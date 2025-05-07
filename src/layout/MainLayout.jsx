@@ -34,7 +34,7 @@ function MainLayout() {
         {/* sidebar top */}
         <div className="">
           {/* logo */}
-          <div className="flex items-center ">
+          <div className="flex items-center "> 
             <div>
               <img src="/my_spot_page_favicon.png" alt="" />
             </div>

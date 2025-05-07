@@ -1,18 +1,14 @@
 import { imageProvider } from "@/lib/imageProvider";
 import { dashboardTabs } from "@/lib/staticData";
-import { MainContext } from "@/provider/Context";
-
-
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { Link, Outlet } from "react-router";
 
 function MainLayout() {
   // const {currentTab} = useContext(MainContext)
-  const [toggle, setToggle] = useState(false);
+  const [toggle, setToggle] = useState(true);
   const [activeTab, setActiveTab] = useState(0);
   const [currentTab, setCurrentTab] = useState('Dashboard')
-
   const handleActiveTab = (index, tab) => {
     console.log(activeTab);
     setActiveTab(index);

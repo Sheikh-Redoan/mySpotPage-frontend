@@ -6,18 +6,17 @@ import { slideInFromLeft } from "@/animations/variants";
 
 const LangSettings = () => {
   return (
-    <motion.div
-      variants={slideInFromLeft()}
-      initial="hidden"
-      animate="visible"
-      className="flex justify-center items-center min-h-screen bg-gray-100 mx-3 md:mx-0"
-    >
-      <form className="bg-white p-[20px] rounded-[12px] shadow-md w-full max-w-md">
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <motion.form
+        variants={slideInFromLeft()}
+        initial="hidden"
+        animate="visible"
+        className="bg-white p-[40px] rounded-[12px] mx-3 sm:mx-0 shadow-md w-full max-w-md"
+      >
         <h1 className="text-xl font-semibold mb-4 text-center">
           Language Settings
         </h1>
         <p className="text-gray-600 mb-4 text-sm">
-          {" "}
           {/* Reduced font size for paragraph */}
           Set your preferred language to ensure smooth and effective
           communication.
@@ -33,7 +32,7 @@ const LangSettings = () => {
           <select
             id="language"
             name="language"
-            className="block w-full text-sm appearance-none border border-gray-300 rounded px-4 py-2 pr-10 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="block w-full text-sm appearance-none border border-gray-300 rounded-md px-4 py-2.5 pr-10 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="english">English</option>
             <option value="bangla">Bangla</option>
@@ -59,13 +58,13 @@ const LangSettings = () => {
         <Link to={"/signin"}>
           <button
             type="submit"
-            className="w-full bg-[#744CDB] text-sm text-white py-2 rounded-md hover:bg-[#722CDb] transition duration-200"
+            className="w-full bg-[#744CDB] text-sm text-white py-2 rounded-md hover:bg-[#633CDB] hover:scale-x-95 transition-all transform duration-200"
           >
             Continue
           </button>
         </Link>
-      </form>
-    </motion.div>
+      </motion.form>
+    </div>
   );
 };
 

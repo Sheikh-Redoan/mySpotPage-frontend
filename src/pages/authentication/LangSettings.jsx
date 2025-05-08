@@ -1,14 +1,24 @@
 import React from "react";
 import { Link } from "react-router";
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
+import { slideInFromLeft } from "@/animations/variants";
 
 const LangSettings = () => {
   return (
-    <div className="flex justify-center font-golos items-center min-h-screen bg-gray-100">
-      <form className="bg-white p-[40px] rounded-[12px] shadow-md w-full max-w-md">
+    <motion.div
+      variants={slideInFromLeft()}
+      initial="hidden"
+      animate="visible"
+      className="flex justify-center items-center min-h-screen bg-gray-100 mx-3 md:mx-0"
+    >
+      <form className="bg-white p-[20px] rounded-[12px] shadow-md w-full max-w-md">
         <h1 className="text-xl font-semibold mb-4 text-center">
           Language Settings
         </h1>
-        <p className="text-gray-600 mb-4">
+        <p className="text-gray-600 mb-4 text-sm">
+          {" "}
+          {/* Reduced font size for paragraph */}
           Set your preferred language to ensure smooth and effective
           communication.
         </p>
@@ -49,13 +59,13 @@ const LangSettings = () => {
         <Link to={"/signin"}>
           <button
             type="submit"
-            className="w-full bg-[#744CDB] text-white py-2 rounded-md hover:bg-[#722CDb] transition duration-200"
+            className="w-full bg-[#744CDB] text-sm text-white py-2 rounded-md hover:bg-[#722CDb] transition duration-200"
           >
             Continue
           </button>
         </Link>
       </form>
-    </div>
+    </motion.div>
   );
 };
 

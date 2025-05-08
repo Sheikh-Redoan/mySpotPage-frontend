@@ -10,6 +10,15 @@ import SettingsPage from "@/pages/SettingsPage";
 import Authentication from "@/layout/Authentication";
 import Signin from "@/pages/authentication/Signin";
 import ForgotPassword from "@/pages/authentication/ForgotPassword";
+import VerifyNumber from "@/pages/authentication/VerifyNumber";
+import ResetPassword from "@/pages/authentication/ResetPassword";
+import ResetSuccessfull from "@/pages/authentication/ResetSuccessfull";
+import Signup from "@/pages/authentication/Signup";
+import SignupVerifyNumber from "@/pages/authentication/SignupVerifyNumber";
+import SetupSignup from "@/pages/authentication/SetupSignup";
+import SignupSuccessfull from "@/pages/authentication/SignupSuccessfull";
+import OnboardLayout from "@/layout/OnboardLayout";
+import SetUpBusiness from "@/pages/onboarding/SetUpBusiness";
 
 export const routes = createBrowserRouter([
   {
@@ -44,6 +53,17 @@ export const routes = createBrowserRouter([
     ],
   },
   {
+    path: "/onboard",
+    element: <OnboardLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        index: true,
+        element: <SetUpBusiness />,
+      },
+    ],
+  },
+  {
     path: "/auth",
     element: <Authentication />,
   },
@@ -54,5 +74,33 @@ export const routes = createBrowserRouter([
   {
     path: "/forgot-password",
     element: <ForgotPassword />,
+  },
+  {
+    path: "/verify-number",
+    element: <VerifyNumber />,
+  },
+  {
+    path: "/reset-password",
+    element: <ResetPassword />,
+  },
+  {
+    path: "/reset-successfull",
+    element: <ResetSuccessfull />,
+  },
+  {
+    path: "/signup",
+    element: <Signup />,
+  },
+  {
+    path: "/signup-verify-number",
+    element: <SignupVerifyNumber />,
+  },
+  {
+    path: "/setup-signup",
+    element: <SetupSignup />,
+  },
+  {
+    path: "/signup-successfull",
+    element: <SignupSuccessfull />,
   },
 ]);

@@ -13,8 +13,8 @@ import ServicePink from '../assets/icons/hand-heart.png'
 import CalendarPink from '../assets/icons/calendar-dots.png'
 import ChartLinePink from '../assets/icons/ChartLine.png'
 import Notification from '../assets/icons/notification.png'
-
-
+import NotificationWhite from '../assets/icons/notification_white.png'
+import NoNotificationIcon from '../assets/icons/no_notification.png'
 
 
 export const imageProvider = {
@@ -31,5 +31,7 @@ export const imageProvider = {
     PricingWhite,
     CalendarWhite,
     PeopleWhite,
-    Notification
+    Notification,
+    NotificationWhite,
+    NoNotificationIcon
 }

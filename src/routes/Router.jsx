@@ -17,6 +17,8 @@ import Signup from "@/pages/authentication/Signup";
 import SignupVerifyNumber from "@/pages/authentication/SignupVerifyNumber";
 import SetupSignup from "@/pages/authentication/SetupSignup";
 import SignupSuccessfull from "@/pages/authentication/SignupSuccessfull";
+import OnboardLayout from "@/layout/OnboardLayout";
+import SetUpBusiness from "@/pages/onboarding/SetUpBusiness";
 
 export const routes = createBrowserRouter([
   {
@@ -47,6 +49,17 @@ export const routes = createBrowserRouter([
       {
         path: "/settings",
         element: <SettingsPage />,
+      },
+    ],
+  },
+  {
+    path: "/onboard",
+    element: <OnboardLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        index: true,
+        element: <SetUpBusiness />,
       },
     ],
   },

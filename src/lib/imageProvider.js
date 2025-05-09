@@ -15,7 +15,7 @@ import ChartLinePink from '../assets/icons/ChartLine.png'
 import Notification from '../assets/icons/notification.png'
 import NotificationWhite from '../assets/icons/notification_white.png'
 import NoNotificationIcon from '../assets/icons/no_notification.png'
-
+import RevenueIcon from '../assets/icons/revenue.png'
 
 export const imageProvider = {
     ChartLinePink,
@@ -33,5 +33,6 @@ export const imageProvider = {
     PeopleWhite,
     Notification,
     NotificationWhite,
-    NoNotificationIcon
+    NoNotificationIcon,
+    RevenueIcon
 }

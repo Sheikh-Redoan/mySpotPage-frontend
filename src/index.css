@@ -6,6 +6,7 @@
   --color-primary01: #866be7;
   --font-golos: "Golos Text", sans-serif;
   --color-description: #797979;
+  --color-primary02: #1E7D5D;
 }
 
 .ant-tooltip .ant-tooltip-inner {
@@ -15,7 +16,7 @@
 
 /* Style the scrollbar */
 .chart-1::-webkit-scrollbar {
-  width: 20px; /* Width of the scrollbar */
+  width: 10px; /* Width of the scrollbar */
   height: 10px;
 }
 
@@ -24,7 +25,7 @@
   background: #f6f6f6; /* Track color */
   border-radius: 20px;
   margin-left: 20px;
-  margin-right: 50px;
+  margin-right: 0px;
 }
 
 /* Style the scrollbar thumb */

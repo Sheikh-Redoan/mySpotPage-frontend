@@ -1,26 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 
-
 @theme inline {
-  --color-primary01: #866BE7;
+  --color-primary01: #866be7;
   --font-golos: "Golos Text", sans-serif;
   --color-description: #797979;
- 
 }
-
-
-
-
 
 .ant-tooltip .ant-tooltip-inner {
   color: rgba(0, 0, 0, 0.887); /* Your desired color */
   font-family: "Golos Text", sans-serif;
 }
-
-
-
 
 /* Style the scrollbar */
 .chart-1::-webkit-scrollbar {
@@ -30,7 +21,7 @@
 
 /* Style the scrollbar track */
 .chart-1::-webkit-scrollbar-track {
-  background: #F6F6F6; /* Track color */
+  background: #f6f6f6; /* Track color */
   border-radius: 20px;
   margin-left: 20px;
   margin-right: 50px;
@@ -38,13 +29,17 @@
 
 /* Style the scrollbar thumb */
 .chart-1::-webkit-scrollbar-thumb {
-  background: #E7E7E7; /* Thumb color */
+  background: #e7e7e7; /* Thumb color */
   border-radius: 20px; /* Rounded corners for the thumb */
-
 }
 
 /* Style when the scrollbar thumb is hovered */
 .chart-1::-webkit-scrollbar-thumb:hover {
   background: #d3d3d3; /* Thumb color on hover */
-  
+}
+
+/* accordian */
+.custom-collapse .ant-collapse-content {
+  background: #ffffff !important;
+  border: none !important;
 }

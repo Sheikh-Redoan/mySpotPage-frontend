@@ -1,4 +1,6 @@
 import React from "react";
+import { imageProvider } from "../../lib/imageProvider";
+import { Link } from "react-router";
 
 const SetUpBusiness = () => {
   return (
@@ -7,20 +9,35 @@ const SetUpBusiness = () => {
       <h1 className="text-[28px] font-semibold my-1">
         Set Up Business Information
       </h1>
-      <p className="text-[#888888]">
+      <p className="text-[#888888] pb-2.5">
         Tell us a bit about your business so we can personalize your experience.
       </p>
-      <form className="p-[16px] border rounded-md mt-4 max-h-[60vh] overflow-y-auto">
+      <form className="p-[16px] border-[1px] border-[#DDDAFA] rounded-md mt-4 max-h-[60vh] overflow-y-auto">
         {/* Image Upload */}
         <div className="mb-6">
           <label className="block mb-2 text-[#888888]">
             Thumbnail <span className="text-orange-600">*</span>
           </label>
-          <input
-            type="file"
-            accept="image/*"
-            className="block w-full border border-gray-300 rounded-md p-2"
-          />
+          <div className="mb-6 flex">
+            <label
+              htmlFor="thumbnail"
+              className="w-full max-w-md flex flex-col items-center justify-center border-2 border-dashed border-gray-400 p-8 rounded-lg cursor-pointer hover:border-[#866BE7] transition-all text-center"
+            >
+              <div className="flex flex-col items-center">
+                <img src={imageProvider.imageUploader} alt="Image" />
+                <p className="text-gray-600 text-lg font-semibold underline my-2">
+                  Upload Image
+                </p>
+                <p className="text-sm text-gray-500">JPEG, PNG up to 50MB</p>
+              </div>
+              <input
+                id="thumbnail"
+                type="file"
+                accept="image/*"
+                className="hidden"
+              />
+            </label>
+          </div>
         </div>
 
         {/* Business Name */}
@@ -112,9 +129,11 @@ const SetUpBusiness = () => {
         </div>
       </form>
       <div className="my-6 text-right mx-5">
-        <button className="px-[14px] py-[10px] text-sm rounded-md text-[#82868E] bg-[#E5E7E8] hover:bg-[#cccfd1]">
-          Continue
-        </button>
+        <Link to={"setup-location"}>
+          <button className="px-[14px] py-[10px] text-sm rounded-lg hover:scale-95 transform transition-all duration-300 ease-in-out hover:shadow-md text-[#82868E] bg-[#E5E7E8] hover:bg-[#cccfd1]">
+            Continue
+          </button>
+        </Link>
       </div>
     </div>
   );

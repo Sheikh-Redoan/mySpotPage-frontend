@@ -19,6 +19,12 @@ import SetupSignup from "@/pages/authentication/SetupSignup";
 import SignupSuccessfull from "@/pages/authentication/SignupSuccessfull";
 import OnboardLayout from "@/layout/OnboardLayout";
 import SetUpBusiness from "@/pages/onboarding/SetUpBusiness";
+import SetUpLocation from "../pages/onboarding/SetUpLocation";
+import SetupLocationServices1 from "../pages/onboarding/solo/SetupLocationServices1";
+import SetupLocationServices2 from "../pages/onboarding/solo/SetupLocationServices2";
+import SetupTeamLocationServices1 from "../pages/onboarding/team/SetupTeamLocationServices1";
+import SetupTeamLocationServices2 from "../pages/onboarding/team/SetupTeamLocationServices2";
+import SetUpService from "../pages/onboarding/SetUpService";
 
 export const routes = createBrowserRouter([
   {
@@ -60,6 +66,30 @@ export const routes = createBrowserRouter([
       {
         index: true,
         element: <SetUpBusiness />,
+      },
+      {
+        path: "setup-location",
+        element: <SetUpLocation />,
+      },
+      {
+        path: "setup-services1",
+        element: <SetupLocationServices1 />,
+      },
+      {
+        path: "setup-services2",
+        element: <SetupLocationServices2 />,
+      },
+      {
+        path: "setup-teamservices1",
+        element: <SetupTeamLocationServices1 />,
+      },
+      {
+        path: "setup-teamservices2",
+        element: <SetupTeamLocationServices2 />,
+      },
+      {
+        path: "service",
+        element: <SetUpService />,
       },
     ],
   },

@@ -1,4 +1,5 @@
 
+
 import ChartLineWhite from '../assets/icons/chartLineWhite.png'
 import SettingsWhite from '../assets/icons/settingsWhilte.png'
 import ServiceWhite from '../assets/icons/serviceWhite.png'
@@ -17,7 +18,14 @@ import NotificationWhite from '../assets/icons/notification_white.png'
 import NoNotificationIcon from '../assets/icons/no_notification.png'
 import RevenueIcon from '../assets/icons/revenue.png'
 import SalesIcon from '../assets/icons/sales.png'
-
+import people from "../assets/icons/people.png";
+import multiplePeople from "../assets/icons/multiplePeople.png";
+import imageUploader from "../assets/icons/imageUploader.png";
+import edit from "../assets/icons/edit.png";
+import deleteIcon from "../assets/icons/delete.png";
+import colorPeople from "../assets/icons/colorPeople.png";
+import multipleCoPeo from "../assets/icons/multipleCoPeo.png";
+import upload from "../assets/icons/upload.png";
 
 export const imageProvider = {
     ChartLinePink,
@@ -37,5 +45,13 @@ export const imageProvider = {
     NotificationWhite,
     NoNotificationIcon,
     RevenueIcon,
-    SalesIcon
+    SalesIcon,
+  people,
+  multiplePeople,
+  imageUploader,
+  edit,
+  deleteIcon,
+  colorPeople,
+  multipleCoPeo,
+  upload,
 }

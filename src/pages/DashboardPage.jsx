@@ -13,6 +13,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { imageProvider } from "../lib/imageProvider";
+import SalesChart from "../components/DashboardPageComponents/SalesChart";
 
 function DashboardPage() {
   const data = [
@@ -50,7 +51,6 @@ function DashboardPage() {
     console.log(`selected ${value}`);
   };
 
-
   const month = [
     { value: "january", label: "January" },
     { value: "february", label: "February" },
@@ -64,7 +64,7 @@ function DashboardPage() {
     { value: "october", label: "October" },
     { value: "november", label: "November" },
     { value: "december", label: "December" },
-  ]
+  ];
   const services = [
     { value: "web_design", label: "Web Design" },
     { value: "web_development", label: "Web Development" },
@@ -79,14 +79,12 @@ function DashboardPage() {
     { value: "consulting", label: "Tech Consulting" },
     { value: "cloud_services", label: "Cloud Services" },
   ];
-  
-  
 
   return (
     <div className="p-4 bg-[#F9FAFC]">
       {/* statistics */}
       <div className="grid grid-cols-4 gap-4">
-        <div className="p-5 rounded-xl bg-white shadow-xs inset-shadow-sm">
+        <div className="p-5 rounded-2xl bg-white shadow-xs inset-shadow-sm">
           <h3 className="text-description">Complete Bookings</h3>
           <h2 className="text-xl font-semibold pt-1">1250</h2>
           <p className="flex items-center gap-1 pt-1">
@@ -124,11 +122,11 @@ function DashboardPage() {
         </div>
       </div>
 
-      <div className="w-full pt-4">
+      <div className="w-full space-y-4 pt-4">
         {/* chart1 */}
-        <div className="bg-white rounded-xl flex w-full h-full p-6 inset-shadow-sm ">
-          <div className="w-9/12 chart-1 overflow-x-auto ">
-            <div className="p-4 flex justify-between items-center">
+        <div className="bg-white space-x-8 divide-x divide-gray-200 rounded-xl flex w-full h-full p-6 inset-shadow-sm ">
+          <div className="w-8/12 pr-8 chart-1 flex flex-col  ">
+            <div className="px-0 pt-0 pb-4 w-full flex justify-between items-center">
               <div className="flex items-start gap-4">
                 <img
                   className="p-4 rounded-lg bg-[#EFFAF5]"
@@ -137,7 +135,7 @@ function DashboardPage() {
                 />
 
                 <div>
-                  <h4>Total Revenue</h4>
+                  <h4 className="font-medium text-black/60">Total Revenue</h4>
                   <h3 className="text-lg font-semibold flex items-center">
                     12,123,874{" "}
                     <span className="pl-4">
@@ -159,7 +157,7 @@ function DashboardPage() {
                   options={month}
                 />
                 <Select
-                className="font-golos font-medium"
+                  className="font-golos font-medium"
                   defaultValue="Services"
                   style={{ width: 250 }}
                   onChange={handleChange}
@@ -167,44 +165,209 @@ function DashboardPage() {
                 />
               </div>
             </div>
-            <ResponsiveContainer width={1900} height={400}>
-              <AreaChart
-                data={data}
-                margin={{
-                  top: 10,
-                  right: 50,
-                  left: 0,
-                  bottom: 0,
-                }}
-              >
-                <defs>
-                  <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#2D9C74" stopOpacity={1.2} />
-                    <stop offset="95%" stopColor="#9DCCBC" stopOpacity={0.2} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Area
-                  type="monotone"
-                  dataKey="uv"
-                  stroke="#1E7D5D"
-                  fill="url(#colorUv)"
-                />
-              </AreaChart>
-            </ResponsiveContainer>
+            <div className="w-full chart-1 overflow-x-auto">
+              <ResponsiveContainer width={1900} height={400}>
+                <AreaChart
+                  data={data}
+                  margin={{
+                    top: 10,
+                    right: 50,
+                    left: 0,
+                    bottom: 0,
+                  }}
+                >
+                  <defs>
+                    <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#2D9C74" stopOpacity={1.2} />
+                      <stop
+                        offset="95%"
+                        stopColor="#9DCCBC"
+                        stopOpacity={0.2}
+                      />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip />
+                  <Area
+                    type="monotone"
+                    dataKey="uv"
+                    stroke="#1E7D5D"
+                    fill="url(#colorUv)"
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
           </div>
-          <div className="w-5/12">
-            <h3>Most Popular Service</h3>
+          <div className="w-4/12 ">
+            <h3 className="font-semibold pb-4">Most Popular Service</h3>
+
+            <div className=" w-full ">
+              <div>
+                <div className="flex justify-between">
+                  <h4 className="text-description">
+                    <span className="pr-3">#</span> Booking per services
+                  </h4>
+                  <h4 className="text-description pr-2">Revenue</h4>
+                </div>
+
+                <div className="pt-5 space-y-3 overflow-y-auto pr-2 chart-1 max-h-[420px] divide-y divide-gray-200 ">
+                  <div className="flex items-center pb-2 justify-between">
+                    <div className="flex  gap-2">
+                      <h4 className="bg-primary02 w-5 mt-1 text-sm text-white flex justify-center items-center h-5 rounded-full">
+                        1
+                      </h4>
+                      <div>
+                        <h4>Classic Ombre</h4>
+                        <h4 className="text-description text-sm">
+                          820 bookings
+                        </h4>
+                      </div>
+                    </div>
+                    <div>
+                      <h4 className="font-medium">₪ 1,029,910</h4>
+                    </div>
+                  </div>
+                  <div className="flex items-center pb-2 justify-between">
+                    <div className="flex  gap-2">
+                      <h4 className="bg-primary02 w-5 mt-1 text-sm text-white flex justify-center items-center h-5 rounded-full">
+                        2
+                      </h4>
+                      <div>
+                        <h4>Classic Ombre</h4>
+                        <h4 className="text-description text-sm">
+                          820 bookings
+                        </h4>
+                      </div>
+                    </div>
+                    <div>
+                      <h4 className="font-medium">₪ 1,029,910</h4>
+                    </div>
+                  </div>
+                  <div className="flex items-center pb-2 justify-between">
+                    <div className="flex  gap-2">
+                      <h4 className="bg-primary02 w-5 mt-1 text-sm text-white flex justify-center items-center h-5 rounded-full">
+                        3
+                      </h4>
+                      <div>
+                        <h4>Classic Ombre</h4>
+                        <h4 className="text-description text-sm">
+                          820 bookings
+                        </h4>
+                      </div>
+                    </div>
+                    <div>
+                      <h4 className="font-medium">₪ 1,029,910</h4>
+                    </div>
+                  </div>
+                  <div className="flex items-center pb-2 justify-between">
+                    <div className="flex  gap-2">
+                      <h4 className="bg-primary02 w-5 mt-1 text-sm text-white flex justify-center items-center h-5 rounded-full">
+                        2
+                      </h4>
+                      <div>
+                        <h4>Classic Ombre</h4>
+                        <h4 className="text-description text-sm">
+                          820 bookings
+                        </h4>
+                      </div>
+                    </div>
+                    <div>
+                      <h4 className="font-medium">₪ 1,029,910</h4>
+                    </div>
+                  </div>
+                  <div className="flex items-center pb-2 justify-between">
+                    <div className="flex  gap-2">
+                      <h4 className="bg-primary02 w-5 mt-1 text-sm text-white flex justify-center items-center h-5 rounded-full">
+                        3
+                      </h4>
+                      <div>
+                        <h4>Classic Ombre</h4>
+                        <h4 className="text-description text-sm">
+                          820 bookings
+                        </h4>
+                      </div>
+                    </div>
+                    <div>
+                      <h4 className="font-medium">₪ 1,029,910</h4>
+                    </div>
+                  </div>
+                  <div className="flex items-center pb-2 justify-between">
+                    <div className="flex  gap-2">
+                      <h4 className="bg-primary02 w-5 mt-1 text-sm text-white flex justify-center items-center h-5 rounded-full">
+                        3
+                      </h4>
+                      <div>
+                        <h4>Classic Ombre</h4>
+                        <h4 className="text-description text-sm">
+                          820 bookings
+                        </h4>
+                      </div>
+                    </div>
+                    <div>
+                      <h4 className="font-medium">₪ 1,029,910</h4>
+                    </div>
+                  </div>
+                  <div className="flex items-center pb-2 justify-between">
+                    <div className="flex  gap-2">
+                      <h4 className="bg-primary02 w-5 mt-1 text-sm text-white flex justify-center items-center h-5 rounded-full">
+                        2
+                      </h4>
+                      <div>
+                        <h4>Classic Ombre</h4>
+                        <h4 className="text-description text-sm">
+                          820 bookings
+                        </h4>
+                      </div>
+                    </div>
+                    <div>
+                      <h4 className="font-medium">₪ 1,029,910</h4>
+                    </div>
+                  </div>
+                  <div className="flex items-center pb-2 justify-between">
+                    <div className="flex  gap-2">
+                      <h4 className="bg-primary02 w-5 mt-1 text-sm text-white flex justify-center items-center h-5 rounded-full">
+                        3
+                      </h4>
+                      <div>
+                        <h4>Classic Ombre</h4>
+                        <h4 className="text-description text-sm">
+                          820 bookings
+                        </h4>
+                      </div>
+                    </div>
+                    <div>
+                      <h4 className="font-medium">₪ 1,029,910</h4>
+                    </div>
+                  </div>
+                  <div className="flex items-center pb-2 justify-between">
+                    <div className="flex  gap-2">
+                      <h4 className="bg-primary02 w-5 mt-1 text-sm text-white flex justify-center items-center h-5 rounded-full">
+                        3
+                      </h4>
+                      <div>
+                        <h4>Classic Ombre</h4>
+                        <h4 className="text-description text-sm">
+                          820 bookings
+                        </h4>
+                      </div>
+                    </div>
+                    <div>
+                      <h4 className="font-medium">₪ 1,029,910</h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+        {/* chart 2 */}
+        <SalesChart/>
 
-        {/* chart1 */}
-        <div></div>
+        
 
-        {/* chart1 */}
+        {/* chart3 */}
         <div></div>
       </div>
     </div>

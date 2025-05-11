@@ -25,6 +25,8 @@ import SetupLocationServices2 from "../pages/onboarding/solo/SetupLocationServic
 import SetupTeamLocationServices1 from "../pages/onboarding/team/SetupTeamLocationServices1";
 import SetupTeamLocationServices2 from "../pages/onboarding/team/SetupTeamLocationServices2";
 import SetUpService from "../pages/onboarding/SetUpService";
+import ServiceTable from "../pages/onboarding/ServiceTable";
+import SuccessNotifications from "../pages/onboarding/SuccessNotifications";
 
 export const routes = createBrowserRouter([
   {
@@ -91,7 +93,15 @@ export const routes = createBrowserRouter([
         path: "service",
         element: <SetUpService />,
       },
+      {
+        path: "service-table",
+        element: <ServiceTable />,
+      },
     ],
+  },
+  {
+    path: "/success-notification",
+    element: <SuccessNotifications />,
   },
   {
     path: "/auth",

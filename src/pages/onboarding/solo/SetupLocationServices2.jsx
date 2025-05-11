@@ -1,43 +1,54 @@
 import { Switch } from "antd";
 import { Plus } from "lucide-react";
-import React from "react";
+
 import { imageProvider } from "../../../lib/imageProvider";
 import { Link } from "react-router";
+import { useState } from "react";
 
 const SetupLocationServices2 = () => {
+  const [showMenu1, setShowMenu1] = useState(false);
+  const [showMenu2, setShowMenu2] = useState(false);
+  const [showMenu3, setShowMenu3] = useState(false);
+
   const onChange = (checked) => {
     console.log(`switch to ${checked}`);
   };
   return (
-    <div className="p-[40px]">
+    <div className="px-2 py-[20px] lg:px-[20px] lg:py-[30px] xl:p-[40px]">
       <p className="text-[#866BE7] mb-2 font-medium">Step 2 of 3</p>
-      <h1 className="text-[28px] font-semibold my-1">Set Up Location</h1>
+      <h1 className="text-[22px] md:text-[28px] font-semibold my-1">
+        Set Up Location
+      </h1>
       <p className="text-[#888888]  pb-2.5">
         Choose where your business operates. This helps us show relevant
         settings.
       </p>
       <div className="p-[16px] border-[1px] border-[#DDDAFA] rounded-md mt-4 min-h-[520px] px-8">
-        <div className="flex justify-between items-center my-2">
-          <h2 className="text-xl text-[#242528] font-semibold">
-            Fixed Location Services
-          </h2>
-          <div className="flex items-center gap-2 text-[#744CDB] font-semibold hover:underline">
+        <div className="xl:flex justify-between items-start my-2">
+          <div>
+            <h2 className="text-xl text-[#242528] font-semibold">
+              Fixed Location Services
+            </h2>
+            <p className="text-[#797979] mt-1 text-sm">
+              Your service is based at a specific location. Ensure your address
+              settings are correct for customers to find you easily.
+            </p>
+          </div>
+
+          <div className="flex items-center gap-2 text-[#744CDB] text-sm font-semibold hover:underline mt-3 xl:mt-0 whitespace-nowrap w-fit">
             <Plus /> Add Location
           </div>
         </div>
-        <p className="text-[#797979] mt-1 text-sm">
-          Your service is based at a specific location. Ensure your address
-          settings are correct for customers to find you easily.
-        </p>
+
         <hr className="my-6 text-[#F6F6F6]" />
 
-        <div className="flex justify-between items-center mb-2">
+        <div className="flex justify-between items-start mb-2">
           <div className="flex items-start gap-5">
             <div>
               <Switch defaultChecked onChange={onChange} />
             </div>
             <div className="flex flex-col justify-start">
-              <h4 className="text-[#242528] font-semibold text-lg">
+              <h4 className="text-[#242528] font-semibold text-base md:text-lg">
                 TCL Beauty Studio 01{" "}
                 <span className="text-[#866BE7] bg-[#F5F4FE] ml-2 p-1 rounded text-sm">
                   Hidden
@@ -48,18 +59,33 @@ const SetupLocationServices2 = () => {
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-6">
+          <div className="hidden sm:flex items-center gap-6">
             <img src={imageProvider.edit} alt="Edit Icon" />
             <img src={imageProvider.deleteIcon} alt="Delete Icon" />
           </div>
+          {/* Show on small screens */}
+          <div className="block md:hidden relative">
+            <button
+              className="text-3xl"
+              onClick={() => setShowMenu1(!showMenu1)}
+            >
+              ⋯
+            </button>
+            {showMenu1 && (
+              <div className="absolute flex gap-4 right-0 mt-2  p-2 z-10">
+                <img src={imageProvider.edit} alt="Edit Icon" />
+                <img src={imageProvider.deleteIcon} alt="Delete Icon" />
+              </div>
+            )}
+          </div>
         </div>
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-start">
           <div className="flex items-start gap-5">
             <div>
               <Switch defaultChecked onChange={onChange} />
             </div>
             <div className="flex flex-col justify-start">
-              <h4 className="text-[#242528] font-semibold text-lg">
+              <h4 className="text-[#242528] font-semibold text-base md:text-lg">
                 Mobile Service
               </h4>
               <p className="text-[#797979] my-2 text-sm">
@@ -67,41 +93,74 @@ const SetupLocationServices2 = () => {
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-6">
+          <div className="hidden sm:flex items-center gap-6">
             <img src={imageProvider.edit} alt="Edit Icon" />
             <img src={imageProvider.deleteIcon} alt="Delete Icon" />
           </div>
+          {/* Show on small screens */}
+          <div className="block md:hidden relative">
+            <button
+              className="text-3xl"
+              onClick={() => setShowMenu2(!showMenu2)}
+            >
+              ⋯
+            </button>
+            {showMenu2 && (
+              <div className="absolute flex gap-4 right-0 mt-2  p-2 z-10">
+                <img src={imageProvider.edit} alt="Edit Icon" />
+                <img src={imageProvider.deleteIcon} alt="Delete Icon" />
+              </div>
+            )}
+          </div>
         </div>
         <hr className="my-6 text-[#F6F6F6]" />
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-start">
           <div className="flex items-start gap-5">
             <div>
               <Switch defaultChecked onChange={onChange} />
             </div>
             <div className="flex flex-col justify-start">
-              <h4 className="text-[#242528] font-semibold text-lg">
+              <h4 className="text-[#242528] font-semibold text-base md:text-lg">
                 Mobile Service
               </h4>
-              <p className="text-[#797979] my-2 text-sm">
+              <p className="text-[#797979] my-2 text-sm w-[90%] sm:w-full">
                 Your mobile service is currently inactive. Please enable it to
                 offer on-location services to your clients.
               </p>
             </div>
           </div>
-          <div>
+          <div className="hidden sm:block">
             <img src={imageProvider.edit} alt="Edit Icon" />
+          </div>
+          {/* Show on small screens */}
+          <div className="block sm:hidden relative">
+            <button
+              className="text-3xl"
+              onClick={() => setShowMenu3(!showMenu3)}
+            >
+              ⋯
+            </button>
+            {showMenu3 && (
+              <div className="absolute right-0 mt-2  p-2 z-10">
+                <img
+                  className="w-8 h-8 object-contain"
+                  src={imageProvider.edit}
+                  alt="Edit Icon"
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>
 
-      <div className="flex items-center justify-end gap-4 my-6 mx-5">
-        <Link to={"/onboard/setup-services1"}>
-          <button className="px-[18px] py-[8px] border font-medium border-[#242528] rounded-lg hover:scale-95 transform transition-all duration-300 ease-in-out hover:bg-[#f3f3f3] hover:shadow-md">
+      <div className="sm:w-auto flex items-center justify-end gap-4 my-6 mx-2 sm:mx-5">
+        <Link to={"/onboard/setup-services1"} className="w-full sm:w-auto">
+          <button className="w-full sm:w-auto px-[18px] py-[8px] border font-medium border-[#242528] rounded-lg hover:scale-95 transform transition-all duration-300 ease-in-out hover:bg-[#f3f3f3] hover:shadow-md">
             Previous
           </button>
         </Link>
-        <Link to={"/onboard/service"}>
-          <button className="px-[18px] py-[8px] bg-[#242528] text-[#fff] border font-medium rounded-lg hover:scale-95 transition-all duration-300 ease-in-out hover:bg-[#3a3a3a] hover:shadow-md">
+        <Link to={"/onboard/service"} className="w-full sm:w-auto">
+          <button className="w-full sm:w-auto px-[18px] py-[8px] bg-[#242528] text-[#fff] border font-medium rounded-lg hover:scale-95 transition-all duration-300 ease-in-out hover:bg-[#3a3a3a] hover:shadow-md">
             Continue
           </button>
         </Link>

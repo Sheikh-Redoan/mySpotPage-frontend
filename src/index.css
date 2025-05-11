@@ -6,7 +6,7 @@
   --color-primary01: #866be7;
   --font-golos: "Golos Text", sans-serif;
   --color-description: #797979;
-  --color-primary02: #1E7D5D;
+  --color-primary02: #1e7d5d;
 }
 
 .ant-tooltip .ant-tooltip-inner {
@@ -39,8 +39,19 @@
   background: #d3d3d3; /* Thumb color on hover */
 }
 
+/* sidebar */
+
+.custom-steps .ant-steps-item-tail {
+  padding: 0 !important;
+  top: 32px !important;
+}
+
 /* accordian */
 .custom-collapse .ant-collapse-content {
   background: #ffffff !important;
   border: none !important;
+}
+.custom-collapse .ant-collapse-item .ant-collapse-arrow {
+  font-size: 18px !important;
+  margin-top: 18px !important;
 }

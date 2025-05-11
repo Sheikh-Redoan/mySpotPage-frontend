@@ -1,12 +1,13 @@
 import React from "react";
 import { imageProvider } from "../../lib/imageProvider";
 import { Link } from "react-router";
+import { ChevronDown } from "lucide-react";
 
 const SetUpBusiness = () => {
   return (
-    <div className="p-[40px]">
+    <div className="px-2 py-[20px] lg:px-[20px] lg:py-[30px] xl:p-[40px]">
       <p className="text-[#866BE7] mb-2 font-medium">Step 1 of 3</p>
-      <h1 className="text-[28px] font-semibold my-1">
+      <h1 className="text-[22px] md:text-[28px] font-semibold my-1">
         Set Up Business Information
       </h1>
       <p className="text-[#888888] pb-2.5">
@@ -54,29 +55,32 @@ const SetUpBusiness = () => {
         </div>
 
         {/* Business Type and Classification */}
-        <div className="flex gap-6 mb-6">
+        <div className="sm:flex gap-6 mb-6">
           {/* Business Type */}
-          <div className="flex-1">
+          <div className="flex-1 relative">
             <label className="block mb-2 text-[#888888]">
               Business Type <span className="text-orange-600">*</span>
             </label>
             <select
-              className="block text-sm w-full border border-gray-300 rounded-md p-2"
+              className="block text-sm w-full border border-gray-300 rounded-md p-2 appearance-none"
               required
             >
               <option value="">Select Business Type</option>
               <option value="service">Service</option>
               <option value="product">Product</option>
             </select>
+            <div className="pointer-events-none absolute inset-y-0 top-8 right-3 flex items-center text-gray-600">
+              <ChevronDown />
+            </div>
           </div>
 
           {/* Business Classification */}
-          <div className="flex-1">
+          <div className="flex-1 relative">
             <label className="block mb-2 text-[#888888]">
               Business Classification <span className="text-orange-600">*</span>
             </label>
             <select
-              className="block text-sm w-full border border-gray-300 rounded-md p-2"
+              className="block text-sm w-full border border-gray-300 rounded-md p-2 appearance-none"
               required
             >
               <option value="">Select Classification</option>
@@ -84,11 +88,14 @@ const SetUpBusiness = () => {
               <option value="wholesale">Wholesale</option>
               <option value="franchise">Franchise</option>
             </select>
+            <div className="pointer-events-none absolute inset-y-0 top-8 right-3 flex items-center text-gray-600">
+              <ChevronDown />
+            </div>
           </div>
         </div>
 
         {/* Legal Name and Registration Number */}
-        <div className="flex gap-6 mb-6">
+        <div className="sm:flex gap-6 mb-6">
           {/* Legal Name */}
           <div className="flex-1">
             <label className="block mb-2 text-[#888888]">
@@ -128,9 +135,9 @@ const SetUpBusiness = () => {
           />
         </div>
       </form>
-      <div className="my-6 text-right mx-5">
-        <Link to={"setup-location"}>
-          <button className="px-[14px] py-[10px] text-sm rounded-lg hover:scale-95 transform transition-all duration-300 ease-in-out hover:shadow-md text-[#82868E] bg-[#E5E7E8] hover:bg-[#cccfd1]">
+      <div className="mt-8 sm:my-6 w-full px-5 text-right">
+        <Link to="setup-location">
+          <button className="w-full md:w-auto block md:inline-block text-center md:text-right px-[14px] py-[10px] rounded-lg hover:scale-95 transform transition-all duration-300 ease-in-out hover:shadow-md text-[#82868E] bg-[#E5E7E8] hover:bg-[#cccfd1]">
             Continue
           </button>
         </Link>

@@ -27,6 +27,9 @@ import SetupTeamLocationServices2 from "../pages/onboarding/team/SetupTeamLocati
 import SetUpService from "../pages/onboarding/SetUpService";
 import ServiceTable from "../pages/onboarding/ServiceTable";
 import SuccessNotifications from "../pages/onboarding/SuccessNotifications";
+import BusinessInfo from "../components/SettingsPages/BusinessInfo";
+import Location from "../components/SettingsPages/Location";
+import Subscription from "../components/SettingsPages/Subscription";
 
 export const routes = createBrowserRouter([
   {
@@ -57,6 +60,20 @@ export const routes = createBrowserRouter([
       {
         path: "/settings",
         element: <SettingsPage />,
+        children: [
+          {
+            path: "business-info",
+            element: <BusinessInfo />,
+          },
+          {
+            path: "location",
+            element: <Location />,
+          },
+          {
+            path: "subscription",
+            element: <Subscription />,
+          },
+        ],
       },
     ],
   },

@@ -55,3 +55,22 @@
   font-size: 18px !important;
   margin-top: 18px !important;
 }
+
+/* table */
+.custom-ant-table .ant-table-thead > tr > th {
+  background-color: #262626;
+  color: white;
+}
+
+.ant-table-column-sorter {
+  color: #3d0318;
+}
+
+.custom-sort-column .ant-table-column-sorter {
+  color: #3d0318;
+}
+
+.ant-table-thead > tr > th.ant-table-column-sort {
+  background-color: transparent !important;
+  color: #290814;
+}

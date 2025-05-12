@@ -1,5 +1,4 @@
 import { imageProvider } from "@/lib/imageProvider";
-import React from "react";
 import { Outlet } from "react-router";
 import { Steps } from "antd";
 import { Check } from "lucide-react";
@@ -8,7 +7,7 @@ import { motion } from "framer-motion";
 import { slideInFromLeft } from "@/animations/variants";
 
 const OnboardLayout = () => {
-  const currentStep = 2;
+  const currentStep = 1;
 
   const stepItems = [0, 1, 2].map((index) => {
     const isCompleted = index < currentStep;
@@ -72,7 +71,7 @@ const OnboardLayout = () => {
   return (
     <div className="flex flex-col font-golos">
       {/* Sticky Navbar */}
-      <nav className="fixed top-0 z-50 bg-white sm:pl-16 px-5 py-3.5 w-full border-b">
+      <nav className="fixed top-0 z-50 bg-white pl-5 lg:pl-18  px-5 py-3.5 w-full border-b border-b-[#EFEFEF]">
         <motion.div
           variants={slideInFromLeft()}
           initial="hidden"
@@ -86,13 +85,15 @@ const OnboardLayout = () => {
 
       {/* Sidebar */}
       <div className="flex flex-col md:flex-row h-screen overflow-hidden relative">
+        {/* Desktop sidebar */}
         <motion.aside
           variants={slideInFromLeft()}
           initial="hidden"
           animate="visible"
-          className="w-full sm:max-w-[420px] bg-[#F9FAFC] py-10 sm:pl-16 px-5 h-screen pt-[108px]"
+          className="hidden lg:block w-full max-w-[340px] xl:max-w-[420px] bg-[#F9FAFC] py-10 pl-16 px-5 h-screen pt-[108px]"
         >
           <Steps
+            className="custom-steps"
             direction="vertical"
             current={currentStep}
             items={stepItems}
@@ -100,8 +101,30 @@ const OnboardLayout = () => {
           />
         </motion.aside>
 
-        {/* Outlet Content */}
-        <main className="w-full sm:w-3/4 p-4  pt-[60px]">
+        {/* Main Content (scrollable area) */}
+        <main className="w-full lg:w-3/4 p-4 pt-[60px] overflow-y-auto">
+          {/* Mobile progress bar inside scrollable area */}
+          <div className="flex lg:hidden justify-center gap-3 pt-8">
+            {[0, 1, 2].map((index) => {
+              const isCompleted = index < currentStep;
+              const isCurrent = index === currentStep;
+
+              return (
+                <div
+                  key={index}
+                  className={`w-full h-2.5 rounded-3xl ${
+                    isCompleted
+                      ? "bg-[#866BE7]"
+                      : isCurrent
+                      ? "border-2 border-[#866BE7]"
+                      : "bg-gray-300"
+                  }`}
+                />
+              );
+            })}
+          </div>
+
+          {/* Actual outlet content */}
           <Outlet />
         </main>
       </div>

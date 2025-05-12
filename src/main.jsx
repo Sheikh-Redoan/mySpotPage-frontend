@@ -9,6 +9,8 @@ import { RouterProvider } from "react-router";
 import { routes } from "./routes/Router";
 import StateContextProvider from "./provider/StateContextProvider";
 import { ConfigProvider } from "antd";
+import { Provider } from "react-redux";
+import { store } from './redux/store';
 
 // Create a client
 const queryClient = new QueryClient();
@@ -24,6 +26,7 @@ const theme = {
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
+    <Provider store={store}>
     <QueryClientProvider client={queryClient}>
       <StateContextProvider>
         <ConfigProvider theme={theme}>
@@ -32,5 +35,6 @@ createRoot(document.getElementById("root")).render(
       </StateContextProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
+    </Provider>
   </StrictMode>
 );

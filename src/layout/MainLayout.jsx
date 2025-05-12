@@ -1,23 +1,23 @@
 import { imageProvider } from "@/lib/imageProvider";
 import { dashboardTabs } from "@/lib/staticData";
-import { MainContext } from "@/provider/Context";
-
-
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { Link, Outlet } from "react-router";
-
+import {Tooltip } from 'antd'
+import '../styles/antdCustom.css'
+import TopNavbar from "../pages/layout/TopNavbar";
 function MainLayout() {
   // const {currentTab} = useContext(MainContext)
-  const [toggle, setToggle] = useState(false);
+  const [toggle, setToggle] = useState(true);
   const [activeTab, setActiveTab] = useState(0);
   const [currentTab, setCurrentTab] = useState('Dashboard')
-
   const handleActiveTab = (index, tab) => {
     console.log(activeTab);
     setActiveTab(index);
     setCurrentTab(tab)
   };
+
+  
 
 
   return (
@@ -38,7 +38,7 @@ function MainLayout() {
         {/* sidebar top */}
         <div className="">
           {/* logo */}
-          <div className="flex items-center ">
+          <div className="flex items-center "> 
             <div>
               <img src="/my_spot_page_favicon.png" alt="" />
             </div>
@@ -54,15 +54,16 @@ function MainLayout() {
           </div>
 
           {/* tabs */}
-          <div className="pt-10  flex flex-col w-fit  justify-between">
-            <div className="flex w-fit flex-col gap-4">
+          <div className="pt-6  flex flex-col w-fit  justify-between">
+            <div className="flex sidebar-tabs w-fit flex-col gap-4">
               {dashboardTabs.map((tab, index) => (
-                <Link to={tab.link}
+               <Tooltip placement="right" color="white"  title={toggle? tab.name : ''}>
+                 <Link to={tab.link}
                   onClick={() => handleActiveTab(index, tab.name)}
                   key={tab.id}
                   className={` ${
                     activeTab === index ? "bg-primary01 text-white" : ""
-                  } py-2 justify-center items-center px-3 transiton-all duration-300 flex w-fit text-white cursor-pointer rounded-md `}
+                  } py-2 justify-center items-center px-3 transiton-all duration-300 flex w-fit text-white cursor-pointer rounded-xl `}
                 >
                   <img
                     className=""
@@ -84,6 +85,7 @@ function MainLayout() {
                     {tab.name}
                   </h4>
                 </Link>
+               </Tooltip>
               ))}
             </div>
           </div>
@@ -106,15 +108,7 @@ function MainLayout() {
 
       <div className="flex-1 relative ml-20  min-h-screen h-full ">
         {/* topnav */}
-        <div className="flex justify-between border-b items-center px-6 py-4 absolute  top-0 left-0 right-0">
-          <h3 className="font-semibold text-lg">{currentTab}</h3>
-          <div className="flex items-center gap-4">
-            <img className="cursor-pointer" src={imageProvider.Notification} alt="" />
-            <div className="cursor-pointer">
-              <img className="w-10 h-10 rounded-full bg-white" src="https://png.pngtree.com/png-vector/20231019/ourmid/pngtree-user-profile-avatar-png-image_10211467.png" alt="" />
-            </div>
-          </div>
-        </div>
+        <TopNavbar currentTab={currentTab}/>
         <div className="pt-18 px-1">
         <Outlet />
         </div>

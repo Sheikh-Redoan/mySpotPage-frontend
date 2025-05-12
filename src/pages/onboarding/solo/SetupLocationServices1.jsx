@@ -28,7 +28,7 @@ const SetupLocationServices1 = () => {
             </p>
           </div>
 
-          <div className="flex items-center gap-2 text-[#744CDB] text-sm font-semibold hover:underline mt-3 xl:mt-0 whitespace-nowrap w-fit">
+          <div className="flex items-center gap-2 text-[#744CDB] text-sm sm:text-base font-semibold hover:underline mt-3 xl:mt-0 whitespace-nowrap w-fit">
             <Plus /> Add Location
           </div>
         </div>

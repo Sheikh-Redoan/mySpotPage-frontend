@@ -11,7 +11,7 @@ const SuccessNotifications = () => {
         variants={slideInFromLeft()}
         initial="hidden"
         animate="visible"
-        className=" max-w-[420px] max-h-[295px] bg-[#FFFFFF] rounded-md shadow-md"
+        className=" max-w-[420px] min-h-[295px] bg-[#FFFFFF] rounded-md shadow-md mx-2 md:mx-0"
       >
         <h1 className="text-[#242528] text-xl font-bold p-4 border-b border-b-gray-300">
           Notification

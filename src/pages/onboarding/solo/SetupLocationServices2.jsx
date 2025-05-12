@@ -35,7 +35,7 @@ const SetupLocationServices2 = () => {
             </p>
           </div>
 
-          <div className="flex items-center gap-2 text-[#744CDB] text-sm font-semibold hover:underline mt-3 xl:mt-0 whitespace-nowrap w-fit">
+          <div className="flex items-center gap-2 text-[#744CDB] text-sm sm:text-base font-semibold hover:underline mt-3 xl:mt-0 whitespace-nowrap w-fit">
             <Plus /> Add Location
           </div>
         </div>
@@ -72,8 +72,12 @@ const SetupLocationServices2 = () => {
               ⋯
             </button>
             {showMenu1 && (
-              <div className="absolute flex gap-4 right-0 mt-2  p-2 z-10">
-                <img src={imageProvider.edit} alt="Edit Icon" />
+              <div className="absolute  bg-gray-200 rounded z-10 w-10 h-14 p-2 pl-3 mr-3 shadow-md">
+                <img
+                  className="pb-2"
+                  src={imageProvider.edit}
+                  alt="Edit Icon"
+                />
                 <img src={imageProvider.deleteIcon} alt="Delete Icon" />
               </div>
             )}
@@ -106,8 +110,12 @@ const SetupLocationServices2 = () => {
               ⋯
             </button>
             {showMenu2 && (
-              <div className="absolute flex gap-4 right-0 mt-2  p-2 z-10">
-                <img src={imageProvider.edit} alt="Edit Icon" />
+              <div className="absolute  bg-gray-200 rounded z-10 w-10 h-14 p-2 pl-3 mr-3 shadow-md">
+                <img
+                  className="pb-2"
+                  src={imageProvider.edit}
+                  alt="Edit Icon"
+                />
                 <img src={imageProvider.deleteIcon} alt="Delete Icon" />
               </div>
             )}
@@ -141,12 +149,8 @@ const SetupLocationServices2 = () => {
               ⋯
             </button>
             {showMenu3 && (
-              <div className="absolute right-0 mt-2  p-2 z-10">
-                <img
-                  className="w-8 h-8 object-contain"
-                  src={imageProvider.edit}
-                  alt="Edit Icon"
-                />
+              <div className="absolute bg-gray-200 rounded z-10 w-10 h-9 p-2 pl-3 mr-3 shadow-md">
+                <img src={imageProvider.edit} alt="Edit Icon" />
               </div>
             )}
           </div>

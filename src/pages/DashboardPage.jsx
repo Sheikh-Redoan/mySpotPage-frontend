@@ -364,6 +364,7 @@ function DashboardPage() {
         </div>
         {/* chart 2 */}
         <SalesChart/>
+        
 
         
 

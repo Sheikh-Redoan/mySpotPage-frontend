@@ -84,7 +84,7 @@ function RevenueChart() {
 
 
   return (
-    <div className="bg-white space-x-8 divide-x divide-gray-200 rounded-xl flex w-full h-full p-6 inset-shadow-sm ">
+    <div className="bg-white space-x-8 divide-x divide-gray-200 rounded-2xl flex w-full h-full p-6 inset-shadow-sm ">
           <div className="w-9/12 pr-8 chart-1 flex flex-col  ">
             <div className="px-0 pt-0 pb-4 w-full flex justify-between items-center">
               <div className="flex items-start gap-4">

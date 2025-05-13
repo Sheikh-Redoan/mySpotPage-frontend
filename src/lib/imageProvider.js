@@ -32,6 +32,8 @@ import activePlan from "../assets/icons/activePlan.png";
 import subscriptionAlert from "../assets/icons/subscriptionAlert.png";
 import emtyBilling from "../assets/icons/emtyBilling.png";
 
+import Client from '../assets/icons/man.png'
+
 export const imageProvider = {
   ChartLinePink,
   TextLogo,
@@ -66,4 +68,5 @@ export const imageProvider = {
   activePlan,
   subscriptionAlert,
   emtyBilling,
+  Client
 };

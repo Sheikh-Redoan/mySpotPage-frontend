@@ -146,7 +146,7 @@ function SalesChart() {
           </div>
         </div>
         <div className="w-full chart-1 overflow-x-auto">
-          <ResponsiveContainer width={1900} height={400}>
+          <ResponsiveContainer width={1900} height={300}>
             <BarChart
               width={500}
               height={300}

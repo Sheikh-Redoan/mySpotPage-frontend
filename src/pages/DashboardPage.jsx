@@ -5,6 +5,7 @@ import SalesChart from "../components/DashboardPageComponents/SalesChart";
 import RepeatClientChart from "../components/DashboardPageComponents/RepeatClientChart";
 import { GoArrowUp } from "react-icons/go";
 import RevenueChart from "../components/DashboardPageComponents/RevenueChart";
+import ClientChart from "../components/DashboardPageComponents/ClientChart";
 
 function DashboardPage() {
  
@@ -56,13 +57,8 @@ function DashboardPage() {
         <RevenueChart/>
         {/* chart 2 */}
         <SalesChart/>
-        <div>
-        </div>
-
-        
-
         {/* chart3 */}
-        <div></div>
+        <ClientChart/>
       </div>
     </div>
   );

@@ -25,6 +25,12 @@ import colorPeople from "../assets/icons/colorPeople.png";
 import multipleCoPeo from "../assets/icons/multipleCoPeo.png";
 import upload from "../assets/icons/upload.png";
 import smile from "../assets/icons/smile.png";
+import businessinfo from "../assets/icons/businessInfo.png";
+import location from "../assets/icons/location.png";
+import subscription from "../assets/icons/subscription.png";
+import activePlan from "../assets/icons/activePlan.png";
+import subscriptionAlert from "../assets/icons/subscriptionAlert.png";
+import emtyBilling from "../assets/icons/emtyBilling.png";
 
 export const imageProvider = {
   ChartLinePink,
@@ -54,4 +60,10 @@ export const imageProvider = {
   multipleCoPeo,
   upload,
   smile,
+  businessinfo,
+  location,
+  subscription,
+  activePlan,
+  subscriptionAlert,
+  emtyBilling,
 };

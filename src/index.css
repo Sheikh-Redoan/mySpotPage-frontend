@@ -74,3 +74,36 @@
   background-color: transparent !important;
   color: #290814;
 }
+
+
+
+
+
+
+
+
+/* CSS form Mahim  start*/
+
+:where(.css-dev-only-do-not-override-1veog48).ant-tabs .ant-tabs-tab+.ant-tabs-tab{
+  margin: 0;
+}
+:where(.css-dev-only-do-not-override-1veog48).ant-tabs .ant-tabs-tab{
+  padding: 12px 32px;
+}
+
+:where(.css-dev-only-do-not-override-1veog48).ant-tabs-top >.ant-tabs-nav, :where(.css-dev-only-do-not-override-1veog48).ant-tabs-bottom >.ant-tabs-nav, :where(.css-dev-only-do-not-override-1veog48).ant-tabs-top >div>.ant-tabs-nav, :where(.css-dev-only-do-not-override-1veog48).ant-tabs-bottom >div>.ant-tabs-nav{
+  margin: 0;
+}
+
+:where(.css-dev-only-do-not-override-1veog48).ant-tabs .ant-tabs-tab{
+  font-size: 16px;
+  color: #4F4F4F;
+}
+
+:where(.css-dev-only-do-not-override-1veog48).ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
+  font-weight: 600;
+}
+
+/* CSS form Mahim  end*/
+
+

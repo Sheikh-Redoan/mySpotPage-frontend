@@ -62,15 +62,15 @@ export const routes = createBrowserRouter([
         element: <SettingsPage />,
         children: [
           {
-            path: "business-info",
+            path: "/settings/business-info",
             element: <BusinessInfo />,
           },
           {
-            path: "location",
+            path: "/settings/location",
             element: <Location />,
           },
           {
-            path: "subscription",
+            path: "/settings/subscription",
             element: <Subscription />,
           },
         ],

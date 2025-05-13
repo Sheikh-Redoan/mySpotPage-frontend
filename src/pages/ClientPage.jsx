@@ -1,6 +1,7 @@
 import { Button, Tabs } from "antd";
 import { PlusIcon } from "./../assets/icons/icons";
 import { useState } from "react";
+import ClientTable from "../components/DashboardPageComponents/shared/ClientTable";
 
 const items = [
   {
@@ -42,6 +43,7 @@ function ClientPage() {
           Add Client
         </button>
       </div>
+      <ClientTable />
     </div>
   );
 }

@@ -16,6 +16,7 @@ import {
   SearchOutlined,
   VipIcon,
 } from "../../../assets/icons/icons";
+import CustomEmptyTable from "./CustomEmptyTable";
 // import { Checkbox } from "@/components/ui/checkbox";
 
 const { Option } = Select;
@@ -31,7 +32,7 @@ const ClientTable = () => {
 
   const handleSearch = (value) => {
     setSearchQuery(value);
-    let filteredResults = searchClients(value);
+    let filteredResults = getClients();
 
     if (selectedCity !== "All cities") {
       filteredResults = filteredResults.filter((client) =>
@@ -227,9 +228,15 @@ const ClientTable = () => {
         <div>
           <div className="text-[#262626] text-sm mb-1">{text}</div>
           {!record.isVerified && (
-            <div className="px-2 py-1 inline-flex items-center gap-1 bg-[#FBD9DA] rounded-full text-[#ED4245] text-xs font-medium">
-              Unverified <InfoCircleOutlined className="size-4" />
-            </div>
+            <Tooltip
+              placement="top"
+              color="white"
+              title={"Pending Phone Confirmation"}
+            >
+              <div className="px-2 py-1 inline-flex items-center gap-1 bg-[#FBD9DA] rounded-full text-[#ED4245] text-xs font-medium">
+                Unverified <InfoCircleOutlined className="size-4" />
+              </div>
+            </Tooltip>
           )}
         </div>
       ),
@@ -245,14 +252,17 @@ const ClientTable = () => {
       key: "action",
       render: () => (
         <div className="flex gap-4">
-          <button type="button" className="cursor-pointer">
-            <DetailsIcon />
-          </button>
-          <button type="button" className="cursor-pointer">
-            <Tooltip title="View client info">
+          <Tooltip placement="top" color="white" title="View detail">
+            <button type="button" className="cursor-pointer">
+              <DetailsIcon />
+            </button>
+          </Tooltip>
+
+          <Tooltip title="Add to blacklist">
+            <button type="button" className="cursor-pointer">
               <InfoCircleOutlined className="size-5" />
-            </Tooltip>
-          </button>
+            </button>
+          </Tooltip>
         </div>
       ),
     },
@@ -341,6 +351,7 @@ const ClientTable = () => {
         pagination={false}
         rowKey="id"
         className="w-full"
+        locale={{ emptyText: <CustomEmptyTable/> }}
       />
 
       <div className="flex justify-between items-center mt-4">

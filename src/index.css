@@ -10,8 +10,9 @@
 }
 
 .ant-tooltip .ant-tooltip-inner {
-  color: rgba(0, 0, 0, 0.887); /* Your desired color */
+  color: rgba(0, 0, 0, 0.887);
   font-family: "Golos Text", sans-serif;
+  background-color: #fff;
 }
 
 /* Style the scrollbar */
@@ -75,7 +76,6 @@
   color: #290814;
 }
 
-
 .ant-table-column-sorters {
   display: flex !important;
   align-items: center !important;
@@ -99,7 +99,7 @@
 }
 
 .ant-tooltip-arrow::before {
-  background-color: #262626 !important;
+  background-color: #fff !important;
 }
 
 .ant-table-wrapper .ant-table-thead > tr > th::before {
@@ -172,9 +172,8 @@
   margin-inline-end: 8px;
 }
 
-:where(.css-dev-only-do-not-override-1veog48).ant-select-single{
+:where(.css-dev-only-do-not-override-1veog48).ant-select-single {
   height: 100%;
 }
 
 /* CSS form Mahim  end*/
-

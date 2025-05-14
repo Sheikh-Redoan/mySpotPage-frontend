@@ -2,6 +2,7 @@ import { Button, Tabs } from "antd";
 import { PlusIcon } from "./../assets/icons/icons";
 import { useState } from "react";
 import ClientTable from "../components/DashboardPageComponents/shared/ClientTable";
+import AddClientModal from "../components/DashboardPageComponents/shared/AddClientModal";
 
 const items = [
   {
@@ -20,6 +21,7 @@ const items = [
 
 function ClientPage() {
   const [tabKey, setTabKey] = useState("1");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onChange = (key) => {
     console.log(typeof key);
@@ -37,6 +39,7 @@ function ClientPage() {
         />
         <button
           type="button"
+          onClick={() => setIsModalOpen(true)}
           className="inline-flex items-center px-3 py-2 gap-2 text-sm font-semibold text-white bg-primary01 border border-primary01 rounded-lg hover:bg-primary01 focus:outline-none focus:ring-2 focus:ring-primary01 focus:ring-offset-2"
         >
           <PlusIcon />
@@ -44,6 +47,10 @@ function ClientPage() {
         </button>
       </div>
       <ClientTable />
+      <AddClientModal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+      />
     </div>
   );
 }

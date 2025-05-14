@@ -48,7 +48,7 @@ const ClientTable = () => {
 
     setClients(filteredResults);
     setTotalClients(filteredResults.length);
-    setCurrentPage(1); // Reset to first page when searching
+    setCurrentPage(1);
   };
 
   const handleCityFilter = (value) => {
@@ -351,7 +351,14 @@ const ClientTable = () => {
         pagination={false}
         rowKey="id"
         className="w-full"
-        locale={{ emptyText: <CustomEmptyTable/> }}
+        locale={{ emptyText: <CustomEmptyTable /> }}
+        rowClassName={(record) =>
+          searchQuery &&
+          (record.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            record.phone.toLowerCase().includes(searchQuery.toLowerCase()))
+            ? "bg-highlight01"
+            : ""
+        }
       />
 
       <div className="flex justify-between items-center mt-4">

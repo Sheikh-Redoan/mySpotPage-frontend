@@ -94,7 +94,7 @@ const Upgradeplan = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-3 px-4">
           {plans.map((plan, index) => {
             const isActive = plan.name;
-            const currentIndex = plans.findIndex((p) => p.name === currentPlan);
+            // const currentIndex = plans.findIndex((p) => p.name === currentPlan);
             return (
               <div
                 key={index}

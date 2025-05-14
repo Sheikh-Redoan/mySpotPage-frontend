@@ -36,6 +36,7 @@ import bloom from "../assets/icons/bloom.png";
 import upgradeIcon from "../assets/icons/upgradeIcon.png";
 import mastard from "../assets/icons/mastard.png";
 import visa from "../assets/icons/visa.png";
+import Client from '../assets/icons/man.png'
 
 export const imageProvider = {
   ChartLinePink,
@@ -71,6 +72,7 @@ export const imageProvider = {
   spark,
   subscriptionAlert,
   emtyBilling,
+  Client,
   glow,
   bloom,
   upgradeIcon,

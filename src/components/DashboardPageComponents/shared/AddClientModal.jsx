@@ -1,5 +1,5 @@
 import { Modal } from "antd";
-import { ImageIcon, RightIcon, UpdateIcon } from "../../../assets/icons/icons";
+import { ImageIcon, UpdateIcon } from "../../../assets/icons/icons";
 
 const AddClientModal = ({ isModalOpen, setIsModalOpen }) => {
   const handleCancel = () => {
@@ -43,16 +43,7 @@ const AddClientModal = ({ isModalOpen, setIsModalOpen }) => {
             </fieldset>
           </div>
         </div>
-        <div className="flex items-center justify-between gap-2 mt-8">
-          <div className="flex items-center gap-2">
-            <p className="text-[#262626]">Basic information</p>
-            <RightIcon />
-            <p className="text-[#888]">Provider notes</p>
-          </div>
-          <button type="button" className="p-2 w-24 bg-[#242528] rounded-lg text-white font-semibold cursor-pointer">
-            Next
-          </button>
-        </div>
+        <div className="">fhgfjhhgf</div>
       </div>
     </Modal>
   );

@@ -28,10 +28,14 @@ import smile from "../assets/icons/smile.png";
 import businessinfo from "../assets/icons/businessInfo.png";
 import location from "../assets/icons/location.png";
 import subscription from "../assets/icons/subscription.png";
-import activePlan from "../assets/icons/activePlan.png";
+import spark from "../assets/icons/activePlan.png";
 import subscriptionAlert from "../assets/icons/subscriptionAlert.png";
 import emtyBilling from "../assets/icons/emtyBilling.png";
-
+import glow from "../assets/icons/glow.png";
+import bloom from "../assets/icons/bloom.png";
+import upgradeIcon from "../assets/icons/upgradeIcon.png";
+import mastard from "../assets/icons/mastard.png";
+import visa from "../assets/icons/visa.png";
 import Client from '../assets/icons/man.png'
 
 export const imageProvider = {
@@ -65,8 +69,13 @@ export const imageProvider = {
   businessinfo,
   location,
   subscription,
-  activePlan,
+  spark,
   subscriptionAlert,
   emtyBilling,
-  Client
+  Client,
+  glow,
+  bloom,
+  upgradeIcon,
+  mastard,
+  visa,
 };

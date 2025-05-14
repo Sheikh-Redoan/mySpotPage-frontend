@@ -30,6 +30,7 @@ import SuccessNotifications from "../pages/onboarding/SuccessNotifications";
 import BusinessInfo from "../components/SettingsPages/BusinessInfo";
 import Location from "../components/SettingsPages/Location";
 import Subscription from "../components/SettingsPages/Subscription";
+import Upgradeplan from "../components/SettingsPages/UpgradePlan/Upgradeplan";
 
 export const routes = createBrowserRouter([
   {
@@ -62,15 +63,15 @@ export const routes = createBrowserRouter([
         element: <SettingsPage />,
         children: [
           {
-            path: "business-info",
+            index: true,
             element: <BusinessInfo />,
           },
           {
-            path: "location",
+            path: "/settings/location",
             element: <Location />,
           },
           {
-            path: "subscription",
+            path: "/settings/subscription",
             element: <Subscription />,
           },
         ],
@@ -159,5 +160,9 @@ export const routes = createBrowserRouter([
   {
     path: "/signup-successfull",
     element: <SignupSuccessfull />,
+  },
+  {
+    path: "/upgrade-plan",
+    element: <Upgradeplan />,
   },
 ]);

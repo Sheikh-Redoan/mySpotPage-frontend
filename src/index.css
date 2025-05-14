@@ -58,7 +58,7 @@
 
 /* table */
 .custom-ant-table .ant-table-thead > tr > th {
-  background-color: #262626;
+  background: #262626 !important;
   color: white;
 }
 
@@ -67,12 +67,65 @@
 }
 
 .custom-sort-column .ant-table-column-sorter {
-  color: #3d0318;
+  color: #f9f7f8;
 }
 
-.ant-table-thead > tr > th.ant-table-column-sort {
-  background-color: transparent !important;
+.ant-table-cell .ant-table-column-has-sorters {
+  background: transparent !important;
   color: #290814;
+}
+
+
+.ant-table-column-sorters {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 8px !important;
+}
+
+.ant-table-column-sorter-up,
+.ant-table-column-sorter-down {
+  color: #aaa !important;
+}
+
+.ant-table-column-sorter-up.active,
+.ant-table-column-sorter-down.active {
+  color: #ffffff !important;
+}
+
+.subscription-tooltip .ant-tooltip-inner {
+  color: #ffffff !important;
+  background-color: #222;
+}
+
+.ant-tooltip-arrow::before {
+  background-color: #262626 !important;
+}
+
+.ant-table-wrapper .ant-table-thead > tr > th::before {
+  display: none !important;
+}
+
+/* date picker  */
+.custom-range-picker {
+  width: 100%;
+  font-size: 14px;
+}
+.custom-range-picker .ant-picker-suffix {
+  font-size: 20px;
+}
+.custom-range-picker .ant-picker-input > input {
+  font-size: 16px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.custom-range-picker .ant-picker-range-separator {
+  font-size: 16px;
+}
+
+.custom-range-picker .ant-picker {
+  padding: 4px 10px;
 }
 
 /* CSS form Mahim  start*/
@@ -124,3 +177,4 @@
 }
 
 /* CSS form Mahim  end*/
+

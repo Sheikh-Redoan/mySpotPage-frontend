@@ -36,7 +36,8 @@ import bloom from "../assets/icons/bloom.png";
 import upgradeIcon from "../assets/icons/upgradeIcon.png";
 import mastard from "../assets/icons/mastard.png";
 import visa from "../assets/icons/visa.png";
-import Client from '../assets/icons/man.png'
+import Client from "../assets/icons/man.png";
+import amrican from "../assets/icons/amrican.png";
 
 export const imageProvider = {
   ChartLinePink,
@@ -78,4 +79,5 @@ export const imageProvider = {
   upgradeIcon,
   mastard,
   visa,
+  amrican,
 };

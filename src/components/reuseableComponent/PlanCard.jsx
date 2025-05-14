@@ -63,11 +63,14 @@ const PlanCard = ({
           showCancel ? "justify-between" : "justify-end"
         }`}
       >
-        {showCancel && (
-          <p className="text-red-500 underline cursor-pointer">
-            Cancel Subscription
-          </p>
-        )}
+        <Link to={"/cancel-subscription"}>
+          {showCancel && (
+            <p className="text-red-500 underline cursor-pointer">
+              Cancel Subscription
+            </p>
+          )}
+        </Link>
+
         <Link to={"/upgrade-plan"} state={{ currentPlan: planName }}>
           <p className="text-[#744CDB] underline flex items-center gap-2">
             Upgrade Plan <ArrowUpRight size={20} />

@@ -4,8 +4,9 @@ import { Plus } from "lucide-react";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { Table } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PlanCard from "../reuseableComponent/PlanCard";
+import { Link, useLocation } from "react-router";
 
 dayjs.extend(customParseFormat);
 const { RangePicker } = DatePicker;
@@ -130,48 +131,9 @@ const data = [
   },
 ];
 
-// static data
-const staticCards = [
-  {
-    id: 1,
-    image: imageProvider.mastard,
-    number: "**********72872",
-    expiry: "5/06/25",
-    isDefault: true,
-  },
-  {
-    id: 2,
-    image: imageProvider.visa,
-    number: "**********72872",
-    expiry: "5/06/25",
-    isDefault: false,
-  },
-  {
-    id: 3,
-    image: imageProvider.visa,
-    number: "**********72872",
-    expiry: "5/06/25",
-    isDefault: false,
-  },
-  {
-    id: 4,
-    image: imageProvider.mastard,
-    number: "**********72872",
-    expiry: "5/06/25",
-    isDefault: false,
-  },
-  {
-    id: 5,
-    image: imageProvider.mastard,
-    number: "**********72872",
-    expiry: "5/06/25",
-    isDefault: false,
-  },
-];
-
 const Subscription = () => {
   const [cards, setCards] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const location = useLocation();
 
   const [selectedDates, setSelectedDates] = useState(null);
   const [currentPlan] = useState("Glow");
@@ -186,12 +148,13 @@ const Subscription = () => {
     }
   };
 
-  const handleAddCard = () => {
-    if (currentIndex < staticCards.length) {
-      setCards([...cards, staticCards[currentIndex]]);
-      setCurrentIndex(currentIndex + 1);
+  useEffect(() => {
+    setCards([]);
+
+    if (location.state?.newCard) {
+      setCards([location.state.newCard]);
     }
-  };
+  }, []);
 
   return (
     <div className="min-h-full">
@@ -252,7 +215,7 @@ const Subscription = () => {
               <h2 className="text-[#262626] font-semibold text-xl pb-2">
                 Payment Method
               </h2>
-              {cards.length === 0 && (
+              {cards.length === 1 && (
                 <p className="text-[#888888]">
                   No payment method yet — add one to keep your plan running
                   smoothly.
@@ -260,15 +223,14 @@ const Subscription = () => {
               )}
             </div>
             <div>
-              <button
-                onClick={handleAddCard}
-                className="flex gap-2 font-semibold border border-[#744CDB] text-[#744CDB] px-3.5 py-2 shadow-md rounded-md hover:scale-95 transform transition-all ease-in-out duration-300"
-              >
-                <Plus /> Add Card
-              </button>
+              <Link to={"/add-card"}>
+                <button className="flex gap-2 font-semibold border border-[#744CDB] text-[#744CDB] px-3.5 py-2 shadow-md rounded-md hover:scale-95 transform transition-all ease-in-out duration-300">
+                  <Plus /> Add Card
+                </button>
+              </Link>
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-3 overflow-y-auto h-[160px]">
+          {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-3 overflow-y-auto h-[90px]">
             {cards.map((card) => (
               <div
                 key={card.id}
@@ -289,7 +251,7 @@ const Subscription = () => {
                 <p className="text-lg font-medium mb-4">...</p>
               </div>
             ))}
-          </div>
+          </div> */}
         </div>
       </div>
 

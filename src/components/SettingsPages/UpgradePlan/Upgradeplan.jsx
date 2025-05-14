@@ -1,12 +1,26 @@
 import { ChevronDown, ChevronUp, X } from "lucide-react";
 import { imageProvider } from "../../../lib/imageProvider";
-import { useState } from "react";
-import { Link, useLocation } from "react-router";
+import { useEffect, useRef, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router";
 
 const Upgradeplan = () => {
   const [showAll, setShowAll] = useState(false);
   const location = useLocation();
   const currentPlan = location.state?.currentPlan || "Spark";
+  const UpgradeCard = useRef(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (UpgradeCard.current && !UpgradeCard.current.contains(event.target)) {
+        navigate("/settings/subscription");
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [navigate]);
 
   const cards = [
     {
@@ -79,10 +93,13 @@ const Upgradeplan = () => {
 
   return (
     <div className="bg-[#24252880] min-h-[100vh] py-8  flex items-center justify-center font-golos">
-      <div className="bg-[#ffffff] min-h-[640px] w-[1110px] rounded-lg">
+      <div
+        ref={UpgradeCard}
+        className="bg-[#ffffff] min-h-[640px] w-[1110px] rounded-lg"
+      >
         <div className="flex justify-between items-center my-2 py-3 px-4">
           <p className="text-lg font-semibold"> Select Plan</p>
-          <Link to={"/settings/subscription"}>
+          <Link className="hover:scale-105" to={"/settings/subscription"}>
             <X />
           </Link>
         </div>
@@ -93,13 +110,11 @@ const Upgradeplan = () => {
         {/* Plan card */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-3 px-4">
           {plans.map((plan, index) => {
-            const isActive = plan.name;
-            // const currentIndex = plans.findIndex((p) => p.name === currentPlan);
             return (
               <div
                 key={index}
                 className={`min-w-[340px] min-h-[180px] border rounded-xl p-4 transform transition-all duration-300 ease-in-out ${
-                  isActive === "Spark"
+                  currentPlan === plan.name
                     ? "bg-[#F5F4FE] border-[#866BE7] hover:scale-105"
                     : "hover:scale-95 border-[#D1D1D1]"
                 }`}
@@ -117,13 +132,31 @@ const Upgradeplan = () => {
                   </div>
                 </div>
                 <button
-                  className={`w-full p-2 rounded-lg my-2 font-medium ${
-                    isActive === "Spark"
-                      ? " bg-[#E4E3FD] text-[#A496EF]"
+                  className={`w-full p-2 rounded-lg my-2 font-medium hover:scale-95 transform transition-all duration-300 ease-in-out
+                  ${
+                    currentPlan === plan.name
+                      ? plan.name === "Spark"
+                        ? "bg-[#E4E3FD] text-[#A496EF]"
+                        : "border border-[#ED4245] bg-[#FFFFFF] text-[#ED4245]"
                       : "bg-[#744CDB] text-[#FFFFFF]"
-                  } hover:scale-95 transform transition-all duration-300 ease-in-out`}
+                  }
+                        `}
                 >
-                  {isActive === "Spark" ? "Current Plan" : "Upgrade"}
+                  {currentPlan === plan.name ? (
+                    plan.name === "Spark" ? (
+                      "Current Plan"
+                    ) : (
+                      <Link to={"/cancel-subscription"}>
+                        Cancel Subscription
+                      </Link>
+                    )
+                  ) : (currentPlan === "Glow" && plan.name === "Spark") ||
+                    (currentPlan === "Bloom" &&
+                      (plan.name === "Glow" || plan.name === "Spark")) ? (
+                    <Link to={"/success-downgrade"}>Downgrade</Link>
+                  ) : (
+                    <Link to={"/checkout"}>Upgrade</Link>
+                  )}
                 </button>
 
                 <p className="text-[#262626] font-medium text-sm mt-2">
@@ -132,105 +165,6 @@ const Upgradeplan = () => {
               </div>
             );
           })}
-          {/* <div
-            className={`min-w-[340px] min-h-[180px] border rounded-xl p-4 transform transition-all duration-300 ease-in-out ${
-              currentPlan === "Spark"
-                ? "bg-[#F5F4FE] border-[#866BE7] hover:scale-105"
-                : "hover:scale-95 border-[#D1D1D1]"
-            }`}
-          >
-            <div className="mt-4">
-              <div className="flex items-center gap-3">
-                <img src={imageProvider.spark} alt="icon" />
-                <p className="text-lg font-semibold"> Spark</p>
-              </div>
-              <div className="text-[#866BE7] font-medium text-2xl flex items-end gap-1 mt-3.5">
-                <p>Free</p>
-                <span className="text-[#888888] text-sm font-normal">
-                  / 10 Bookings
-                </span>
-              </div>
-            </div>
-            <button
-              className={`w-full p-2 rounded-lg my-2 font-medium ${
-                currentPlan === "Spark"
-                  ? " bg-[#E4E3FD] text-[#A496EF]"
-                  : "bg-[#744CDB] text-[#FFFFFF]"
-              } hover:scale-95 transform transition-all duration-300 ease-in-out`}
-            >
-              {currentPlan === "Spark" ? "Current Plan" : "Upgrade"}
-            </button>
-
-            <p className="text-[#262626] font-medium text-sm mt-2">
-              Start Smart , Dream Big{" "}
-            </p>
-          </div>
-          <div
-            className={`min-w-[340px] min-h-[180px] border rounded-xl p-4 transform transition-all duration-300 ease-in-out ${
-              currentPlan === "Glow"
-                ? "bg-[#F5F4FE] border-[#866BE7] hover:scale-105"
-                : "hover:scale-95 border-[#D1D1D1]"
-            }`}
-          >
-            <div className="mt-4">
-              <div className="flex items-center gap-3">
-                <img src={imageProvider.glow} alt="icon" />
-                <p className="text-lg font-semibold">Glow</p>
-              </div>
-              <div className="text-[#866BE7] font-medium text-2xl flex items-end gap-1 mt-3.5">
-                <p>$79</p>
-                <span className="text-[#888888] text-sm font-normal">
-                  / Month
-                </span>
-              </div>
-            </div>
-            <button
-              className={`w-full p-2 rounded-lg my-2 font-medium ${
-                currentPlan === "Glow"
-                  ? "border border-[#ED4245] bg-[#FFFFFF] text-[#ED4245]"
-                  : "bg-[#744CDB] text-[#FFFFFF]"
-              } hover:scale-95 transform transition-all duration-300 ease-in-out`}
-            >
-              {currentPlan === "Glow" ? "Cancel Subscription" : "Upgrade"}
-            </button>
-
-            <p className="text-[#262626] font-medium text-sm mt-2">
-              For the Professional You are
-            </p>
-          </div>
-          <div
-            className={`min-w-[340px] min-h-[180px] border rounded-xl p-4 transform transition-all duration-300 ease-in-out ${
-              currentPlan === "Bloom"
-                ? "bg-[#F5F4FE] border-[#866BE7] hover:scale-105"
-                : "hover:scale-95 border-[#D1D1D1]"
-            }`}
-          >
-            <div className="mt-4">
-              <div className="flex items-center gap-3">
-                <img src={imageProvider.bloom} alt="icon" />
-                <p className="text-lg font-semibold">Bloom</p>
-              </div>
-              <div className="text-[#866BE7] font-medium text-2xl flex items-end gap-1 mt-3.5">
-                <p>$149</p>
-                <span className="text-[#888888] text-sm font-normal">
-                  / Month
-                </span>
-              </div>
-            </div>
-            <button
-              className={`w-full p-2 rounded-lg my-2 font-medium ${
-                currentPlan === "Bloom"
-                  ? "border border-[#ED4245] bg-[#FFFFFF] text-[#ED4245]"
-                  : "bg-[#744CDB] text-[#FFFFFF]"
-              } hover:scale-95 transform transition-all duration-300 ease-in-out`}
-            >
-              {currentPlan === "Bloom" ? "Cancel Subscription" : "Upgrade"}
-            </button>
-
-            <p className="text-[#262626] font-medium text-sm mt-2">
-              Lead The Team With Confidence
-            </p>
-          </div> */}
         </div>
         {/* ........... */}
         <div className="min-h-full border border-[#ECEBFC] rounded-lg my-4 mx-4 p-3">
@@ -239,6 +173,25 @@ const Upgradeplan = () => {
             have to. Spark is here to give you the foundation you need to grow
             without the stress.
           </p>
+
+          <div className="p-3 my-2">
+            {currentPlan === "Glow" ? (
+              <p>
+                Everything is{" "}
+                <span className="text-[#744CDB] font-medium">Spark</span> , Plus
+              </p>
+            ) : (
+              ""
+            )}
+            {currentPlan === "Bloom" ? (
+              <p>
+                Everything is{" "}
+                <span className="text-[#744CDB] font-medium">Glow</span>, Plus
+              </p>
+            ) : (
+              ""
+            )}
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 my-4">
             {visibleCards.map((card, index) => (
               <div key={index} className="px-2">
@@ -253,13 +206,19 @@ const Upgradeplan = () => {
                 <hr className="mt-7 text-[#E7E7E7]" />
               </div>
             ))}
-            <div className="text-center mt-6">
+            <div className="text-center mt-6 mx-2">
               <button
                 onClick={() => setShowAll(!showAll)}
                 className="text-[#744CDB] font-medium underline flex items-center justify-center gap-2 cursor-pointer"
               >
                 {showAll ? "Show Less" : "Show More"}
-                <span>{showAll ? <ChevronUp /> : <ChevronDown />}</span>
+                <span>
+                  {showAll ? (
+                    <ChevronUp size={20} />
+                  ) : (
+                    <ChevronDown size={20} />
+                  )}
+                </span>
               </button>
             </div>
           </div>

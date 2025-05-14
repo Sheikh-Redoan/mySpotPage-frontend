@@ -31,6 +31,11 @@ import BusinessInfo from "../components/SettingsPages/BusinessInfo";
 import Location from "../components/SettingsPages/Location";
 import Subscription from "../components/SettingsPages/Subscription";
 import Upgradeplan from "../components/SettingsPages/UpgradePlan/Upgradeplan";
+import CheckOut from "../components/SettingsPages/UpgradePlan/CheckOut";
+import SuccessUpgrade from "../components/SettingsPages/UpgradePlan/SuccessUpgrade";
+import SuccessDowngrade from "../components/SettingsPages/UpgradePlan/SuccessDowngrade";
+import CancelSubscription from "../components/SettingsPages/UpgradePlan/CancelSubscription";
+import AddCard from "../components/SettingsPages/UpgradePlan/AddCard";
 
 export const routes = createBrowserRouter([
   {
@@ -164,5 +169,25 @@ export const routes = createBrowserRouter([
   {
     path: "/upgrade-plan",
     element: <Upgradeplan />,
+  },
+  {
+    path: "/checkout",
+    element: <CheckOut />,
+  },
+  {
+    path: "/success-upgrade",
+    element: <SuccessUpgrade />,
+  },
+  {
+    path: "/success-downgrade",
+    element: <SuccessDowngrade />,
+  },
+  {
+    path: "/cancel-subscription",
+    element: <CancelSubscription />,
+  },
+  {
+    path: "/add-card",
+    element: <AddCard />,
   },
 ]);

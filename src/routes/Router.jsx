@@ -67,11 +67,11 @@ export const routes = createBrowserRouter([
             element: <BusinessInfo />,
           },
           {
-            path: "location",
+            path: "/settings/location",
             element: <Location />,
           },
           {
-            path: "subscription",
+            path: "/settings/subscription",
             element: <Subscription />,
           },
         ],

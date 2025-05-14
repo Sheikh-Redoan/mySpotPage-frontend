@@ -51,6 +51,30 @@ const Upgradeplan = () => {
     },
   ];
 
+  const plans = [
+    {
+      name: "Spark",
+      price: "Free",
+      subtext: "/ 10 Bookings",
+      desc: "Start Smart , Dream Big",
+      image: imageProvider.spark,
+    },
+    {
+      name: "Glow",
+      price: "$79",
+      subtext: "/ Month",
+      desc: "For the Professional You are",
+      image: imageProvider.glow,
+    },
+    {
+      name: "Bloom",
+      price: "$149",
+      subtext: "/ Month",
+      desc: "Lead The Team With Confidence",
+      image: imageProvider.bloom,
+    },
+  ];
+
   const visibleCards = showAll ? cards : cards.slice(0, 4);
 
   return (
@@ -68,7 +92,47 @@ const Upgradeplan = () => {
         </p>
         {/* Plan card */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-3 px-4">
-          <div
+          {plans.map((plan, index) => {
+            const isActive = plan.name;
+            const currentIndex = plans.findIndex((p) => p.name === currentPlan);
+            return (
+              <div
+                key={index}
+                className={`min-w-[340px] min-h-[180px] border rounded-xl p-4 transform transition-all duration-300 ease-in-out ${
+                  isActive === "Spark"
+                    ? "bg-[#F5F4FE] border-[#866BE7] hover:scale-105"
+                    : "hover:scale-95 border-[#D1D1D1]"
+                }`}
+              >
+                <div className="mt-4">
+                  <div className="flex items-center gap-3">
+                    <img src={plan.image} alt="icon" />
+                    <p className="text-lg font-semibold"> {plan.name}</p>
+                  </div>
+                  <div className="text-[#866BE7] font-medium text-2xl flex items-end gap-1 mt-3.5">
+                    <p>{plan.price}</p>
+                    <span className="text-[#888888] text-sm font-normal">
+                      {plan.subtext}
+                    </span>
+                  </div>
+                </div>
+                <button
+                  className={`w-full p-2 rounded-lg my-2 font-medium ${
+                    isActive === "Spark"
+                      ? " bg-[#E4E3FD] text-[#A496EF]"
+                      : "bg-[#744CDB] text-[#FFFFFF]"
+                  } hover:scale-95 transform transition-all duration-300 ease-in-out`}
+                >
+                  {isActive === "Spark" ? "Current Plan" : "Upgrade"}
+                </button>
+
+                <p className="text-[#262626] font-medium text-sm mt-2">
+                  {plan.desc}
+                </p>
+              </div>
+            );
+          })}
+          {/* <div
             className={`min-w-[340px] min-h-[180px] border rounded-xl p-4 transform transition-all duration-300 ease-in-out ${
               currentPlan === "Spark"
                 ? "bg-[#F5F4FE] border-[#866BE7] hover:scale-105"
@@ -166,7 +230,7 @@ const Upgradeplan = () => {
             <p className="text-[#262626] font-medium text-sm mt-2">
               Lead The Team With Confidence
             </p>
-          </div>
+          </div> */}
         </div>
         {/* ........... */}
         <div className="min-h-full border border-[#ECEBFC] rounded-lg my-4 mx-4 p-3">

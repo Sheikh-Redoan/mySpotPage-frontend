@@ -174,7 +174,7 @@ const Subscription = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const [selectedDates, setSelectedDates] = useState(null);
-  const [currentPlan] = useState("Spark");
+  const [currentPlan] = useState("Glow");
   const currentBookings = 5;
   const bookingLimit = 10;
 

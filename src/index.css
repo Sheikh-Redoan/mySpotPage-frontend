@@ -92,8 +92,9 @@
   color: #ffffff !important;
 }
 
-.ant-tooltip-inner {
+.subscription-tooltip .ant-tooltip-inner {
   color: #ffffff !important;
+  background-color: #222;
 }
 
 .ant-tooltip-arrow::before {

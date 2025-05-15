@@ -1,27 +1,17 @@
-import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import { MastardIcon, VisaIcon } from "../../../assets/icons/icons2";
 import { imageProvider } from "../../../lib/imageProvider";
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
+import { slideInFromBottom } from "../../../animations/variants";
 
 const AddCard = () => {
   const navigate = useNavigate();
-  const [isDefault, setIsDefault] = useState(false);
-
-  //   for all input
-  const defaultData = {
-    phone: "9876543210",
-    cardNumber: "1234-5678-9012-3456",
-    nameOnCard: "Visa Card",
-    idNumber: "ID987654",
-    expiryDate: "12/28",
-    cvv: "123",
-  };
 
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { isValid },
   } = useForm({
     mode: "onChange",
@@ -37,33 +27,18 @@ const AddCard = () => {
 
   const onSubmit = (data) => {
     console.log("Submitted Data:", data);
-    const newCard = {
-      id: 1,
-      image: imageProvider.mastard,
-      number: "**********72872",
-      expiry: "5/06/25",
-      isDefault: false,
-    };
-    navigate("/settings/subscription", { state: { newCard } });
+   
+    navigate("/settings/subscription");
   };
-
-  const handleCheckboxChange = () => {
-    setIsDefault((prev) => !prev);
-  };
-
-  useEffect(() => {
-    if (isDefault) {
-      Object.entries(defaultData).forEach(([key, value]) => {
-        setValue(key, value);
-      });
-    } else {
-      Object.keys(defaultData).forEach((key) => setValue(key, ""));
-    }
-  }, [isDefault, setValue]);
 
   return (
     <div className="bg-[#24252880] min-h-[100vh] py-8  flex items-center justify-center font-golos">
-      <div className="bg-[#ffffff] min-h-[430px] w-[490px] rounded-lg">
+      <motion.div
+        variants={slideInFromBottom()}
+        initial="hidden"
+        animate="visible"
+        className="bg-[#ffffff] min-h-[430px] w-[490px] rounded-lg"
+      >
         <div className=" my-2 py-3 px-6">
           <p className="text-xl font-semibold"> Add Card</p>
         </div>
@@ -147,9 +122,6 @@ const AddCard = () => {
             <div className="px-1.5 py-4 flex items-center gap-2">
               <input
                 type="checkbox"
-                id="setDefault"
-                checked={isDefault}
-                onChange={handleCheckboxChange}
                 className="w-4 h-4 text-[#866BE7] border-[2px] border-[#CED0D3] rounded-md"
               />
               <label
@@ -178,7 +150,7 @@ const AddCard = () => {
             </div>
           </form>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

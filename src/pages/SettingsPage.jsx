@@ -29,7 +29,7 @@ function SettingsPage() {
               <img src={imageProvider.businessinfo} alt="icon" />
               <p className=" font-semibold block">Business Info</p>
             </li>
-          </Link>
+          </Link> 
           <Link to="/settings/location">
             <li
               className={`px-6 py-3 mb-4 rounded-xl flex items-center gap-5 ${isActive("/settings/location")

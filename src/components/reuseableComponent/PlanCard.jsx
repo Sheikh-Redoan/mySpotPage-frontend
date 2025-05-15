@@ -67,7 +67,7 @@ const PlanCard = ({
           {showCancel && (
             <p className="text-red-500 underline cursor-pointer">
               Cancel Subscription
-            </p>
+            </p> 
           )}
         </Link>
 

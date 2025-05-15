@@ -4,9 +4,9 @@ import { Plus } from "lucide-react";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { Table } from "antd";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PlanCard from "../reuseableComponent/PlanCard";
-import { Link, useLocation } from "react-router";
+import { Link} from "react-router";
 
 dayjs.extend(customParseFormat);
 const { RangePicker } = DatePicker;
@@ -132,9 +132,6 @@ const data = [
 ];
 
 const Subscription = () => {
-  const [cards, setCards] = useState([]);
-  const location = useLocation();
-
   const [selectedDates, setSelectedDates] = useState(null);
   const [currentPlan] = useState("Glow");
   const currentBookings = 5;
@@ -147,14 +144,6 @@ const Subscription = () => {
       setSelectedDates(null);
     }
   };
-
-  useEffect(() => {
-    setCards([]);
-
-    if (location.state?.newCard) {
-      setCards([location.state.newCard]);
-    }
-  }, []);
 
   return (
     <div className="min-h-full">
@@ -215,12 +204,11 @@ const Subscription = () => {
               <h2 className="text-[#262626] font-semibold text-xl pb-2">
                 Payment Method
               </h2>
-              {cards.length === 1 && (
-                <p className="text-[#888888]">
-                  No payment method yet — add one to keep your plan running
-                  smoothly.
-                </p>
-              )}
+
+              <p className="text-[#888888]">
+                No payment method yet — add one to keep your plan running
+                smoothly.
+              </p>
             </div>
             <div>
               <Link to={"/add-card"}>
@@ -230,28 +218,6 @@ const Subscription = () => {
               </Link>
             </div>
           </div>
-          {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-3 overflow-y-auto h-[90px]">
-            {cards.map((card) => (
-              <div
-                key={card.id}
-                className="flex justify-between items-center border border-[#E7E7E7] rounded-lg p-4"
-              >
-                <div className="flex gap-5">
-                  <img src={card.image} alt="icon" />
-                  <div className="text-sm">
-                    <p className="font-semibold">{card.number}</p>
-                    <p className="text-[#797979]">{card.expiry}</p>
-                  </div>
-                </div>
-                {card.isDefault && (
-                  <p className="text-xs border px-1 py-0.5 rounded-lg bg-[#D8E2F8] text-[#3E70DD]">
-                    Default
-                  </p>
-                )}
-                <p className="text-lg font-medium mb-4">...</p>
-              </div>
-            ))}
-          </div> */}
         </div>
       </div>
 

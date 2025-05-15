@@ -1,5 +1,5 @@
 import { DatePicker, Modal, Select, Switch } from "antd";
-import { CalenderIcon, DownArrowIcon, Forwardcon, ImageIcon, SearchIcon, UpdateIcon } from "../../../assets/icons/icons";
+import { CalenderIcon, DownArrowIcon, ForwardIcon, ImageIcon, SearchIcon, UpdateIcon } from "../../../assets/icons/icons";
 import { useState } from "react";
 
 const AddClientModal = ({ isModalOpen, setIsModalOpen }) => {

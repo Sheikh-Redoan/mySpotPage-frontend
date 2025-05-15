@@ -38,6 +38,7 @@ import CancelSubscription from "../components/SettingsPages/UpgradePlan/CancelSu
 import AddCard from "../components/SettingsPages/UpgradePlan/AddCard";
 import DynamicSubSideBarLayout from "../pages/DynamicSubSideBarLayout";
 import { clientNavItems, settingsNavItems } from "../pages/layout/subSidebarObj";
+import BasicInfo from "../pages/BasicInfo";
 
 export const routes = createBrowserRouter([
   {
@@ -71,7 +72,7 @@ export const routes = createBrowserRouter([
         children: [
           {
             path: "basic-info",
-            element: <Location />,
+            element: <BasicInfo />,
           },
           {
             path: "booking-info",

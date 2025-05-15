@@ -36,6 +36,8 @@ import SuccessUpgrade from "../components/SettingsPages/UpgradePlan/SuccessUpgra
 import SuccessDowngrade from "../components/SettingsPages/UpgradePlan/SuccessDowngrade";
 import CancelSubscription from "../components/SettingsPages/UpgradePlan/CancelSubscription";
 import AddCard from "../components/SettingsPages/UpgradePlan/AddCard";
+import DynamicSubSideBarLayout from "../pages/DynamicSubSideBarLayout";
+import { clientNavItems, settingsNavItems } from "../pages/layout/subSidebarObj";
 
 export const routes = createBrowserRouter([
   {
@@ -64,19 +66,37 @@ export const routes = createBrowserRouter([
         element: <ClientPage />,
       },
       {
+        path: "/client",
+        element: <DynamicSubSideBarLayout indexPath="/client/basic-info" items={clientNavItems} />,
+        children: [
+          {
+            path: "basic-info",
+            element: <Location />,
+          },
+          {
+            path: "booking-info",
+            element: <Location />,
+          },
+          {
+            path: "provider-notes",
+            element: <Location />,
+          },
+        ],
+      },
+      {
         path: "/settings",
-        element: <SettingsPage />,
+        element: <DynamicSubSideBarLayout indexPath="/settings" items={settingsNavItems} />,
         children: [
           {
             index: true,
             element: <BusinessInfo />,
           },
           {
-            path: "/settings/location",
+            path: "location",
             element: <Location />,
           },
           {
-            path: "/settings/subscription",
+            path: "subscription",
             element: <Subscription />,
           },
         ],

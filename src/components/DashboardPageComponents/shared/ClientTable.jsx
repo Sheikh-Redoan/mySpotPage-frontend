@@ -17,6 +17,7 @@ import {
   VipIcon,
 } from "../../../assets/icons/icons";
 import CustomEmptyTable from "./CustomEmptyTable";
+import { Link } from "react-router";
 // import { Checkbox } from "@/components/ui/checkbox";
 
 const { Option } = Select;
@@ -253,9 +254,9 @@ const ClientTable = () => {
       render: () => (
         <div className="flex gap-4">
           <Tooltip placement="top" color="white" title="View detail">
-            <button type="button" className="cursor-pointer">
+            <Link to="/client/basic-info">
               <DetailsIcon />
-            </button>
+            </Link>
           </Tooltip>
 
           <Tooltip title="Add to blacklist">
@@ -354,8 +355,8 @@ const ClientTable = () => {
         locale={{ emptyText: <CustomEmptyTable /> }}
         rowClassName={(record) =>
           searchQuery &&
-          (record.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            record.phone.toLowerCase().includes(searchQuery.toLowerCase()))
+            (record.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+              record.phone.toLowerCase().includes(searchQuery.toLowerCase()))
             ? "bg-highlight01"
             : ""
         }

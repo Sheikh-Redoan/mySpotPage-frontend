@@ -5,6 +5,8 @@ function SettingsPage() {
   const location = useLocation();
   const currentPath = location.pathname;
 
+  console.log("Current path:", currentPath);
+
   const isActive = (path) => {
     return (
       currentPath === path ||
@@ -19,11 +21,10 @@ function SettingsPage() {
         <ul className="space-y-3">
           <Link to={"/settings"}>
             <li
-              className={`px-6 py-3 my-4 rounded-xl flex items-center gap-4 ${
-                isActive("/settings")
+              className={`px-6 py-3 my-4 rounded-xl flex items-center gap-4 ${isActive("/settings")
                   ? "bg-[#ECEBFC] text-[#744CDB]"
                   : "hover:bg-gray-100 text-[#242528]"
-              }`}
+                }`}
             >
               <img src={imageProvider.businessinfo} alt="icon" />
               <p className=" font-semibold block">Business Info</p>
@@ -31,11 +32,10 @@ function SettingsPage() {
           </Link>
           <Link to="/settings/location">
             <li
-              className={`px-6 py-3 mb-4 rounded-xl flex items-center gap-5 ${
-                isActive("/settings/location")
+              className={`px-6 py-3 mb-4 rounded-xl flex items-center gap-5 ${isActive("/settings/location")
                   ? "bg-[#ECEBFC] text-[#744CDB]"
                   : "hover:bg-gray-100 text-[#242528]"
-              }`}
+                }`}
             >
               <img src={imageProvider.location} alt="icon" />
               <p className=" font-semibold block">Location</p>
@@ -43,11 +43,10 @@ function SettingsPage() {
           </Link>
           <Link to="/settings/subscription">
             <li
-              className={`px-6 py-3 mb-4 rounded-xl flex items-center gap-4 ${
-                isActive("/settings/subscription")
+              className={`px-6 py-3 mb-4 rounded-xl flex items-center gap-4 ${isActive("/settings/subscription")
                   ? "bg-[#ECEBFC] text-[#744CDB]"
                   : "hover:bg-gray-100 text-[#242528]"
-              }`}
+                }`}
             >
               <img src={imageProvider.subscription} alt="icon" />
               <p className="font-semibold block w-full">Subscription</p>

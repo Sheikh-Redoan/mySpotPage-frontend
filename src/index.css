@@ -4,7 +4,7 @@
 
 @theme inline {
   --color-primary01: #866be7;
-  --color-highlight01: #F5F4FE;
+  --color-highlight01: #f5f4fe;
   --font-golos: "Golos Text", sans-serif;
   --color-description: #797979;
   --color-primary02: #1e7d5d;
@@ -41,8 +41,8 @@
   background: #d3d3d3; /* Thumb color on hover */
 }
 
+/* Sefat Custom CSS Start */
 /* sidebar */
-
 .custom-steps .ant-steps-item-tail {
   padding: 0 !important;
   top: 32px !important;
@@ -121,8 +121,15 @@
 }
 
 .custom-range-picker .ant-picker {
-  padding: 4px 10px;
+  padding: 3px 10px;
 }
+
+/* input */
+.custom-dropdown .ant-select-item-option {
+  margin: 5px 16px !important;
+}
+
+/* Sefat Custom CSS Start */
 
 /* CSS form Mahim  start*/
 

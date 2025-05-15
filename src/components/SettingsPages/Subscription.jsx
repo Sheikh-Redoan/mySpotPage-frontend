@@ -4,9 +4,9 @@ import { Plus } from "lucide-react";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { Table } from "antd";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PlanCard from "../reuseableComponent/PlanCard";
-import { Link, useLocation } from "react-router";
+import { Link} from "react-router";
 
 dayjs.extend(customParseFormat);
 const { RangePicker } = DatePicker;

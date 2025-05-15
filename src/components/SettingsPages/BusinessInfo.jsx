@@ -134,9 +134,9 @@ const BusinessInfo = () => {
                 <button
                   type="button"
                   onClick={handleRemoveImage}
-                  className="absolute -top-2 -right-2 bg-white border border-gray-300 rounded-full p-1 hover:bg-[#866BE7] hover:border-none transform transition-all duration-300 ease-in-out "
+                  className="absolute -top-2 -right-2 bg-white border border-gray-300 rounded-full p-1 group hover:bg-primary01 hover:border-primary01"
                 >
-                  <X className="w-5 h-5 text-[#866BE7] hover:text-[#FFFFFF]" />
+                  <X className="w-5 h-5 text-[#866BE7] group-hover:scale-105 transform transition-all duration-100 group-hover:text-white" />
                 </button>
               </div>
             )}
@@ -279,7 +279,7 @@ const BusinessInfo = () => {
 
       {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 bg-[#111113cc] flex items-center justify-center">
+        <div className="fixed inset-0 z-50 bg-[#7F7F81] flex items-center justify-center">
           <div className="bg-white rounded-lg shadow-lg w-[90%] max-w-3xl">
             {/* Header */}
             <div className="flex justify-between items-center py-6 px-6">
@@ -312,6 +312,7 @@ const BusinessInfo = () => {
                   height={450}
                   scale={imgSclaeValue}
                   rotate={0}
+                  color={[255, 255, 255, 0.6]}
                   className="object-contain w-full max-h-[70vh]"
                 />
               </div>

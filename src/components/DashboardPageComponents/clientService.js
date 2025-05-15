@@ -268,3 +268,4 @@ export const filterClientsByGenders = (genders) => {
 
   return clientData.filter((client) => genders.includes(client.gender));
 };
+

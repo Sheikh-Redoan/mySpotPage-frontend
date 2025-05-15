@@ -136,7 +136,7 @@ const AddClientModal = ({ isModalOpen, setIsModalOpen }) => {
             <div className="mt-8 flex items-center justify-between">
               <div className="flex items-center gap-1">
                 <p className="text-[#262626]">Basic information</p>
-                <Forwardcon />
+                <ForwardIcon />
                 <p className="text-[#888]">Provider notes</p>
               </div>
               <button type="button" onClick={() => setStep(2)} className="text-white font-semibold bg-black py-2 w-24 rounded-lg cursor-pointer">Next</button>
@@ -156,7 +156,7 @@ const AddClientModal = ({ isModalOpen, setIsModalOpen }) => {
             <div className="mt-8 flex items-center justify-between">
               <div className="flex items-center gap-1">
                 <p className="text-[#888]">Basic information</p>
-                <Forwardcon />
+                <ForwardIcon />
                 <p className="text-[#262626]">Provider notes</p>
               </div>
               <button type="button" className="text-[#242528] font-semibold border border-[#242528] py-2 w-24 rounded-lg cursor-pointer" onClick={() => setStep(1)}>Previous</button>

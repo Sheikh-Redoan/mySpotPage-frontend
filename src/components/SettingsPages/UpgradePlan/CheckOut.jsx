@@ -7,16 +7,18 @@ import {
   VisaIcon,
 } from "../../../assets/icons/icons2";
 import { imageProvider } from "../../../lib/imageProvider";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
+import { slideInFromLeft } from "../../../animations/variants";
 
 const CheckOut = () => {
   const navigate = useNavigate();
-  const [isDefault, setIsDefault] = useState(false);
   const UpgradeCard = useRef(null);
   const isSubmitting = useRef(false);
 
-  //   for modal
+  // for modal
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (UpgradeCard.current && !UpgradeCard.current.contains(event.target)) {
@@ -29,20 +31,9 @@ const CheckOut = () => {
     };
   }, [navigate]);
 
-  //   for all input
-  const defaultData = {
-    phone: "9876543210",
-    cardNumber: "1234-5678-9012-3456",
-    nameOnCard: "Visa Card",
-    idNumber: "ID987654",
-    expiryDate: "12/28",
-    cvv: "123",
-  };
-
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { isValid },
   } = useForm({
     mode: "onChange",
@@ -61,20 +52,6 @@ const CheckOut = () => {
     navigate("/success-upgrade");
   };
 
-  const handleCheckboxChange = () => {
-    setIsDefault((prev) => !prev);
-  };
-
-  useEffect(() => {
-    if (isDefault) {
-      Object.entries(defaultData).forEach(([key, value]) => {
-        setValue(key, value);
-      });
-    } else {
-      Object.keys(defaultData).forEach((key) => setValue(key, ""));
-    }
-  }, [isDefault, setValue]);
-
   const handleExternalSubmit = () => {
     if (isSubmitting.current) {
       isSubmitting.current.requestSubmit();
@@ -83,7 +60,10 @@ const CheckOut = () => {
 
   return (
     <div className="bg-[#24252880] min-h-[100vh] py-8  flex items-center justify-center font-golos">
-      <div
+      <motion.div
+        variants={slideInFromLeft()}
+        initial="hidden"
+        animate="visible"
         ref={UpgradeCard}
         className="bg-[#ffffff] min-h-[580px] w-[960px] rounded-lg"
       >
@@ -105,7 +85,7 @@ const CheckOut = () => {
                 Phone Number <span className="text-orange-600">*</span>
               </label>
               <input
-                type="number"
+                type="text"
                 {...register("phone", { required: true })}
                 placeholder="Phone number"
                 className="w-full px-3 py-2 border border-[#E5E7E8] rounded-lg "
@@ -203,9 +183,6 @@ const CheckOut = () => {
               <div className="px-1.5 py-4 flex items-center gap-2">
                 <input
                   type="checkbox"
-                  id="setDefault"
-                  checked={isDefault}
-                  onChange={handleCheckboxChange}
                   className="w-4 h-4 text-[#866BE7] border-[2px] border-[#CED0D3] rounded-md"
                 />
                 <label
@@ -276,7 +253,7 @@ const CheckOut = () => {
             </p>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

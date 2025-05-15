@@ -1,11 +1,19 @@
 import { X } from "lucide-react";
 import { Link } from "react-router";
 import { SmileIcon } from "../../../assets/icons/icons2";
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
+import { slideInFromLeft } from "../../../animations/variants";
 
 const SuccessDowngrade = () => {
   return (
     <div className="bg-[#24252880] min-h-[100vh] py-8  flex items-center justify-center font-golos">
-      <div className="bg-[#ffffff] min-h-[260px] w-[430px] rounded-lg">
+      <motion.div
+        variants={slideInFromLeft()}
+        initial="hidden"
+        animate="visible"
+        className="bg-[#ffffff] min-h-[260px] w-[430px] rounded-lg"
+      >
         <div className="flex justify-between items-center my-2 py-3 px-6">
           <p className="text-xl font-semibold"> Notification</p>
           <Link className="hover:scale-105" to={"/upgrade-plan"}>
@@ -27,7 +35,7 @@ const SuccessDowngrade = () => {
             </p>
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

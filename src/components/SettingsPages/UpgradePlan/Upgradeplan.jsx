@@ -2,6 +2,9 @@ import { ChevronDown, ChevronUp, X } from "lucide-react";
 import { imageProvider } from "../../../lib/imageProvider";
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
+// eslint-disable-next-line no-unused-vars
+import { motion } from "framer-motion";
+import { slideInFromBottom } from "./../../../animations/variants";
 
 const Upgradeplan = () => {
   const [showAll, setShowAll] = useState(false);
@@ -93,7 +96,10 @@ const Upgradeplan = () => {
 
   return (
     <div className="bg-[#24252880] min-h-[100vh] py-8  flex items-center justify-center font-golos">
-      <div
+      <motion.div
+        variants={slideInFromBottom()}
+        initial="hidden"
+        animate="visible"
         ref={UpgradeCard}
         className="bg-[#ffffff] min-h-[640px] w-[1110px] rounded-lg"
       >
@@ -131,34 +137,38 @@ const Upgradeplan = () => {
                     </span>
                   </div>
                 </div>
-                <button
-                  className={`w-full p-2 rounded-lg my-2 font-medium hover:scale-95 transform transition-all duration-300 ease-in-out
-                  ${
+                <Link
+                  to={
                     currentPlan === plan.name
                       ? plan.name === "Spark"
-                        ? "bg-[#E4E3FD] text-[#A496EF]"
-                        : "border border-[#ED4245] bg-[#FFFFFF] text-[#ED4245]"
-                      : "bg-[#744CDB] text-[#FFFFFF]"
+                        ? "#"
+                        : "/cancel-subscription"
+                      : (currentPlan === "Glow" && plan.name === "Spark") ||
+                        (currentPlan === "Bloom" &&
+                          (plan.name === "Glow" || plan.name === "Spark"))
+                      ? "/success-downgrade"
+                      : "/checkout"
                   }
-                        `}
+                  className={`w-full block text-center p-2 rounded-lg my-2 font-medium hover:scale-95 transform transition-all duration-300 ease-in-out
+                 ${
+                   currentPlan === plan.name
+                     ? plan.name === "Spark"
+                       ? "bg-[#E4E3FD] text-[#A496EF]"
+                       : "border border-[#ED4245] bg-[#FFFFFF] text-[#ED4245]"
+                     : "bg-[#744CDB] text-[#FFFFFF]"
+                 }
+                       `}
                 >
-                  {currentPlan === plan.name ? (
-                    plan.name === "Spark" ? (
-                      "Current Plan"
-                    ) : (
-                      <Link to={"/cancel-subscription"}>
-                        Cancel Subscription
-                      </Link>
-                    )
-                  ) : (currentPlan === "Glow" && plan.name === "Spark") ||
-                    (currentPlan === "Bloom" &&
-                      (plan.name === "Glow" || plan.name === "Spark")) ? (
-                    <Link to={"/success-downgrade"}>Downgrade</Link>
-                  ) : (
-                    <Link to={"/checkout"}>Upgrade</Link>
-                  )}
-                </button>
-
+                  {currentPlan === plan.name
+                    ? plan.name === "Spark"
+                      ? "Current Plan"
+                      : "Cancel Subscription"
+                    : (currentPlan === "Glow" && plan.name === "Spark") ||
+                      (currentPlan === "Bloom" &&
+                        (plan.name === "Glow" || plan.name === "Spark"))
+                    ? "Downgrade"
+                    : "Upgrade"}
+                </Link>
                 <p className="text-[#262626] font-medium text-sm mt-2">
                   {plan.desc}
                 </p>
@@ -226,7 +236,7 @@ const Upgradeplan = () => {
         <p className="px-4 text-[#242528] pt-2 pb-8 font-semibold underline">
           Compare plans and pricing options
         </p>
-      </div>
+      </motion.div>
     </div>
   );
 };

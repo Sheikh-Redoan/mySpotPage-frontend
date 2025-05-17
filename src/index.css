@@ -129,7 +129,48 @@
   margin: 5px 16px !important;
 }
 
-/* Sefat Custom CSS Start */
+/* Time Picker */
+.custom-time-picker .ant-picker-input > input {
+  padding: 4px 6px;
+  font-size: 14px;
+}
+
+.custom-checkbox .ant-checkbox-inner {
+  width: 18px;
+  height: 18px;
+}
+.custom-checkbox1 .ant-checkbox-inner {
+  width: 22px;
+  height: 22px;
+  border-radius: 100%;
+  border: 1px solid #d9d9d9;
+  background-color: transparent;
+  transition: all 0.3s;
+}
+
+.custom-checkbox1 .ant-checkbox-inner::after {
+  display: none;
+}
+
+.custom-checkbox1 .ant-checkbox-checked .ant-checkbox-inner {
+  background-color: transparent;
+  border-color: #866be7;
+}
+
+/* Show dot when checked */
+.custom-checkbox1 .ant-checkbox-checked .ant-checkbox-inner::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  background-color: #866be7;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Sefat Custom CSS End */
 
 /* CSS form Mahim  start*/
 

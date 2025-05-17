@@ -279,7 +279,7 @@ const BusinessInfo = () => {
 
       {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 bg-[#7F7F81] flex items-center justify-center">
+        <div className="fixed inset-0 z-50 bg-[#111113cc] flex items-center justify-center">
           <div className="bg-white rounded-lg shadow-lg w-[90%] max-w-3xl">
             {/* Header */}
             <div className="flex justify-between items-center py-6 px-6">
@@ -308,7 +308,7 @@ const BusinessInfo = () => {
                 <AvatarEditor
                   ref={editorRef}
                   image={editorImage}
-                  width={720}
+                  width={718}
                   height={450}
                   scale={imgSclaeValue}
                   rotate={0}

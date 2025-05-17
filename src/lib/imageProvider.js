@@ -38,6 +38,7 @@ import mastard from "../assets/icons/mastard.png";
 import visa from "../assets/icons/visa.png";
 import Client from "../assets/icons/man.png";
 import amrican from "../assets/icons/amrican.png";
+import dollor from "../assets/icons/dollor.png";
 
 export const imageProvider = {
   ChartLinePink,
@@ -80,4 +81,5 @@ export const imageProvider = {
   mastard,
   visa,
   amrican,
+  dollor,
 };

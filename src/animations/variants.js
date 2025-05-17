@@ -36,3 +36,30 @@ export const slideInFromBottom = (i = 0) => ({
     },
   },
 });
+export const collapseVariants = (i = 0) => ({
+  hidden: {
+    height: 0,
+    opacity: 0,
+    overflow: "hidden",
+  },
+  visible: (i = 0) => ({
+    height: "auto",
+    opacity: 1,
+    overflow: "hidden",
+    transition: {
+      duration: 0.3,
+      delay: i * 0.2,
+      ease: "easeInOut",
+    },
+  }),
+  exit: (i = 0) => ({
+    height: 0,
+    opacity: 0,
+    overflow: "hidden",
+    transition: {
+      duration: 0.3,
+      delay: i * 0.2,
+      ease: "easeInOut",
+    },
+  }),
+});

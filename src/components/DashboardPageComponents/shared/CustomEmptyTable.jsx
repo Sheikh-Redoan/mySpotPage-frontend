@@ -1,4 +1,7 @@
-const CustomEmptyTable = (title, description) => {
+const CustomEmptyTable = ({
+  title = "No Clients Yet, description",
+  description = "You haven't added any clients yet. Start by adding a new client manually or wait for clients to sign up.",
+}) => {
   return (
     <div className="flex flex-col items-center gap-3 my-40">
       <svg
@@ -36,12 +39,9 @@ const CustomEmptyTable = (title, description) => {
           fill="black"
         />
       </svg>
-      <div className="space-y-2">
-        <h2 className="text-[#262626] font-semibold">No Clients Yet</h2>
-        <p className="max-w-[420px] text-[#797979] text-sm">
-          You haven't added any clients yet. Start by adding a new client
-          manually or wait for clients to sign up.
-        </p>
+      <div className="space-y-2 text-center">
+        <h2 className="text-[#262626] font-semibold">{title}</h2>
+        <p className="max-w-[420px] text-[#797979] text-sm">{description}</p>
       </div>
     </div>
   );

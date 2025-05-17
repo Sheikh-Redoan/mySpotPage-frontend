@@ -39,6 +39,8 @@ import AddCard from "../components/SettingsPages/UpgradePlan/AddCard";
 import DynamicSubSideBarLayout from "../pages/DynamicSubSideBarLayout";
 import { clientNavItems, settingsNavItems } from "../pages/layout/subSidebarObj";
 import BasicInfo from "../pages/BasicInfo";
+import ProviderNotes from "../pages/ProviderNotes";
+import BookingInfo from "../pages/BookingInfo";
 
 export const routes = createBrowserRouter([
   {
@@ -76,11 +78,11 @@ export const routes = createBrowserRouter([
           },
           {
             path: "booking-info",
-            element: <Location />,
+            element: <BookingInfo />,
           },
           {
             path: "provider-notes",
-            element: <Location />,
+            element: <ProviderNotes />,
           },
         ],
       },

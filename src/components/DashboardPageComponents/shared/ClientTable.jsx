@@ -1,15 +1,11 @@
 import React, { useState } from "react";
 import { Table, Input, Select, Pagination, Tooltip } from "antd";
-import {
-  getClients,
-  searchClients,
-  filterClientsByCity,
-  filterClientsByGenders,
-} from "../clientService";
+import { getClients, searchClients } from "../clientService";
 import {
   DetailsIcon,
   DownArrowIcon,
   FemaleIcon,
+  FilterFilled,
   InfoCircleOutlined,
   MaleIcon,
   OthersIcon,
@@ -30,6 +26,7 @@ const ClientTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [totalClients, setTotalClients] = useState(getClients().length);
+  const [genderFilterOpen, setGenderFilterOpen] = useState(false);
 
   const handleSearch = (value) => {
     setSearchQuery(value);
@@ -168,6 +165,17 @@ const ClientTable = () => {
       title: "Gender",
       dataIndex: "gender",
       key: "gender",
+      filterIcon: (filtered) => (
+        <FilterFilled
+          className={
+            genderFilterOpen || filtered ? "fill-[#F6F6F6]" : "fill-[#797979]"
+          }
+        />
+      ),
+      filterDropdownOpen: genderFilterOpen,
+      onFilterDropdownVisibleChange: (visible) => {
+        setGenderFilterOpen(visible);
+      },
       filters: [
         {
           text: (
@@ -355,8 +363,8 @@ const ClientTable = () => {
         locale={{ emptyText: <CustomEmptyTable /> }}
         rowClassName={(record) =>
           searchQuery &&
-            (record.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-              record.phone.toLowerCase().includes(searchQuery.toLowerCase()))
+          (record.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            record.phone.toLowerCase().includes(searchQuery.toLowerCase()))
             ? "bg-highlight01"
             : ""
         }

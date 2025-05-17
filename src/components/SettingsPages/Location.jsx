@@ -569,7 +569,15 @@ const Location = () => {
                           to view details.
                         </p>
                         {regionalDropdown && (
-                          <div className="pl-7 my-6 space-y-3.5">
+                          <motion.div
+                            key="regional-area"
+                            variants={collapseVariants()}
+                            initial="hidden"
+                            animate="visible"
+                            exit="exit"
+                            custom={0}
+                            className="pl-7 my-6 space-y-3.5"
+                          >
                             {[
                               "Northern District (Mehoz HaTzafon)",
                               "Haifa District (Mehoz Heifa)",
@@ -596,7 +604,7 @@ const Location = () => {
                                 />
                               </div>
                             ))}
-                          </div>
+                          </motion.div>
                         )}
                       </div>
                       {/* Offer service */}

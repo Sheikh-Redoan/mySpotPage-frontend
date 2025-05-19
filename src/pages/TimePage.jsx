@@ -116,7 +116,7 @@ function TimePage() {
         >
           <PlusIcon />
           Set time-based
-        </button>
+        </button> 
         <div className="overflow-x-auto my-6 rounded shadow-lg">
           <Table
             columns={columns}

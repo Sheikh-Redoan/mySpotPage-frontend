@@ -1,6 +1,6 @@
-import { Checkbox, DatePicker, Modal, Select, TimePicker } from "antd";
+import { Checkbox, DatePicker, Modal, Radio, Select, TimePicker } from "antd";
 import { CalenderIcon, DownArrowIcon } from "../../../assets/icons/icons";
-
+const { RangePicker } = DatePicker;
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { Clock, PlusIcon } from "lucide-react";
@@ -12,6 +12,11 @@ dayjs.extend(customParseFormat);
 const format = "hh:mm A";
 
 const TimeBasedModal = ({ isModalOpen, setIsModalOpen }) => {
+  const [pickerType] = useState("single");
+  const [singleDate, setSingleDate] = useState(null);
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+
   const [isAllDay, setIsAllDay] = useState(false);
 
   const handleCancel = () => {
@@ -20,10 +25,6 @@ const TimeBasedModal = ({ isModalOpen, setIsModalOpen }) => {
 
   const handleGenderChange = (value) => {
     console.log(`selected ${value}`);
-  };
-
-  const handleDateChange = (dateString) => {
-    console.log(dateString);
   };
 
   const handleAllDayChange = (e) => {
@@ -45,18 +46,37 @@ const TimeBasedModal = ({ isModalOpen, setIsModalOpen }) => {
         <div className="space-y-3 mt-4">
           <div className="grid grid-cols-2 gap-3">
             <fieldset>
-              <label htmlFor="dob" className="block w-fit mb-1">
+              <label htmlFor="date" className="block w-fit mb-1">
                 Date <span className="text-[#ED4245]">*</span>
               </label>
-              <DatePicker
-                id="dob"
-                onChange={handleDateChange}
-                className="w-full !h-10 border border-[#E0E0E0] rounded-lg"
-                placeholder="Select"
-                suffixIcon={<CalenderIcon />}
-                format="YYYY-MM-DD"
-              />
+
+              {pickerType === "single" ? (
+                <DatePicker
+                  id="date"
+                  onChange={(date) => setSingleDate(date)}
+                  className="w-full !h-10 border border-[#E0E0E0] rounded-lg"
+                  placeholder="Select date"
+                  suffixIcon={<CalenderIcon />}
+                  format="YYYY-MM-DD"
+                  style={{ height: "40px", borderRadius: "8px" }}
+                />
+              ) : (
+                <RangePicker
+                  id="date-range"
+                  onChange={(dates) => {
+                    setStartDate(dates?.[0]);
+                    setEndDate(dates?.[1]);
+                  }}
+                  className="w-full !h-10 border border-[#E0E0E0] rounded-lg"
+                  placeholder={["Select date"]}
+                  separator=""
+                  suffixIcon={<CalenderIcon />}
+                  format="YYYY-MM-DD"
+                  style={{ height: "40px", borderRadius: "8px" }}
+                />
+              )}
             </fieldset>
+
             <fieldset>
               <label htmlFor="lastName" className="block w-fit mb-1">
                 Frequency <span className="text-[#ED4245]">*</span>
@@ -88,7 +108,7 @@ const TimeBasedModal = ({ isModalOpen, setIsModalOpen }) => {
             <Checkbox onChange={handleAllDayChange}>All day</Checkbox>
           </div>
 
-          <div className="relative border border-[#E7E7E7] h-[138px] rounded-lg p-2">
+          <div className="relative border border-[#E7E7E7] h-[138px] rounded-lg py-2 px-3">
             {isAllDay && (
               <div className="absolute inset-0 bg-transparent bg-opacity-60 z-10 cursor-not-allowed rounded-lg" />
             )}
@@ -104,6 +124,7 @@ const TimeBasedModal = ({ isModalOpen, setIsModalOpen }) => {
                   defaultValue={dayjs("11:00 AM", format)}
                   format={format}
                   use12Hours
+                  style={{ width: "220px" }}
                   className="custom-time-picker"
                   suffixIcon={<Clock size={22} />}
                 />
@@ -111,6 +132,7 @@ const TimeBasedModal = ({ isModalOpen, setIsModalOpen }) => {
               <div className="space-y-1">
                 <h4 className="text-[#ACAFB4]">End time</h4>
                 <TimePicker
+                  style={{ width: "220px" }}
                   defaultValue={dayjs("11:00 AM", format)}
                   format={format}
                   use12Hours
@@ -118,6 +140,7 @@ const TimeBasedModal = ({ isModalOpen, setIsModalOpen }) => {
                   suffixIcon={<Clock size={22} />}
                 />
               </div>
+
               <div className="space-y-1">
                 <h4 className="text-[#ACAFB4]">Action</h4>
                 <div className="flex justify-center items-center my-2 rounded-full h-[40px] w-[40px] bg-[#F6F6F6] mx-auto hover:scale-105 transform transition-all duration-300 ease-in-out">

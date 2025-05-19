@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Pagination, Select, Table } from "antd";
 import { imageProvider } from "../../../lib/imageProvider";
+
 // Columns (same, with align properties added)
 const columns = [
   {

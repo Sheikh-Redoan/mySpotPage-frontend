@@ -22,14 +22,14 @@ const SearchableDropdown = ({
       <div className="border border-[#E7E7E7] rounded-lg my-2">
         <Input
           placeholder={searchPlaceholder}
-          prefix={<SearchOutlined />}
+          prefix={searchValue ? null : <SearchOutlined />}
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
           onClick={(e) => e.stopPropagation()}
           bordered={false}
           style={{
-            fontSize: "20px",
-            height: "38px",
+            fontSize: "18px",
+            height: "36px",
           }}
         />
       </div>

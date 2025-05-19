@@ -37,10 +37,14 @@ import SuccessDowngrade from "../components/SettingsPages/UpgradePlan/SuccessDow
 import CancelSubscription from "../components/SettingsPages/UpgradePlan/CancelSubscription";
 import AddCard from "../components/SettingsPages/UpgradePlan/AddCard";
 import DynamicSubSideBarLayout from "../pages/DynamicSubSideBarLayout";
-import { clientNavItems, settingsNavItems } from "../pages/layout/subSidebarObj";
+import {
+  clientNavItems,
+  settingsNavItems,
+} from "../pages/layout/subSidebarObj";
 import BasicInfo from "../pages/BasicInfo";
 import ProviderNotes from "../pages/ProviderNotes";
 import BookingInfo from "../pages/BookingInfo";
+import AddNewService from "../components/DashboardPageComponents/shared/AddNewService";
 
 export const routes = createBrowserRouter([
   {
@@ -70,7 +74,12 @@ export const routes = createBrowserRouter([
       },
       {
         path: "/client",
-        element: <DynamicSubSideBarLayout indexPath="/client/basic-info" items={clientNavItems} />,
+        element: (
+          <DynamicSubSideBarLayout
+            indexPath="/client/basic-info"
+            items={clientNavItems}
+          />
+        ),
         children: [
           {
             path: "basic-info",
@@ -88,7 +97,12 @@ export const routes = createBrowserRouter([
       },
       {
         path: "/settings",
-        element: <DynamicSubSideBarLayout indexPath="/settings" items={settingsNavItems} />,
+        element: (
+          <DynamicSubSideBarLayout
+            indexPath="/settings"
+            items={settingsNavItems}
+          />
+        ),
         children: [
           {
             index: true,

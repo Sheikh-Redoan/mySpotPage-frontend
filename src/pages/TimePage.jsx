@@ -9,7 +9,7 @@ function TimePage() {
 
   return (
     <div className="w-full p-5">
-      <div>
+     
         <button
           type="button"
           onClick={() => setIsModalOpen(true)}
@@ -24,7 +24,7 @@ function TimePage() {
           isModalOpen={isModalOpen}
           setIsModalOpen={setIsModalOpen}
         />
-      </div>
+    
     </div>
   );
 }

@@ -47,6 +47,7 @@ const BusinessInfo = () => {
   const [image, setImage] = useState(null);
   const [editorImage, setEditorImage] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [imgSclaeValue, setImgSclaeValue] = useState(1.2);
   const { register, handleSubmit } = useForm();
   const editorRef = useRef(null);
 
@@ -70,8 +71,6 @@ const BusinessInfo = () => {
   const handleRemoveImage = () => {
     setImage(null);
   };
-
-  const [imgSclaeValue, setImgSclaeValue] = useState(1.2);
 
   const handleCropFinish = () => {
     if (editorRef.current) {

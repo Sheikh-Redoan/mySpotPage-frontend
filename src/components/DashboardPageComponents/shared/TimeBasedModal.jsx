@@ -1,4 +1,4 @@
-import { Checkbox, DatePicker, Modal, Radio, Select, TimePicker } from "antd";
+import { Checkbox, DatePicker, Modal, Select, TimePicker } from "antd";
 import { CalenderIcon, DownArrowIcon } from "../../../assets/icons/icons";
 const { RangePicker } = DatePicker;
 import dayjs from "dayjs";
@@ -12,7 +12,7 @@ dayjs.extend(customParseFormat);
 const format = "hh:mm A";
 
 const TimeBasedModal = ({ isModalOpen, setIsModalOpen }) => {
-  const [pickerType] = useState("single");
+  const [pickerType] = useState("singl");
   const [singleDate, setSingleDate] = useState(null);
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);

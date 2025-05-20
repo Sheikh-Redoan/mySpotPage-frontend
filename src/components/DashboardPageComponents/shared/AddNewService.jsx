@@ -1,30 +1,32 @@
 import { Checkbox, Collapse, Select, Space } from "antd";
 const { Panel } = Collapse;
-import { ArrowLeft, ChevronDown, Minus, Plus, Upload, X } from "lucide-react";
+import { ArrowLeft, Check, Minus, Plus, Upload, X } from "lucide-react";
 import { imageProvider } from "../../../lib/imageProvider";
 import { useRef, useState } from "react";
-import { useForm } from "react-hook-form";
-import { DownArrowIcon, PlusIcon } from "../../../assets/icons/icons";
+import { Controller, useForm } from "react-hook-form";
+import { DownArrowIcon } from "../../../assets/icons/icons";
 import { DeleteIcon } from "../../../assets/icons/icons2";
-import AvatarEditor from "react-avatar-editor";
-
-const text = `
-  A dog is a type of domesticated animal.
-  Known for its loyalty and faithfulness,
-  it can be found as a welcome guest in many households across the world.
-`;
+import ImageCropModal from "../../modal/ImageCropModal";
 
 const AddNewService = ({ setAddNewService }) => {
-  const { register, handleSubmit } = useForm({ mode: "onChange" });
+  const [activeKey, setActiveKey] = useState(["1"]);
+  const [isStepComplete, setIsStepComplete] = useState(false);
+  const { register, handleSubmit, trigger, control } = useForm({
+    mode: "onChange",
+  });
   const [thumbnailName, setThumbnailName] = useState("");
   const [priceModal1, setPriceModal1] = useState(false);
   const [priceModal2, setPriceModal2] = useState(false);
-
   const [image, setImage] = useState(null);
-  const [editorImage, setEditorImage] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [imgSclaeValue, setImgSclaeValue] = useState(1.2);
-  const editorRef = useRef(null);
+  const [croppedImage, setCroppedImage] = useState(null);
+  const [workImage, setWorkImage] = useState(null);
+  const [workCroppedImage, setWorkCroppedImage] = useState(null);
+  const fileInputRef = useRef();
+
+  const handleButtonClick = () => {
+    fileInputRef.current.click();
+  };
 
   const onSubmit = (data) => {
     console.log(data);
@@ -34,24 +36,52 @@ const AddNewService = ({ setAddNewService }) => {
     const file = e.target.files[0];
     if (file) {
       const imageURL = URL.createObjectURL(file);
-      setEditorImage(imageURL);
       setImage(imageURL);
     }
   };
 
-  const handleRemoveImage = () => {
-    setImage(null);
-  };
-
-  const handleCropFinish = () => {
-    if (editorRef.current) {
-      const canvas = editorRef.current.getImageScaledToCanvas();
-      const croppedImage = canvas.toDataURL();
-
-      setImage(croppedImage);
-      setIsModalOpen(false);
+  const handleWorkFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setWorkImage(imageUrl);
     }
   };
+
+  const handleCropFinish = (croppedImgDataUrl) => {
+    setCroppedImage(croppedImgDataUrl);
+  };
+  const handleWorkCropFinish = (croppedImgDataUrl) => {
+    setWorkCroppedImage(croppedImgDataUrl);
+  };
+
+  const handleRemoveImage = () => {
+    setImage(null);
+    setCroppedImage(null);
+  };
+  const handleWorkRemoveImage = () => {
+    setWorkImage(null);
+    setWorkCroppedImage(null);
+  };
+
+  const handleCollapseChange = async (key) => {
+    if (!key.includes("1")) {
+      const isValid = await trigger([
+        "serviceName",
+        "description",
+        "availableFor",
+      ]);
+
+      const allFilled = isValid && image;
+
+      setIsStepComplete(allFilled);
+
+      if (!allFilled) return;
+    }
+
+    setActiveKey(key);
+  };
+
   const priceCheckboxChange1 = (e) => {
     setPriceModal1(e.target.checked);
   };
@@ -80,6 +110,8 @@ const AddNewService = ({ setAddNewService }) => {
           <Collapse
             expandIconPosition="end center"
             defaultActiveKey={["1"]}
+            activeKey={activeKey}
+            onChange={handleCollapseChange}
             className="custom-collapse"
             bordered={false}
           >
@@ -92,9 +124,16 @@ const AddNewService = ({ setAddNewService }) => {
               key="1"
               header={
                 <div className="flex items-center gap-x-3">
-                  <div className="w-10 h-10 flex justify-center items-center border p-4 rounded-full  text-[#262626] font-bold">
-                    1
+                  <div
+                    className={`w-10 h-10 flex justify-center items-center border rounded-full font-bold transition-all duration-200 ${
+                      isStepComplete
+                        ? "bg-[#262626] text-white "
+                        : "border p-4 text-[#262626]"
+                    }`}
+                  >
+                    {isStepComplete ? <Check className="w-6 h-6" /> : "1"}
                   </div>
+
                   <span className="text-[#262626] font-semibold text-base md:text-xl">
                     Basic Details
                   </span>
@@ -132,7 +171,7 @@ const AddNewService = ({ setAddNewService }) => {
                       <div className="relative w-full max-w-[180px]">
                         <img
                           onClick={() => setIsModalOpen(true)}
-                          src={image}
+                          src={croppedImage || image}
                           alt="Uploaded"
                           className="w-full h-[140px] rounded-lg object-cover"
                         />
@@ -176,23 +215,35 @@ const AddNewService = ({ setAddNewService }) => {
                   </div>
 
                   {/* Available for  */}
-                  <div className="relative  w-[440px]">
-                    <label className="block mb-2 text-[#888888]">
-                      Available for <span className="text-orange-600">*</span>
-                    </label>
-                    <Select
-                      id="gender"
-                      placeholder="For All"
-                      className="border border-[#E0E0E0] rounded-lg w-full !h-10"
-                      suffixIcon={<DownArrowIcon />}
-                    >
-                      {["For All", "For Women", "For Men"].map((city) => (
-                        <Option key={city} value={city}>
-                          {city}
-                        </Option>
-                      ))}
-                    </Select>
-                  </div>
+                  <Controller
+                    name="availableFor"
+                    control={control}
+                    defaultValue="For All"
+                    rules={{ required: true }}
+                    render={({ field }) => (
+                      <div className="relative w-[440px]">
+                        <label className="block mb-2 text-[#888888]">
+                          Available for{" "}
+                          <span className="text-orange-600">*</span>
+                        </label>
+                        <Select
+                          {...field}
+                          id="availableFor"
+                          placeholder="For All"
+                          className="border border-[#E0E0E0] rounded-lg w-full !h-10"
+                          suffixIcon={<DownArrowIcon />}
+                          onChange={(value) => field.onChange(value)}
+                          value={field.value}
+                        >
+                          {["For All", "For Women", "For Men"].map((option) => (
+                            <Option key={option} value={option}>
+                              {option}
+                            </Option>
+                          ))}
+                        </Select>
+                      </div>
+                    )}
+                  />
                 </form>
               </div>
             </Panel>
@@ -306,80 +357,88 @@ const AddNewService = ({ setAddNewService }) => {
                     <p>This service offers multiple options</p>
                   </label>
                   {priceModal1 && (
-                    <div className="ml-4 md:ml-12 flex items-center gap-x-6 gap-y-3">
-                      <div className="flex justify-center items-center mt-6 rounded-full h-[40px] w-[40px] bg-[#F6F6F6] hover:scale-105 transform transition-all duration-300 ease-in-out">
-                        <DeleteIcon className="h-5 w-5" />
-                      </div>
-                      <div className="space-y-1.5 ">
-                        <label className="block">
-                          Name <span className="text-orange-600">*</span>
-                        </label>
-                        <input
-                          className="border border-[#E5E7E8] p-2 rounded-lg w-[280px]"
-                          type="text"
-                          placeholder="Name"
-                        />
-                      </div>
-                      <div className="space-y-1.5">
-                        <h4>
-                          Hour(s) <span className="text-orange-600">*</span>
-                        </h4>
-                        <div className="flex justify-between items-center border border-[#E5E7E8] p-2 rounded-lg w-[210px]">
-                          <Plus className="text-[#ACAFB4]" />
-                          <p className="text-[#424348]">0</p>
-                          <Minus className="text-[#ACAFB4]" />
+                    <div className="ml-4 md:ml-12">
+                      <div className="flex items-center gap-x-6 gap-y-3">
+                        <div className="flex justify-center items-center mt-6 rounded-full h-[40px] w-[40px] bg-[#F6F6F6] hover:scale-105 transform transition-all duration-300 ease-in-out">
+                          <DeleteIcon className="h-5 w-5" />
+                        </div>
+                        <div className="space-y-1.5 ">
+                          <label className="block">
+                            Name <span className="text-orange-600">*</span>
+                          </label>
+                          <input
+                            className="border border-[#E5E7E8] p-2 rounded-lg w-[280px]"
+                            type="text"
+                            placeholder="Name"
+                          />
+                        </div>
+                        <div className="space-y-1.5">
+                          <h4>
+                            Hour(s) <span className="text-orange-600">*</span>
+                          </h4>
+                          <div className="flex justify-between items-center border border-[#E5E7E8] p-2 rounded-lg w-[210px]">
+                            <Plus className="text-[#ACAFB4]" />
+                            <p className="text-[#424348]">0</p>
+                            <Minus className="text-[#ACAFB4]" />
+                          </div>
+                        </div>
+                        <div className="space-y-1.5">
+                          <h4>
+                            Minute(s) <span className="text-orange-600">*</span>
+                          </h4>
+                          <div className="flex justify-between items-center border border-[#E5E7E8] p-2 rounded-lg w-[210px]">
+                            <Plus className="text-[#ACAFB4]" />
+                            <p className="text-[#424348]">0</p>
+                            <Minus className="text-[#ACAFB4]" />
+                          </div>
+                        </div>
+                        <div className="space-y-1.5">
+                          <h4>
+                            Price Type{" "}
+                            <span className="text-orange-600">*</span>
+                          </h4>
+                          <Select
+                            id="price"
+                            placeholder="Select"
+                            className="w-[210px] !h-10"
+                            suffixIcon={<DownArrowIcon />}
+                          >
+                            {["Fixed Price", "Initial Price Base"].map(
+                              (city) => (
+                                <Option
+                                  className="text-[#ACAFB4] text-base"
+                                  key={city}
+                                  value={city}
+                                >
+                                  {city}
+                                </Option>
+                              )
+                            )}
+                          </Select>
+                        </div>
+                        <div className="space-y-1.5 relative">
+                          <label className="block">
+                            Amount <span className="text-orange-600">*</span>
+                          </label>
+                          <input
+                            className="border border-[#E5E7E8] p-2 rounded-lg w-[210px]"
+                            type="text"
+                            placeholder="Price"
+                          />
+                          <div className="pointer absolute inset-y-0 top-8 right-3 flex items-center text-[#888888]">
+                            <img src={imageProvider.dollor} alt="" />
+                          </div>
                         </div>
                       </div>
-                      <div className="space-y-1.5">
-                        <h4>
-                          Minute(s) <span className="text-orange-600">*</span>
-                        </h4>
-                        <div className="flex justify-between items-center border border-[#E5E7E8] p-2 rounded-lg w-[210px]">
-                          <Plus className="text-[#ACAFB4]" />
-                          <p className="text-[#424348]">0</p>
-                          <Minus className="text-[#ACAFB4]" />
-                        </div>
-                      </div>
-                      <div className="space-y-1.5">
-                        <h4>
-                          Price Type <span className="text-orange-600">*</span>
-                        </h4>
-                        <Select
-                          id="price"
-                          placeholder="Select"
-                          className="w-[210px] !h-10"
-                          suffixIcon={<DownArrowIcon />}
-                        >
-                          {["Fixed Price", "Initial Price Base"].map((city) => (
-                            <Option
-                              className="text-[#ACAFB4] text-base"
-                              key={city}
-                              value={city}
-                            >
-                              {city}
-                            </Option>
-                          ))}
-                        </Select>
-                      </div>
-                      <div className="space-y-1.5 relative">
-                        <label className="block">
-                          Amount <span className="text-orange-600">*</span>
-                        </label>
-                        <input
-                          className="border border-[#E5E7E8] p-2 rounded-lg w-[210px]"
-                          type="text"
-                          placeholder="Price"
-                        />
-                        <div className="pointer absolute inset-y-0 top-8 right-3 flex items-center text-[#888888]">
-                          <img src={imageProvider.dollor} alt="" />
-                        </div>
+
+                      <div className="flex items-center gap-2 p-2 text-[#744CDB] rounded-lg mt-2">
+                        <Plus size={20} className="text-[#744CDB]" />
+                        <p className="text-[15px] font-semibold">
+                          Add More Option
+                        </p>
                       </div>
                     </div>
                   )}
-                </div>
-                <div className="flex items-center gap-2 p-2 text-[#744CDB] rounded-lg mt-2">
-                  <Plus size={20} className="text-[#744CDB]" />
-                  <p className="text-[15px] font-semibold">Add More Option</p>
                 </div>
               </div>
             </Panel>
@@ -413,72 +472,64 @@ const AddNewService = ({ setAddNewService }) => {
                 <h2 className="mb-3">
                   You can upload up to 10 images to showcase your best work.
                 </h2>
-
-                <button className="w-[188px] px-3 py-2 rounded-lg flex items-center border border-[#E7E7E7] gap-3">
+                <button
+                  className="w-[188px] px-3 py-2 rounded-lg flex items-center border border-[#E7E7E7] gap-3"
+                  onClick={handleButtonClick}
+                  type="button"
+                >
                   <Upload size={18} />
                   <p className="font-medium text-[#262626]">
                     Upload Your Image
                   </p>
+                  <input
+                    ref={fileInputRef}
+                    id="thumbnail"
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={handleWorkFileChange}
+                  />
                 </button>
+                {workImage ? (
+                  <div className="relative w-full max-w-[180px] my-4">
+                    <img
+                      onClick={() => setIsModalOpen(true)}
+                      src={workCroppedImage || workImage}
+                      alt="Uploaded"
+                      className="w-full h-[140px] rounded-lg object-cover"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleWorkRemoveImage}
+                      className="absolute -top-2 -right-2 bg-white border border-gray-300 rounded-full p-1 group hover:bg-primary01 hover:border-primary01"
+                    >
+                      <X className="w-5 h-5 text-[#866BE7] group-hover:scale-105 transform transition-all duration-100 group-hover:text-white" />
+                    </button>
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
             </Panel>
           </Collapse>
         </Space>
       </div>
 
+      {/* Modal1 */}
+      <ImageCropModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        image={image}
+        onCropFinish={handleCropFinish}
+      />
+
       {/* Modal */}
-      {isModalOpen && (
-        <div className="fixed inset-0 z-50 bg-[#111113cc] flex items-center justify-center">
-          <div className="bg-white rounded-lg shadow-lg w-[90%] max-w-3xl">
-            {/* Header */}
-            <div className="flex justify-between items-center py-6 px-6">
-              <h3 className="text-xl font-semibold text-[#242528]">
-                Crop image
-              </h3>
-              <button onClick={() => setIsModalOpen(false)}>
-                <X className="w-6 h-6 text-[#52555B] hover:scale-105 hover:text-[#3c3e42]" />
-              </button>
-            </div>
-
-            {/* Avatar Editor */}
-            <div className="flex justify-center items-center py-2">
-              <div
-                onWheel={(e) => {
-                  e.preventDefault();
-                  const delta = e.deltaY;
-
-                  setImgSclaeValue((prev) => {
-                    let newScale = prev + (delta > 0 ? -0.05 : 0.05);
-                    newScale = Math.min(Math.max(newScale, 0.5), 3);
-                    return newScale;
-                  });
-                }}
-              >
-                <AvatarEditor
-                  ref={editorRef}
-                  image={editorImage}
-                  width={718}
-                  height={450}
-                  scale={imgSclaeValue}
-                  rotate={0}
-                  color={[255, 255, 255, 0.6]}
-                  className="object-contain w-full max-h-[70vh]"
-                />
-              </div>
-            </div>
-
-            {/* Finish Button */}
-            <div className="flex justify-end my-3 pr-6">
-              <button
-                onClick={handleCropFinish}
-                className="text-[#242528] cursor-pointer hover:text-[#141516] hover:font-semibold font-medium text-lg py-2"
-              >
-                Finish
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <ImageCropModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        image={workImage}
+        onCropFinish={handleWorkCropFinish}
+      />
     </div>
   );
 };

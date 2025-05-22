@@ -17,8 +17,6 @@ function MainLayout() {
     setCurrentTab(tab)
   };
 
-  
-
 
   return (
     <div className="relative font-golos h-screen">

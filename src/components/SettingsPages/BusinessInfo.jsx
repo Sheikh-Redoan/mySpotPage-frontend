@@ -4,9 +4,9 @@ import { CopyIcon } from "../../assets/icons/icons2";
 import { ConfigProvider } from "antd";
 import SearchableDropdown from "../ui/SearchableDropdown";
 import Dropdown from "../ui/Dropdown";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { X } from "lucide-react";
-import AvatarEditor from "react-avatar-editor";
+import ImageCropModal from "../modal/ImageCropModal";
 
 const serviceOptions = [
   { value: "nails", label: "Nails" },
@@ -45,10 +45,9 @@ const businessOptions = [
 
 const BusinessInfo = () => {
   const [image, setImage] = useState(null);
-  const [editorImage, setEditorImage] = useState(null);
+  const [croppedImage, setCroppedImage] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { register, handleSubmit } = useForm();
-  const editorRef = useRef(null);
 
   const onSubmit = (data) => {
     console.log(data);
@@ -57,30 +56,21 @@ const BusinessInfo = () => {
   const handleChange = (value) => {
     console.log("Selected:", value);
   };
+  const handleRemoveImage = () => {
+    setImage(null);
+    setCroppedImage(null);
+  };
 
-  const handleFileChange = (e) => {
+const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       const imageURL = URL.createObjectURL(file);
-      setEditorImage(imageURL);
       setImage(imageURL);
     }
   };
 
-  const handleRemoveImage = () => {
-    setImage(null);
-  };
-
-  const [imgSclaeValue, setImgSclaeValue] = useState(1.2);
-
-  const handleCropFinish = () => {
-    if (editorRef.current) {
-      const canvas = editorRef.current.getImageScaledToCanvas();
-      const croppedImage = canvas.toDataURL();
-
-      setImage(croppedImage);
-      setIsModalOpen(false);
-    }
+  const handleCropFinish = (croppedImgDataUrl) => {
+    setCroppedImage(croppedImgDataUrl);
   };
 
   return (
@@ -127,7 +117,7 @@ const BusinessInfo = () => {
               <div className="relative w-full max-w-md">
                 <img
                   onClick={() => setIsModalOpen(true)}
-                  src={image}
+                  src={croppedImage || image}
                   alt="Uploaded"
                   className="w-full h-[180px] rounded-lg object-cover"
                 />
@@ -278,60 +268,15 @@ const BusinessInfo = () => {
       </form>
 
       {/* Modal */}
-      {isModalOpen && (
-        <div className="fixed inset-0 z-50 bg-[#111113cc] flex items-center justify-center">
-          <div className="bg-white rounded-lg shadow-lg w-[90%] max-w-3xl">
-            {/* Header */}
-            <div className="flex justify-between items-center py-6 px-6">
-              <h3 className="text-xl font-semibold text-[#242528]">
-                Crop image
-              </h3>
-              <button onClick={() => setIsModalOpen(false)}>
-                <X className="w-6 h-6 text-[#52555B] hover:scale-105 hover:text-[#3c3e42]" />
-              </button>
-            </div>
-
-            {/* Avatar Editor */}
-            <div className="flex justify-center items-center py-2">
-              <div
-                onWheel={(e) => {
-                  e.preventDefault();
-                  const delta = e.deltaY;
-
-                  setImgSclaeValue((prev) => {
-                    let newScale = prev + (delta > 0 ? -0.05 : 0.05);
-                    newScale = Math.min(Math.max(newScale, 0.5), 3);
-                    return newScale;
-                  });
-                }}
-              >
-                <AvatarEditor
-                  ref={editorRef}
-                  image={editorImage}
-                  width={718}
-                  height={450}
-                  scale={imgSclaeValue}
-                  rotate={0}
-                  color={[255, 255, 255, 0.6]}
-                  className="object-contain w-full max-h-[70vh]"
-                />
-              </div>
-            </div>
-
-            {/* Finish Button */}
-            <div className="flex justify-end my-3 pr-6">
-              <button
-                onClick={handleCropFinish}
-                className="text-[#242528] cursor-pointer hover:text-[#141516] hover:font-semibold font-medium text-lg py-2"
-              >
-                Finish
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <ImageCropModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        image={image}
+        onCropFinish={handleCropFinish}
+      />
     </div>
   );
 };
 
 export default BusinessInfo;
+

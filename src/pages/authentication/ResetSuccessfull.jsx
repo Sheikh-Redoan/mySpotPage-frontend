@@ -1,7 +1,6 @@
 import { slideInFromRight } from "@/animations/variants";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
-import React from "react";
 import icon from "../../assets/icons/icon.jpg";
 import { Link } from "react-router";
 import { ArrowLeft } from "lucide-react";

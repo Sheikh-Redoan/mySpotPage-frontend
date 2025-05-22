@@ -25,6 +25,20 @@ import colorPeople from "../assets/icons/colorPeople.png";
 import multipleCoPeo from "../assets/icons/multipleCoPeo.png";
 import upload from "../assets/icons/upload.png";
 import smile from "../assets/icons/smile.png";
+import businessinfo from "../assets/icons/businessInfo.png";
+import location from "../assets/icons/location.png";
+import subscription from "../assets/icons/subscription.png";
+import spark from "../assets/icons/activePlan.png";
+import subscriptionAlert from "../assets/icons/subscriptionAlert.png";
+import emtyBilling from "../assets/icons/emtyBilling.png";
+import glow from "../assets/icons/glow.png";
+import bloom from "../assets/icons/bloom.png";
+import upgradeIcon from "../assets/icons/upgradeIcon.png";
+import mastard from "../assets/icons/mastard.png";
+import visa from "../assets/icons/visa.png";
+import Client from "../assets/icons/man.png";
+import amrican from "../assets/icons/amrican.png";
+import dollor from "../assets/icons/dollor.png";
 
 export const imageProvider = {
   ChartLinePink,
@@ -54,4 +68,18 @@ export const imageProvider = {
   multipleCoPeo,
   upload,
   smile,
+  businessinfo,
+  location,
+  subscription,
+  spark,
+  subscriptionAlert,
+  emtyBilling,
+  Client,
+  glow,
+  bloom,
+  upgradeIcon,
+  mastard,
+  visa,
+  amrican,
+  dollor,
 };

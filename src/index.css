@@ -4,14 +4,16 @@
 
 @theme inline {
   --color-primary01: #866be7;
+  --color-highlight01: #f5f4fe;
   --font-golos: "Golos Text", sans-serif;
   --color-description: #797979;
   --color-primary02: #1e7d5d;
 }
 
 .ant-tooltip .ant-tooltip-inner {
-  color: rgba(0, 0, 0, 0.887); /* Your desired color */
+  color: rgba(0, 0, 0, 0.887);
   font-family: "Golos Text", sans-serif;
+  background-color: #fff;
 }
 
 /* Style the scrollbar */
@@ -39,8 +41,8 @@
   background: #d3d3d3; /* Thumb color on hover */
 }
 
+/* Sefat Custom CSS Start */
 /* sidebar */
-
 .custom-steps .ant-steps-item-tail {
   padding: 0 !important;
   top: 32px !important;
@@ -55,3 +57,167 @@
   font-size: 18px !important;
   margin-top: 18px !important;
 }
+
+/* table */
+.ant-table-thead > tr > th {
+  background: #262626 !important;
+  color: white !important;
+}
+
+.ant-table-column-sorter {
+  color: #3d0318;
+}
+
+.custom-sort-column .ant-table-column-sorter {
+  color: #f9f7f8;
+}
+
+.ant-table-cell .ant-table-column-has-sorters {
+  background: transparent !important;
+  color: #290814;
+}
+
+.ant-table-column-sorters {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 8px !important;
+}
+
+.ant-table-column-sorter-up,
+.ant-table-column-sorter-down {
+  color: #aaa !important;
+}
+
+.ant-table-column-sorter-up.active,
+.ant-table-column-sorter-down.active {
+  color: #ffffff !important;
+}
+
+.ant-tooltip-arrow::before {
+  background-color: #fff !important;
+}
+
+.ant-table-wrapper .ant-table-thead > tr > th::before {
+  display: none !important;
+}
+
+/* date picker  */
+.custom-range-picker {
+  width: 100%;
+  font-size: 14px;
+}
+.custom-range-picker .ant-picker-suffix {
+  font-size: 20px;
+}
+.custom-range-picker .ant-picker-input > input {
+  font-size: 16px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.custom-range-picker .ant-picker-range-separator {
+  font-size: 16px;
+}
+
+.custom-range-picker .ant-picker {
+  padding: 3px 10px;
+}
+
+/* input */
+.custom-dropdown .ant-select-item-option {
+  margin: 5px 16px !important;
+}
+
+/* Time Picker */
+.custom-time-picker .ant-picker-input > input {
+  padding: 4px 6px;
+  font-size: 14px;
+}
+
+.custom-checkbox .ant-checkbox-inner {
+  width: 18px;
+  height: 18px;
+}
+.custom-checkbox1 .ant-checkbox-inner {
+  width: 22px;
+  height: 22px;
+  border-radius: 100%;
+  border: 1px solid #d9d9d9;
+  background-color: transparent;
+  transition: all 0.3s;
+}
+
+.custom-checkbox1 .ant-checkbox-inner::after {
+  display: none;
+}
+
+.custom-checkbox1 .ant-checkbox-checked .ant-checkbox-inner {
+  background-color: transparent;
+  border-color: #866be7;
+}
+
+/* Show dot when checked */
+.custom-checkbox1 .ant-checkbox-checked .ant-checkbox-inner::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  background-color: #866be7;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Sefat Custom CSS End */
+
+/* CSS form Mahim  start*/
+
+:where(.css-dev-only-do-not-override-1veog48).ant-tabs
+  .ant-tabs-tab
+  + .ant-tabs-tab {
+  margin: 0;
+}
+:where(.css-dev-only-do-not-override-1veog48).ant-tabs .ant-tabs-tab {
+  padding: 12px 32px;
+}
+
+:where(.css-dev-only-do-not-override-1veog48).ant-tabs-top > .ant-tabs-nav,
+:where(.css-dev-only-do-not-override-1veog48).ant-tabs-bottom > .ant-tabs-nav,
+:where(.css-dev-only-do-not-override-1veog48).ant-tabs-top
+  > div
+  > .ant-tabs-nav,
+:where(.css-dev-only-do-not-override-1veog48).ant-tabs-bottom
+  > div
+  > .ant-tabs-nav {
+  margin: 0;
+}
+
+:where(.css-dev-only-do-not-override-1veog48).ant-tabs .ant-tabs-tab {
+  font-size: 16px;
+  color: #4f4f4f;
+}
+
+:where(.css-dev-only-do-not-override-1veog48).ant-tabs
+  .ant-tabs-tab.ant-tabs-tab-active
+  .ant-tabs-tab-btn {
+  font-weight: 600;
+}
+
+:where(.css-dev-only-do-not-override-1veog48).ant-input-affix-wrapper {
+  padding: 8px 12px;
+  border-radius: 8px;
+  width: 100%;
+}
+
+:where(.css-dev-only-do-not-override-1veog48).ant-input-affix-wrapper
+  .ant-input-prefix {
+  margin-inline-end: 8px;
+}
+
+:where(.css-dev-only-do-not-override-1veog48).ant-select-single {
+  height: 100%;
+}
+
+/* CSS form Mahim  end*/

@@ -27,6 +27,24 @@ import SetupTeamLocationServices2 from "../pages/onboarding/team/SetupTeamLocati
 import SetUpService from "../pages/onboarding/SetUpService";
 import ServiceTable from "../pages/onboarding/ServiceTable";
 import SuccessNotifications from "../pages/onboarding/SuccessNotifications";
+import BusinessInfo from "../components/SettingsPages/BusinessInfo";
+import Location from "../components/SettingsPages/Location";
+import Subscription from "../components/SettingsPages/Subscription";
+import Upgradeplan from "../components/SettingsPages/UpgradePlan/Upgradeplan";
+import CheckOut from "../components/SettingsPages/UpgradePlan/CheckOut";
+import SuccessUpgrade from "../components/SettingsPages/UpgradePlan/SuccessUpgrade";
+import SuccessDowngrade from "../components/SettingsPages/UpgradePlan/SuccessDowngrade";
+import CancelSubscription from "../components/SettingsPages/UpgradePlan/CancelSubscription";
+import AddCard from "../components/SettingsPages/UpgradePlan/AddCard";
+import DynamicSubSideBarLayout from "../pages/DynamicSubSideBarLayout";
+import {
+  clientNavItems,
+  settingsNavItems,
+} from "../pages/layout/subSidebarObj";
+import BasicInfo from "../pages/BasicInfo";
+import ProviderNotes from "../pages/ProviderNotes";
+import BookingInfo from "../pages/BookingInfo";
+import AddNewService from "../components/DashboardPageComponents/shared/AddNewService";
 
 export const routes = createBrowserRouter([
   {
@@ -55,8 +73,50 @@ export const routes = createBrowserRouter([
         element: <ClientPage />,
       },
       {
+        path: "/client",
+        element: (
+          <DynamicSubSideBarLayout
+            indexPath="/client/basic-info"
+            items={clientNavItems}
+          />
+        ),
+        children: [
+          {
+            path: "basic-info",
+            element: <BasicInfo />,
+          },
+          {
+            path: "booking-info",
+            element: <BookingInfo />,
+          },
+          {
+            path: "provider-notes",
+            element: <ProviderNotes />,
+          },
+        ],
+      },
+      {
         path: "/settings",
-        element: <SettingsPage />,
+        element: (
+          <DynamicSubSideBarLayout
+            indexPath="/settings"
+            items={settingsNavItems}
+          />
+        ),
+        children: [
+          {
+            index: true,
+            element: <BusinessInfo />,
+          },
+          {
+            path: "location",
+            element: <Location />,
+          },
+          {
+            path: "subscription",
+            element: <Subscription />,
+          },
+        ],
       },
     ],
   },
@@ -142,5 +202,29 @@ export const routes = createBrowserRouter([
   {
     path: "/signup-successfull",
     element: <SignupSuccessfull />,
+  },
+  {
+    path: "/upgrade-plan",
+    element: <Upgradeplan />,
+  },
+  {
+    path: "/checkout",
+    element: <CheckOut />,
+  },
+  {
+    path: "/success-upgrade",
+    element: <SuccessUpgrade />,
+  },
+  {
+    path: "/success-downgrade",
+    element: <SuccessDowngrade />,
+  },
+  {
+    path: "/cancel-subscription",
+    element: <CancelSubscription />,
+  },
+  {
+    path: "/add-card",
+    element: <AddCard />,
   },
 ]);

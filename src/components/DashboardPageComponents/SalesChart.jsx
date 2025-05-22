@@ -82,7 +82,7 @@ function SalesChart() {
 
   return (
     <div className="bg-white space-x-8 divide-x divide-gray-200 rounded-xl flex w-full h-full p-6 inset-shadow-sm ">
-      <div className="w-8/12 pr-8 chart-1 flex flex-col  ">
+      <div className="w-9/12 pr-8 chart-1 flex flex-col  ">
         <div className="">
           <div className="px-0 pt-0 pb-4 w-full flex justify-between items-center">
             <div className="flex items-start gap-4">
@@ -135,7 +135,7 @@ function SalesChart() {
               </h4>
             </div>
             <div className="border p-4 space-y-1.5 border-black/10 rounded-xl">
-              <h4 className="text-description">Peek- Time Booking Volume</h4>
+              <h4 className="text-description flex w-full justify-between">Peek- Time Booking Volume <span className="text-primary01 bg-[#ECEBFC] px-4 py-2 rounded-full text-sm font-medium ">Peak time: 14:00 - 18:00</span></h4>
               <h3 className="font-semibold text-black text-lg">950</h3>
               <h4 className="flex items-center ">
                 <GoArrowUp color="#05DF72" />{" "}
@@ -146,7 +146,7 @@ function SalesChart() {
           </div>
         </div>
         <div className="w-full chart-1 overflow-x-auto">
-          <ResponsiveContainer width={1900} height={400}>
+          <ResponsiveContainer width={1900} height={300}>
             <BarChart
               width={500}
               height={300}
@@ -173,7 +173,7 @@ function SalesChart() {
           </ResponsiveContainer>
         </div>
       </div>
-      <div className="w-4/12 ">
+      <div className="w-3/12 ">
         <h3 className="font-semibold pb-4">Repeat Clients</h3>
 
         <RepeatClientChart/>

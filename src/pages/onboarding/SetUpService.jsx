@@ -117,7 +117,6 @@ const SetUpService = () => {
                     type="text"
                     className="block w-full text-sm border border-gray-300 p-2 rounded-md"
                     placeholder="e.g Hair cut"
-                    required
                   />
                 </div>
 
@@ -131,7 +130,6 @@ const SetUpService = () => {
                     type="text"
                     className="block w-full text-sm border border-gray-300 p-2 rounded-md"
                     placeholder="e.g. A haircut is a process of trimming, shaping, or styling hair to achieve a specific look."
-                    required
                   />
                 </div>
 
@@ -143,7 +141,6 @@ const SetUpService = () => {
                   <select
                     {...register("availableFor", { required: true })}
                     className="block text-sm w-full border border-gray-300 rounded-md p-2.5 appearance-none"
-                    required
                   >
                     <option value="For Al">For all</option>
                     <option value="Female Only">Female Only</option>

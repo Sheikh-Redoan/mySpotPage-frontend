@@ -45,6 +45,8 @@ import BasicInfo from "../pages/BasicInfo";
 import ProviderNotes from "../pages/ProviderNotes";
 import BookingInfo from "../pages/BookingInfo";
 import AddNewService from "../components/DashboardPageComponents/shared/AddNewService";
+import ClientInformation from "../components/CalenderClientInformation/ClientInformation";
+import AllAppoimtment from "../components/calendarManagement/AllAppointment";
 
 export const routes = createBrowserRouter([
   {
@@ -59,6 +61,16 @@ export const routes = createBrowserRouter([
       {
         path: "/calendar",
         element: <CalendarPage />,
+        children: [
+          {
+            path: "/calendar",
+            element: <AllAppoimtment></AllAppoimtment>,
+          },
+        ],
+      },
+      {
+        path: "/ClientInformation",
+        element: <ClientInformation></ClientInformation>,
       },
       {
         path: "/service-menu",

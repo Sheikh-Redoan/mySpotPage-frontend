@@ -1,8 +1,7 @@
 import React from 'react'
 import { imageProvider } from '../../lib/imageProvider'
 
-import { ArrowUp, ChevronDown } from "lucide-react";
-import { DownOutlined } from "@ant-design/icons";
+import { ArrowUp, ChevronDown } from "lucide-react"; 
 import { Select } from "antd";
 import {
     AreaChart,

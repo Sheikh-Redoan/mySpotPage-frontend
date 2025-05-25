@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Select, Input, Checkbox } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+import { Select, Input, Checkbox } from "antd"; 
 import { X } from "lucide-react";
+import { SearchOutlined } from "../../assets/icons/icons";
 
 const LocationDropdown = ({
   options,

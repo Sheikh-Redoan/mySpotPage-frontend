@@ -37,7 +37,8 @@ function ClientPage() {
           onChange={onChange}
           className="custom-client-tabs"
         />
-        <button
+      
+        <button 
           type="button"
           onClick={() => setIsModalOpen(true)}
           className="inline-flex items-center px-3 py-2 gap-2 text-sm font-semibold text-white bg-primary01 border border-primary01 rounded-lg hover:bg-primary01 focus:outline-none focus:ring-2 focus:ring-primary01 focus:ring-offset-2"

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Select, Input } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+import { Select, Input } from "antd"; 
+import { SearchOutlined } from "../../assets/icons/icons";
 
 const SearchableDropdown = ({
   options,

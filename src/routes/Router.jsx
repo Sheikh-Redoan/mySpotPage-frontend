@@ -1,52 +1,51 @@
-import { createBrowserRouter } from "react-router";
-import MainLayout from "../layout/MainLayout";
-import ErrorPage from "../pages/ErrorPage";
-import DashboardPage from "@/pages/DashboardPage";
+import Authentication from "@/layout/Authentication";
+import OnboardLayout from "@/layout/OnboardLayout";
 import CalendarPage from "@/pages/CalendarPage";
+import ClientPage from "@/pages/ClientPage";
+import DashboardPage from "@/pages/DashboardPage";
 import ServicePage from "@/pages/ServicePage";
 import TimePage from "@/pages/TimePage";
-import ClientPage from "@/pages/ClientPage";
-import SettingsPage from "@/pages/SettingsPage";
-import Authentication from "@/layout/Authentication";
-import Signin from "@/pages/authentication/Signin";
 import ForgotPassword from "@/pages/authentication/ForgotPassword";
-import VerifyNumber from "@/pages/authentication/VerifyNumber";
 import ResetPassword from "@/pages/authentication/ResetPassword";
 import ResetSuccessfull from "@/pages/authentication/ResetSuccessfull";
-import Signup from "@/pages/authentication/Signup";
-import SignupVerifyNumber from "@/pages/authentication/SignupVerifyNumber";
 import SetupSignup from "@/pages/authentication/SetupSignup";
+import Signin from "@/pages/authentication/Signin";
+import Signup from "@/pages/authentication/Signup";
 import SignupSuccessfull from "@/pages/authentication/SignupSuccessfull";
-import OnboardLayout from "@/layout/OnboardLayout";
+import SignupVerifyNumber from "@/pages/authentication/SignupVerifyNumber";
+import VerifyNumber from "@/pages/authentication/VerifyNumber";
 import SetUpBusiness from "@/pages/onboarding/SetUpBusiness";
-import SetUpLocation from "../pages/onboarding/SetUpLocation";
-import SetupLocationServices1 from "../pages/onboarding/solo/SetupLocationServices1";
-import SetupLocationServices2 from "../pages/onboarding/solo/SetupLocationServices2";
-import SetupTeamLocationServices1 from "../pages/onboarding/team/SetupTeamLocationServices1";
-import SetupTeamLocationServices2 from "../pages/onboarding/team/SetupTeamLocationServices2";
-import SetUpService from "../pages/onboarding/SetUpService";
-import ServiceTable from "../pages/onboarding/ServiceTable";
-import SuccessNotifications from "../pages/onboarding/SuccessNotifications";
+import { createBrowserRouter } from "react-router";
+import ClientInformation from "../components/CalenderClientInformation/ClientInformation";
 import BusinessInfo from "../components/SettingsPages/BusinessInfo";
 import Location from "../components/SettingsPages/Location";
 import Subscription from "../components/SettingsPages/Subscription";
-import Upgradeplan from "../components/SettingsPages/UpgradePlan/Upgradeplan";
-import CheckOut from "../components/SettingsPages/UpgradePlan/CheckOut";
-import SuccessUpgrade from "../components/SettingsPages/UpgradePlan/SuccessUpgrade";
-import SuccessDowngrade from "../components/SettingsPages/UpgradePlan/SuccessDowngrade";
-import CancelSubscription from "../components/SettingsPages/UpgradePlan/CancelSubscription";
 import AddCard from "../components/SettingsPages/UpgradePlan/AddCard";
+import CancelSubscription from "../components/SettingsPages/UpgradePlan/CancelSubscription";
+import CheckOut from "../components/SettingsPages/UpgradePlan/CheckOut";
+import SuccessDowngrade from "../components/SettingsPages/UpgradePlan/SuccessDowngrade";
+import SuccessUpgrade from "../components/SettingsPages/UpgradePlan/SuccessUpgrade";
+import Upgradeplan from "../components/SettingsPages/UpgradePlan/Upgradeplan";
+import AllAppoimtment from "../components/calendarManagement/AllAppointment";
+import ClientLayout from "../layout/ClientLayout";
+import MainLayout from "../layout/MainLayout";
+import BasicInfo from "../pages/BasicInfo";
+import BookingInfo from "../pages/BookingInfo";
 import DynamicSubSideBarLayout from "../pages/DynamicSubSideBarLayout";
+import ErrorPage from "../pages/ErrorPage";
+import ProviderNotes from "../pages/ProviderNotes";
 import {
   clientNavItems,
   settingsNavItems,
 } from "../pages/layout/subSidebarObj";
-import BasicInfo from "../pages/BasicInfo";
-import ProviderNotes from "../pages/ProviderNotes";
-import BookingInfo from "../pages/BookingInfo";
-import AddNewService from "../components/DashboardPageComponents/shared/AddNewService";
-import ClientInformation from "../components/CalenderClientInformation/ClientInformation";
-import AllAppoimtment from "../components/calendarManagement/AllAppointment";
+import ServiceTable from "../pages/onboarding/ServiceTable";
+import SetUpLocation from "../pages/onboarding/SetUpLocation";
+import SetUpService from "../pages/onboarding/SetUpService";
+import SuccessNotifications from "../pages/onboarding/SuccessNotifications";
+import SetupLocationServices1 from "../pages/onboarding/solo/SetupLocationServices1";
+import SetupLocationServices2 from "../pages/onboarding/solo/SetupLocationServices2";
+import SetupTeamLocationServices1 from "../pages/onboarding/team/SetupTeamLocationServices1";
+import SetupTeamLocationServices2 from "../pages/onboarding/team/SetupTeamLocationServices2";
 
 export const routes = createBrowserRouter([
   {
@@ -132,6 +131,18 @@ export const routes = createBrowserRouter([
       },
     ],
   },
+
+  {
+    path: "/clients",
+    element: <ClientLayout />,
+    children: [
+      {
+        index: true,
+        element: <div>HOme</div>,
+      },
+    ],
+  },
+
   {
     path: "/onboard",
     element: <OnboardLayout />,
@@ -171,6 +182,7 @@ export const routes = createBrowserRouter([
       },
     ],
   },
+
   {
     path: "/success-notification",
     element: <SuccessNotifications />,

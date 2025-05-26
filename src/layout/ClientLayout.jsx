@@ -4,7 +4,7 @@ export default function ClientLayout({ children }) {
   return (
     <>
       <header>
-        <nav className="container max-w-5xl mx-auto">
+        <nav>
           <TopNavbar />
         </nav>
       </header>

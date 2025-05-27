@@ -135,6 +135,7 @@ export const routes = createBrowserRouter([
   {
     path: "/service-provider-info",
     element: <ClientLayout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,

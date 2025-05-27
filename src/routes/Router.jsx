@@ -34,6 +34,7 @@ import BookingInfo from "../pages/BookingInfo";
 import DynamicSubSideBarLayout from "../pages/DynamicSubSideBarLayout";
 import ErrorPage from "../pages/ErrorPage";
 import ProviderNotes from "../pages/ProviderNotes";
+import SelectStaff from "../pages/client/SelectStaff";
 import ServiceProviderInfo from "../pages/client/ServiceProviderInfo/ServiceProviderInfo";
 import {
   clientNavItems,
@@ -48,6 +49,7 @@ import SetupLocationServices2 from "../pages/onboarding/solo/SetupLocationServic
 import SetupTeamLocationServices1 from "../pages/onboarding/team/SetupTeamLocationServices1";
 import SetupTeamLocationServices2 from "../pages/onboarding/team/SetupTeamLocationServices2";
 import OurWorkDetails from "../pages/client/ServiceProviderInfo/OurWorkDetails";
+import ConfirmPage from "../pages/client/ConfirmPage";
 
 export const routes = createBrowserRouter([
   {
@@ -149,7 +151,7 @@ export const routes = createBrowserRouter([
       },
       {
         path: "select-staff",
-        element: <div>Select Staff</div>,
+        element: <SelectStaff />,
       },
       {
         path: "select-time",
@@ -157,7 +159,7 @@ export const routes = createBrowserRouter([
       },
       {
         path: "confirm",
-        element: <div>Confirm page</div>,
+        element: <ConfirmPage/>,
       },
       {
         path: "confirmation",

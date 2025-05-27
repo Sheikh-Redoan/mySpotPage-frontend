@@ -5,6 +5,7 @@ const initialState = {
   description: "",
   thumbnail: null,
   availableFor: "",
+  selectedStaff: [],
 };
 
 const serviceSlice = createSlice({

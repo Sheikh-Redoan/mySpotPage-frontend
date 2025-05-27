@@ -27,10 +27,10 @@ export default function SelectStaff() {
       <Container>
         <Breadcrumb />
         <div className="flex justify-between flex-col lg:flex-row w-full gap-8">
-          <div className="flex-1 bg-white rounded-lg p-5">
+          <div className="flex-1 bg-white rounded-xl p-5">
             <h2 className="text-xl font-semibold font-golos">Select staff</h2>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 py-5">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 py-5">
               {staff.length > 0 ? (
                 staff.map((item, index) => (
                   <StaffCard
@@ -51,7 +51,23 @@ export default function SelectStaff() {
               )}
             </div>
           </div>
-          <div className="w-1/5 bg-white rounded-lg">Confirm card</div>
+
+          <ConfirmDetails
+            className="w-ull lg:w-1/4 p-4"
+            staffName={selectedStaff?.name}
+            storeName="TCL Beauty Studio 01"
+            appointmentDateTime={"06 Jan 2025, 11:00"}
+            bookingNote={
+              "Hair is thick and slightly wavy, prefers a shoulder-length layered cut with light texture."
+            }
+            services={[]}
+            subtotal={0}
+            vatIncluded={0}
+            discountPercentage={0}
+            discountAmount={0}
+            total={0}
+            paymentInstruction={""}
+          />
         </div>
       </Container>
     </section>
@@ -66,6 +82,7 @@ import staff4 from "../../assets/images/staff/staff4.jpg";
 import staff5 from "../../assets/images/staff/staff5.jpg";
 import staff6 from "../../assets/images/staff/staff6.jpg";
 import staff7 from "../../assets/images/staff/staff7.jpg";
+import ConfirmDetails from "../../components/client/ConfirmDetails";
 
 const staffData = [
   {

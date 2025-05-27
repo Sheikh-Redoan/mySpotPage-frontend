@@ -47,7 +47,7 @@ import SetupLocationServices1 from "../pages/onboarding/solo/SetupLocationServic
 import SetupLocationServices2 from "../pages/onboarding/solo/SetupLocationServices2";
 import SetupTeamLocationServices1 from "../pages/onboarding/team/SetupTeamLocationServices1";
 import SetupTeamLocationServices2 from "../pages/onboarding/team/SetupTeamLocationServices2";
-import SelectServicesPage from "../pages/client/SelectServicesPage";
+import SelectTime from "../pages/client/SelectTime";
 
 export const routes = createBrowserRouter([
   {
@@ -144,16 +144,12 @@ export const routes = createBrowserRouter([
         element: <ServiceProviderInfo />,
       },
       {
-        path: "service",
-        element: <SelectServicesPage />,
-      },
-      {
         path: "select-staff",
         element: <div>Select Staff</div>,
       },
       {
         path: "select-time",
-        element: <div>Select Time</div>,
+        element: <SelectTime/>,
       },
       {
         path: "confirm",

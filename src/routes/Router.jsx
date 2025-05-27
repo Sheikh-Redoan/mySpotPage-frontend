@@ -34,6 +34,7 @@ import BookingInfo from "../pages/BookingInfo";
 import DynamicSubSideBarLayout from "../pages/DynamicSubSideBarLayout";
 import ErrorPage from "../pages/ErrorPage";
 import ProviderNotes from "../pages/ProviderNotes";
+import ServiceProviderInfo from "../pages/ServiceProviderInfo/ServiceProviderInfo";
 import {
   clientNavItems,
   settingsNavItems,
@@ -136,10 +137,11 @@ export const routes = createBrowserRouter([
   {
     path: "/service-provider-info",
     element: <ClientLayout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
-        element: <div>Service Provider info page</div>,
+        element: <ServiceProviderInfo />,
       },
       {
         path: "select-services",

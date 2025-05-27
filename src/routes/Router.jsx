@@ -48,6 +48,7 @@ import SetupLocationServices1 from "../pages/onboarding/solo/SetupLocationServic
 import SetupLocationServices2 from "../pages/onboarding/solo/SetupLocationServices2";
 import SetupTeamLocationServices1 from "../pages/onboarding/team/SetupTeamLocationServices1";
 import SetupTeamLocationServices2 from "../pages/onboarding/team/SetupTeamLocationServices2";
+import ConfirmPage from "../pages/client/ConfirmPage";
 
 export const routes = createBrowserRouter([
   {
@@ -157,7 +158,7 @@ export const routes = createBrowserRouter([
       },
       {
         path: "confirm",
-        element: <div>Confirm page</div>,
+        element: <ConfirmPage/>,
       },
       {
         path: "confirmation",

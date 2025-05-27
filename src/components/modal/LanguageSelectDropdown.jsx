@@ -20,9 +20,9 @@ export default function LanguageSelectDropdown() {
   };
 
   return (
-    <Space direction="vertical">
+    <Space direction="vertical" className="!w-full !block">
       <Dropdown menu={{ items, onClick: handleMenuClick }} trigger={["click"]}>
-        <Button className="w-full !flex !justify-between">
+        <Button className="!w-full !flex !justify-between">
           <Space>{language}</Space>
           <FaCaretDown />
         </Button>

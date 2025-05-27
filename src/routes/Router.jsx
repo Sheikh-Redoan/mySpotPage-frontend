@@ -133,12 +133,32 @@ export const routes = createBrowserRouter([
   },
 
   {
-    path: "/clients",
+    path: "/service-provider-info",
     element: <ClientLayout />,
     children: [
       {
         index: true,
-        element: <div>HOme</div>,
+        element: <div>Service Provider info page</div>,
+      },
+      {
+        path: "/service",
+        element: <div>Service Page</div>,
+      },
+      {
+        path: "/select-staff",
+        element: <div>Select Staff</div>,
+      },
+      {
+        path: "/select-time",
+        element: <div>Select Time</div>,
+      },
+      {
+        path: "/confirm",
+        element: <div>Confirm page</div>,
+      },
+      {
+        path: "/confirmation",
+        element: <div>Confirmation page</div>,
       },
     ],
   },

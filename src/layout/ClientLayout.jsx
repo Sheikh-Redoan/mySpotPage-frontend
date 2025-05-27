@@ -1,13 +1,9 @@
-import TopNavbar from "../pages/layout/TopNavbar";
+import TopNavbarClient from "../pages/layout/TopNavbarClient";
 
 export default function ClientLayout({ children }) {
   return (
     <>
-      <header>
-        <nav className="container max-w-5xl mx-auto">
-          <TopNavbar />
-        </nav>
-      </header>
+      <TopNavbarClient />
       <main>{children}</main>
     </>
   );

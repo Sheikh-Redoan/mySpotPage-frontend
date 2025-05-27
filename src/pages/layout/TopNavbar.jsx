@@ -8,8 +8,6 @@ function TopNavbar({ currentTab }) {
 
   const notificationButtons = ["All", "Read", "Unread"];
 
-  const isLoggedIn = false;
-
   const handleNotification = () => {
     setToggle(!toggle);
   };
@@ -34,47 +32,39 @@ function TopNavbar({ currentTab }) {
 
   return (
     <div className="flex justify-between border-b border-black/5 items-center px-6 py-4 absolute  top-0 left-0 right-0">
-      {currentTab ? (
-        <h3 className="font-semibold text-lg">{currentTab}</h3>
-      ) : (
-        <h3 className="font-semibold text-lg">Logo</h3>
-      )}
+      <h3 className="font-semibold text-lg">{currentTab}</h3>
 
-      {isLoggedIn ? (
-        <div className="flex items-center gap-4">
-          <div
-            className={`relative transition-all duration-300 ${
-              toggle ? "" : "bg-primary01"
-            } p-2 rounded-full`}>
-            <img
-              ref={iconRef}
-              onClick={handleNotification}
-              className="cursor-pointer filter "
-              src={
-                toggle
-                  ? imageProvider.Notification
-                  : imageProvider.NotificationWhite
-              }
-              alt=""
-            />
+      <div className="flex items-center gap-4">
+        <div
+          className={`relative transition-all duration-300 ${
+            toggle ? "" : "bg-primary01"
+          } p-2 rounded-full`}>
+          <img
+            ref={iconRef}
+            onClick={handleNotification}
+            className="cursor-pointer filter "
+            src={
+              toggle
+                ? imageProvider.Notification
+                : imageProvider.NotificationWhite
+            }
+            alt=""
+          />
 
-            <NotificationPopup
-              notificationButtons={notificationButtons}
-              popupRef={popupRef}
-              toggle={toggle}
-            />
-          </div>
-          <div className="cursor-pointer">
-            <img
-              className="w-10 h-10 rounded-full bg-white"
-              src="https://png.pngtree.com/png-vector/20231019/ourmid/pngtree-user-profile-avatar-png-image_10211467.png"
-              alt=""
-            />
-          </div>
+          <NotificationPopup
+            notificationButtons={notificationButtons}
+            popupRef={popupRef}
+            toggle={toggle}
+          />
         </div>
-      ) : (
-        <div>Translator</div>
-      )}
+        <div className="cursor-pointer">
+          <img
+            className="w-10 h-10 rounded-full bg-white"
+            src="https://png.pngtree.com/png-vector/20231019/ourmid/pngtree-user-profile-avatar-png-image_10211467.png"
+            alt=""
+          />
+        </div>
+      </div>
     </div>
   );
 }

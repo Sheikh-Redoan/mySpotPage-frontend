@@ -8,6 +8,7 @@ function TopNavbar({ currentTab }) {
 
   const notificationButtons = ["All", "Read", "Unread"];
 
+  // Statically set isLoggedIn to false
   const isLoggedIn = false;
 
   const handleNotification = () => {

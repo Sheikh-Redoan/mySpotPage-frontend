@@ -6,7 +6,6 @@ export default function Breadcrumb() {
   const currentPath = location.pathname;
 
   function activePath(path, title) {
-    console.log(path, currentPath);
     return path === currentPath ? (
       <span className="text-black cursor-pointer">{title}</span>
     ) : (

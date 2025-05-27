@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Breadcrumb from "../../components/client/Breadcrumb";
 import StaffCard from "../../components/client/StaffCard";
 import { setSelectedStaff } from "../../redux/features/staffSlice";
@@ -59,7 +59,6 @@ export default function SelectStaff() {
 }
 
 // Belows are the Mock staff data will be replaced with the real data
-import { useSelector } from "react-redux";
 import staff1 from "../../assets/images/staff/staff1.jpg";
 import staff2 from "../../assets/images/staff/staff2.jpg";
 import staff3 from "../../assets/images/staff/staff3.jpg";

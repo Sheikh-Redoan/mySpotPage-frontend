@@ -141,23 +141,23 @@ export const routes = createBrowserRouter([
         element: <div>Service Provider info page</div>,
       },
       {
-        path: "/service",
+        path: "service",
         element: <div>Service Page</div>,
       },
       {
-        path: "/select-staff",
+        path: "select-staff",
         element: <div>Select Staff</div>,
       },
       {
-        path: "/select-time",
+        path: "select-time",
         element: <div>Select Time</div>,
       },
       {
-        path: "/confirm",
+        path: "confirm",
         element: <div>Confirm page</div>,
       },
       {
-        path: "/confirmation",
+        path: "confirmation",
         element: <div>Confirmation page</div>,
       },
     ],

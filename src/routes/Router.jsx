@@ -34,7 +34,7 @@ import BookingInfo from "../pages/BookingInfo";
 import DynamicSubSideBarLayout from "../pages/DynamicSubSideBarLayout";
 import ErrorPage from "../pages/ErrorPage";
 import ProviderNotes from "../pages/ProviderNotes";
-import ServiceProviderInfo from "../pages/ServiceProviderInfo/ServiceProviderInfo";
+import ServiceProviderInfo from "../pages/client/ServiceProviderInfo/ServiceProviderInfo";
 import {
   clientNavItems,
   settingsNavItems,

@@ -8,6 +8,7 @@
   --font-golos: "Golos Text", sans-serif;
   --color-description: #797979;
   --color-primary02: #1e7d5d;
+  --color-border: #ecebfc;
 }
 
 .ant-tooltip .ant-tooltip-inner {

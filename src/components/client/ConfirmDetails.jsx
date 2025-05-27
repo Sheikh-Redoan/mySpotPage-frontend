@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
-import { FaStar } from 'react-icons/fa';
-import { IoLocationOutline } from 'react-icons/io5';
-import { FaRegUserCircle } from 'react-icons/fa';
-import { CiCalendar } from 'react-icons/ci';
-import { FaChevronUp, FaChevronDown } from 'react-icons/fa6'; // Import FaChevronDown for "Show more"
-import { PiInfo, PiFireLight } from 'react-icons/pi';
+import { useState } from "react";
+import { CiCalendar } from "react-icons/ci";
+import { FaRegUserCircle, FaStar } from "react-icons/fa";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa6"; // Import FaChevronDown for "Show more"
+import { IoLocationOutline } from "react-icons/io5";
+import { PiFireLight, PiInfo } from "react-icons/pi";
 
 // Dummy image import for demonstration. In a real app, this would likely come from props or a dynamic source.
-import confirm_product from '../../assets/images/confirm.jpg'; // Ensure this path is correct relative to ConfirmDetails.jsx
 
 const ConfirmDetails = ({
   className,
@@ -39,7 +37,8 @@ const ConfirmDetails = ({
   };
 
   return (
-    <div className={`${className} bg-white rounded-xl flex flex-col justify-start items-start gap-5`}>
+    <div
+      className={`${className} bg-white rounded-xl flex flex-col justify-start items-start gap-5`}>
       {/* Store Information Section */}
       <div className="flex flex-col gap-2 w-full">
         <h3 className="self-stretch text-Boulder-950 text-lg font-semibold leading-relaxed">
@@ -67,7 +66,7 @@ const ConfirmDetails = ({
         <div className="flex gap-2 items-start justify-start">
           <FaRegUserCircle className="text-black text-[20px] flex-shrink-0" />
           <p className="self-stretch text-neutral-800 text-sm font-normal leading-tight">
-            Staff - {staffName}
+            {staffName}
           </p>
         </div>
         <div className="flex gap-2 items-start justify-start">
@@ -97,12 +96,18 @@ const ConfirmDetails = ({
           Services ({services.length})
         </h3>
         {displayedServices.map((service) => (
-          <div key={service.id} className="flex justify-start items-start gap-[12px] w-full">
+          <div
+            key={service.id}
+            className="flex justify-start items-start gap-[12px] w-full">
             <img
               src={service.image}
               alt={service.name}
               className="w-20 h-20 relative rounded-lg object-cover"
-              onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/80x80/cccccc/333333?text=No+Image'; }} // Fallback for broken images
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src =
+                  "https://placehold.co/80x80/cccccc/333333?text=No+Image";
+              }} // Fallback for broken images
             />
             <div className="w-full flex flex-col">
               <h3 className="self-stretch text-Boulder-950 text-sm font-medium leading-tight">
@@ -127,8 +132,7 @@ const ConfirmDetails = ({
         {services.length > 2 && ( // Only show button if there are more than 2 services
           <button
             onClick={toggleShowServices}
-            className="text-sm font-normal font-['Golos_Text'] leading-tight text-description flex items-center justify-center gap-2 cursor-pointer w-full"
-          >
+            className="text-sm font-normal font-['Golos_Text'] leading-tight text-description flex items-center justify-center gap-2 cursor-pointer w-full">
             {showAllServices ? (
               <>
                 Show less <FaChevronUp />
@@ -188,9 +192,8 @@ const ConfirmDetails = ({
       {/* Complete Button and Payment Instruction */}
       <button
         type="submit"
-        className="cursor-pointer bg-black rounded-xl justify-center text-white text-base font-semibold font-['Golos_Text'] leading-normal py-[10px] w-full text-center hover:bg-gray-800 transition-colors duration-200"
-      >
-        Complete 
+        className="cursor-pointer bg-black rounded-xl justify-center text-white text-base font-semibold font-['Golos_Text'] leading-normal py-[10px] w-full text-center hover:bg-gray-800 transition-colors duration-200">
+        Complete
       </button>
       <p className="self-stretch text-center text-description text-xs font-normal font-['Golos_Text'] leading-none">
         {paymentInstruction}

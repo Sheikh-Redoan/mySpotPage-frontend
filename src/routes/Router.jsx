@@ -46,6 +46,7 @@ import SetupLocationServices1 from "../pages/onboarding/solo/SetupLocationServic
 import SetupLocationServices2 from "../pages/onboarding/solo/SetupLocationServices2";
 import SetupTeamLocationServices1 from "../pages/onboarding/team/SetupTeamLocationServices1";
 import SetupTeamLocationServices2 from "../pages/onboarding/team/SetupTeamLocationServices2";
+import ServiceProviderInfo from "../pages/ServiceProviderInfo/ServiceProviderInfo";
 
 export const routes = createBrowserRouter([
   {
@@ -138,7 +139,7 @@ export const routes = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <div>Service Provider info page</div>,
+        element: <ServiceProviderInfo />,
       },
       {
         path: "service",

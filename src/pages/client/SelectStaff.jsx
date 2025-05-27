@@ -1,17 +1,25 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import Breadcrumb from "../../components/client/Breadcrumb";
 import StaffCard from "../../components/client/StaffCard";
+import { setSelectedStaff } from "../../redux/features/staffSlice";
 import Container from "./Container";
 
 export default function SelectStaff() {
+  const { selectedStaff } = useSelector(({ selectedStaff }) => selectedStaff);
   const [staff, setStaff] = useState(staffData);
+  const dispatch = useDispatch();
 
-  const handleSelect = (id) => {
+  // log to the console of selected staff from redux store
+  console.log(selectedStaff);
+
+  const handleSelect = (staffData) => {
     const updatedStaff = staff.map((item) => ({
       ...item,
-      selected: item.id === id,
+      selected: item.id === staffData.id,
     }));
     setStaff(updatedStaff);
+    dispatch(setSelectedStaff(staffData));
   };
 
   return (
@@ -22,14 +30,14 @@ export default function SelectStaff() {
           <div className="flex-1 bg-white rounded-lg p-5">
             <h2 className="text-xl font-semibold font-golos">Select staff</h2>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3 py-5">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 py-5">
               {staff.length > 0 ? (
                 staff.map((item, index) => (
                   <StaffCard
                     key={index}
                     value={item.id}
                     isActive={item.selected}
-                    handleSelect={() => handleSelect(item.id)}
+                    handleSelect={() => handleSelect(item)}
                     name={item.name}
                     designation={item.designation}
                     picture={item.picture}
@@ -51,6 +59,7 @@ export default function SelectStaff() {
 }
 
 // Belows are the Mock staff data will be replaced with the real data
+import { useSelector } from "react-redux";
 import staff1 from "../../assets/images/staff/staff1.jpg";
 import staff2 from "../../assets/images/staff/staff2.jpg";
 import staff3 from "../../assets/images/staff/staff3.jpg";

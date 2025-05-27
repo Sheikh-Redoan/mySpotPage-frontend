@@ -17,7 +17,6 @@ export default function Breadcrumb() {
     <div className="my-4">
       <Breadcrumbs
         separator={<ChevronRight strokeWidth={1} />}
-        separatorMargin={0}
         items={[
           {
             title: activePath("/service-provider-info", "Service"),

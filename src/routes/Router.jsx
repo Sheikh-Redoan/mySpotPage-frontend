@@ -144,7 +144,7 @@ export const routes = createBrowserRouter([
         element: <ServiceProviderInfo />,
       },
       {
-        path: "select-services",
+        path: "service",
         element: <SelectServicesPage />,
       },
       {

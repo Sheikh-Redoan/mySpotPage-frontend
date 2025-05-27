@@ -34,6 +34,7 @@ import BookingInfo from "../pages/BookingInfo";
 import DynamicSubSideBarLayout from "../pages/DynamicSubSideBarLayout";
 import ErrorPage from "../pages/ErrorPage";
 import ProviderNotes from "../pages/ProviderNotes";
+import SelectStaff from "../pages/client/SelectStaff";
 import ServiceProviderInfo from "../pages/client/ServiceProviderInfo/ServiceProviderInfo";
 import {
   clientNavItems,
@@ -148,7 +149,7 @@ export const routes = createBrowserRouter([
       },
       {
         path: "select-staff",
-        element: <div>Select Staff</div>,
+        element: <SelectStaff />,
       },
       {
         path: "select-time",

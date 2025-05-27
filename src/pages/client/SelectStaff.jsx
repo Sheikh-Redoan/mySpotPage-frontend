@@ -1,3 +1,12 @@
+import Breadcrumb from "../../components/client/Breadcrumb";
+import Container from "./Container";
+
 export default function SelectStaff() {
-  return <div>SelectStaff</div>;
+  return (
+    <section>
+      <Container>
+        <Breadcrumb />
+      </Container>
+    </section>
+  );
 }

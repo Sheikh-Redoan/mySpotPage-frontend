@@ -223,64 +223,59 @@
 
 /* CSS form Mahim  end*/
 
-
-
-
 /* FullCalendar customization */
-/* FullCalendar customization */
-.fc {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+.fc .fc-button-primary:disabled{
+    color: #744CDB !important;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0;
 }
 
-.fc .fc-toolbar-title {
-  font-size: 1.25rem;
-  color: #1f2937;
-  font-weight: 500;
+.fc-header-toolbar:first-child .fc-button-group {
+    border: none;
+    border-radius: 0;
+}
+
+.fc .fc-button-primary:disabled {
+    background-color: transparent;
+    text-transform: capitalize;
+}
+
+.fc .fc-button:disabled {
+    opacity: 1 !important;
+}
+
+.fc .fc-button-group {
+    border: 1px solid #e5e7e8;
+    border-radius: 8px;
 }
 
 .fc .fc-button {
-  background-color: #eef2ff;
-  color: #4f46e5;
   border: none;
+  background-color: transparent;
+  color: #242528;
+  padding: 4px 22px;
 }
 
 .fc .fc-button:hover {
-  background-color: #e0e7ff;
+  background-color: transparent;
+  color: #242528;
+  border: none;
 }
 
 .fc .fc-button:focus {
   outline: none;
-  ring: 2px;
-  ring-color: #e0e7ff;
 }
 
-.fc .fc-button-active {
-  background-color: #4f46e5;
+.fc .fc-button-primary:focus {
+    box-shadow: none;
+}
+
+.fc .fc-button-primary:not(:disabled).fc-button-active,
+.fc .fc-button-primary:not(:disabled):active {
+  background-color: #866be7;
   color: white;
+  border: none;
+  border-radius: 8px;
 }
-
-.fc .fc-button-active:hover {
-  background-color: #4338ca;
-}
-
-.fc .fc-day-today {
-  background-color: #eef2ff !important;
-}
-
-.discount-event {
-  border: 1px solid #4f46e5;
-  border-radius: 0.25rem;
-  padding: 0 0.25rem;
-}
-
-.fc-event {
-  cursor: pointer;
-}
-
-.fc td, 
-.fc th {
-  border: 1px solid #e5e7eb;
-}
+/* FullCalendar customization end */

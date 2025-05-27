@@ -1,14 +1,15 @@
 import logo from "../../assets/images/logo.png";
 import LanguageSelectModal from "../../components/modal/LanguageSelectModal";
+import Container from "../client/Container";
 export default function TopNavbarClient({ isLoggedIn = false }) {
   return (
     <header className="border-b border-black/5 sticky top-0">
       <nav>
-        <div className="container mx-auto">
-          <div className="flex justify-between items-center px-6 py-4">
+        <Container>
+          <div className="flex justify-between items-center py-4">
             <div className="flex items-center gap-2">
               <img
-                className="w-20 h-8 rounded-full bg-white object-contain"
+                className="w-20 h-8 object-contain"
                 src={logo}
                 alt="brand logo"
               />
@@ -22,13 +23,11 @@ export default function TopNavbarClient({ isLoggedIn = false }) {
                   alt=""
                 />
               ) : (
-                <div className="relative">
-                  <LanguageSelectModal />
-                </div>
+                <LanguageSelectModal />
               )}
             </div>
           </div>
-        </div>
+        </Container>
       </nav>
     </header>
   );

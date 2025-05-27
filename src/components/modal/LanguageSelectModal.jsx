@@ -24,7 +24,7 @@ export default function LanguageSelectModal() {
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}
-        className="!top-10 !left-1/2 !-translate-x-2/3">
+        className="!top-10 !left-1/2 !-translate-x-1/2 md:!-translate-x-4/5">
         <p>Some contents...</p>
         <p>Some contents...</p>
         <p>Some contents...</p>

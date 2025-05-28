@@ -34,7 +34,10 @@ import BookingInfo from "../pages/BookingInfo";
 import DynamicSubSideBarLayout from "../pages/DynamicSubSideBarLayout";
 import ErrorPage from "../pages/ErrorPage";
 import ProviderNotes from "../pages/ProviderNotes";
+import ConfirmPage from "../pages/client/ConfirmPage";
+import EnterAddress from "../pages/client/EnterAddress";
 import SelectStaff from "../pages/client/SelectStaff";
+import OurWorkDetails from "../pages/client/ServiceProviderInfo/OurWorkDetails";
 import ServiceProviderInfo from "../pages/client/ServiceProviderInfo/ServiceProviderInfo";
 import {
   clientNavItems,
@@ -48,8 +51,8 @@ import SetupLocationServices1 from "../pages/onboarding/solo/SetupLocationServic
 import SetupLocationServices2 from "../pages/onboarding/solo/SetupLocationServices2";
 import SetupTeamLocationServices1 from "../pages/onboarding/team/SetupTeamLocationServices1";
 import SetupTeamLocationServices2 from "../pages/onboarding/team/SetupTeamLocationServices2";
-import OurWorkDetails from "../pages/client/ServiceProviderInfo/OurWorkDetails";
-import ConfirmPage from "../pages/client/ConfirmPage";
+import SelectTime from "../pages/client/SelectTime";
+import ConfirmBooking from "../pages/client/ConfirmBooking";
 
 export const routes = createBrowserRouter([
   {
@@ -155,21 +158,21 @@ export const routes = createBrowserRouter([
       },
       {
         path: "select-time",
-        element: <div>Select Time</div>,
+        element: <SelectTime/>,
       },
       {
         path: "confirm",
-        element: <ConfirmPage/>,
+        element: <ConfirmPage />,
       },
       {
         path: "confirmation",
-        element: <div>Confirmation page</div>,
+        element: <ConfirmBooking/>,
       },
     ],
   },
   {
     path: "/our-work",
-    element: <OurWorkDetails/>,
+    element: <OurWorkDetails />,
   },
 
   {

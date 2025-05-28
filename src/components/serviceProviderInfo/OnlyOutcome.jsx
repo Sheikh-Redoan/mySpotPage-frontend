@@ -20,6 +20,7 @@ import toner1 from "../../assets/images/toner1.png";
 import toner2 from "../../assets/images/toner2.png";
 import toner3 from "../../assets/images/toner3.png";
 import toner4 from "../../assets/images/toner4.png";
+import { useEffect } from "react";
 
 // Category Data
 const data = [
@@ -96,6 +97,15 @@ const OnlyOutcome = () => {
     const [openModal, setOpenModal] = useState(false);
     const [activeCategory, setActiveCategory] = useState(null);
     const carouselRef = useRef(null);
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+
+        window.addEventListener("resize", checkMobile);
+        return () => window.removeEventListener("resize", checkMobile);
+    }, []);
 
     return (
         <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -103,48 +113,48 @@ const OnlyOutcome = () => {
                 const chunkedImages = chunkArray(category.images, 1);
 
                 return (
-                        <div 
+                    <div
                         className="w-full"
                         key={index}
                         onMouseEnter={() => setHoveredIndex(index)}
                         onMouseLeave={() => setHoveredIndex(null)}
+                    >
+                        {/* Clickable Title */}
+                        <div
+                            className="text-center text-primary01 font-semibold bg-highlight01 py-2 cursor-pointer rounded-lg"
+                            onClick={() => {
+                                setActiveCategory(category);
+                                setOpenModal(true);
+                            }}
                         >
-                            {/* Clickable Title */}
-                            <div
-                                className="text-center text-primary01 font-semibold bg-highlight01 py-2 cursor-pointer rounded-lg"
-                                onClick={() => {
-                                    setActiveCategory(category);
-                                    setOpenModal(true);
-                                }}
-                            >
-                                {category.title}
-                            </div>
-
-                            {/* Carousel on Main Page */}
-                            <Carousel
-                                dots={false}
-                                arrows={hoveredIndex === index}
-                                prevArrow={<CustomArrow direction="left" />}
-                                nextArrow={<CustomArrow direction="right" />}
-                                className="w-full relative"
-                            >
-                                {chunkedImages.map((group, i) => (
-                                    <div key={i} className="flex w-full gap-2 py-3">
-                                        {group.map((img, j) => (
-                                            <div key={j} className="flex gap-2 w-full">
-                                                <div className="flex-1">
-                                                    <img
-                                                        src={img.after}
-                                                        alt="After"
-                                                        className="w-full h-72 object-cover rounded"
-                                                    />
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                ))}
-                            </Carousel>
+                            {category.title}
                         </div>
+
+                        {/* Carousel on Main Page */}
+                        <Carousel
+                            dots={false}
+                            arrows={isMobile || hoveredIndex === index}
+                            prevArrow={<CustomArrow direction="left" />}
+                            nextArrow={<CustomArrow direction="right" />}
+                            className="w-full relative"
+                        >
+                            {chunkedImages.map((group, i) => (
+                                <div key={i} className="flex w-full gap-2 py-3">
+                                    {group.map((img, j) => (
+                                        <div key={j} className="flex gap-2 w-full">
+                                            <div className="flex-1">
+                                                <img
+                                                    src={img.after}
+                                                    alt="After"
+                                                    className={`w-full object-cover rounded ${isMobile ? "h-[350px]" : "h-72"}`}
+                                                />
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            ))}
+                        </Carousel>
+                    </div>
                 );
             })}
 

@@ -15,6 +15,7 @@ import tonerBefore1 from "../../assets/images/tonarBefore1.png";
 import tonerAfter1 from "../../assets/images/tonerAfter1.png";
 import rootShadowBefore1 from "../../assets/images/shadowBefore1.png";
 import rootShadowAfter1 from "../../assets/images/shadowAfter1.png";
+import { useEffect } from "react";
 
 // Category Data
 const data = [
@@ -77,6 +78,7 @@ const BeforeAfter = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const [activeCategory, setActiveCategory] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   // Modal pagination state
   const [modalPage, setModalPage] = useState(0);
@@ -99,9 +101,9 @@ const BeforeAfter = () => {
   // Get current page images for modal
   const currentModalImages = activeCategory
     ? activeCategory.images.slice(
-        modalPage * imagesPerPage,
-        modalPage * imagesPerPage + imagesPerPage
-      )
+      modalPage * imagesPerPage,
+      modalPage * imagesPerPage + imagesPerPage
+    )
     : [];
 
   // Modal arrow handlers
@@ -113,10 +115,20 @@ const BeforeAfter = () => {
     setModalPage((prev) => (prev === totalModalPages - 1 ? 0 : prev + 1));
   };
 
+
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   return (
     <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {data.map((category, index) => {
-        const chunkedImages = chunkArray(category.images, 1); 
+        const chunkedImages = chunkArray(category.images, 1);
 
         return (
           <div
@@ -136,7 +148,7 @@ const BeforeAfter = () => {
             {/* Carousel */}
             <Carousel
               dots={false}
-              arrows={hoveredIndex === index}
+              arrows={isMobile || hoveredIndex === index}
               prevArrow={<CustomArrow direction="left" />}
               nextArrow={<CustomArrow direction="right" />}
               className="w-full relative"
@@ -206,24 +218,24 @@ const BeforeAfter = () => {
         </div>
 
         {/* Bottom right arrows */}
-          <div className=" flex justify-end gap-4 mt-3">
-            <button
-              onClick={handleModalPrev}
-              className="bg-highlight01 p-2 rounded-full shadow-lg hover:bg-highlight02 transition"
-              aria-label="Previous"
-              type="button"
-            >
-              <MdKeyboardArrowLeft className="text-2xl" />
-            </button>
-            <button
-              onClick={handleModalNext}
-              className="bg-highlight01 p-2 rounded-full shadow-lg hover:bg-highlight02 transition"
-              aria-label="Next"
-              type="button"
-            >
-              <MdKeyboardArrowRight className="text-2xl" />
-            </button>
-          </div>
+        <div className=" flex justify-end gap-4 mt-3">
+          <button
+            onClick={handleModalPrev}
+            className="bg-highlight01 p-2 rounded-full shadow-lg hover:bg-highlight02 transition"
+            aria-label="Previous"
+            type="button"
+          >
+            <MdKeyboardArrowLeft className="text-2xl" />
+          </button>
+          <button
+            onClick={handleModalNext}
+            className="bg-highlight01 p-2 rounded-full shadow-lg hover:bg-highlight02 transition"
+            aria-label="Next"
+            type="button"
+          >
+            <MdKeyboardArrowRight className="text-2xl" />
+          </button>
+        </div>
       </Modal>
     </section>
   );

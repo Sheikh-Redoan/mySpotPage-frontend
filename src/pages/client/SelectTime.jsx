@@ -37,6 +37,12 @@ function renderEventContent(eventInfo) {
   );
 }
 
+// function to format day numbers
+function renderDayCellContent(dayCellInfo) {
+  const day = dayCellInfo.date.getDate();
+  return day < 10 ? `0${day}` : day.toString();
+}
+
 export default function SelectTime() {
   const [weekendsVisible, setWeekendsVisible] = useState(true);
   const [currentEvents, setCurrentEvents] = useState([]);
@@ -48,10 +54,15 @@ export default function SelectTime() {
   useEffect(() => {
     if (calendarRef.current) {
       const calendarApi = calendarRef.current.getApi();
-      setCurrentView(calendarApi.view.type); // Set initial view
-      calendarApi.on("viewDidMount", () => {
-        setCurrentView(calendarApi.view.type); // Update view on change
-      });
+      setCurrentView(calendarApi.view.type);
+      const viewDidMountHandler = () => { 
+        setCurrentView(calendarApi.view.type);
+      };
+      calendarApi.on("viewDidMount", viewDidMountHandler);
+
+      return () => { 
+        calendarApi.off("viewDidMount", viewDidMountHandler);
+      };
     }
   }, []);
 
@@ -161,7 +172,7 @@ export default function SelectTime() {
 
           <div className="flex border-[1px] border-[#e5e7e8] rounded-[8px]">
             <button
-              className={`px-[22px] py-[6px] cursor-pointer rounded-[8px] text-[14px] ${
+              className={`px-[22px] py-[6px] cursor-pointer rounded-[10px] text-[14px] ${
                 currentView === "dayGridMonth"
                   ? "bg-[#866be7] text-white"
                   : ""
@@ -171,7 +182,7 @@ export default function SelectTime() {
               Month
             </button>
             <button
-              className={`px-[22px] py-[6px] cursor-pointer rounded-[8px] text-[14px] ${
+              className={`px-[22px] py-[6px] cursor-pointer rounded-[10px] text-[14px] ${
                 currentView === "timeGridWeek"
                   ? "bg-[#866be7] text-white"
                   : ""
@@ -181,7 +192,7 @@ export default function SelectTime() {
               Week
             </button>
             <button
-              className={`px-[22px] py-[6px] cursor-pointer rounded-[8px] text-[14px] ${
+              className={`px-[22px] py-[6px] cursor-pointer rounded-[10px] text-[14px] ${
                 currentView === "timeGridDay"
                   ? "bg-[#866be7] text-white"
                   : ""
@@ -208,6 +219,7 @@ export default function SelectTime() {
           eventContent={renderEventContent}
           eventClick={handleEventClick}
           eventsSet={handleEvents}
+          dayCellContent={renderDayCellContent}
         />
 
         <div className="mt-6 flex justify-between items-center">
@@ -217,7 +229,7 @@ export default function SelectTime() {
               Join our waitlist!
             </a>
           </p>
-          <button className="px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors">
+          <button className="px-6 py-2 text-[#82868E] bg-[#E5E7E8] rounded-md hover:bg-[#ECEBFC] transition-colors cursor-pointer">
             Continue
           </button>
         </div>

@@ -244,13 +244,13 @@
 }
 
 .fc .fc-scrollgrid-sync-table thead {
-  background-color: #866be7;
+  background-color: #ECEBFC;
 }
 
 .fc .fc-col-header-cell {
   padding: 6px 0;
-  background-color: #866be7;
-  color: white;
+  background-color: #ECEBFC;
+  color: #866BE7;
   font-weight: 500;
   font-size: 14px;
 }
@@ -267,6 +267,32 @@
   font-weight: 400;
   font-size: 14px;
 }
+
+.fc .fc-daygrid-day-top {
+    display: block;
+}
+
+.fc .fc-day-today .fc-daygrid-day-number {
+  background-color: #866BE7; 
+  color: white;             
+  width: 26px;              
+  height: 26px;             
+  border-radius: 50%;       
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;         
+  line-height: 1;          
+  padding: 0;              
+  box-sizing: border-box;
+}
+
+.fc .fc-daygrid-day.fc-day-today {
+    background-color: transparent;
+}
+
+
+
 
 /* .fc .fc-col-header-cell-cushion {
   color: #333;

@@ -3,7 +3,7 @@ import LanguageSelectModal from "../../components/modal/LanguageSelectModal";
 import Container from "../client/Container";
 export default function TopNavbarClient({ isLoggedIn = false }) {
   return (
-    <header className="border-b border-black/5 sticky top-0">
+    <header className="border-b border-black/5 sticky top-0 bg-white z-50">
       <nav>
         <Container>
           <div className="flex justify-between items-center py-4">

@@ -1,15 +1,15 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { formatDate } from "@fullcalendar/core";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import Container from "./Container";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import { DatePicker } from "antd";
+import dayjs from "dayjs";
 
 let eventGuid = 0;
-let todayStr = new Date().toISOString().replace(/T.*$/, ""); // YYYY-MM-DD of today
+let todayStr = new Date().toISOString().replace(/T.*$/, "");
 
 export const INITIAL_EVENTS = [
   {
@@ -40,7 +40,20 @@ function renderEventContent(eventInfo) {
 export default function SelectTime() {
   const [weekendsVisible, setWeekendsVisible] = useState(true);
   const [currentEvents, setCurrentEvents] = useState([]);
-  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(dayjs());
+  const [currentView, setCurrentView] = useState("dayGridMonth"); 
+  const calendarRef = useRef(null);
+
+  // Update currentView when the calendar view changes
+  useEffect(() => {
+    if (calendarRef.current) {
+      const calendarApi = calendarRef.current.getApi();
+      setCurrentView(calendarApi.view.type); // Set initial view
+      calendarApi.on("viewDidMount", () => {
+        setCurrentView(calendarApi.view.type); // Update view on change
+      });
+    }
+  }, []);
 
   function handleWeekendsToggle() {
     setWeekendsVisible(!weekendsVisible);
@@ -50,7 +63,7 @@ export default function SelectTime() {
     let title = prompt("Please enter a new title for your event");
     let calendarApi = selectInfo.view.calendar;
 
-    calendarApi.unselect(); // clear date selection
+    calendarApi.unselect();
 
     if (title) {
       calendarApi.addEvent({
@@ -77,46 +90,137 @@ export default function SelectTime() {
     setCurrentEvents(events);
   }
 
+  const onDatePickerChange = (date) => {
+    if (date && calendarRef.current) {
+      const calendarApi = calendarRef.current.getApi();
+      calendarApi.gotoDate(date.toDate());
+      setSelectedDate(date);
+    }
+  };
+
+  const handleNavButtonClick = (direction) => {
+    if (calendarRef.current) {
+      const calendarApi = calendarRef.current.getApi();
+      if (direction === "prev") {
+        calendarApi.prev();
+      } else if (direction === "next") {
+        calendarApi.next();
+      }
+      const currentDate = calendarApi.getDate();
+      setSelectedDate(dayjs(currentDate));
+    }
+  };
+
+  // Handle view change and update currentView state
+  const handleViewChange = (view) => {
+    if (calendarRef.current) {
+      const calendarApi = calendarRef.current.getApi();
+      calendarApi.changeView(view);
+      setCurrentView(view);
+    }
+  };
+
   return (
     <section className="bg-[#F9FAFC] py-8">
       <Container className="bg-white shadow-md rounded-lg p-4">
-        <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
-
-          <FullCalendar
-            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-            headerToolbar={{
-              left: "prev,next today",
-              right: "dayGridMonth,timeGridWeek,timeGridDay",
-            }}
-            initialView="dayGridMonth"
-            editable={true}
-            selectable={true}
-            selectMirror={true}
-            dayMaxEvents={true}
-            weekends={weekendsVisible}
-            initialEvents={INITIAL_EVENTS} // alternatively, use the `events` setting to fetch from a feed
-            select={handleDateSelect}
-            eventContent={renderEventContent} // custom render function
-            eventClick={handleEventClick}
-            eventsSet={handleEvents} // called after events are initialized/added/changed/removed
-            /* you can update a remote database when these fire:
-          eventAdd={function(){}}
-          eventChange={function(){}}
-          eventRemove={function(){}}
-          */
-          />
-
-          <div className="mt-6 flex justify-between items-center">
-            <p className="text-gray-600">
-              No suitable time slot?{" "}
-              <a href="#" className="text-indigo-600 hover:text-indigo-700">
-                Join our waitlist!
-              </a>
-            </p>
-            <button className="px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors">
-              Continue
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center space-x-4">
+            <button
+              className="cursor-pointer"
+              onClick={() => handleNavButtonClick("prev")}
+            >
+              <img src="/src/assets/icons/left_arrow.svg" alt="Left Arrow" />
+            </button>
+            <DatePicker
+              onChange={onDatePickerChange}
+              picker="month"
+              value={selectedDate}
+              format="MMMM YYYY"
+              allowClear={false}
+              className="w-40"
+            />
+            <button
+              className="cursor-pointer ml-1"
+              onClick={() => handleNavButtonClick("next")}
+            >
+              <img src="/src/assets/icons/right_arrow.svg" alt="Right Arrow" />
+            </button>
+            <button
+              className="text-[#866be7] cursor-pointer text-[14px] font-semibold"
+              onClick={() => {
+                if (calendarRef.current) {
+                  const calendarApi = calendarRef.current.getApi();
+                  calendarApi.today();
+                  setSelectedDate(dayjs());
+                }
+              }}
+            >
+              Today
             </button>
           </div>
+
+          <div className="flex border-[1px] border-[#e5e7e8] rounded-[8px]">
+            <button
+              className={`px-[22px] py-[6px] cursor-pointer rounded-[8px] text-[14px] ${
+                currentView === "dayGridMonth"
+                  ? "bg-[#866be7] text-white"
+                  : ""
+              }`}
+              onClick={() => handleViewChange("dayGridMonth")}
+            >
+              Month
+            </button>
+            <button
+              className={`px-[22px] py-[6px] cursor-pointer rounded-[8px] text-[14px] ${
+                currentView === "timeGridWeek"
+                  ? "bg-[#866be7] text-white"
+                  : ""
+              }`}
+              onClick={() => handleViewChange("timeGridWeek")}
+            >
+              Week
+            </button>
+            <button
+              className={`px-[22px] py-[6px] cursor-pointer rounded-[8px] text-[14px] ${
+                currentView === "timeGridDay"
+                  ? "bg-[#866be7] text-white"
+                  : ""
+              }`}
+              onClick={() => handleViewChange("timeGridDay")}
+            >
+              Day
+            </button>
+          </div>
+        </div>
+
+        <FullCalendar
+          ref={calendarRef}
+          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+          headerToolbar={false}
+          initialView="dayGridMonth"
+          editable={true}
+          selectable={true}
+          selectMirror={true}
+          dayMaxEvents={true}
+          weekends={weekendsVisible}
+          initialEvents={INITIAL_EVENTS}
+          select={handleDateSelect}
+          eventContent={renderEventContent}
+          eventClick={handleEventClick}
+          eventsSet={handleEvents}
+        />
+
+        <div className="mt-6 flex justify-between items-center">
+          <p className="text-gray-600">
+            No suitable time slot?{" "}
+            <a href="#" className="text-indigo-600 hover:text-indigo-700">
+              Join our waitlist!
+            </a>
+          </p>
+          <button className="px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors">
+            Continue
+          </button>
+        </div>
       </Container>
     </section>
   );

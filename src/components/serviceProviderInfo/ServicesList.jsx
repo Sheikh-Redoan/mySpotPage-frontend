@@ -48,8 +48,8 @@ const services = [
   },
 ];
 
-export default function ServicesList() {
-  const [selected, setSelected] = useState([]);
+export default function ServicesList({ selected, setSelected }) {
+  // const [selected, setSelected] = useState([]);
 
   const toggleSelect = (index) => {
     setSelected((prev) =>

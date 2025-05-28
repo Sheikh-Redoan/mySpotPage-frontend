@@ -81,6 +81,7 @@ const TestimonialsSection = () => {
                     ))}
                 </div>
 
+                {/* View More */}
                 {
                     visibleCount < testimonials.length && (
                         <div>
@@ -90,7 +91,7 @@ const TestimonialsSection = () => {
                         </div>
                     )
                 }
-                {/* View More */}
+
 
             </div>
         </section>

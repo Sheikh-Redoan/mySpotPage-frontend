@@ -4,8 +4,29 @@ import ServicesList from '../../../components/serviceProviderInfo/ServicesList';
 import OurWork from '../../../components/serviceProviderInfo/OurWork';
 import { Link } from 'react-router';
 import TestimonialsSection from '../../../components/serviceProviderInfo/TestimonialsSection';
+import { useState } from 'react';
+import BookingCart from '../../../components/serviceProviderInfo/BookingCart';
+
+const businessData = {
+    studioName: "TCL Beauty Studio 01",
+    label: "Business Based",
+    rating: 4.8,
+    reviewCount: "12.5K reviews",
+    address: "15 Rothschild Boulevard, Tel Aviv-Yafo, Israel",
+    workingHours: [
+        { day: "Monday", time: "08:00 - 17:00" },
+        { day: "Tuesday", time: "08:00 - 17:00" },
+        { day: "Wednesday", time: "08:00 - 17:00" },
+        { day: "Thursday", time: "08:00 - 17:00" },
+        { day: "Friday", time: "08:00 - 17:00" },
+        { day: "Saturday", time: "08:00 - 17:00" },
+        { day: "Sunday", time: "08:00 - 17:00" }
+    ],
+}
 
 const ServiceProviderInfo = () => {
+    const [selected, setSelected] = useState([]);
+
     return (
         <section className='container mx-auto py-5 px-3'>
             {/* banner part */}
@@ -13,10 +34,10 @@ const ServiceProviderInfo = () => {
                 <img className='w-full h-auto' src={banner} alt="Service Provider Banner" />
             </div>
             {/* content part */}
-            <div className='grid lg:grid-cols-12 gap-4'>
+            <div className='flex flex-col-reverse lg:flex-row gap-4'>
                 {/* Services List + about us  */}
-                <div className='col-span-9'>
-                    <ServicesList />
+                <div className='flex-1'>
+                    <ServicesList selected={selected} setSelected={setSelected} />
                     <div className='my-12 font-golos '>
                         <h2 className="text-2xl font-semibold mb-4">About Us</h2>
                         <p className='text-description text-sm md:text-base'>At TCL Beauty Studio 01, we’re passionate about delivering exceptional hair services with a personalized touch. Founded in 2020, our mission is to help every client feel confident and beautiful through expert styling and innovative techniques. What sets us apart? Our commitment to high-quality products, skilled professionals, and a welcoming atmosphere. Whether you visit our salon or book a home service, we ensure a top-tier experience tailored just for you.</p>
@@ -29,15 +50,32 @@ const ServiceProviderInfo = () => {
                         <OurWork />
                     </div>
                     <div>
-                        <TestimonialsSection/>
+                        <TestimonialsSection />
                     </div>
                 </div>
 
                 {/* Booking part */}
-                <div className='col-span-3'>
-                    <h1>Booking</h1>
+                <div className=''>
+                    <BookingCart businessData={businessData} selected={selected} />
                 </div>
             </div>
+            <div className="flex justify-between items-center md:hidden fixed bottom-0 left-0 right-0 bg-white shadow-lg p-4 z-50">
+                <div className="text-sm text-center text-gray-500">
+                    {selected.length > 0
+                        ? `${selected.length} service selected`
+                        : "0 service selected"}
+                </div>
+                <button
+                    className={`bg-gray-900 text-white py-2 px-8 rounded-lg transition ${selected.length === 0
+                            ? "opacity-50 cursor-not-allowed"
+                            : "hover:bg-gray-800"
+                        }`}
+                    disabled={selected.length === 0}
+                >
+                    Book now
+                </button>
+            </div>
+
         </section>
     );
 };

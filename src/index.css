@@ -11,8 +11,8 @@
   --color-border: #ecebfc;
 }
 
-.stork_dasharray{
-background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='black' stroke-width='1' stroke-dasharray='5' stroke-dashoffset='0' stroke-linecap='butt'/%3e%3c/svg%3e");
+.stork_dasharray {
+  background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='black' stroke-width='1' stroke-dasharray='5' stroke-dashoffset='0' stroke-linecap='butt'/%3e%3c/svg%3e");
 }
 
 .ant-tooltip .ant-tooltip-inner {
@@ -228,5 +228,56 @@ background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' 
 /* CSS form Mahim  end*/
 
 /* FullCalendar customization */
+.fc .fc-view-harness {
+  border-radius: 12px;
+  overflow: hidden;
+}
 
+.fc .fc-scrollgrid {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.fc .fc-theme-standard .fc-scrollgrid {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.fc .fc-scrollgrid-sync-table thead {
+  background-color: #866be7;
+}
+
+.fc .fc-col-header-cell {
+  padding: 6px 0;
+  background-color: #866be7;
+  color: white;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.fc-scroller {
+  overflow-y: hidden !important;
+}
+
+.fc .fc-daygrid-day-frame {
+  padding: 10px;
+}
+
+.fc-daygrid-day-number {
+  font-weight: 400;
+  font-size: 14px;
+}
+
+/* .fc .fc-col-header-cell-cushion {
+  color: #333;
+}
+
+.fc .fc-col-header-cell.fc-day-sat {
+  background-color: #ffebee;
+}
+
+.fc .fc-col-header-cell.fc-day-sun {
+  background-color: #e3f2fd;
+}
+ */
 /* FullCalendar customization end */

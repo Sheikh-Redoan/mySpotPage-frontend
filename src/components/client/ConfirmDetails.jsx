@@ -23,6 +23,7 @@ const ConfirmDetails = ({
   discountAmount,
   total,
   paymentInstruction,
+  buttonTitle = "Complete",
 }) => {
   // State to manage the visibility of all services.
   // Initially, if there are more than 2 services, only show 2.
@@ -193,7 +194,7 @@ const ConfirmDetails = ({
       <button
         type="submit"
         className="cursor-pointer bg-black rounded-xl justify-center text-white text-base font-semibold font-['Golos_Text'] leading-normal py-[10px] w-full text-center hover:bg-gray-800 transition-colors duration-200">
-        Complete
+        {buttonTitle}
       </button>
       <p className="self-stretch text-center text-description text-xs font-normal font-['Golos_Text'] leading-none">
         {paymentInstruction}

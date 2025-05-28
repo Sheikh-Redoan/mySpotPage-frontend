@@ -1,7 +1,7 @@
 import { Breadcrumb as Breadcrumbs } from "antd";
 import { ChevronRight } from "lucide-react";
 import { Link, useLocation } from "react-router";
-export default function Breadcrumb() {
+export default function Breadcrumb({ isAddressPage }) {
   let location = useLocation();
   const currentPath = location.pathname;
 
@@ -20,6 +20,14 @@ export default function Breadcrumb() {
         items={[
           {
             title: activePath("/service-provider-info", "Service"),
+          },
+          {
+            ...(isAddressPage && {
+              title: activePath(
+                "/service-provider-info/enter-address",
+                "Enter address"
+              ),
+            }),
           },
           {
             title: activePath(

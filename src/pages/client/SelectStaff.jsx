@@ -6,7 +6,7 @@ import { setSelectedStaff } from "../../redux/features/staffSlice";
 import Container from "./Container";
 
 export default function SelectStaff() {
-  const { selectedStaff } = useSelector(({ selectedStaff }) => selectedStaff);
+  const selectedStaff = useSelector(({ selectedStaff }) => selectedStaff);
   const [staff, setStaff] = useState(staffData);
   const dispatch = useDispatch();
 
@@ -67,6 +67,7 @@ export default function SelectStaff() {
             discountAmount={0}
             total={0}
             paymentInstruction={""}
+            buttonTitle={"Continue"}
           />
         </div>
       </Container>

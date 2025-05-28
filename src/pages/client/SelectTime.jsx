@@ -11,6 +11,23 @@ import dayjs from "dayjs";
 let eventGuid = 0;
 let todayStr = new Date().toISOString().replace(/T.*$/, "");
 
+const specialDatesData = [
+  { date: "2025-05-01", isBusy: true },
+  { date: "2025-05-02", isBusy: true },
+  { date: "2025-05-06", sale: "🔥 25% OFF" },
+  { date: "2025-05-08", isBusy: true },
+  { date: "2025-05-09", isBusy: true },
+  { date: "2025-05-14", sale: "🔥 25% OFF" },
+  { date: "2025-06-15", sale: "🔥 10% OFF", isBusy: true },
+  { date: "2025-05-16", isBusy: true },
+  { date: "2025-06-17", isBusy: true },
+  { date: "2025-06-22", isBusy: true },
+  { date: "2025-06-23", isBusy: true },
+  { date: "2025-06-30", sale: "🔥 50% OFF" },
+  { date: "2025-07-01", sale: "🔥 50% OFF" },
+  { date: "2025-07-02", sale: "🔥 50% OFF" },
+];
+
 export const INITIAL_EVENTS = [
   {
     id: createEventId(),
@@ -37,11 +54,14 @@ function renderEventContent(eventInfo) {
   );
 }
 
-// function to format day numbers
-function renderDayCellContent(dayCellInfo) {
-  const day = dayCellInfo.date.getDate();
-  return day < 10 ? `0${day}` : day.toString();
-}
+// Utility to format a Date object or date string to YYYY-MM-DD
+const toYYYYMMDD = (dateInput) => {
+  const d = new Date(dateInput);
+  const year = d.getFullYear();
+  const month = (`0${d.getMonth() + 1}`).slice(-2);
+  const day = (`0${d.getDate()}`).slice(-2);
+  return `${year}-${month}-${day}`;
+};
 
 export default function SelectTime() {
   const [weekendsVisible, setWeekendsVisible] = useState(true);
@@ -49,6 +69,8 @@ export default function SelectTime() {
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [currentView, setCurrentView] = useState("dayGridMonth"); 
   const calendarRef = useRef(null);
+
+  const [highlightedDate, setHighlightedDate] = useState(null);
 
   // Update currentView when the calendar view changes
   useEffect(() => {
@@ -131,10 +153,69 @@ export default function SelectTime() {
     }
   };
 
+  // Function to add custom classes to day cells
+  function dayCellClassNamesFunc(arg) {
+    const dateStr = toYYYYMMDD(arg.date);
+    const classes = [];
+    const specialDateInfo = specialDatesData.find(sd => sd.date === dateStr);
+
+    if (dateStr === highlightedDate) {
+      classes.push('custom-selected-date');
+    }
+
+    if (specialDateInfo && specialDateInfo.isBusy) {
+      classes.push('custom-busy-date');
+    }
+    return classes;
+  }
+
+  // Handler for clicking a date to "select" it (custom highlight)
+  const handleDateClickForHighlight = (clickInfo) => {
+    const clickedDateStr = clickInfo.dateStr;
+    const specialDateInfo = specialDatesData.find(sd => sd.date === clickedDateStr);
+
+    if (specialDateInfo && specialDateInfo.isBusy) {
+      console.log("This date is busy and cannot be highlighted.");
+      return;
+    }
+    setHighlightedDate(clickedDateStr);
+    clickInfo.view.calendar.unselect();
+  };
+
+  // Function to render day cell content (number + sale badge)
+  function renderDayCellContentWithSales(dayCellInfo) {
+    const dayNumber = dayCellInfo.date.getDate();
+    const formattedDayNumber = dayNumber < 10 ? `0${dayNumber}` : dayNumber.toString();
+    const dateStr = toYYYYMMDD(dayCellInfo.date);
+    const specialDateInfo = specialDatesData.find(sd => sd.date === dateStr);
+
+    return (
+      <div className="custom-day-cell-content">
+        <span className="custom-day-number">{formattedDayNumber}</span>
+        {specialDateInfo && specialDateInfo.sale && !dayCellInfo.isOtherMonth && (
+          <div className="sale-badge">
+            {specialDateInfo.sale}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // Prevent selection (for event creation) on busy dates
+  const handleSelectAllow = (selectInfo) => {
+    const startDateStr = toYYYYMMDD(selectInfo.start);
+    const specialDateInfo = specialDatesData.find(sd => sd.date === startDateStr);
+
+    if (specialDateInfo && specialDateInfo.isBusy) {
+      return false; 
+    }
+    return true; 
+  };
+
   return (
-    <section className="bg-[#F9FAFC] py-8">
-      <Container className="bg-white shadow-md rounded-lg p-4">
-        <div className="flex items-center justify-between mb-4">
+    <section className="bg-[#F9FAFC] py-4 px-2 md:px-0 md:py-8">
+      <Container className="bg-white shadow-md rounded-lg max-sm:py-4 max-sm:px-2 lg:p-6">
+        <div className="flex flex-col md:flex-row gap-4 md:gap-0 items-center justify-between mb-4">
           <div className="flex items-center space-x-4">
             <button
               className="cursor-pointer"
@@ -172,7 +253,7 @@ export default function SelectTime() {
 
           <div className="flex border-[1px] border-[#e5e7e8] rounded-[8px]">
             <button
-              className={`px-[22px] py-[6px] cursor-pointer rounded-[10px] text-[14px] ${
+              className={`px-[22px] py-[4px] md:py-[6px] cursor-pointer rounded-[10px] text-[14px] ${
                 currentView === "dayGridMonth"
                   ? "bg-[#866be7] text-white"
                   : ""
@@ -219,7 +300,10 @@ export default function SelectTime() {
           eventContent={renderEventContent}
           eventClick={handleEventClick}
           eventsSet={handleEvents}
-          dayCellContent={renderDayCellContent}
+          dayCellClassNames={dayCellClassNamesFunc}
+          dateClick={handleDateClickForHighlight}
+          selectAllow={handleSelectAllow}
+          dayCellContent={renderDayCellContentWithSales}
         />
 
         <div className="mt-6 flex justify-between items-center">

@@ -6,7 +6,7 @@ import OnlyOutcome from "../../../components/serviceProviderInfo/OnlyOutcome";
 const OurWorkDetails = () => {
 
     return (
-        <section className="container mx-auto mt-16 px-4 font-golos">
+        <section className="container mx-auto my-16 px-4 font-golos">
             <h1 className="text-2xl font-bold mb-8">Our Work</h1>
             <BeforeAfter />
 

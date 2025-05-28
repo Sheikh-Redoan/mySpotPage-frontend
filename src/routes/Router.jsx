@@ -52,7 +52,6 @@ import SetupLocationServices2 from "../pages/onboarding/solo/SetupLocationServic
 import SetupTeamLocationServices1 from "../pages/onboarding/team/SetupTeamLocationServices1";
 import SetupTeamLocationServices2 from "../pages/onboarding/team/SetupTeamLocationServices2";
 import SelectTime from "../pages/client/SelectTime";
-import ConfirmPage from "../pages/client/ConfirmPage";
 import ConfirmBooking from "../pages/client/ConfirmBooking";
 
 export const routes = createBrowserRouter([

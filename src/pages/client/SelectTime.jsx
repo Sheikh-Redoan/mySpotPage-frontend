@@ -7,6 +7,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import Container from "./Container";
 import { DatePicker } from "antd";
 import dayjs from "dayjs";
+import { Link } from "react-router";
 
 let eventGuid = 0;
 let todayStr = new Date().toISOString().replace(/T.*$/, "");
@@ -46,6 +47,7 @@ export function createEventId() {
 }
 
 function renderEventContent(eventInfo) {
+  console.log("eventInfo", eventInfo);
   return (
     <>
       <b>{eventInfo.timeText}</b>
@@ -93,6 +95,7 @@ export default function SelectTime() {
   }
 
   function handleDateSelect(selectInfo) {
+    console.log("select infol", selectInfo);
     let title = prompt("Please enter a new title for your event");
     let calendarApi = selectInfo.view.calendar;
 
@@ -120,6 +123,7 @@ export default function SelectTime() {
   }
 
   function handleEvents(events) {
+    // console.log("events", events);
     setCurrentEvents(events);
   }
 
@@ -171,6 +175,7 @@ export default function SelectTime() {
 
   // Handler for clicking a date to "select" it (custom highlight)
   const handleDateClickForHighlight = (clickInfo) => {
+    // console.log("clickInfo", clickInfo);
     const clickedDateStr = clickInfo.dateStr;
     const specialDateInfo = specialDatesData.find(sd => sd.date === clickedDateStr);
 
@@ -306,12 +311,12 @@ export default function SelectTime() {
           dayCellContent={renderDayCellContentWithSales}
         />
 
-        <div className="mt-6 flex justify-between items-center">
-          <p className="text-gray-600">
+        <div className="mt-6 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0">
+          <p className="text-[#3D3D3D] text-[14px]">
             No suitable time slot?{" "}
-            <a href="#" className="text-indigo-600 hover:text-indigo-700">
+            <Link to="#" className="hover:text-indigo-700 text-[#744CDB] text-[14px] underline">
               Join our waitlist!
-            </a>
+            </Link>
           </p>
           <button className="px-6 py-2 text-[#82868E] bg-[#E5E7E8] rounded-md hover:bg-[#ECEBFC] transition-colors cursor-pointer">
             Continue

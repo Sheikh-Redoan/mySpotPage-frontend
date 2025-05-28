@@ -336,6 +336,14 @@
   }
   .custom-day-cell-content {
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .sale-badge {
+    border: none;
+    color: #866be7;
+    padding: 0;
+    white-space: wrap;
   }
 }
 

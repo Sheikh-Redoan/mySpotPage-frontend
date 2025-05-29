@@ -48,8 +48,8 @@ const services = [
   },
 ];
 
-export default function ServicesList() {
-  const [selected, setSelected] = useState([]);
+export default function ServicesList({ selected, setSelected }) {
+  // const [selected, setSelected] = useState([]);
 
   const toggleSelect = (index) => {
     setSelected((prev) =>
@@ -64,7 +64,7 @@ export default function ServicesList() {
         {services.map((service, index) => (
           <div
             key={index}
-            className="flex items-start gap-4 border rounded-lg border-border p-4 shadow-xs"
+            className="relative flex flex-col md:flex-row items-start gap-4 border rounded-lg border-border p-4 shadow-xs "
           >
             <img
               src={service.image}
@@ -76,7 +76,7 @@ export default function ServicesList() {
               <p className="text-sm text-description mt-1">
                 {service.description}
               </p>
-              <div className="text-sm mt-2 flex items-center gap-3">
+              <div className="text-sm flex items-center gap-3 mt-4 md:mt-2">
                 <span>{service.duration}</span>
                 <span className="bg-[#d1d1d1] size-2 rounded-full"></span>
                 <span className="text-primary01 font-semibold">{service.price}</span>
@@ -84,7 +84,7 @@ export default function ServicesList() {
             </div>
             <input
               type="checkbox"
-              className="w-5 h-5 mt-1 accent-primary01"
+              className="absolute top-4 right-4 size-5 accent-primary01"
               checked={selected.includes(index)}
               onChange={() => toggleSelect(index)}
             />

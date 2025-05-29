@@ -61,12 +61,13 @@ const ConfirmPage = () => {
   };
 
   return (
-    <section className="py-8"> 
-      <Container className="max-w-[1296px] mx-auto px-4"> 
-        <Breadcrumb />
-        <div className="flex flex-col lg:flex-row items-start justify-between w-full gap-8 mt-6"> 
-        
-          <div className="p-5 bg-white rounded-xl flex-1 w-full lg:w-auto"> 
+    <section className="py-8">
+      <Container className="max-w-[1296px] mx-auto px-4">
+        {/* Pass isAddressPage as true to show "Enter address" and "Select staff" in the breadcrumb */}
+        <Breadcrumb isStaffPage={true} />
+        <div className="flex flex-col lg:flex-row items-start justify-between w-full gap-8 mt-6">
+
+          <div className="p-5 bg-white rounded-xl flex-1 w-full lg:w-auto">
             <h2 className="text-Boulder-950 text-base font-semibold leading-normal mb-4">
               Confirm
             </h2>
@@ -104,6 +105,7 @@ const ConfirmPage = () => {
             discountAmount={storeData.discountAmount}
             total={storeData.total}
             paymentInstruction={storeData.paymentInstruction}
+            buttonTittle = {"Complete"}
           />
         </div>
       </Container>

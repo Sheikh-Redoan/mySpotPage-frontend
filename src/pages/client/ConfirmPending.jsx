@@ -1,20 +1,22 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 // Importing icons from react-icons
-import { FaCheckCircle, FaStar } from "react-icons/fa"; // Keep FaStar for custom star rendering
+import { FaCheckCircle, FaStar } from "react-icons/fa";
 import { PiStorefrontLight, PiInfo, PiFireLight } from "react-icons/pi";
-import { IoLocationOutline } from "react-icons/io5"; // Keep for location icon in ConfirmDetails if needed later, but we'll use CiMap here
 import { CiCalendar } from "react-icons/ci";
 import { GoDotFill } from "react-icons/go";
-import { CiMap } from "react-icons/ci"; // Using CiMap for the map icon as per your original structure
+import { CiMap } from "react-icons/ci";
+import { SplitIcon } from "lucide-react";
 
 // Importing the ConfirmDetails component
-import ConfirmDetails from "../../components/client/ConfirmDetails"; // Adjust path as per your project structure
+import ConfirmDetails from "../../components/client/ConfirmDetails";
 
-// Dummy image import for services. In a real application, these would be dynamic.
+// Dummy image import for services.
 import confirm_product from "../../assets/images/confirm.jpg";
-import { SplitIcon } from "lucide-react"; // Only SplitIcon is used from lucide-react
 
-const ConfirmBooking = () => {
+const ConfirmPending = () => {
+  // State to manage the booking status: 'pending' or 'confirmed'
+  const [bookingStatus, setBookingStatus] = useState('pending');
+
   const bookingData = {
     thankYouMessage: "Thank You for Your Booking!",
     confirmationText:
@@ -22,17 +24,38 @@ const ConfirmBooking = () => {
     paymentRequirementTitle: "Payment Requirement",
     paymentInstruction: "You will pay at the appointment location",
     storeName: "TCL Beauty Studio 01",
-    rating: "4.8", // This will be used to render stars directly in ConfirmBooking
-    reviewsCount: "2.5K", // Changed to 2.5K as per image for consistency
-    location: "15 Rothschild Boulevard, Tel Aviv-Yafo, Israel", // Location is still part of bookingData
+    rating: "4.8",
+    reviewsCount: "2.5K",
+    location: "15 Rothschild Boulevard, Tel Aviv-Yafo, Israel",
     staffName: "John Doe",
     appointmentDateTime: "06 Jan 2025, 11:00",
     bookingNote:
       "Hair is thick and slightly wavy, prefers a shoulder-length layered cut with light texture.",
     services: [
-      { id: 1, image: confirm_product, name: "Classic Ombre", options: "Smooth / Scalp treatment", duration: "2h45m", price: "₪70.00" },
-      { id: 2, image: confirm_product, name: "Reverse Ombre", options: "Shadow Root", duration: "3h30m", price: "₪100.00" },
-      { id: 3, image: confirm_product, name: "Balayage with Toner", options: "30m", duration: "30m", price: "₪100.00" },
+      {
+        id: 1,
+        image: confirm_product,
+        name: "Classic Ombre",
+        options: "Smooth / Scalp treatment",
+        duration: "2h45m",
+        price: "₪70.00",
+      },
+      {
+        id: 2,
+        image: confirm_product,
+        name: "Reverse Ombre",
+        options: "Shadow Root",
+        duration: "3h30m",
+        price: "₪100.00",
+      },
+      {
+        id: 3,
+        image: confirm_product,
+        name: "Balayage with Toner",
+        options: "30m",
+        duration: "30m",
+        price: "₪100.00",
+      },
     ],
     subtotal: "₪270.00",
     vatIncluded: "(includes ₪48.60 VAT)",
@@ -41,39 +64,50 @@ const ConfirmBooking = () => {
     total: "₪216.00",
   };
 
+  // Simulate an API call to update booking status
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      // In a real application, this would be an actual API call
+      // and you would set the status based on the API response.
+      setBookingStatus('confirmed'); // Simulate successful confirmation
+    }, 5000); // Simulate 5 seconds delay for API response
+
+    return () => clearTimeout(timer); // Cleanup the timer if component unmounts
+  }, []); // Empty dependency array means this effect runs once on mount
+
   // Helper function to render dynamic stars based on the rating string
   const renderStars = (currentRatingString) => {
     const numericRating = parseFloat(currentRatingString);
     if (isNaN(numericRating)) {
-      return null; // Don't render stars if rating is not a valid number
+      return null;
     }
 
-    const totalStars = 5; // Total number of stars to display
+    const totalStars = 5;
     const fullStars = Math.floor(numericRating);
     const partialStarFraction = numericRating - fullStars;
     const stars = [];
 
     for (let i = 0; i < totalStars; i++) {
       if (i < fullStars) {
-        // Full star
         stars.push(
           <FaStar key={`star-full-${i}`} className="text-[#FFD056] text-sm" />
         );
       } else if (i === fullStars && partialStarFraction > 0) {
-        // Partial star using a layering technique
         stars.push(
-          <div key={`star-partial-${i}`} className="relative inline-block w-4 h-4"> {/* Adjust w-4 h-4 for icon size */}
-            <FaStar className="text-gray-300 absolute top-0 left-0 text-sm" /> {/* Background empty star */}
+          <div
+            key={`star-partial-${i}`}
+            className="relative inline-block w-4 h-4"
+          >
+            <FaStar className="text-gray-300 absolute top-0 left-0 text-sm" />
             <div
               className="absolute top-0 left-0 overflow-hidden"
               style={{ width: `${partialStarFraction * 100}%` }}
             >
-              <FaStar className="text-[#FFD056] text-sm" /> {/* Foreground filled star */}
+              <FaStar className="text-[#FFD056] text-sm" />
             </div>
           </div>
         );
       } else {
-        // Empty star
         stars.push(
           <FaStar key={`star-empty-${i}`} className="text-gray-300 text-sm" />
         );
@@ -81,7 +115,6 @@ const ConfirmBooking = () => {
     }
     return stars;
   };
-
 
   return (
     <div className="self-stretch px-4 py-5 bg-gray-50 flex flex-col items-center gap-10 lg:px-16">
@@ -95,9 +128,61 @@ const ConfirmBooking = () => {
             <h1 className="text-Boulder-950 text-3xl font-semibold font-['Golos_Text'] leading-10 text-center">
               {bookingData.thankYouMessage}
             </h1>
-            <p className="w-full max-w-[604px] text-center text-Boulder-500 text-base font-normal font-['Golos_Text'] leading-normal">
+            <p className="max-w-[472px] text-center justify-start text-description text-base font-normal font-['Golos_Text'] leading-normal">
               {bookingData.confirmationText}
             </p>
+          </div>
+        </div>
+
+        {/* Booking Status Section */}
+        <div className="w-full max-w-[856px] p-6 bg-white rounded-xl shadow flex flex-col justify-start items-start gap-4">
+          <h2 className="self-stretch text-violet-500 text-xl font-semibold font-['Golos_Text'] leading-7">
+            Booking Status
+          </h2>
+          <div className="relative w-full">
+
+            {/* Conditionally render Pending status and dashed line */}
+            {bookingStatus === 'pending' && (
+              <>
+                {/* Dashed line connector */}
+                <div className="absolute left-[11px] top-6 bottom-6 w-0.5 border-l-2 border-dashed border-gray-300 h-[45%]"></div>
+
+                {/* Pending for Confirmation Status - Using original div design */}
+                <div className="flex items-start mb-8 z-10 relative">
+                  <div className="w-6 h-6 rounded-full border-2 border-green-500 flex items-center justify-center flex-shrink-0">
+                    {/* Inner green dot for active pending as per image */}
+                    <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                  </div>
+                  <div className="ml-4 flex-grow">
+                    <h3 className="text-base font-medium text-gray-800 mb-1">
+                      Pending for Confirmation
+                    </h3>
+                    <p className="text-sm text-gray-600 leading-tight">
+                      Our team will review and send to your phone number a
+                      confirmation message once it has been approved.
+                    </p>
+                  </div>
+                </div>
+              </>
+            )}
+
+            {/* Confirmed Status - Using original div design with conditional styling */}
+            <div className="flex items-start z-10 relative">
+              <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center flex-shrink-0
+                                ${bookingStatus === 'confirmed' ? 'bg-green-500 border-green-500' : 'border-gray-300'}`}>
+                {/* Inner white dot, visible only when 'confirmed' and active */}
+                <div className={`w-3 h-3 rounded-full bg-white ${bookingStatus === 'confirmed' ? 'block' : 'hidden'}`}></div>
+              </div>
+              <div className="ml-4 flex-grow">
+                <h3 className="text-base font-medium text-gray-800 mb-1">
+                  Confirmed
+                </h3>
+                <p className="text-sm text-gray-600 leading-tight">
+                  We look forward to seeing you at your scheduled time. If you
+                  need to make any changes, please contact us.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -124,8 +209,6 @@ const ConfirmBooking = () => {
             <div>
               {/* Store Name */}
               <div className="flex justify-start items-center text-Boulder-950 text-lg font-semibold leading-relaxed">
-                {/* CiMap icon is not part of the store name from the image, it's just a general map icon */}
-                {/* <CiMap/>  -- Removed as per image only showing text and stars first */}
                 <h3 className="text-Boulder-950 text-lg font-semibold leading-relaxed">
                   {bookingData.storeName}
                 </h3>
@@ -155,7 +238,10 @@ const ConfirmBooking = () => {
                 <span>Baber shop</span> <GoDotFill className="opacity-[.4]" />{" "}
                 <span>26 Bedfordbury</span>
               </p>
-              <a href="#" className="justify-center text-violet-600 text-xs font-normal font-['Golos_Text'] underline leading-none">
+              <a
+                href="#"
+                className="justify-center text-violet-600 text-xs font-normal font-['Golos_Text'] underline leading-none"
+              >
                 View larger map
               </a>
             </div>
@@ -163,7 +249,10 @@ const ConfirmBooking = () => {
             {/* Get Direction button */}
             <div className="flex flex-col justify-center items-center">
               <SplitIcon className="text-violet-600" />
-              <a href="#" className="justify-center text-violet-600 text-sm font-semibold font-['Golos_Text'] underline leading-tight">
+              <a
+                href="#"
+                className="justify-center text-violet-600 text-sm font-semibold font-['Golos_Text'] underline leading-tight"
+              >
                 Get Direction
               </a>
             </div>
@@ -189,4 +278,4 @@ const ConfirmBooking = () => {
   );
 };
 
-export default ConfirmBooking;
+export default ConfirmPending;

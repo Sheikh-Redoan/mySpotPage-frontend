@@ -1,7 +1,7 @@
 import { Breadcrumb as Breadcrumbs } from "antd";
 import { ChevronRight } from "lucide-react";
 import { Link, useLocation } from "react-router";
-export default function Breadcrumb({ isAddressPage }) {
+export default function Breadcrumb({ isAddressPage, isStaffPage }) {
   let location = useLocation();
   const currentPath = location.pathname;
 
@@ -30,10 +30,12 @@ export default function Breadcrumb({ isAddressPage }) {
             }),
           },
           {
-            title: activePath(
-              "/service-provider-info/select-staff",
-              "Select staff"
-            ),
+            ...(isStaffPage && {
+              title: activePath(
+                "/service-provider-info/select-staff",
+                "Select staff"
+              ),
+            }),
           },
           {
             title: activePath(
@@ -41,8 +43,10 @@ export default function Breadcrumb({ isAddressPage }) {
               "Select time"
             ),
           },
-          {
+          isStaffPage? {
             title: activePath("/service-provider-info/confirm", "Confirm"),
+          }: {
+            title: activePath("/service-provider-info/confirm-staff", "Confirm"),
           },
         ]}
       />

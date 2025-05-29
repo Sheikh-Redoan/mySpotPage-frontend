@@ -53,6 +53,8 @@ import SetupTeamLocationServices1 from "../pages/onboarding/team/SetupTeamLocati
 import SetupTeamLocationServices2 from "../pages/onboarding/team/SetupTeamLocationServices2";
 import SelectTime from "../pages/client/SelectTime";
 import ConfirmBooking from "../pages/client/ConfirmBooking";
+import ConfirmStaff from "../pages/client/ConfirmStaff";
+import ConfirmPending from "../pages/client/ConfirmPending";
 
 export const routes = createBrowserRouter([
   {
@@ -82,7 +84,7 @@ export const routes = createBrowserRouter([
         path: "/service-menu",
         element: <ServicePage />,
       },
-      {
+      { 
         path: "/pricing",
         element: <TimePage />,
       },
@@ -163,6 +165,14 @@ export const routes = createBrowserRouter([
       {
         path: "confirm",
         element: <ConfirmPage />,
+      },
+      {
+        path: "confirm-staff",
+        element: <ConfirmStaff />,
+      },
+      {
+        path: "confirmation-pending",
+        element: <ConfirmPending/>,
       },
       {
         path: "confirmation",

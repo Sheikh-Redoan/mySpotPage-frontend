@@ -2,15 +2,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import { MapPin, Star } from "lucide-react";
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 
-const BookingCart = ({ businessData: { studioName, label, rating, reviewCount, address, workingHours }, selected }) => {
-    const [selectedDay, setSelectedDay] = useState(null);
+const BookingCart = ({ businessData: { studioName, label, rating, reviewCount, address, workingHours }, selected, selectedDay, setSelectedDay}) => {
+
     const [showAll, setShowAll] = useState(false);
     const contentRef = useRef(null);
-
-    const maxVisibleItems = 0; // Show first 3 by default on mobile
-
     // Track if it's mobile device (Tailwind-style)
     const [isMobile, setIsMobile] = useState(false);
+
+    const maxVisibleItems = 0; // Show first 0 by default on mobile
 
     useEffect(() => {
         const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -52,7 +51,7 @@ const BookingCart = ({ businessData: { studioName, label, rating, reviewCount, a
 
             {/* Working hours */}
             <div className="space-y-2">
-                <h3 className="font-semibold">Working hours</h3>
+
                 <div
                     ref={contentRef}
                     className="transition-all duration-500 overflow-hidden"
@@ -62,6 +61,7 @@ const BookingCart = ({ businessData: { studioName, label, rating, reviewCount, a
                             : `${workingHours.length * 42}px`
                     }}
                 >
+                    <h3 className="font-semibold">Working hours</h3>
                     <ul className="space-y-1 text-sm">
                         {visibleHours.map(({ day, time }) => {
                             const isSelected = selectedDay === day;

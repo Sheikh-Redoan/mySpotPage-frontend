@@ -69,7 +69,7 @@ export default function ServicesList({ selected, setSelected }) {
       <h2 className="text-2xl font-semibold mb-4">Our Services</h2>
       <div className="space-y-4">
         {services.map((service, index) => {
-          const isChecked = selected.some((item) => item.title === service.title);
+          const isChecked = selected.some((item) => item.id === service.id);
           return (
             <div
               key={index}
@@ -93,7 +93,7 @@ export default function ServicesList({ selected, setSelected }) {
               </div>
               <input
                 type="checkbox"
-                className="absolute top-4 right-4 size-5 accent-primary01"
+                className="absolute top-4 right-4 size-5 accent-primary01 cursor-pointer"
                 checked={isChecked}
                 onChange={() => toggleSelect(service)}
               />

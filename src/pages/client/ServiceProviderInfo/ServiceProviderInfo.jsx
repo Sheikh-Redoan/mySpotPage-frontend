@@ -26,7 +26,7 @@ const businessData = {
 
 const ServiceProviderInfo = () => {
     const [selected, setSelected] = useState([]);
-    console.log("Selected services:", selected);
+    const [selectedDay, setSelectedDay] = useState(null);
 
     return (
         <section className='container mx-auto py-5 px-3'>
@@ -57,7 +57,7 @@ const ServiceProviderInfo = () => {
 
                 {/* Booking part */}
                 <div className=''>
-                    <BookingCart businessData={businessData} selected={selected} />
+                    <BookingCart businessData={businessData} selected={selected} selectedDay={selectedDay} setSelectedDay={setSelectedDay} />
                 </div>
             </div>
 

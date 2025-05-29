@@ -1,22 +1,21 @@
 import { imageProvider } from "@/lib/imageProvider";
-import { dashboardTabs } from "@/lib/staticData";
+
+import { Tooltip } from "antd";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
 import { Link, Outlet } from "react-router";
-import {Tooltip } from 'antd'
-import '../styles/antdCustom.css'
 import TopNavbar from "../pages/layout/TopNavbar";
-function MainLayout() {
+import "../styles/antdCustom.css";
+function MainLayout({ tabs }) {
   // const {currentTab} = useContext(MainContext)
   const [toggle, setToggle] = useState(true);
   const [activeTab, setActiveTab] = useState(0);
-  const [currentTab, setCurrentTab] = useState('Dashboard')
+  const [currentTab, setCurrentTab] = useState("Dashboard");
   const handleActiveTab = (index, tab) => {
     console.log(activeTab);
     setActiveTab(index);
-    setCurrentTab(tab)
+    setCurrentTab(tab);
   };
-
 
   return (
     <div className="relative font-golos h-screen">
@@ -29,14 +28,13 @@ function MainLayout() {
             toggle
               ? "w-0 opacity-0 invisible "
               : "size-9 flex justify-center items-center object-cover  opacity-100"
-          }`}
-        >
+          }`}>
           <ChevronLeft size={18} className="text-white" />
         </button>
         {/* sidebar top */}
         <div className="">
           {/* logo */}
-          <div className="flex items-center "> 
+          <div className="flex items-center ">
             <div>
               <img src="/my_spot_page_favicon.png" alt="" />
             </div>
@@ -54,36 +52,39 @@ function MainLayout() {
           {/* tabs */}
           <div className="pt-6  flex flex-col w-fit  justify-between">
             <div className="flex sidebar-tabs w-fit flex-col gap-4">
-              {dashboardTabs.map((tab, index) => (
-               <Tooltip placement="right" color="white"  title={toggle? tab.name : ''}>
-                 <Link to={tab.link}
-                  onClick={() => handleActiveTab(index, tab.name)}
+              {tabs.map((tab, index) => (
+                <Tooltip
                   key={tab.id}
-                  className={` ${
-                    activeTab === index ? "bg-primary01 text-white" : ""
-                  } py-2 justify-center items-center px-3 transiton-all duration-300 flex w-fit text-white cursor-pointer rounded-xl `}
-                >
-                  <img
-                    className=""
-                    src={
-                      index === activeTab && activeTab === tab.id
-                        ? tab.imageWhite
-                        : tab.imagePink
-                    }
-                  />
-                  <h4
+                  placement="right"
+                  color="white"
+                  title={toggle ? tab.name : ""}>
+                  <Link
+                    to={tab.link}
+                    onClick={() => handleActiveTab(index, tab.name)}
+                    key={tab.id}
                     className={` ${
-                      index === activeTab ? "text-white" : ""
-                    } transition-all text-primary01 duration-300 whitespace-nowrap overflow-hidden ${
-                      toggle
-                        ? "w-0 opacity-0 invisible  "
-                        : "w-48 pl-2 opacity-100"
-                    }`}
-                  >
-                    {tab.name}
-                  </h4>
-                </Link>
-               </Tooltip>
+                      activeTab === index ? "bg-primary01 text-white" : ""
+                    } py-2 justify-center items-center px-3 transiton-all duration-300 flex w-fit text-white cursor-pointer rounded-xl `}>
+                    <img
+                      className="w-5 h-5 object-contain"
+                      src={
+                        index === activeTab && activeTab === tab.id
+                          ? tab.imageWhite
+                          : tab.imagePink
+                      }
+                    />
+                    <h4
+                      className={` ${
+                        index === activeTab ? "text-white" : ""
+                      } transition-all text-primary01 duration-300 whitespace-nowrap overflow-hidden ${
+                        toggle
+                          ? "w-0 opacity-0 invisible  "
+                          : "w-48 pl-2 opacity-100"
+                      }`}>
+                      {tab.name}
+                    </h4>
+                  </Link>
+                </Tooltip>
               ))}
             </div>
           </div>
@@ -97,8 +98,7 @@ function MainLayout() {
               !toggle
                 ? "w-0 opacity-0 invisible -translate-x-6 "
                 : "size-9 flex justify-center items-center  opacity-100"
-            }`}
-          >
+            }`}>
             <ChevronRight className="text-white" />
           </button>
         </div>
@@ -106,9 +106,9 @@ function MainLayout() {
 
       <div className="flex-1 relative ml-20  min-h-screen h-full ">
         {/* topnav */}
-        <TopNavbar currentTab={currentTab}/>
+        <TopNavbar currentTab={currentTab} />
         <div className="pt-18 px-1">
-        <Outlet />
+          <Outlet />
         </div>
       </div>
     </div>

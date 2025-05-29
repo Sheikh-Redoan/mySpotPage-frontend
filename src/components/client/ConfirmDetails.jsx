@@ -4,6 +4,7 @@ import { FaRegUserCircle, FaStar } from "react-icons/fa";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa6"; // Import FaChevronDown for "Show more"
 import { IoLocationOutline } from "react-icons/io5";
 import { PiFireLight, PiInfo } from "react-icons/pi";
+import { Link } from "react-router";
 
 // Dummy image import for demonstration. In a real app, this would likely come from props or a dynamic source.
 
@@ -24,6 +25,7 @@ const ConfirmDetails = ({
   total,
   paymentInstruction,
   buttonTittle,
+  buttonpath = "/service-provider-info/confirmation",
 }) => {
   // State to manage the visibility of all services.
   // Initially, if there are more than 2 services, only show 2.
@@ -31,9 +33,10 @@ const ConfirmDetails = ({
 
   // Determine which services to display based on the showAllServices state
   // Only slice if services array exists and has more than 2 items
-  const displayedServices = (services && services.length > 2 && !showAllServices)
-    ? services.slice(0, 2)
-    : services;
+  const displayedServices =
+    services && services.length > 2 && !showAllServices
+      ? services.slice(0, 2)
+      : services;
 
   // Toggle function for "Show less/Show more"
   const toggleShowServices = () => {
@@ -43,12 +46,15 @@ const ConfirmDetails = ({
   // Helper to check if any store info is provided to render the section
   const hasStoreInfo = storeName || rating || reviewsCount || location;
   // Helper to check if any staff/appointment/note info is provided
-  const hasStaffAppointmentNote = staffName || appointmentDateTime || bookingNote;
+  const hasStaffAppointmentNote =
+    staffName || appointmentDateTime || bookingNote;
   // Helper to check if any pricing info is provided
   const hasPricingInfo = subtotal || discountAmount || total;
 
   return (
-    <div className={`${className} bg-white rounded-xl flex flex-col justify-start items-start gap-5`}>
+    <div
+      className={`${className} bg-white rounded-xl flex flex-col justify-start items-start gap-5`}
+    >
       {/* Store Information Section - Renders only if any store-related prop is provided */}
       {hasStoreInfo && (
         <div className="flex flex-col gap-2 w-full">
@@ -118,9 +124,11 @@ const ConfirmDetails = ({
       )}
 
       {/* Separator Line (renders if either store info or staff/appointment/note info is present, AND services are present) */}
-      {(hasStoreInfo || hasStaffAppointmentNote) && services && services.length > 0 && (
-        <div className="w-full border-t border-dashed border-gray-300"></div>
-      )}
+      {(hasStoreInfo || hasStaffAppointmentNote) &&
+        services &&
+        services.length > 0 && (
+          <div className="w-full border-t border-dashed border-gray-300"></div>
+        )}
 
       {/* Services Section - Renders only if services array is provided and not empty */}
       {services && services.length > 0 && (
@@ -129,12 +137,22 @@ const ConfirmDetails = ({
             Services ({services.length})
           </h3>
           {displayedServices.map((service) => (
-            <div key={service.id} className="flex justify-start items-start gap-[12px] w-full">
+            <div
+              key={service.id}
+              className="flex justify-start items-start gap-[12px] w-full"
+            >
               <img
-                src={service.image || 'https://placehold.co/80x80/cccccc/333333?text=No+Image'} // Fallback for broken or missing images
-                alt={service.name || 'Service image'}
+                src={
+                  service.image ||
+                  "https://placehold.co/80x80/cccccc/333333?text=No+Image"
+                } // Fallback for broken or missing images
+                alt={service.name || "Service image"}
                 className="w-20 h-20 relative rounded-lg object-cover"
-                onError={(e) => { e.target.onerror = null; e.target.src = 'https://placehold.co/80x80/cccccc/333333?text=No+Image'; }}
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src =
+                    "https://placehold.co/80x80/cccccc/333333?text=No+Image";
+                }}
               />
               <div className="w-full flex flex-col">
                 {service.name && (
@@ -232,7 +250,7 @@ const ConfirmDetails = ({
             </div>
           )}
           {/* Separator Line for Total - Renders only if discount or subtotal is present AND total is present */}
-          {((subtotal || discountAmount) && total) && (
+          {(subtotal || discountAmount) && total && (
             <div className="h-[1px] w-full border-t border-description"></div>
           )}
           {total && (
@@ -249,14 +267,16 @@ const ConfirmDetails = ({
       )}
 
       {/* Complete Button and Payment Instruction */}
-      {buttonTittle && (
-        <button
-          type="submit"
-          className="cursor-pointer bg-black rounded-xl justify-center text-white text-base font-semibold font-['Golos_Text'] leading-normal py-[10px] w-full text-center hover:bg-gray-800 transition-colors duration-200"
-        >
-          {buttonTittle}
-        </button>
-      )}
+      <Link to={buttonpath} className="w-full">
+        {buttonTittle && (
+          <button
+            type="submit"
+            className="cursor-pointer bg-black rounded-xl justify-center text-white text-base font-semibold font-['Golos_Text'] leading-normal py-[10px] w-full text-center hover:bg-gray-800 transition-colors duration-200"
+          >
+            {buttonTittle}
+          </button>
+        )}
+      </Link>
       {paymentInstruction && (
         <p className="self-stretch text-center text-description text-xs font-normal font-['Golos_Text'] leading-none">
           {paymentInstruction}

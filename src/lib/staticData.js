@@ -48,23 +48,23 @@ export const dashboardTabs = [
 export const adminTabs = [
   {
     id: 0,
-    name: "Users",
+    name: "User Management",
     imagePink: imageProvider.PeoplePink,
     imageWhite: imageProvider.PeopleWhite,
-    link: "/users-management",
+    link: "/admin-portal",
   },
   {
     id: 1,
     name: "Data Management",
     imagePink: imageProvider.database,
     imageWhite: imageProvider.databaseCol,
-    link: "/data-management",
+    link: "data-management",
   },
   {
     id: 5,
     name: "Settings",
     imagePink: imageProvider.SettingsPink,
     imageWhite: imageProvider.SettingsWhite,
-    link: "/settings",
+    link: "settings",
   },
 ];

@@ -10,7 +10,7 @@ function MainLayout({ tabs }) {
   // const {currentTab} = useContext(MainContext)
   const [toggle, setToggle] = useState(true);
   const [activeTab, setActiveTab] = useState(0);
-  const [currentTab, setCurrentTab] = useState("Dashboard");
+  const [currentTab, setCurrentTab] = useState(tabs[0].name);
   const handleActiveTab = (index, tab) => {
     console.log(activeTab);
     setActiveTab(index);
@@ -66,7 +66,7 @@ function MainLayout({ tabs }) {
                       activeTab === index ? "bg-primary01 text-white" : ""
                     } py-2 justify-center items-center px-3 transiton-all duration-300 flex w-fit text-white cursor-pointer rounded-xl `}>
                     <img
-                      className="w-5 h-5 object-contain"
+                      className=""
                       src={
                         index === activeTab && activeTab === tab.id
                           ? tab.imageWhite

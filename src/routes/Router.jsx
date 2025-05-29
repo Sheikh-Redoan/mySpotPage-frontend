@@ -196,6 +196,10 @@ export const routes = createBrowserRouter([
         index: true,
         element: <UserManagement />,
       },
+      {
+        path: "data-management",
+        element: <UserManagement />,
+      },
     ],
   },
   {

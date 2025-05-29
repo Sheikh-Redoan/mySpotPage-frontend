@@ -13,6 +13,7 @@ import deleteIcon from "../assets/icons/delete.png";
 import dollor from "../assets/icons/dollor.png";
 import edit from "../assets/icons/edit.png";
 import emtyBilling from "../assets/icons/emtyBilling.png";
+import filterIcon from "../assets/icons/filter.png";
 import glow from "../assets/icons/glow.png";
 import ServicePink from "../assets/icons/hand-heart.png";
 import imageUploader from "../assets/icons/imageUploader.png";
@@ -88,4 +89,5 @@ export const imageProvider = {
   user,
   database,
   databaseCol,
+  filterIcon,
 };

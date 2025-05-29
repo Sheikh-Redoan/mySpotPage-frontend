@@ -1,7 +1,12 @@
+import { ListFilter } from "lucide-react";
+import { useState } from "react";
+import UserFilter from "../../components/admin/UserFilter";
 import Filter from "../../components/shared/Filter";
+import Popup from "../../components/shared/Popup";
 import Search from "../../components/shared/Search";
 
 export default function UserManagement() {
+  const [open, setOpen] = useState(false);
   return (
     <div className="w-full p-5">
       <div className="flex w-full gap-4 mb-4">
@@ -17,7 +22,11 @@ export default function UserManagement() {
           />
         </div>
         <div className="w-[200px]">
-          <Filter name="filter" data={categories} defaultValue="Filter" />
+          <Popup
+            name="Filter"
+            icon={<ListFilter size={20} className="text-gray-400" />}>
+            <UserFilter open={open} onClose={() => setOpen(false)} />
+          </Popup>
         </div>
       </div>
     </div>

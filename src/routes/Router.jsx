@@ -1,5 +1,6 @@
 import Authentication from "@/layout/Authentication";
 import OnboardLayout from "@/layout/OnboardLayout";
+import { dashboardTabs } from "@/lib/staticData";
 import CalendarPage from "@/pages/CalendarPage";
 import ClientPage from "@/pages/ClientPage";
 import DashboardPage from "@/pages/DashboardPage";
@@ -29,11 +30,13 @@ import Upgradeplan from "../components/SettingsPages/UpgradePlan/Upgradeplan";
 import AllAppoimtment from "../components/calendarManagement/AllAppointment";
 import ClientLayout from "../layout/ClientLayout";
 import MainLayout from "../layout/MainLayout";
+import { adminTabs } from "../lib/staticData";
 import BasicInfo from "../pages/BasicInfo";
 import BookingInfo from "../pages/BookingInfo";
 import DynamicSubSideBarLayout from "../pages/DynamicSubSideBarLayout";
 import ErrorPage from "../pages/ErrorPage";
 import ProviderNotes from "../pages/ProviderNotes";
+import UserManagement from "../pages/admin/UserManagement";
 import ConfirmBooking from "../pages/client/ConfirmBooking";
 import ConfirmPage from "../pages/client/ConfirmPage";
 import ConfirmPending from "../pages/client/ConfirmPending";
@@ -59,7 +62,7 @@ import SetupTeamLocationServices2 from "../pages/onboarding/team/SetupTeamLocati
 export const routes = createBrowserRouter([
   {
     path: "/",
-    element: <MainLayout />,
+    element: <MainLayout tabs={dashboardTabs} />,
     errorElement: <ErrorPage />,
     children: [
       {
@@ -181,6 +184,21 @@ export const routes = createBrowserRouter([
       {
         path: "confirmation",
         element: <ConfirmBooking />,
+      },
+    ],
+  },
+  {
+    path: "/admin-portal",
+    element: <MainLayout tabs={adminTabs} />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        index: true,
+        element: <UserManagement />,
+      },
+      {
+        path: "data-management",
+        element: <UserManagement />,
       },
     ],
   },

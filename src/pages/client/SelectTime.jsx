@@ -58,8 +58,8 @@ function renderEventContent(eventInfo) {
 const toYYYYMMDD = (dateInput) => {
   const d = new Date(dateInput);
   const year = d.getFullYear();
-  const month = (`0${d.getMonth() + 1}`).slice(-2);
-  const day = (`0${d.getDate()}`).slice(-2);
+  const month = `0${d.getMonth() + 1}`.slice(-2);
+  const day = `0${d.getDate()}`.slice(-2);
   return `${year}-${month}-${day}`;
 };
 
@@ -109,8 +109,11 @@ export default function SelectTime() {
     const startDateStr = toYYYYMMDD(selectInfo.start);
     const endDateStr = toYYYYMMDD(selectInfo.end);
 
-    if (startDateStr === endDateStr ||
-      (selectInfo.allDay && new Date(selectInfo.start).getTime() === new Date(selectInfo.end).getTime() - 86400000)
+    if (
+      startDateStr === endDateStr ||
+      (selectInfo.allDay &&
+        new Date(selectInfo.start).getTime() ===
+          new Date(selectInfo.end).getTime() - 86400000)
     ) {
       setHighlightedDate(startDateStr);
       selectInfo.view.calendar.unselect();
@@ -138,11 +141,14 @@ export default function SelectTime() {
     });
     setHighlightedDate(startDate.toISOString());
     setIsModalOpen(false);
+    calendarApi.select(startDate);
   }
 
   function handleEventClick(clickInfo) {
     if (
-      confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)
+      confirm(
+        `Are you sure you want to delete the event '${clickInfo.event.title}'`
+      )
     ) {
       clickInfo.event.remove();
     }
@@ -198,7 +204,9 @@ export default function SelectTime() {
 
   const handleDateClickForHighlight = (clickInfo) => {
     const clickedDateStr = clickInfo.dateStr;
-    const specialDateInfo = specialDatesData.find((sd) => sd.date === clickedDateStr);
+    const specialDateInfo = specialDatesData.find(
+      (sd) => sd.date === clickedDateStr
+    );
 
     if (!specialDateInfo || !specialDateInfo.isBusy) {
       setHighlightedDate(clickedDateStr);
@@ -213,23 +221,28 @@ export default function SelectTime() {
 
   function renderDayCellContentWithSales(dayCellInfo) {
     const dayNumber = dayCellInfo.date.getDate();
-    const formattedDayNumber = dayNumber < 10 ? `0${dayNumber}` : dayNumber.toString();
+    const formattedDayNumber =
+      dayNumber < 10 ? `0${dayNumber}` : dayNumber.toString();
     const dateStr = toYYYYMMDD(dayCellInfo.date);
     const specialDateInfo = specialDatesData.find((sd) => sd.date === dateStr);
 
     return (
       <div className="custom-day-cell-content">
         <span className="custom-day-number">{formattedDayNumber}</span>
-        {specialDateInfo && specialDateInfo.sale && !dayCellInfo.isOtherMonth && (
-          <div className="sale-badge">{specialDateInfo.sale}</div>
-        )}
+        {specialDateInfo &&
+          specialDateInfo.sale &&
+          !dayCellInfo.isOtherMonth && (
+            <div className="sale-badge">{specialDateInfo.sale}</div>
+          )}
       </div>
     );
   }
 
   const handleSelectAllow = (selectInfo) => {
     const startDateStr = toYYYYMMDD(selectInfo.start);
-    const specialDateInfo = specialDatesData.find((sd) => sd.date === startDateStr);
+    const specialDateInfo = specialDatesData.find(
+      (sd) => sd.date === startDateStr
+    );
 
     if (specialDateInfo && specialDateInfo.isBusy) {
       return false;
@@ -244,8 +257,7 @@ export default function SelectTime() {
           <div className="flex items-center space-x-4">
             <button
               className="cursor-pointer"
-              onClick={() => handleNavButtonClick("prev")}
-            >
+              onClick={() => handleNavButtonClick("prev")}>
               <img src="/src/assets/icons/left_arrow.svg" alt="Left Arrow" />
             </button>
             <DatePicker
@@ -258,8 +270,7 @@ export default function SelectTime() {
             />
             <button
               className="cursor-pointer ml-1"
-              onClick={() => handleNavButtonClick("next")}
-            >
+              onClick={() => handleNavButtonClick("next")}>
               <img src="/src/assets/icons/right_arrow.svg" alt="Right Arrow" />
             </button>
             <button
@@ -270,32 +281,31 @@ export default function SelectTime() {
                   calendarApi.today();
                   setSelectedDate(dayjs());
                 }
-              }}
-            >
+              }}>
               Today
             </button>
           </div>
 
           <div className="flex border border-gray-200 rounded-lg">
             <button
-              className={`px-5 py-1 md:py-1.5 cursor-pointer rounded-md text-sm ${currentView === "dayGridMonth" ? "bg-[#866BE7] text-white" : ""
-                }`}
-              onClick={() => handleViewChange("dayGridMonth")}
-            >
+              className={`px-5 py-1 md:py-1.5 cursor-pointer rounded-md text-sm ${
+                currentView === "dayGridMonth" ? "bg-[#866BE7] text-white" : ""
+              }`}
+              onClick={() => handleViewChange("dayGridMonth")}>
               Month
             </button>
             <button
-              className={`px-5 py-1.5 cursor-pointer rounded-md text-sm ${currentView === "timeGridWeek" ? "bg-[#866BE7] text-white" : ""
-                }`}
-              onClick={() => handleViewChange("timeGridWeek")}
-            >
+              className={`px-5 py-1.5 cursor-pointer rounded-md text-sm ${
+                currentView === "timeGridWeek" ? "bg-[#866BE7] text-white" : ""
+              }`}
+              onClick={() => handleViewChange("timeGridWeek")}>
               Week
             </button>
             <button
-              className={`px-5 py-1.5 cursor-pointer rounded-md text-sm ${currentView === "timeGridDay" ? "bg-[#866BE7] text-white" : ""
-                }`}
-              onClick={() => handleViewChange("timeGridDay")}
-            >
+              className={`px-5 py-1.5 cursor-pointer rounded-md text-sm ${
+                currentView === "timeGridDay" ? "bg-[#866BE7] text-white" : ""
+              }`}
+              onClick={() => handleViewChange("timeGridDay")}>
               Day
             </button>
           </div>
@@ -329,7 +339,9 @@ export default function SelectTime() {
             setHighlightedDate(null);
           }}
           onSubmit={handleModalSubmit}
-          selectedDate={modalSelectInfo ? new Date(modalSelectInfo.date) : new Date()}
+          selectedDate={
+            modalSelectInfo ? new Date(modalSelectInfo.date) : new Date()
+          }
           timeSlots={timeSlots}
         />
 
@@ -338,8 +350,7 @@ export default function SelectTime() {
             No suitable time slot?{" "}
             <Link
               to="#"
-              className="hover:text-indigo-700 text-[#744CDB] text-sm underline"
-            >
+              className="hover:text-indigo-700 text-[#744CDB] text-sm underline">
               Join our waitlist!
             </Link>
           </p>

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { MapPin, Star } from "lucide-react";
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 
-const BookingCart = ({ businessData: { studioName, label, rating, reviewCount, address, workingHours }, selected, selectedDay, setSelectedDay}) => {
+const BookingCart = ({ businessData: { studioName, label, rating, reviewCount, address, workingHours }, selected, selectedDay, setSelectedDay,setModalOpen}) => {
 
     const [showAll, setShowAll] = useState(false);
     const contentRef = useRef(null);
@@ -109,6 +109,7 @@ const BookingCart = ({ businessData: { studioName, label, rating, reviewCount, a
                 <button
                     className={`w-full bg-gray-900 text-white py-2 rounded-lg transition ${selected?.length === 0 ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-800"}`}
                     disabled={selected?.length === 0}
+                    onClick={() => setModalOpen(true)}
                 >
                     Book now
                 </button>

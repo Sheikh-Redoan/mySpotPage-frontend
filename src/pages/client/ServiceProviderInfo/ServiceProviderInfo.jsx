@@ -6,6 +6,7 @@ import { Link } from 'react-router';
 import TestimonialsSection from '../../../components/serviceProviderInfo/TestimonialsSection';
 import { useState } from 'react';
 import BookingCart from '../../../components/serviceProviderInfo/BookingCart';
+import TreatmentModal from '../../../components/serviceProviderInfo/TreatmentModal';
 
 const businessData = {
     studioName: "TCL Beauty Studio 01",
@@ -27,6 +28,7 @@ const businessData = {
 const ServiceProviderInfo = () => {
     const [selected, setSelected] = useState([]);
     const [selectedDay, setSelectedDay] = useState(null);
+    const [modalOpen, setModalOpen] = useState(false);
 
     return (
         <section className='container mx-auto py-5 px-3'>
@@ -57,7 +59,7 @@ const ServiceProviderInfo = () => {
 
                 {/* Booking part */}
                 <div className=''>
-                    <BookingCart businessData={businessData} selected={selected} selectedDay={selectedDay} setSelectedDay={setSelectedDay} />
+                    <BookingCart businessData={businessData} selected={selected} selectedDay={selectedDay} setSelectedDay={setSelectedDay} setModalOpen={setModalOpen}/>
                 </div>
             </div>
 
@@ -74,10 +76,21 @@ const ServiceProviderInfo = () => {
                         : "hover:bg-gray-800"
                         }`}
                     disabled={selected.length === 0}
+                    onClick={() => setModalOpen(true)}
                 >
                     Book now
                 </button>
             </div>
+
+            {/* modal for booking confirmation */}
+            <TreatmentModal
+                open={modalOpen}
+                onCancel={() => setModalOpen(false)}
+                onContinue={() => {
+                    setModalOpen(false);
+                }}
+                services={selected}
+            />
 
         </section>
     );

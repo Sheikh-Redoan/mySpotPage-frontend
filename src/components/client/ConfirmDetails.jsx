@@ -27,6 +27,7 @@ const ConfirmDetails = ({
   buttonTittle,
   buttonpath = "/service-provider-info/confirmation",
 }) => {
+  console.log(buttonTittle);
   // State to manage the visibility of all services.
   // Initially, if there are more than 2 services, only show 2.
   const [showAllServices, setShowAllServices] = useState(false);
@@ -53,8 +54,7 @@ const ConfirmDetails = ({
 
   return (
     <div
-      className={`${className} bg-white rounded-xl flex flex-col justify-start items-start gap-5`}
-    >
+      className={`${className} bg-white rounded-xl flex flex-col justify-start items-start gap-5`}>
       {/* Store Information Section - Renders only if any store-related prop is provided */}
       {hasStoreInfo && (
         <div className="flex flex-col gap-2 w-full">
@@ -139,8 +139,7 @@ const ConfirmDetails = ({
           {displayedServices.map((service) => (
             <div
               key={service.id}
-              className="flex justify-start items-start gap-[12px] w-full"
-            >
+              className="flex justify-start items-start gap-[12px] w-full">
               <img
                 src={
                   service.image ||
@@ -187,8 +186,7 @@ const ConfirmDetails = ({
           {services.length > 2 && ( // Only show button if there are more than 2 services
             <button
               onClick={toggleShowServices}
-              className="text-sm font-normal font-['Golos_Text'] leading-tight text-description flex items-center justify-center gap-2 cursor-pointer w-full"
-            >
+              className="text-sm font-normal font-['Golos_Text'] leading-tight text-description flex items-center justify-center gap-2 cursor-pointer w-full">
               {showAllServices ? (
                 <>
                   Show less <FaChevronUp />
@@ -271,8 +269,7 @@ const ConfirmDetails = ({
         {buttonTittle && (
           <button
             type="submit"
-            className="cursor-pointer bg-black rounded-xl justify-center text-white text-base font-semibold font-['Golos_Text'] leading-normal py-[10px] w-full text-center hover:bg-gray-800 transition-colors duration-200"
-          >
+            className="cursor-pointer bg-black rounded-xl justify-center text-white text-base font-semibold font-['Golos_Text'] leading-normal py-[10px] w-full text-center hover:bg-gray-800 transition-colors duration-200">
             {buttonTittle}
           </button>
         )}

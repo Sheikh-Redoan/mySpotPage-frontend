@@ -6,7 +6,7 @@ export default function EnterAddress() {
   return (
     <section>
       <Container>
-        <Breadcrumb isAddressPage />
+        <Breadcrumb isAddressPage={true} />
         <h2 className="text-xl font-semibold font-golos">Enter Address</h2>
 
         <AddressForm />

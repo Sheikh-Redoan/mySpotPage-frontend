@@ -26,6 +26,7 @@ const businessData = {
 
 const ServiceProviderInfo = () => {
     const [selected, setSelected] = useState([]);
+    console.log("Selected services:", selected);
 
     return (
         <section className='container mx-auto py-5 px-3'>
@@ -59,6 +60,8 @@ const ServiceProviderInfo = () => {
                     <BookingCart businessData={businessData} selected={selected} />
                 </div>
             </div>
+
+            {/* Mobile booking button */}
             <div className="flex justify-between items-center md:hidden fixed bottom-0 left-0 right-0 bg-white shadow-lg p-4 z-50">
                 <div className="text-sm text-center text-gray-500">
                     {selected.length > 0
@@ -67,8 +70,8 @@ const ServiceProviderInfo = () => {
                 </div>
                 <button
                     className={`bg-gray-900 text-white py-2 px-8 rounded-lg transition ${selected.length === 0
-                            ? "opacity-50 cursor-not-allowed"
-                            : "hover:bg-gray-800"
+                        ? "opacity-50 cursor-not-allowed"
+                        : "hover:bg-gray-800"
                         }`}
                     disabled={selected.length === 0}
                 >

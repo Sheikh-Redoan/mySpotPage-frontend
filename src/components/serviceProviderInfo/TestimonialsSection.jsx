@@ -85,7 +85,7 @@ const TestimonialsSection = () => {
                 {
                     visibleCount < testimonials.length && (
                         <div>
-                            <button onClick={handleViewMore} className="text-sm text-primary01 font-semibold cursor-pointer flex items-center">
+                            <button onClick={handleViewMore} className="text-sm text-primary01 font-semibold cursor-pointer flex items-center mb-24">
                                 View more <span className="ml-1"><IoIosArrowDown className="text-lg" /></span>
                             </button>
                         </div>

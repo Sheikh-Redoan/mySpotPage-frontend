@@ -7,6 +7,7 @@ import service5 from "../../assets/images/service5.png";
 
 const services = [
   {
+    id: 1,
     title: "Classic Ombre",
     description:
       "Classic Ombre is a hair coloring technique that gradually transitions from a darker shade at the roots to a lighter shade at the ends, creating a natural, sun-kissed effect.",
@@ -15,6 +16,7 @@ const services = [
     image: service1,
   },
   {
+    id: 2,
     title: "Reverse Ombre",
     description:
       "Reverse Ombre is a hair coloring style where the hair fades from a lighter shade at the roots to a darker shade at the ends, offering a bold and modern contrast.",
@@ -23,6 +25,7 @@ const services = [
     image: service2,
   },
   {
+    id: 3,
     title: "Smoothing Keratin Treatment",
     description:
       "Smoothing Keratin Treatment is a hair treatment that smooths and strengthens hair by infusing keratin protein, reducing frizz, enhancing shine, and making hair more manageable.",
@@ -31,6 +34,7 @@ const services = [
     image: service3,
   },
   {
+    id: 4,
     title: "Balayage with Toner",
     description:
       "Balayage with Toner is a freehand hair-coloring technique that creates soft, natural highlights, with a toner applied to refine the shade and ensure a seamless, blended finish.",
@@ -39,6 +43,7 @@ const services = [
     image: service4,
   },
   {
+    id: 5,
     title: "Balayage & Root Shadow",
     description:
       "Balayage & Root Shadow is a balayage technique combined with a root shadow, where a darker shade is blended into the roots for a soft, natural transition and effortless regrowth.",
@@ -49,47 +54,52 @@ const services = [
 ];
 
 export default function ServicesList({ selected, setSelected }) {
-  // const [selected, setSelected] = useState([]);
 
-  const toggleSelect = (index) => {
-    setSelected((prev) =>
-      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
-    );
+  const toggleSelect = (service) => {
+    const isSelected = selected.some((item) => item.id === service.id);
+    if (isSelected) {
+      setSelected((prev) => prev.filter((item) => item.id !== service.id));
+    } else {
+      setSelected((prev) => [...prev, service]);
+    }
   };
 
   return (
     <div className="font-golos">
       <h2 className="text-2xl font-semibold mb-4">Our Services</h2>
       <div className="space-y-4">
-        {services.map((service, index) => (
-          <div
-            key={index}
-            className="relative flex flex-col md:flex-row items-start gap-4 border rounded-lg border-border p-4 shadow-xs "
-          >
-            <img
-              src={service.image}
-              alt={service.title}
-              className="size-20 object-cover rounded-md"
-            />
-            <div className="flex-1">
-              <h3 className="font-semibold text-lg">{service.title}</h3>
-              <p className="text-sm text-description mt-1">
-                {service.description}
-              </p>
-              <div className="text-sm flex items-center gap-3 mt-4 md:mt-2">
-                <span>{service.duration}</span>
-                <span className="bg-[#d1d1d1] size-2 rounded-full"></span>
-                <span className="text-primary01 font-semibold">{service.price}</span>
+        {services.map((service, index) => {
+          const isChecked = selected.some((item) => item.title === service.title);
+          return (
+            <div
+              key={index}
+              className="relative flex flex-col md:flex-row items-start gap-4 border rounded-lg border-border p-4 shadow-xs"
+            >
+              <img
+                src={service.image}
+                alt={service.title}
+                className="size-20 object-cover rounded-md"
+              />
+              <div className="flex-1">
+                <h3 className="font-semibold text-lg">{service.title}</h3>
+                <p className="text-sm text-description mt-1">
+                  {service.description}
+                </p>
+                <div className="text-sm flex items-center gap-3 mt-4 md:mt-2">
+                  <span>{service.duration}</span>
+                  <span className="bg-[#d1d1d1] size-2 rounded-full"></span>
+                  <span className="text-primary01 font-semibold">{service.price}</span>
+                </div>
               </div>
+              <input
+                type="checkbox"
+                className="absolute top-4 right-4 size-5 accent-primary01"
+                checked={isChecked}
+                onChange={() => toggleSelect(service)}
+              />
             </div>
-            <input
-              type="checkbox"
-              className="absolute top-4 right-4 size-5 accent-primary01"
-              checked={selected.includes(index)}
-              onChange={() => toggleSelect(index)}
-            />
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

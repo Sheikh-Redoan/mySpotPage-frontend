@@ -22,7 +22,7 @@ const BookingCart = ({ businessData: { studioName, label, rating, reviewCount, a
     const visibleHours = isMobile && !showAll ? workingHours.slice(0, maxVisibleItems) : workingHours;
 
     return (
-        <div className="w-full max-w-sm p-5 rounded-xl border border-gray-200 shadow-sm space-y-5 bg-white font-golos">
+        <section className="w-full max-w-sm p-5 rounded-xl border border-gray-200 shadow-sm space-y-5 bg-white font-golos mx-auto">
             {/* Header */}
             <div className="space-y-2">
                 <h2 className="text-2xl font-semibold mb-3">{studioName}</h2>
@@ -113,7 +113,7 @@ const BookingCart = ({ businessData: { studioName, label, rating, reviewCount, a
                     Book now
                 </button>
             </div>
-        </div>
+        </section>
     );
 };
 

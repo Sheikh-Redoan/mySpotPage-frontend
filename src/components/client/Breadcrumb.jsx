@@ -43,11 +43,16 @@ export default function Breadcrumb({ isAddressPage, isStaffPage }) {
               "Select time"
             ),
           },
-          isStaffPage? {
-            title: activePath("/service-provider-info/confirm", "Confirm"),
-          }: {
-            title: activePath("/service-provider-info/confirm-staff", "Confirm"),
-          },
+          isStaffPage
+            ? {
+                title: activePath("/service-provider-info/confirm", "Confirm"),
+              }
+            : {
+                title: activePath(
+                  "/service-provider-info/confirm-staff",
+                  "Confirm"
+                ),
+              },
         ]}
       />
     </div>

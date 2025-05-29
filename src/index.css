@@ -233,78 +233,119 @@
   border-radius: 12px;
   overflow: hidden;
 }
-
 .fc .fc-scrollgrid {
   border-radius: 12px;
   overflow: hidden;
 }
-
 .fc .fc-theme-standard .fc-scrollgrid {
   border-radius: 12px;
   overflow: hidden;
 }
-
 .fc .fc-scrollgrid-sync-table thead {
-  background-color: #ECEBFC;
+  background-color: #ecebfc;
 }
-
 .fc .fc-col-header-cell {
   padding: 6px 0;
-  background-color: #ECEBFC;
-  color: #866BE7;
+  background-color: #ecebfc;
+  color: #866be7;
   font-weight: 500;
   font-size: 14px;
 }
-
 .fc-scroller {
   overflow-y: hidden !important;
 }
-
 .fc .fc-daygrid-day-frame {
-  padding: 10px;
+  padding: 0 10px;
 }
-
 .fc-daygrid-day-number {
   font-weight: 400;
   font-size: 14px;
 }
-
 .fc .fc-daygrid-day-top {
-    display: block;
+  display: block;
 }
-
 .fc .fc-day-today .fc-daygrid-day-number {
-  background-color: #866BE7; 
-  color: white;             
-  width: 26px;              
-  height: 26px;             
-  border-radius: 50%;       
+  background-color: #866be7;
+  color: white;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-weight: 500;         
-  line-height: 1;          
-  padding: 0;              
+  font-weight: 500;
+  line-height: 1;
   box-sizing: border-box;
+  margin-top: 20px;
 }
-
 .fc .fc-daygrid-day.fc-day-today {
-    background-color: transparent;
+  background-color: transparent;
 }
 
-
-
-
-/* .fc .fc-col-header-cell-cushion {
-  color: #333;
+/* custom stye for selected and busy state */
+.custom-selected-date .fc-daygrid-day-frame {
+  background-color: #f6f4ff !important;
+}
+.custom-selected-date .custom-day-number {
+  color: #53389e !important;
+  font-weight: bold;
+}
+.custom-busy-date .fc-daygrid-day-frame {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 7px,
+    rgba(0, 0, 0, 0.04) 7px,
+    rgba(0, 0, 0, 0.04) 14px
+  ) !important;
+}
+.custom-busy-date .custom-day-number {
+  opacity: 0.7;
 }
 
-.fc .fc-col-header-cell.fc-day-sat {
-  background-color: #ffebee;
+/* Sale Badge Styling */
+.custom-day-cell-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+}
+.custom-day-number {
+  font-size: 0.875em;
+  padding: 2px;
+  z-index: 1;
+}
+.sale-badge {
+  border: 1px solid #c3bcf6;
+  color: #866be7;
+  padding: 4px 8px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+  z-index: 2;
 }
 
-.fc .fc-col-header-cell.fc-day-sun {
-  background-color: #e3f2fd;
+@media only screen and (max-width: 600px) {
+  .fc {
+    height: 535px !important;
+  }
+  .custom-day-cell-content {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .sale-badge {
+    border: none;
+    color: #866be7;
+    padding: 0;
+    white-space: wrap;
+  }
 }
- */
+
 /* FullCalendar customization end */

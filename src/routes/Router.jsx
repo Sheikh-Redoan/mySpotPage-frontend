@@ -34,9 +34,13 @@ import BookingInfo from "../pages/BookingInfo";
 import DynamicSubSideBarLayout from "../pages/DynamicSubSideBarLayout";
 import ErrorPage from "../pages/ErrorPage";
 import ProviderNotes from "../pages/ProviderNotes";
+import ConfirmBooking from "../pages/client/ConfirmBooking";
 import ConfirmPage from "../pages/client/ConfirmPage";
+import ConfirmPending from "../pages/client/ConfirmPending";
+import ConfirmStaff from "../pages/client/ConfirmStaff";
 import EnterAddress from "../pages/client/EnterAddress";
 import SelectStaff from "../pages/client/SelectStaff";
+import SelectTime from "../pages/client/SelectTime";
 import OurWorkDetails from "../pages/client/ServiceProviderInfo/OurWorkDetails";
 import ServiceProviderInfo from "../pages/client/ServiceProviderInfo/ServiceProviderInfo";
 import {
@@ -51,10 +55,6 @@ import SetupLocationServices1 from "../pages/onboarding/solo/SetupLocationServic
 import SetupLocationServices2 from "../pages/onboarding/solo/SetupLocationServices2";
 import SetupTeamLocationServices1 from "../pages/onboarding/team/SetupTeamLocationServices1";
 import SetupTeamLocationServices2 from "../pages/onboarding/team/SetupTeamLocationServices2";
-import SelectTime from "../pages/client/SelectTime";
-import ConfirmBooking from "../pages/client/ConfirmBooking";
-import ConfirmStaff from "../pages/client/ConfirmStaff";
-import ConfirmPending from "../pages/client/ConfirmPending";
 
 export const routes = createBrowserRouter([
   {
@@ -84,7 +84,7 @@ export const routes = createBrowserRouter([
         path: "/service-menu",
         element: <ServicePage />,
       },
-      { 
+      {
         path: "/pricing",
         element: <TimePage />,
       },
@@ -155,12 +155,16 @@ export const routes = createBrowserRouter([
         element: <div>Service Page</div>,
       },
       {
+        path: "enter-address",
+        element: <EnterAddress />,
+      },
+      {
         path: "select-staff",
         element: <SelectStaff />,
       },
       {
         path: "select-time",
-        element: <SelectTime/>,
+        element: <SelectTime />,
       },
       {
         path: "confirm",
@@ -172,11 +176,11 @@ export const routes = createBrowserRouter([
       },
       {
         path: "confirmation-pending",
-        element: <ConfirmPending/>,
+        element: <ConfirmPending />,
       },
       {
         path: "confirmation",
-        element: <ConfirmBooking/>,
+        element: <ConfirmBooking />,
       },
     ],
   },

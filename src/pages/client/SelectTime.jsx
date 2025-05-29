@@ -1,15 +1,13 @@
-
-import React, { useState, useRef, useEffect } from "react";
-import { formatDate } from "@fullcalendar/core";
-import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
-import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import Container from "./Container";
+import FullCalendar from "@fullcalendar/react";
+import timeGridPlugin from "@fullcalendar/timegrid";
 import { DatePicker } from "antd";
 import dayjs from "dayjs";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
 import EventModal from "../../components/selectTimeComponents/EventModal";
+import Container from "./Container";
 
 let eventGuid = 0;
 let todayStr = new Date().toISOString().replace(/T.*$/, "");
@@ -51,8 +49,8 @@ export function createEventId() {
 function renderEventContent(eventInfo) {
   return (
     <>
-      <b>{eventInfo.timeText}</b>
-      <i>{eventInfo.event.title}</i>
+      {/* <b>{eventInfo.timeText}</b>
+      <i>{eventInfo.event.title}</i> */}
     </>
   );
 }
@@ -73,11 +71,9 @@ export default function SelectTime() {
   const calendarRef = useRef(null);
   const [highlightedDate, setHighlightedDate] = useState(null);
 
-  // State for the modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalSelectInfo, setModalSelectInfo] = useState(null);
 
-  // Time slots for the modal
   const timeSlots = [
     { time: "08:00", sale: "🔥 29% OFF" },
     { time: "10:00" },
@@ -109,27 +105,40 @@ export default function SelectTime() {
     setWeekendsVisible(!weekendsVisible);
   }
 
-  // Updated handleDateSelect to open the modal
   function handleDateSelect(selectInfo) {
-    setModalSelectInfo(selectInfo);
-    setIsModalOpen(true);
-    selectInfo.view.calendar.unselect();
+    const startDateStr = toYYYYMMDD(selectInfo.start);
+    const endDateStr = toYYYYMMDD(selectInfo.end);
+
+    if (startDateStr === endDateStr ||
+      (selectInfo.allDay && new Date(selectInfo.start).getTime() === new Date(selectInfo.end).getTime() - 86400000)
+    ) {
+      setHighlightedDate(startDateStr);
+      selectInfo.view.calendar.unselect();
+    } else {
+      console.log("Multi-day selection detected:", selectInfo);
+      selectInfo.view.calendar.unselect();
+    }
   }
 
-  // Handle modal submission
-  const handleModalSubmit = ({ time }) => {
+  function handleModalSubmit({ time }) {
     const calendarApi = modalSelectInfo.view.calendar;
-    const startDate = new Date(modalSelectInfo.startStr);
+    const startDate = new Date(modalSelectInfo.date);
     const [hours, minutes] = time.split(":");
     startDate.setHours(parseInt(hours), parseInt(minutes), 0);
+
+    if (isNaN(startDate.getTime())) {
+      console.error("Invalid date generated. Cannot add event.");
+      return;
+    }
 
     calendarApi.addEvent({
       id: createEventId(),
       start: startDate.toISOString(),
-      end: modalSelectInfo.endStr,
       allDay: false,
     });
-  };
+    setHighlightedDate(startDate.toISOString());
+    setIsModalOpen(false);
+  }
 
   function handleEventClick(clickInfo) {
     if (
@@ -147,7 +156,7 @@ export default function SelectTime() {
     if (date && calendarRef.current) {
       const calendarApi = calendarRef.current.getApi();
       calendarApi.gotoDate(date.toDate());
-      setSelectedDate(date);
+      setSelectedDate(dayjs(date));
     }
   };
 
@@ -191,11 +200,14 @@ export default function SelectTime() {
     const clickedDateStr = clickInfo.dateStr;
     const specialDateInfo = specialDatesData.find((sd) => sd.date === clickedDateStr);
 
-    if (specialDateInfo && specialDateInfo.isBusy) {
-      console.log("This date is busy and cannot be highlighted.");
-      return;
+    if (!specialDateInfo || !specialDateInfo.isBusy) {
+      setHighlightedDate(clickedDateStr);
+      setModalSelectInfo(clickInfo);
+      setIsModalOpen(true);
+    } else {
+      console.log("This date is busy and cannot be selected.");
+      setHighlightedDate(null);
     }
-    setHighlightedDate(clickedDateStr);
     clickInfo.view.calendar.unselect();
   };
 
@@ -266,25 +278,22 @@ export default function SelectTime() {
 
           <div className="flex border border-gray-200 rounded-lg">
             <button
-              className={`px-5 py-1 md:py-1.5 cursor-pointer rounded-md text-sm ${
-                currentView === "dayGridMonth" ? "bg-[#866BE7] text-white" : ""
-              }`}
+              className={`px-5 py-1 md:py-1.5 cursor-pointer rounded-md text-sm ${currentView === "dayGridMonth" ? "bg-[#866BE7] text-white" : ""
+                }`}
               onClick={() => handleViewChange("dayGridMonth")}
             >
               Month
             </button>
             <button
-              className={`px-5 py-1.5 cursor-pointer rounded-md text-sm ${
-                currentView === "timeGridWeek" ? "bg-[#866BE7] text-white" : ""
-              }`}
+              className={`px-5 py-1.5 cursor-pointer rounded-md text-sm ${currentView === "timeGridWeek" ? "bg-[#866BE7] text-white" : ""
+                }`}
               onClick={() => handleViewChange("timeGridWeek")}
             >
               Week
             </button>
             <button
-              className={`px-5 py-1.5 cursor-pointer rounded-md text-sm ${
-                currentView === "timeGridDay" ? "bg-[#866BE7] text-white" : ""
-              }`}
+              className={`px-5 py-1.5 cursor-pointer rounded-md text-sm ${currentView === "timeGridDay" ? "bg-[#866BE7] text-white" : ""
+                }`}
               onClick={() => handleViewChange("timeGridDay")}
             >
               Day
@@ -315,9 +324,12 @@ export default function SelectTime() {
 
         <EventModal
           isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
+          onClose={() => {
+            setIsModalOpen(false);
+            setHighlightedDate(null);
+          }}
           onSubmit={handleModalSubmit}
-          selectedDate={modalSelectInfo ? new Date(modalSelectInfo.startStr) : new Date()}
+          selectedDate={modalSelectInfo ? new Date(modalSelectInfo.date) : new Date()}
           timeSlots={timeSlots}
         />
 

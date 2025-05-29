@@ -7,7 +7,7 @@ const EventModal = ({ isOpen, onClose, onSubmit, selectedDate, timeSlots }) => {
 
   const handleSubmit = () => {
     if (!selectedTime) {
-      alert("Please enter a title and select a time.");
+      alert("Please select a time.");
       return;
     }
     onSubmit({ time: selectedTime });
@@ -19,7 +19,7 @@ const EventModal = ({ isOpen, onClose, onSubmit, selectedDate, timeSlots }) => {
     <Modal
       open={isOpen}
       onCancel={onClose}
-      footer={null} 
+      footer={null}
       closable={true}
       closeIcon={<X className="w-6 h-6" />}
       title={
@@ -30,21 +30,21 @@ const EventModal = ({ isOpen, onClose, onSubmit, selectedDate, timeSlots }) => {
       className="!w-[600px]"
       styles={{
         header: {
-          padding: "16px 24px", 
-          borderBottom: "1px solid #E5E7E8", 
+          padding: "16px 24px",
+          borderBottom: "1px solid #E5E7E8",
         },
         body: {
-          padding: "16px 24px", 
+          padding: "16px 24px",
         },
         content: {
           backgroundColor: "#FFFFFF",
-          borderRadius: "8px", 
+          borderRadius: "8px",
           boxShadow:
-            "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)", 
+            "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
         },
       }}
       style={{
-        backgroundColor: "rgba(75, 85, 99, 0.7)", 
+        backgroundColor: "rgba(75, 85, 99, 0.7)",
       }}
       centered
     >
@@ -56,11 +56,10 @@ const EventModal = ({ isOpen, onClose, onSubmit, selectedDate, timeSlots }) => {
         {timeSlots.map((slot) => (
           <div
             key={slot.time}
-            className={`px-3 py-2 rounded-lg flex justify-between items-center cursor-pointer ${
-              selectedTime === slot.time
+            className={`px-3 py-2 rounded-lg flex justify-between items-center cursor-pointer ${selectedTime === slot.time
                 ? "border-[1px] border-[#866BE7] bg-[#F5F4FE]"
                 : "border-[1px] border-[#E5E7E8]"
-            }`}
+              }`}
             onClick={() => setSelectedTime(slot.time)}
           >
             <span>{slot.time}</span>

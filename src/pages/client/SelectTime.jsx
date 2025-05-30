@@ -100,6 +100,7 @@ export default function SelectTime() {
       (selectInfo.allDay &&
         new Date(selectInfo.start).getTime() ===
           new Date(selectInfo.end).getTime() - 86400000)
+      )
     if (
       startDateStr === endDateStr ||
       (selectInfo.allDay &&
@@ -163,9 +164,6 @@ export default function SelectTime() {
 
   function handleEventClick(clickInfo) {
     if (
-      confirm(
-        `Are you sure you want to delete the event '${clickInfo.event.title}'`
-      )
       confirm(
         `Are you sure you want to delete the event '${clickInfo.event.title}'`
       )

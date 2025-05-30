@@ -10,7 +10,7 @@ import EventModal from "../../components/selectTimeComponents/EventModal";
 import Container from "./Container";
 
 let eventGuid = 0;
-let todayStr = new Date().toISOString().replace(/T.*$/, "");
+let todayStr = dayjs().format('YYYY-MM-DD'); 
 
 const specialDatesData = [
   { date: "2025-05-01", isBusy: true },
@@ -58,8 +58,8 @@ function renderEventContent(eventInfo) {
 const toYYYYMMDD = (dateInput) => {
   const d = new Date(dateInput);
   const year = d.getFullYear();
-  const month = (`0${d.getMonth() + 1}`).slice(-2);
-  const day = (`0${d.getDate()}`).slice(-2);
+  const month = `0${d.getMonth() + 1}`.slice(-2);
+  const day = `0${d.getDate()}`.slice(-2);
   return `${year}-${month}-${day}`;
 };
 
@@ -67,7 +67,7 @@ export default function SelectTime() {
   const [weekendsVisible, setWeekendsVisible] = useState(true);
   const [currentEvents, setCurrentEvents] = useState([]);
   const [selectedDate, setSelectedDate] = useState(dayjs());
-  const [currentView, setCurrentView] = useState("dayGridMonth");
+  const [currentView, setCurrentView] = useState("dayGridMonth"); 
   const calendarRef = useRef(null);
   const [highlightedDate, setHighlightedDate] = useState(null);
 
@@ -86,31 +86,26 @@ export default function SelectTime() {
     { time: "17:00" },
   ];
 
-  useEffect(() => {
-    if (calendarRef.current) {
-      const calendarApi = calendarRef.current.getApi();
-      setCurrentView(calendarApi.view.type);
-      const viewDidMountHandler = () => {
-        setCurrentView(calendarApi.view.type);
-      };
-      calendarApi.on("viewDidMount", viewDidMountHandler);
-
-      return () => {
-        calendarApi.off("viewDidMount", viewDidMountHandler);
-      };
-    }
-  }, []);
-
   function handleWeekendsToggle() {
     setWeekendsVisible(!weekendsVisible);
   }
 
+  // Triggered when a date/time selection is made
   function handleDateSelect(selectInfo) {
     const startDateStr = toYYYYMMDD(selectInfo.start);
     const endDateStr = toYYYYMMDD(selectInfo.end);
 
-    if (startDateStr === endDateStr ||
-      (selectInfo.allDay && new Date(selectInfo.start).getTime() === new Date(selectInfo.end).getTime() - 86400000)
+    if (
+      startDateStr === endDateStr ||
+      (selectInfo.allDay &&
+        new Date(selectInfo.start).getTime() ===
+          new Date(selectInfo.end).getTime() - 86400000)
+      )
+    if (
+      startDateStr === endDateStr ||
+      (selectInfo.allDay &&
+        new Date(selectInfo.start).getTime() ===
+          new Date(selectInfo.end).getTime() - 86400000)
     ) {
       setHighlightedDate(startDateStr);
       selectInfo.view.calendar.unselect();
@@ -119,6 +114,32 @@ export default function SelectTime() {
       selectInfo.view.calendar.unselect();
     }
   }
+
+  // Triggered when the user clicks on a date or a time
+  const handleDateClickForHighlight = (clickInfo) => {
+    const clickedDate = clickInfo.date;
+    const clickedDateStr = toYYYYMMDD(clickedDate);
+
+    const specialDateInfo = specialDatesData.find(
+      (sd) => sd.date === clickedDateStr
+    );
+
+    if (currentView === "dayGridMonth") {
+      if (!specialDateInfo || !specialDateInfo.isBusy) {
+        setHighlightedDate(clickedDateStr);
+        setModalSelectInfo(clickInfo);
+        setIsModalOpen(true);
+      } else {
+        console.log("This date is busy and cannot be selected.");
+        setHighlightedDate(null);
+      }
+    } else {
+      setHighlightedDate(null); 
+      console.log(`Date clicked in ${currentView} view. Modal will not open.`);
+    }
+
+    clickInfo.view.calendar.unselect();
+  };
 
   function handleModalSubmit({ time }) {
     const calendarApi = modalSelectInfo.view.calendar;
@@ -136,13 +157,16 @@ export default function SelectTime() {
       start: startDate.toISOString(),
       allDay: false,
     });
-    setHighlightedDate(startDate.toISOString());
+    setHighlightedDate(toYYYYMMDD(startDate)); 
     setIsModalOpen(false);
+    calendarApi.select(startDate);
   }
 
   function handleEventClick(clickInfo) {
     if (
-      confirm(`Are you sure you want to delete the event '${clickInfo.event.title}'`)
+      confirm(
+        `Are you sure you want to delete the event '${clickInfo.event.title}'`
+      )
     ) {
       clickInfo.event.remove();
     }
@@ -170,6 +194,7 @@ export default function SelectTime() {
       }
       const currentDate = calendarApi.getDate();
       setSelectedDate(dayjs(currentDate));
+      setCurrentView(calendarApi.view.type);
     }
   };
 
@@ -196,43 +221,63 @@ export default function SelectTime() {
     return classes;
   }
 
-  const handleDateClickForHighlight = (clickInfo) => {
-    const clickedDateStr = clickInfo.dateStr;
-    const specialDateInfo = specialDatesData.find((sd) => sd.date === clickedDateStr);
-
-    if (!specialDateInfo || !specialDateInfo.isBusy) {
-      setHighlightedDate(clickedDateStr);
-      setModalSelectInfo(clickInfo);
-      setIsModalOpen(true);
-    } else {
-      console.log("This date is busy and cannot be selected.");
-      setHighlightedDate(null);
-    }
-    clickInfo.view.calendar.unselect();
-  };
-
   function renderDayCellContentWithSales(dayCellInfo) {
     const dayNumber = dayCellInfo.date.getDate();
-    const formattedDayNumber = dayNumber < 10 ? `0${dayNumber}` : dayNumber.toString();
+    const formattedDayNumber =
+      dayNumber < 10 ? `0${dayNumber}` : dayNumber.toString();
     const dateStr = toYYYYMMDD(dayCellInfo.date);
     const specialDateInfo = specialDatesData.find((sd) => sd.date === dateStr);
 
     return (
       <div className="custom-day-cell-content">
         <span className="custom-day-number">{formattedDayNumber}</span>
-        {specialDateInfo && specialDateInfo.sale && !dayCellInfo.isOtherMonth && (
-          <div className="sale-badge">{specialDateInfo.sale}</div>
-        )}
+        {specialDateInfo &&
+          specialDateInfo.sale &&
+          !dayCellInfo.isOtherMonth && (
+            <div className="sale-badge">{specialDateInfo.sale}</div>
+          )}
       </div>
     );
   }
 
-  const handleSelectAllow = (selectInfo) => {
-    const startDateStr = toYYYYMMDD(selectInfo.start);
-    const specialDateInfo = specialDatesData.find((sd) => sd.date === startDateStr);
+  const renderTimeSlotContent = (slotInfo) => {
+    const time = dayjs(slotInfo.date).format("HH:mm");
+    const specialTimeSlot = timeSlots.find((ts) => ts.time === time);
 
-    if (specialDateInfo && specialDateInfo.isBusy) {
-      return false;
+    const isBusy = specialDatesData.some(
+      (sd) =>
+        sd.date === toYYYYMMDD(slotInfo.date) &&
+        sd.isBusy &&
+        (specialTimeSlot ? specialTimeSlot.isBusy : false) 
+    );
+
+    if (isBusy) {
+      return (
+        <div className="fc-event-main-frame fc-timegrid-busy-slot">
+          <div className="fc-event-time"></div>
+          <div className="fc-event-title fc-sticky"></div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="fc-event-main-frame">
+        {specialTimeSlot && specialTimeSlot.sale && (
+          <div className="sale-badge-timegrid">{specialTimeSlot.sale}</div>
+        )}
+      </div>
+    );
+  };
+
+  const handleSelectAllow = (selectInfo) => {
+    if (currentView === "dayGridMonth") {
+      const startDateStr = toYYYYMMDD(selectInfo.start);
+      const specialDateInfo = specialDatesData.find(
+        (sd) => sd.date === startDateStr
+      );
+      if (specialDateInfo && specialDateInfo.isBusy) {
+        return false;
+      }
     }
     return true;
   };
@@ -244,22 +289,20 @@ export default function SelectTime() {
           <div className="flex items-center space-x-4">
             <button
               className="cursor-pointer"
-              onClick={() => handleNavButtonClick("prev")}
-            >
+              onClick={() => handleNavButtonClick("prev")}>
               <img src="/src/assets/icons/left_arrow.svg" alt="Left Arrow" />
             </button>
             <DatePicker
               onChange={onDatePickerChange}
               picker="month"
               value={selectedDate}
-              format="MMMM YYYY"
+              format="MMMM YYYY" 
               allowClear={false}
               className="w-40"
             />
             <button
               className="cursor-pointer ml-1"
-              onClick={() => handleNavButtonClick("next")}
-            >
+              onClick={() => handleNavButtonClick("next")}>
               <img src="/src/assets/icons/right_arrow.svg" alt="Right Arrow" />
             </button>
             <button
@@ -269,31 +312,36 @@ export default function SelectTime() {
                   const calendarApi = calendarRef.current.getApi();
                   calendarApi.today();
                   setSelectedDate(dayjs());
+                  setCurrentView(calendarApi.view.type);
                 }
-              }}
-            >
+              }}>
               Today
             </button>
           </div>
 
           <div className="flex border border-gray-200 rounded-lg">
             <button
-              className={`px-5 py-1 md:py-1.5 cursor-pointer rounded-md text-sm ${currentView === "dayGridMonth" ? "bg-[#866BE7] text-white" : ""
-                }`}
+              className={`px-5 py-1 md:py-1.5 cursor-pointer rounded-md text-sm ${
+                currentView === "dayGridMonth"
+                  ? "bg-[#866BE7] text-white"
+                  : ""
+              }`}
               onClick={() => handleViewChange("dayGridMonth")}
             >
               Month
             </button>
             <button
-              className={`px-5 py-1.5 cursor-pointer rounded-md text-sm ${currentView === "timeGridWeek" ? "bg-[#866BE7] text-white" : ""
-                }`}
+              className={`px-5 py-1.5 cursor-pointer rounded-md text-sm ${
+                currentView === "timeGridWeek" ? "bg-[#866BE7] text-white" : ""
+              }`}
               onClick={() => handleViewChange("timeGridWeek")}
             >
               Week
             </button>
             <button
-              className={`px-5 py-1.5 cursor-pointer rounded-md text-sm ${currentView === "timeGridDay" ? "bg-[#866BE7] text-white" : ""
-                }`}
+              className={`px-5 py-1.5 cursor-pointer rounded-md text-sm ${
+                currentView === "timeGridDay" ? "bg-[#866BE7] text-white" : ""
+              }`}
               onClick={() => handleViewChange("timeGridDay")}
             >
               Day
@@ -302,10 +350,11 @@ export default function SelectTime() {
         </div>
 
         <FullCalendar
+          key={currentView} 
           ref={calendarRef}
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           headerToolbar={false}
-          initialView="dayGridMonth"
+          initialView={currentView}
           editable={true}
           selectable={true}
           selectMirror={true}
@@ -313,13 +362,43 @@ export default function SelectTime() {
           weekends={weekendsVisible}
           initialEvents={INITIAL_EVENTS}
           select={handleDateSelect}
+          dateClick={handleDateClickForHighlight}
           eventContent={renderEventContent}
           eventClick={handleEventClick}
           eventsSet={handleEvents}
           dayCellClassNames={dayCellClassNamesFunc}
-          dateClick={handleDateClickForHighlight}
           selectAllow={handleSelectAllow}
-          dayCellContent={renderDayCellContentWithSales}
+          dayCellContent={renderDayCellContentWithSales} 
+          // TimeGrid specific props
+          slotMinTime="08:00:00"
+          slotMaxTime="18:00:00"
+          slotDuration="01:00:00"
+          snapDuration="01:00:00"
+          scrollTime="08:00:00"
+          allDaySlot={false}
+          slotLabelFormat={{
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false,
+            meridiem: false,
+          }}
+          slotLabelClassNames="custom-slot-label"
+          // Conditionally render dayHeaderContent based on currentView
+          dayHeaderContent={
+            currentView === "timeGridWeek" || currentView === "timeGridDay"
+              ? (arg) => (
+                  <div className="custom-day-header-content">
+                    <div className="custom-day-header-weekday">
+                      {arg.date.toLocaleString("en-US", { weekday: "short" })}
+                    </div>
+                    <div className="custom-day-header-day">
+                      {arg.date.getDate()}
+                    </div>
+                  </div>
+                )
+              : null
+          }
+          slotLaneContent={renderTimeSlotContent}
         />
 
         <EventModal
@@ -329,7 +408,9 @@ export default function SelectTime() {
             setHighlightedDate(null);
           }}
           onSubmit={handleModalSubmit}
-          selectedDate={modalSelectInfo ? new Date(modalSelectInfo.date) : new Date()}
+          selectedDate={
+            modalSelectInfo ? new Date(modalSelectInfo.date) : new Date()
+          }
           timeSlots={timeSlots}
         />
 
@@ -338,8 +419,7 @@ export default function SelectTime() {
             No suitable time slot?{" "}
             <Link
               to="#"
-              className="hover:text-indigo-700 text-[#744CDB] text-sm underline"
-            >
+              className="hover:text-indigo-700 text-[#744CDB] text-sm underline">
               Join our waitlist!
             </Link>
           </p>

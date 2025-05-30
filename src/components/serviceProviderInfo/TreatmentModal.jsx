@@ -36,8 +36,8 @@ const TreatmentModal = ({ open, onCancel, onContinue, services }) => {
 
     const handleContinue = () => {
         const selectedData = services.map(service => ({
-            id: service.id,
-            name: service.title,
+            serviceId: service.id,
+            serviceName: service.title,
             treatment: selectedTreatments[service.id],
         }));
         onContinue(selectedData);

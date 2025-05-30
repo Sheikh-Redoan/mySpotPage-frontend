@@ -42,7 +42,7 @@ const testimonials = [
         rating: 5
     },
     {
-        name: "John D.",
+        name: "Dohn D.",
         date: "Jan 20, 2025",
         time: "16:23",
         avatar: "",

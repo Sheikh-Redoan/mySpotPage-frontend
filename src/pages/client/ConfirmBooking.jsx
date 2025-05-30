@@ -92,10 +92,10 @@ const ConfirmBooking = () => {
             <FaCheckCircle className="text-white text-3xl" />
           </div>
           <div className="self-stretch flex flex-col justify-start items-center gap-3">
-            <h1 className="text-Boulder-950 text-3xl font-semibold font-['Golos_Text'] leading-10 text-center">
+            <h1 className="text-Boulder-950 text-3xl font-semibold   leading-10 text-center">
               {bookingData.thankYouMessage}
             </h1>
-            <p className="w-full max-w-[604px] text-center text-Boulder-500 text-base font-normal font-['Golos_Text'] leading-normal">
+            <p className="w-full max-w-[604px] text-center text-Boulder-500 text-base font-normal   leading-normal">
               {bookingData.confirmationText}
             </p>
           </div>
@@ -103,12 +103,12 @@ const ConfirmBooking = () => {
 
         {/* Payment Requirement Section */}
         <div className="w-full max-w-[856px] p-6 bg-white rounded-xl shadow flex flex-col justify-start items-start gap-4">
-          <h2 className="self-stretch text-violet-500 text-xl font-semibold font-['Golos_Text'] leading-7">
+          <h2 className="self-stretch text-violet-500 text-xl font-semibold   leading-7">
             {bookingData.paymentRequirementTitle}
           </h2>
           <div className="self-stretch px-3 py-2 bg-violet-50 rounded-lg flex items-center gap-2">
             <PiStorefrontLight className="text-violet-500 text-2xl flex-shrink-0" />
-            <p className="text-violet-500 text-base font-semibold font-['Golos_Text'] leading-normal">
+            <p className="text-violet-500 text-base font-semibold   leading-normal">
               {bookingData.paymentInstruction}
             </p>
           </div>
@@ -116,7 +116,7 @@ const ConfirmBooking = () => {
 
         {/* Booking Information Section */}
         <div className="w-full max-w-[856px] p-6 bg-white rounded-xl shadow flex flex-col justify-start items-start gap-4">
-          <h2 className="self-stretch text-violet-500 text-xl font-semibold font-['Golos_Text'] leading-7">
+          <h2 className="self-stretch text-violet-500 text-xl font-semibold   leading-7">
             Booking Information
           </h2>
 
@@ -155,7 +155,7 @@ const ConfirmBooking = () => {
                 <span>Baber shop</span> <GoDotFill className="opacity-[.4]" />{" "}
                 <span>26 Bedfordbury</span>
               </p>
-              <a href="#" className="justify-center text-violet-600 text-xs font-normal font-['Golos_Text'] underline leading-none">
+              <a href="#" className="justify-center text-violet-600 text-xs font-normal   underline leading-none">
                 View larger map
               </a>
             </div>
@@ -163,7 +163,7 @@ const ConfirmBooking = () => {
             {/* Get Direction button */}
             <div className="flex flex-col justify-center items-center">
               <SplitIcon className="text-violet-600" />
-              <a href="#" className="justify-center text-violet-600 text-sm font-semibold font-['Golos_Text'] underline leading-tight">
+              <a href="#" className="justify-center text-violet-600 text-sm font-semibold   underline leading-tight">
                 Get Direction
               </a>
             </div>

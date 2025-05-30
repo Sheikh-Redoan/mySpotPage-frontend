@@ -58,8 +58,8 @@ function renderEventContent(eventInfo) {
 const toYYYYMMDD = (dateInput) => {
   const d = new Date(dateInput);
   const year = d.getFullYear();
-  const month = (`0${d.getMonth() + 1}`).slice(-2);
-  const day = (`0${d.getDate()}`).slice(-2);
+  const month = `0${d.getMonth() + 1}`.slice(-2);
+  const day = `0${d.getDate()}`.slice(-2);
   return `${year}-${month}-${day}`;
 };
 
@@ -95,6 +95,11 @@ export default function SelectTime() {
     const startDateStr = toYYYYMMDD(selectInfo.start);
     const endDateStr = toYYYYMMDD(selectInfo.end);
 
+    if (
+      startDateStr === endDateStr ||
+      (selectInfo.allDay &&
+        new Date(selectInfo.start).getTime() ===
+          new Date(selectInfo.end).getTime() - 86400000)
     if (
       startDateStr === endDateStr ||
       (selectInfo.allDay &&
@@ -153,10 +158,14 @@ export default function SelectTime() {
     });
     setHighlightedDate(toYYYYMMDD(startDate)); 
     setIsModalOpen(false);
+    calendarApi.select(startDate);
   }
 
   function handleEventClick(clickInfo) {
     if (
+      confirm(
+        `Are you sure you want to delete the event '${clickInfo.event.title}'`
+      )
       confirm(
         `Are you sure you want to delete the event '${clickInfo.event.title}'`
       )
@@ -216,16 +225,19 @@ export default function SelectTime() {
 
   function renderDayCellContentWithSales(dayCellInfo) {
     const dayNumber = dayCellInfo.date.getDate();
-    const formattedDayNumber = dayNumber < 10 ? `0${dayNumber}` : dayNumber.toString();
+    const formattedDayNumber =
+      dayNumber < 10 ? `0${dayNumber}` : dayNumber.toString();
     const dateStr = toYYYYMMDD(dayCellInfo.date);
     const specialDateInfo = specialDatesData.find((sd) => sd.date === dateStr);
 
     return (
       <div className="custom-day-cell-content">
         <span className="custom-day-number">{formattedDayNumber}</span>
-        {specialDateInfo && specialDateInfo.sale && !dayCellInfo.isOtherMonth && (
-          <div className="sale-badge">{specialDateInfo.sale}</div>
-        )}
+        {specialDateInfo &&
+          specialDateInfo.sale &&
+          !dayCellInfo.isOtherMonth && (
+            <div className="sale-badge">{specialDateInfo.sale}</div>
+          )}
       </div>
     );
   }
@@ -279,8 +291,7 @@ export default function SelectTime() {
           <div className="flex items-center space-x-4">
             <button
               className="cursor-pointer"
-              onClick={() => handleNavButtonClick("prev")}
-            >
+              onClick={() => handleNavButtonClick("prev")}>
               <img src="/src/assets/icons/left_arrow.svg" alt="Left Arrow" />
             </button>
             <DatePicker
@@ -293,8 +304,7 @@ export default function SelectTime() {
             />
             <button
               className="cursor-pointer ml-1"
-              onClick={() => handleNavButtonClick("next")}
-            >
+              onClick={() => handleNavButtonClick("next")}>
               <img src="/src/assets/icons/right_arrow.svg" alt="Right Arrow" />
             </button>
             <button
@@ -306,8 +316,7 @@ export default function SelectTime() {
                   setSelectedDate(dayjs());
                   setCurrentView(calendarApi.view.type);
                 }
-              }}
-            >
+              }}>
               Today
             </button>
           </div>
@@ -401,7 +410,9 @@ export default function SelectTime() {
             setHighlightedDate(null);
           }}
           onSubmit={handleModalSubmit}
-          selectedDate={modalSelectInfo ? new Date(modalSelectInfo.date) : new Date()}
+          selectedDate={
+            modalSelectInfo ? new Date(modalSelectInfo.date) : new Date()
+          }
           timeSlots={timeSlots}
         />
 
@@ -410,8 +421,7 @@ export default function SelectTime() {
             No suitable time slot?{" "}
             <Link
               to="#"
-              className="hover:text-indigo-700 text-[#744CDB] text-sm underline"
-            >
+              className="hover:text-indigo-700 text-[#744CDB] text-sm underline">
               Join our waitlist!
             </Link>
           </p>

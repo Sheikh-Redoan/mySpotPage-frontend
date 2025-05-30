@@ -8,14 +8,33 @@ export default function AddressForm() {
     setFormLayout(address);
   };
 
+  const onFinish = (values) => {
+    console.log("Success:", values);
+  };
+
+  const CustomLabel = ({ label, required }) => (
+    <span>
+      {label} {required && <span style={{ color: "red" }}>*</span>}
+    </span>
+  );
+
   return (
     <Form
       layout="vertical"
       form={form}
       initialValues={{ address }}
-      onValuesChange={onChange}>
-      <Form.Item label="Address">
-        <Input placeholder="Enter your address" />
+      onValuesChange={onChange}
+      onFinish={onFinish}>
+      <Form.Item
+        label={<CustomLabel label="Address" required />}
+        rules={[
+          {
+            required: true,
+            message:
+              "This provider does not serve your location. Please choose another provider or check service availability.",
+          },
+        ]}>
+        <Input placeholder="Your address" className="!py-2" />
       </Form.Item>
     </Form>
   );

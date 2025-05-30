@@ -27,6 +27,7 @@ const ConfirmDetails = ({
   buttonTittle,
   buttonpath = "/service-provider-info/confirmation",
 }) => {
+  console.log(buttonTittle);
   // State to manage the visibility of all services.
   // Initially, if there are more than 2 services, only show 2.
   const [showAllServices, setShowAllServices] = useState(false);
@@ -53,8 +54,7 @@ const ConfirmDetails = ({
 
   return (
     <div
-      className={`${className} bg-white rounded-xl flex flex-col justify-start items-start gap-5`}
-    >
+      className={`${className} bg-white rounded-xl flex flex-col justify-start items-start gap-5`}>
       {/* Store Information Section - Renders only if any store-related prop is provided */}
       {hasStoreInfo && (
         <div className="flex flex-col gap-2 w-full">
@@ -139,8 +139,7 @@ const ConfirmDetails = ({
           {displayedServices.map((service) => (
             <div
               key={service.id}
-              className="flex justify-start items-start gap-[12px] w-full"
-            >
+              className="flex justify-start items-start gap-[12px] w-full">
               <img
                 src={
                   service.image ||
@@ -187,8 +186,7 @@ const ConfirmDetails = ({
           {services.length > 2 && ( // Only show button if there are more than 2 services
             <button
               onClick={toggleShowServices}
-              className="text-sm font-normal font-['Golos_Text'] leading-tight text-description flex items-center justify-center gap-2 cursor-pointer w-full"
-            >
+              className="text-sm font-normal font-['Golos_Text'] leading-tight text-description flex items-center justify-center gap-2 cursor-pointer w-full">
               {showAllServices ? (
                 <>
                   Show less <FaChevronUp />
@@ -213,17 +211,17 @@ const ConfirmDetails = ({
         <div className="flex flex-col gap-[12px] w-full justify-center items-start">
           {(subtotal || vatIncluded) && (
             <div className="flex justify-between items-start w-full">
-              <p className="self-stretch text-description text-sm font-normal font-['Golos_Text'] leading-tight flex items-center gap-1">
+              <p className="self-stretch text-description text-sm font-normal   leading-tight flex items-center gap-1">
                 Subtotal {subtotal && <PiInfo className="text-gray-500" />}
               </p>
               <div>
                 {subtotal && (
-                  <p className="text-right text-black text-sm font-normal font-['Golos_Text'] leading-tight">
+                  <p className="text-right text-black text-sm font-normal   leading-tight">
                     {subtotal}
                   </p>
                 )}
                 {vatIncluded && (
-                  <p className="w-32 h-4 text-description text-xs font-normal font-['Golos_Text'] leading-none">
+                  <p className="w-32 h-4 text-description text-xs font-normal   leading-none">
                     {vatIncluded}
                   </p>
                 )}
@@ -232,17 +230,17 @@ const ConfirmDetails = ({
           )}
           {(discountPercentage || discountAmount) && (
             <div className="flex justify-between items-start w-full">
-              <p className="self-stretch text-description text-sm font-normal font-['Golos_Text'] leading-tight flex items-center gap-1">
+              <p className="self-stretch text-description text-sm font-normal   leading-tight flex items-center gap-1">
                 Discount
               </p>
               <div className="flex gap-1 items-center">
                 {discountPercentage && (
-                  <p className="text-violet-500 text-xs font-medium font-['Golos_Text'] leading-none px-2 py-1 flex bg-[#ecebfc] w-max rounded items-center gap-1">
+                  <p className="text-violet-500 text-xs font-medium   leading-none px-2 py-1 flex bg-[#ecebfc] w-max rounded items-center gap-1">
                     <PiFireLight /> {discountPercentage}
                   </p>
                 )}
                 {discountAmount && (
-                  <p className="text-right text-red-500 text-sm font-normal font-['Golos_Text'] leading-tight">
+                  <p className="text-right text-red-500 text-sm font-normal   leading-tight">
                     {discountAmount}
                   </p>
                 )}
@@ -255,10 +253,10 @@ const ConfirmDetails = ({
           )}
           {total && (
             <div className="flex justify-between items-start w-full">
-              <p className="w-full max-w-48 text-description text-sm font-normal font-['Golos_Text'] leading-tight">
+              <p className="w-full max-w-48 text-description text-sm font-normal   leading-tight">
                 Total
               </p>
-              <p className="text-right text-violet-500 text-lg font-semibold font-['Golos_Text'] leading-relaxed">
+              <p className="text-right text-violet-500 text-lg font-semibold   leading-relaxed">
                 {total}
               </p>
             </div>
@@ -271,14 +269,13 @@ const ConfirmDetails = ({
         {buttonTittle && (
           <button
             type="submit"
-            className="cursor-pointer bg-black rounded-xl justify-center text-white text-base font-semibold font-['Golos_Text'] leading-normal py-[10px] w-full text-center hover:bg-gray-800 transition-colors duration-200"
-          >
+            className="cursor-pointer bg-black rounded-xl justify-center text-white text-base font-semibold font-['Golos_Text'] leading-normal py-[10px] w-full text-center hover:bg-gray-800 transition-colors duration-200">
             {buttonTittle}
           </button>
         )}
       </Link>
       {paymentInstruction && (
-        <p className="self-stretch text-center text-description text-xs font-normal font-['Golos_Text'] leading-none">
+        <p className="self-stretch text-center text-description text-xs font-normal   leading-none">
           {paymentInstruction}
         </p>
       )}

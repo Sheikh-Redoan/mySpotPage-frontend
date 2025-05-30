@@ -58,7 +58,7 @@ export const adminTabs = [
     name: "User Management",
     imagePink: imageProvider.PeoplePink,
     imageWhite: imageProvider.PeopleWhite,
-    link: "/admin-portal",
+    link: "/user-management",
   },
   {
     id: 1,
@@ -90,6 +90,23 @@ export const profileTabs = [
     imagePink: imageProvider.securityPink,
     imageWhite: imageProvider.securityBlack,
     link: "/user-management/my-profile/security",
+  },
+];
+
+export const userManagementTabs = [
+  {
+    id: 0,
+    name: "Basic Information",
+    imagePink: imageProvider.buildingCol,
+    imageWhite: imageProvider.building,
+    link: "basic-information",
+  },
+  {
+    id: 1,
+    name: "Subscription",
+    imagePink: imageProvider.cardCol,
+    imageWhite: imageProvider.card,
+    link: "subscription",
   },
 ];
 // Initial breadcrumbs

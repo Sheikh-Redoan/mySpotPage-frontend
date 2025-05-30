@@ -209,8 +209,18 @@ export const routes = createBrowserRouter([
         element: <UserManagement />,
       },
       {
-        path: ":name/business-information",
-        element: <BasicInformation />,
+        path: ":name",
+        element: <MyProfileLayout />,
+        children: [
+          {
+            path: "basic-information",
+            element: <BasicInformation />,
+          },
+          {
+            path: "subscription",
+            element: <BasicInformation />,
+          },
+        ],
       },
       {
         path: "my-profile",

@@ -1,10 +1,10 @@
-import React from "react";
 // Assuming Container and Breadcrumb exist in your project structure
 import { PiStorefrontLight } from "react-icons/pi";
-import Container from "./Container";
+import confirm_product from "../../assets/images/confirm.jpg";
 import Breadcrumb from "../../components/client/Breadcrumb";
 import ConfirmDetails from "../../components/client/ConfirmDetails";
-import confirm_product from "../../assets/images/confirm.jpg";
+import { getBreadcrumbs } from "../../lib/staticData";
+import Container from "./Container";
 
 const ConfirmPage = () => {
   // Sample data to pass to ConfirmDetails.
@@ -16,7 +16,8 @@ const ConfirmPage = () => {
     location: "15 Rothschild Boulevard, Tel Aviv-Yafo, Israel",
     staffName: "John Doe",
     appointmentDateTime: "06 Jan 2025, 11:00",
-    bookingNote: "Hair is thick and slightly wavy, prefers a shoulder-length layered cut with light texture.",
+    bookingNote:
+      "Hair is thick and slightly wavy, prefers a shoulder-length layered cut with light texture.",
     services: [
       {
         id: 1,
@@ -64,9 +65,8 @@ const ConfirmPage = () => {
     <section className="py-8">
       <Container className="max-w-[1296px] mx-auto px-4">
         {/* Pass isAddressPage as true to show "Enter address" and "Select staff" in the breadcrumb */}
-        <Breadcrumb isStaffPage={true} />
+        <Breadcrumb breadcrumbs={getBreadcrumbs()} />
         <div className="flex flex-col lg:flex-row items-start justify-between w-full gap-8 mt-6">
-
           <div className="p-5 bg-white rounded-xl flex-1 w-full lg:w-auto">
             <h2 className="text-Boulder-950 text-base font-semibold leading-normal mb-4">
               Confirm
@@ -105,7 +105,7 @@ const ConfirmPage = () => {
             discountAmount={storeData.discountAmount}
             total={storeData.total}
             paymentInstruction={storeData.paymentInstruction}
-            buttonTittle = {"Complete"}
+            buttonTittle={"Complete"}
           />
         </div>
       </Container>

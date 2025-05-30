@@ -1,13 +1,27 @@
 import AddressForm from "../../components/client/AddressForm";
 import Breadcrumb from "../../components/client/Breadcrumb";
 import ConfirmDetails from "../../components/client/ConfirmDetails";
+import { getBreadcrumbs } from "../../lib/staticData";
 import Container from "./Container";
 
 export default function EnterAddress() {
   return (
     <section>
       <Container>
-        <Breadcrumb isAddressPage={true} isStaffPage={true} />
+        <Breadcrumb
+          isAddressPage={true}
+          isStaffPage={true}
+          breadcrumbs={getBreadcrumbs(1, 0, [
+            {
+              name: "Enter Address",
+              link: "/service-provider-info/enter-address",
+            },
+            {
+              name: "Select Staff",
+              link: "/service-provider-info/select-staff",
+            },
+          ])}
+        />
         <div className="flex justify-between flex-col lg:flex-row w-full gap-8">
           <div className="flex-1 bg-white rounded-xl p-5">
             <h2 className="text-xl font-semibold font-golos">Enter Address</h2>

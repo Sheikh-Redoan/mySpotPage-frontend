@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { PiStorefrontLight } from "react-icons/pi";
-import Container from "./Container";
+import { Link } from "react-router";
+import confirm_product from "../../assets/images/confirm.jpg";
 import Breadcrumb from "../../components/client/Breadcrumb";
 import ConfirmDetails from "../../components/client/ConfirmDetails";
-import confirm_product from "../../assets/images/confirm.jpg";
-import { Link } from "react-router";
-import { MdOutlineKeyboardArrowDown } from "react-icons/md";
-
+import { getBreadcrumbs } from "../../lib/staticData";
+import Container from "./Container";
 
 const ConfirmStaff = () => {
   // State to manage mobile view and full summary modal visibility
@@ -88,15 +88,16 @@ const ConfirmStaff = () => {
         </div>
         <button
           onClick={() => setShowFullSummary(true)}
-          className="text-black text-sm font-semibold flex justify-center items-center"
-        >
-          See detail <MdOutlineKeyboardArrowDown/>
+          className="text-black text-sm font-semibold flex justify-center items-center">
+          See detail <MdOutlineKeyboardArrowDown />
         </button>
       </div>
-        <div className="border-t border-t-gray-200 my-3"></div>
+      <div className="border-t border-t-gray-200 my-3"></div>
       <div className="flex justify-between items-center mb-4">
         <span className="text-lg font-bold text-description">Total</span>
-        <span className="text-lg font-bold text-violet-500">{storeData.total}</span>
+        <span className="text-lg font-bold text-violet-500">
+          {storeData.total}
+        </span>
       </div>
       <Link to="/service-provider-info/confirmation-pending">
         <button className="cursor-pointer bg-black rounded-xl justify-center text-white text-base font-semibold   leading-normal py-[10px] w-full text-center hover:bg-gray-800 transition-colors duration-200">
@@ -116,8 +117,7 @@ const ConfirmStaff = () => {
         <h2 className="text-xl font-bold">Summary</h2>
         <button
           onClick={() => setShowFullSummary(false)}
-          className="text-gray-500 text-2xl font-bold"
-        >
+          className="text-gray-500 text-2xl font-bold">
           &times; {/* Cross icon */}
         </button>
       </div>
@@ -148,7 +148,7 @@ const ConfirmStaff = () => {
       <section className="py-4">
         <Container className="max-w-[1296px] mx-auto px-4">
           {/* Breadcrumb: Set isAddressPage to false to match the provided image's breadcrumb */}
-          <Breadcrumb isAddressPage={false} />
+          <Breadcrumb breadcrumbs={getBreadcrumbs()} />
           <div className="flex flex-col lg:flex-row items-start justify-between w-full gap-8 mt-6">
             <div className="p-5 bg-white rounded-xl flex-1 w-full lg:w-auto">
               <h2 className="text-Boulder-950 text-base font-semibold leading-normal mb-4">

@@ -36,6 +36,7 @@ import BookingInfo from "../pages/BookingInfo";
 import DynamicSubSideBarLayout from "../pages/DynamicSubSideBarLayout";
 import ErrorPage from "../pages/ErrorPage";
 import ProviderNotes from "../pages/ProviderNotes";
+import BasicInformation from "../pages/admin/BasicInformation";
 import UserManagement from "../pages/admin/UserManagement";
 import ConfirmBooking from "../pages/client/ConfirmBooking";
 import ConfirmPage from "../pages/client/ConfirmPage";
@@ -209,7 +210,7 @@ export const routes = createBrowserRouter([
       },
       {
         path: ":name/Business Information",
-        element: <div>Business Information</div>,
+        element: <BasicInformation />,
       },
       {
         path: "my-profile",

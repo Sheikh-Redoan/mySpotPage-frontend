@@ -6,66 +6,62 @@ import { cn } from "../../lib/utils";
 export default function Popup({ name, icon, buttonComp, children, className }) {
   const [toggle, setToggle] = useState(true);
   const popupRef = useRef(null);
-  const iconRef = useRef(null);
 
   const handlePopup = () => {
-    setToggle(!toggle);
+    setToggle((prev) => !prev);
   };
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (
-        popupRef.current &&
-        !popupRef.current.contains(event.target) &&
-        iconRef.current &&
-        !iconRef.current.contains(event.target)
-      ) {
-        setToggle(true);
+      if (popupRef.current && !popupRef.current.contains(event.target)) {
+        setToggle((prev) => !prev);
       }
     };
 
-    document.body.addEventListener("click", handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.body.removeEventListener("click", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
   return (
-    <div className="relative">
+    <div className="relative inline-block">
       {name && (
-        <Button type="default" onClick={handlePopup} variant="outlined">
-          {icon && icon}
-
+        <Button type="default" onClick={handlePopup}>
+          {icon}
           {name}
         </Button>
       )}
 
       {buttonComp && (
-        <Button type="text" onClick={handlePopup} variant="text">
+        <button
+          type="text"
+          onClick={handlePopup}
+          className="hover:!bg-transparent !bg-transparent focus:!bg-transparent active:!WSbg-transparent">
           {buttonComp(handlePopup)}
-        </Button>
+        </button>
       )}
 
       <div
         ref={popupRef}
         className={cn(
-          "w-[350px] transition-all duration-300  absolute top-0  z-[10] left-1/2 rounded-xl bg-white shadow-lg inset-shadow-sm",
+          "w-[350px] transition-all duration-300 absolute top-0 z-[10] left-1/2 transform -translate-x-1/2 rounded-xl bg-white shadow-lg inset-shadow-sm",
           toggle
             ? "scale-0 opacity-0 invisible"
             : "scale-100 opacity-100 visible",
           className
         )}>
         {name && (
-          <div className="flex justify-between items-center border-b border-b-gray-100 px-3 py-2">
+          <div className="flex justify-between items-center border-b border-gray-100 px-3 py-2">
             <h3 className="text-lg font-semibold">{name}</h3>
-            <Button type="text" onClick={handlePopup} variant="outlined">
+            <Button type="text" onClick={handlePopup}>
               <X size={20} strokeWidth={1} className="text-gray-600" />
             </Button>
           </div>
         )}
 
         <div className="flex items-center gap-2 p-4">
-          {children(handlePopup)}
+          {typeof children === "function" ? children(handlePopup) : children}
         </div>
       </div>
     </div>

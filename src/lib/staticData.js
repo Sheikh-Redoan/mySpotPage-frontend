@@ -44,27 +44,3 @@ export const dashboardTabs = [
     link: "/settings",
   },
 ];
-
-export const adminTabs = [
-  {
-    id: 0,
-    name: "User Management",
-    imagePink: imageProvider.PeoplePink,
-    imageWhite: imageProvider.PeopleWhite,
-    link: "/admin-portal",
-  },
-  {
-    id: 1,
-    name: "Data Management",
-    imagePink: imageProvider.database,
-    imageWhite: imageProvider.databaseCol,
-    link: "data-management",
-  },
-  {
-    id: 5,
-    name: "Settings",
-    imagePink: imageProvider.SettingsPink,
-    imageWhite: imageProvider.SettingsWhite,
-    link: "settings",
-  },
-];

@@ -99,7 +99,7 @@ export const userManagementTabs = [
     name: "Basic Information",
     imagePink: imageProvider.buildingCol,
     imageWhite: imageProvider.building,
-    link: "basic-information",
+    link: "business-information",
   },
   {
     id: 1,

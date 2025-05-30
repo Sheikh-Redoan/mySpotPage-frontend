@@ -213,7 +213,7 @@ export const routes = createBrowserRouter([
         element: <MyProfileLayout />,
         children: [
           {
-            path: "basic-information",
+            path: "business-information",
             element: <BasicInformation />,
           },
           {

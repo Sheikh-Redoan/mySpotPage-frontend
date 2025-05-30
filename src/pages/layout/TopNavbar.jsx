@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router";
 import UserMenuPopUp from "../../components/admin/UserMenuPopUp";
 import Popup from "../../components/shared/Popup";
 import { imageProvider } from "../../lib/imageProvider";
@@ -9,13 +8,6 @@ function TopNavbar({ currentTab }) {
   const [toggle, setToggle] = useState(true);
   const popupRef = useRef(null);
   const iconRef = useRef(null);
-
-  const location = useLocation();
-  const currentPath = location.pathname;
-  console.log(
-    "Current path:",
-    currentPath.split("/")[currentPath.split("/").length - 1]
-  );
 
   const notificationButtons = ["All", "Read", "Unread"];
 

@@ -50,5 +50,4 @@ export const dashboardTabs = [
       "imageWhite": imageProvider.SettingsWhite,
       "link": '/settings'
     }
-  ]
-  
+  ]  

@@ -42,9 +42,6 @@ import upgradeIcon from "../assets/icons/upgradeIcon.png";
 import upload from "../assets/icons/upload.png";
 import user from "../assets/icons/user.png";
 import visa from "../assets/icons/visa.png";
-import Client from "../assets/icons/man.png";
-import amrican from "../assets/icons/amrican.png";
-import dollor from "../assets/icons/dollor.png";
 import TextLogo from "../assets/images/my_spot_page_text_favicon.png";
 
 export const imageProvider = {

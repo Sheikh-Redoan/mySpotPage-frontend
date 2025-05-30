@@ -43,6 +43,7 @@ import upgradeIcon from "../assets/icons/upgradeIcon.png";
 import upload from "../assets/icons/upload.png";
 import visa from "../assets/icons/visa.png";
 import TextLogo from "../assets/images/my_spot_page_text_favicon.png";
+import flag from "../assets/icons/flag.png";
 
 export const imageProvider = {
   ChartLinePink,
@@ -90,4 +91,5 @@ export const imageProvider = {
   dollor,
   database,
   colDatabase,
+  flag,
 };

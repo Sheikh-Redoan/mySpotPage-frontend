@@ -37,6 +37,8 @@ import DynamicSubSideBarLayout from "../pages/DynamicSubSideBarLayout";
 import ErrorPage from "../pages/ErrorPage";
 import ProviderNotes from "../pages/ProviderNotes";
 import BasicInformation from "../pages/admin/BasicInformation";
+import ProfileBesicInformation from "../pages/admin/ProfileBesicInformation";
+import ProfileSecurity from "../pages/admin/ProfileSecurity";
 import UserManagement from "../pages/admin/UserManagement";
 import ConfirmBooking from "../pages/client/ConfirmBooking";
 import ConfirmPage from "../pages/client/ConfirmPage";
@@ -47,6 +49,7 @@ import SelectStaff from "../pages/client/SelectStaff";
 import SelectTime from "../pages/client/SelectTime";
 import OurWorkDetails from "../pages/client/ServiceProviderInfo/OurWorkDetails";
 import ServiceProviderInfo from "../pages/client/ServiceProviderInfo/ServiceProviderInfo";
+import MyProfileLayout from "../pages/layout/MyProfileLayout";
 import {
   clientNavItems,
   settingsNavItems,
@@ -60,9 +63,6 @@ import SetupLocationServices2 from "../pages/onboarding/solo/SetupLocationServic
 import SetupTeamLocationServices1 from "../pages/onboarding/team/SetupTeamLocationServices1";
 import SetupTeamLocationServices2 from "../pages/onboarding/team/SetupTeamLocationServices2";
 import StaffManagement from "../pages/seller/StaffManagement";
-import MyProfileLayout from "../pages/layout/MyProfileLayout";
-import ProfileBesicInformation from "../pages/admin/ProfileBesicInformation";
-import ProfileSecurity from "../pages/admin/ProfileSecurity";
 
 export const routes = createBrowserRouter([
   {
@@ -209,7 +209,7 @@ export const routes = createBrowserRouter([
         element: <UserManagement />,
       },
       {
-        path: ":name/Business Information",
+        path: ":name/business-information",
         element: <BasicInformation />,
       },
       {
@@ -219,14 +219,14 @@ export const routes = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <ProfileBesicInformation/>,
+            element: <ProfileBesicInformation />,
           },
           {
             path: "security",
-            element: <ProfileSecurity/>
-          }
-        ],      
-      }
+            element: <ProfileSecurity />,
+          },
+        ],
+      },
     ],
   },
 

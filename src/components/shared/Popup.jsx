@@ -14,7 +14,7 @@ export default function Popup({ name, icon, buttonComp, children, className }) {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (popupRef.current && !popupRef.current.contains(event.target)) {
-        setToggle((prev) => !prev);
+        setToggle(true);
       }
     };
 

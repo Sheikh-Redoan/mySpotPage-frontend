@@ -44,6 +44,10 @@ import upload from "../assets/icons/upload.png";
 import visa from "../assets/icons/visa.png";
 import TextLogo from "../assets/images/my_spot_page_text_favicon.png";
 import flag from "../assets/icons/flag.png";
+import databaseCol from "../assets/icons/database.png"
+import securityBlack from "../assets/icons/securityblack.png";
+import securityPink from "../assets/icons/securityPink.png";
+import PeopleBlack from "../assets/icons/PeopleBlack.png";
 
 export const imageProvider = {
   ChartLinePink,
@@ -92,4 +96,8 @@ export const imageProvider = {
   database,
   colDatabase,
   flag,
+  databaseCol,
+  PeopleBlack,
+  securityPink,
+  securityBlack
 };

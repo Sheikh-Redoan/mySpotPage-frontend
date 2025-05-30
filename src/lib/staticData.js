@@ -75,3 +75,20 @@ export const adminTabs = [
     link: "settings",
   },
 ];
+
+export const profileTabs = [
+  {
+    id: 0,
+    name: "Basic Information",
+    imagePink: imageProvider.PeoplePink,
+    imageWhite: imageProvider.PeopleBlack,
+    link: "/user-management/my-profile",
+  },
+  {
+    id: 1,
+    name: "Security",
+    imagePink: imageProvider.securityPink,
+    imageWhite: imageProvider.securityBlack,
+    link: "/user-management/my-profile/security",
+  },
+];

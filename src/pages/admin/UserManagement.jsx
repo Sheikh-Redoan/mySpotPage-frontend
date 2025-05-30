@@ -37,7 +37,7 @@ export default function UserManagement() {
       </div>
 
       <div className="fixed bottom-0 bg-white p-5 inset-x-0 pl-28">
-        <div className="flex items-center justify-between w-full">
+        <div className="flex items-center justify-between w-full flex-wrap gap-4">
           <p className="space-x-2 text-sm">
             Show <span className="px-4 py-2 bg-gray-100 rounded-lg">10</span> /
             25 results per page

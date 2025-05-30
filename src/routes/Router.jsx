@@ -59,6 +59,9 @@ import SetupLocationServices2 from "../pages/onboarding/solo/SetupLocationServic
 import SetupTeamLocationServices1 from "../pages/onboarding/team/SetupTeamLocationServices1";
 import SetupTeamLocationServices2 from "../pages/onboarding/team/SetupTeamLocationServices2";
 import StaffManagement from "../pages/seller/StaffManagement";
+import MyProfileLayout from "../pages/layout/MyProfileLayout";
+import ProfileBesicInformation from "../pages/admin/ProfileBesicInformation";
+import ProfileSecurity from "../pages/admin/ProfileSecurity";
 
 export const routes = createBrowserRouter([
   {
@@ -208,8 +211,24 @@ export const routes = createBrowserRouter([
         path: ":name/Business Information",
         element: <div>Business Information</div>,
       },
+      {
+        path: "my-profile",
+        element: <MyProfileLayout />,
+        errorElement: <ErrorPage />,
+        children: [
+          {
+            index: true,
+            element: <ProfileBesicInformation/>,
+          },
+          {
+            path: "security",
+            element: <ProfileSecurity/>
+          }
+        ],      
+      }
     ],
   },
+
   {
     path: "/our-work",
     element: <OurWorkDetails />,

@@ -2,7 +2,20 @@ import { Button, Modal } from "antd";
 import { X } from "lucide-react";
 import React from "react";
 
-const EventModal = ({ isOpen, onClose, onSubmit, selectedDate, timeSlots }) => {
+const timeSlots = [
+  { time: "08:00", sale: "🔥 29% OFF" },
+  { time: "09:00"},
+  { time: "10:00" },
+  { time: "11:00", sale: "🔥 25% OFF" },
+  { time: "12:00" },
+  { time: "13:00", sale: "🔥 29% OFF" },
+  { time: "14:00" },
+  { time: "15:00" },
+  { time: "16:00" },
+  { time: "17:00" },
+];
+
+const EventModal = ({ isOpen, onClose, onSubmit, selectedDate }) => {
   const [selectedTime, setSelectedTime] = React.useState(null);
 
   const handleSubmit = () => {
@@ -56,10 +69,11 @@ const EventModal = ({ isOpen, onClose, onSubmit, selectedDate, timeSlots }) => {
         {timeSlots.map((slot) => (
           <div
             key={slot.time}
-            className={`px-3 py-2 rounded-lg flex justify-between items-center cursor-pointer ${selectedTime === slot.time
+            className={`px-3 py-2 rounded-lg flex justify-between items-center cursor-pointer ${
+              selectedTime === slot.time
                 ? "border-[1px] border-[#866BE7] bg-[#F5F4FE]"
                 : "border-[1px] border-[#E5E7E8]"
-              }`}
+            }`}
             onClick={() => setSelectedTime(slot.time)}
           >
             <span>{slot.time}</span>

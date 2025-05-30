@@ -86,13 +86,11 @@ export default function SelectTime() {
     { time: "17:00" },
   ];
 
-  // Removed the useEffect for viewDidMount as handleViewChange updates state directly.
-  // FullCalendar will re-render when currentView changes, and the prop will be re-evaluated.
-
   function handleWeekendsToggle() {
     setWeekendsVisible(!weekendsVisible);
   }
 
+  // Triggered when a date/time selection is made
   function handleDateSelect(selectInfo) {
     const startDateStr = toYYYYMMDD(selectInfo.start);
     const endDateStr = toYYYYMMDD(selectInfo.end);
@@ -111,6 +109,32 @@ export default function SelectTime() {
     }
   }
 
+  // Triggered when the user clicks on a date or a time
+  const handleDateClickForHighlight = (clickInfo) => {
+    const clickedDate = clickInfo.date;
+    const clickedDateStr = toYYYYMMDD(clickedDate);
+
+    const specialDateInfo = specialDatesData.find(
+      (sd) => sd.date === clickedDateStr
+    );
+
+    if (currentView === "dayGridMonth") {
+      if (!specialDateInfo || !specialDateInfo.isBusy) {
+        setHighlightedDate(clickedDateStr);
+        setModalSelectInfo(clickInfo);
+        setIsModalOpen(true);
+      } else {
+        console.log("This date is busy and cannot be selected.");
+        setHighlightedDate(null);
+      }
+    } else {
+      setHighlightedDate(null); 
+      console.log(`Date clicked in ${currentView} view. Modal will not open.`);
+    }
+
+    clickInfo.view.calendar.unselect();
+  };
+
   function handleModalSubmit({ time }) {
     const calendarApi = modalSelectInfo.view.calendar;
     const startDate = new Date(modalSelectInfo.date);
@@ -127,7 +151,7 @@ export default function SelectTime() {
       start: startDate.toISOString(),
       allDay: false,
     });
-    setHighlightedDate(toYYYYMMDD(startDate)); // Still highlight the day
+    setHighlightedDate(toYYYYMMDD(startDate)); 
     setIsModalOpen(false);
   }
 
@@ -163,7 +187,6 @@ export default function SelectTime() {
       }
       const currentDate = calendarApi.getDate();
       setSelectedDate(dayjs(currentDate));
-      // Re-evaluate currentView after navigation as well, to be safe
       setCurrentView(calendarApi.view.type);
     }
   };
@@ -172,8 +195,6 @@ export default function SelectTime() {
     if (calendarRef.current) {
       const calendarApi = calendarRef.current.getApi();
       calendarApi.changeView(view);
-      // Immediately update the state. React will then re-render,
-      // and FullCalendar's props will be re-evaluated.
       setCurrentView(view);
     }
   };
@@ -192,25 +213,6 @@ export default function SelectTime() {
     }
     return classes;
   }
-
-  const handleDateClickForHighlight = (clickInfo) => {
-    const clickedDate = clickInfo.date;
-    const clickedDateStr = toYYYYMMDD(clickedDate);
-
-    const specialDateInfo = specialDatesData.find(
-      (sd) => sd.date === clickedDateStr
-    );
-
-    if (!specialDateInfo || !specialDateInfo.isBusy) {
-      setHighlightedDate(clickedDateStr);
-      setModalSelectInfo(clickInfo);
-      setIsModalOpen(true);
-    } else {
-      console.log("This date is busy and cannot be selected.");
-      setHighlightedDate(null);
-    }
-    clickInfo.view.calendar.unselect();
-  };
 
   function renderDayCellContentWithSales(dayCellInfo) {
     const dayNumber = dayCellInfo.date.getDate();
@@ -353,13 +355,13 @@ export default function SelectTime() {
           weekends={weekendsVisible}
           initialEvents={INITIAL_EVENTS}
           select={handleDateSelect}
+          dateClick={handleDateClickForHighlight}
           eventContent={renderEventContent}
           eventClick={handleEventClick}
           eventsSet={handleEvents}
           dayCellClassNames={dayCellClassNamesFunc}
-          dateClick={handleDateClickForHighlight}
           selectAllow={handleSelectAllow}
-          dayCellContent={renderDayCellContentWithSales} // For month view
+          dayCellContent={renderDayCellContentWithSales} 
           // TimeGrid specific props
           slotMinTime="08:00:00"
           slotMaxTime="18:00:00"

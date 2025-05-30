@@ -1,6 +1,7 @@
 import { Button, Checkbox, Collapse } from "antd";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
+import { useSearchParams } from "react-router";
 
 const { Panel } = Collapse;
 
@@ -16,6 +17,7 @@ const planOptions = [
 export default function UserFilter({ closePopup }) {
   const [selectedGenders, setSelectedGenders] = useState(genderOptions);
   const [selectedPlans, setSelectedPlans] = useState(planOptions);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const handleGenderChange = (checkedValues) => {
     setSelectedGenders(checkedValues);
@@ -26,12 +28,23 @@ export default function UserFilter({ closePopup }) {
   };
 
   const handleReset = () => {
-    setSelectedGenders(genderOptions);
-    setSelectedPlans(planOptions);
+    setSelectedGenders([]);
+    setSelectedPlans([]);
+    searchParams.delete("plan");
+    searchParams.delete("gender");
+    setSearchParams(searchParams);
+    closePopup();
   };
 
   const handleApply = () => {
     console.log("Apply filters:", { selectedGenders, selectedPlans });
+    if (selectedPlans.length > 0)
+      searchParams.set("plan", selectedPlans.join(","));
+    if (selectedGenders.length > 0)
+      searchParams.set("gender", selectedGenders.join(","));
+
+    setSearchParams(searchParams);
+
     closePopup();
   };
 
@@ -41,30 +54,26 @@ export default function UserFilter({ closePopup }) {
         defaultActiveKey={["1", "2"]}
         ghost
         expandIcon={({ isActive }) => (
-          // <CaretRightOutlined
-
-          // />
-
           <ChevronDown
             strokeWidth={1}
             rotate={isActive ? 90 : 0}
             style={{ transition: "transform 0.3s" }}
           />
         )}>
-        <Panel header="Gender" key="1">
+        <Panel header="Gender" key="1" className="font-semibold">
           <Checkbox.Group
             options={genderOptions}
             value={selectedGenders}
             onChange={handleGenderChange}
-            className="flex flex-col gap-2 text-violet-600"
+            className="flex flex-col gap-2 text-violet-600 font-normal"
           />
         </Panel>
-        <Panel header="Plan" key="2">
+        <Panel header="Plan" key="2" className="font-semibold">
           <Checkbox.Group
             options={planOptions}
             value={selectedPlans}
             onChange={handlePlanChange}
-            className="flex flex-col gap-2 text-violet-600"
+            className="flex flex-col gap-2 text-violet-600 font-normal"
           />
         </Panel>
       </Collapse>

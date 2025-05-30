@@ -49,10 +49,10 @@ export default function Popup({ name, icon, buttonComp, children, className }) {
       <div
         ref={popupRef}
         className={cn(
+          "w-[350px] transition-all duration-300  absolute top-0  z-[10] left-1/2 rounded-xl bg-white shadow-lg inset-shadow-sm",
           toggle
             ? "scale-0 opacity-0 invisible"
             : "scale-100 opacity-100 visible",
-          "w-[350px] transition-all duration-300  absolute top-0  z-[10] left-1/2 rounded-xl bg-white shadow-lg inset-shadow-sm",
           className
         )}>
         {name && (

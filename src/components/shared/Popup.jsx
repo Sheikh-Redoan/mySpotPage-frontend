@@ -23,9 +23,9 @@ export default function Popup({ name, icon, buttonComp, children }) {
       }
     };
 
-    document.addEventListener("click", handleClickOutside);
+    document.body.addEventListener("click", handleClickOutside);
     return () => {
-      document.removeEventListener("click", handleClickOutside);
+      document.body.removeEventListener("click", handleClickOutside);
     };
   }, []);
 
@@ -41,7 +41,7 @@ export default function Popup({ name, icon, buttonComp, children }) {
 
       {buttonComp && (
         <Button type="default" onClick={handlePopup} variant="outlined">
-          {buttonComp()}
+          {buttonComp(handlePopup)}
         </Button>
       )}
 
@@ -61,7 +61,9 @@ export default function Popup({ name, icon, buttonComp, children }) {
           </div>
         )}
 
-        <div className="flex items-center gap-2 p-4">{children}</div>
+        <div className="flex items-center gap-2 p-4">
+          {children(handlePopup)}
+        </div>
       </div>
     </div>
   );

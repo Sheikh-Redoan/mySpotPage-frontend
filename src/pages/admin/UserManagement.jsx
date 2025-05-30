@@ -25,7 +25,7 @@ export default function UserManagement() {
           <Popup
             name="Filter"
             icon={<ListFilter size={20} className="text-gray-400" />}>
-            <UserFilter open={open} onClose={() => setOpen(false)} />
+            {(handlePopup) => <UserFilter closePopup={handlePopup} />}
           </Popup>
         </div>
       </div>

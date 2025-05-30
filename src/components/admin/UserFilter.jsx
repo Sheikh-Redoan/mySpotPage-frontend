@@ -1,4 +1,5 @@
-import { Button, Checkbox, Collapse, Drawer } from "antd";
+import { Button, Checkbox, Collapse } from "antd";
+import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 
 const { Panel } = Collapse;
@@ -35,25 +36,21 @@ export default function UserFilter({ open, onClose }) {
   };
 
   return (
-    <Drawer
-      title="Filter"
-      placement="right"
-      onClose={onClose}
-      open={open}
-      width={320}
-      className="rounded-l-xl"
-      closeIcon={false}
-      footer={
-        <div className="flex justify-between px-4 py-2 border-t">
-          <Button onClick={handleReset} className="border-black text-black">
-            Reset
-          </Button>
-          <Button type="primary" className="bg-black" onClick={handleApply}>
-            Apply
-          </Button>
-        </div>
-      }>
-      <Collapse defaultActiveKey={["1", "2"]} ghost>
+    <div className="w-full">
+      <Collapse
+        defaultActiveKey={["1", "2"]}
+        ghost
+        expandIcon={({ isActive }) => (
+          // <CaretRightOutlined
+
+          // />
+
+          <ChevronDown
+            strokeWidth={1}
+            rotate={isActive ? 90 : 0}
+            style={{ transition: "transform 0.3s" }}
+          />
+        )}>
         <Panel header="Gender" key="1">
           <Checkbox.Group
             options={genderOptions}
@@ -71,7 +68,24 @@ export default function UserFilter({ open, onClose }) {
           />
         </Panel>
       </Collapse>
-    </Drawer>
+
+      <div className="flex justify-between px-4 py-2 w-full gap-1">
+        <Button
+          onClick={handleReset}
+          type="default"
+          size="large"
+          className="flex-1">
+          Reset
+        </Button>
+        <Button
+          type="primary"
+          onClick={handleApply}
+          size="large"
+          className="flex-1">
+          Apply
+        </Button>
+      </div>
+    </div>
   );
 }
 

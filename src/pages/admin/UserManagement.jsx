@@ -6,7 +6,7 @@ import Popup from "../../components/shared/Popup";
 import Search from "../../components/shared/Search";
 
 export default function UserManagement() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   return (
     <div className="w-full p-5">
       <div className="flex w-full gap-4 mb-4">

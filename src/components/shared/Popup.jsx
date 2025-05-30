@@ -1,8 +1,9 @@
 import { Button } from "antd";
 import { X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { cn } from "../../lib/utils";
 
-export default function Popup({ name, icon, buttonComp, children }) {
+export default function Popup({ name, icon, buttonComp, children, className }) {
   const [toggle, setToggle] = useState(true);
   const popupRef = useRef(null);
   const iconRef = useRef(null);
@@ -47,11 +48,13 @@ export default function Popup({ name, icon, buttonComp, children }) {
 
       <div
         ref={popupRef}
-        className={` ${
+        className={cn(
           toggle
             ? "scale-0 opacity-0 invisible"
-            : "scale-100 opacity-100 visible"
-        } w-[350px] transition-all duration-300  absolute top-0  z-[10] left-1/2 rounded-xl bg-white shadow-lg inset-shadow-sm`}>
+            : "scale-100 opacity-100 visible",
+          "w-[350px] transition-all duration-300  absolute top-0  z-[10] left-1/2 rounded-xl bg-white shadow-lg inset-shadow-sm",
+          className
+        )}>
         {name && (
           <div className="flex justify-between items-center border-b border-b-gray-100 px-3 py-2">
             <h3 className="text-lg font-semibold">{name}</h3>

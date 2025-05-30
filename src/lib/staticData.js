@@ -33,13 +33,20 @@ export const dashboardTabs = [
     },
     {
       "id": 4,
+      "name": "Seller Menu",
+      "imagePink": imageProvider.seller_pink,
+      "imageWhite": imageProvider.seller_white,
+      "link": '/seller-management'
+    },
+    {
+      "id": 5,
       "name": "Client Management",
       "imagePink": imageProvider.PeoplePink,
       "imageWhite": imageProvider.PeopleWhite,
       "link": '/client-management'
     },
     {
-      "id": 5,
+      "id": 6,
       "name": "Settings",
       "imagePink": imageProvider.SettingsPink,
       "imageWhite": imageProvider.SettingsWhite,

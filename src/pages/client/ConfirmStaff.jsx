@@ -99,7 +99,7 @@ const ConfirmStaff = () => {
         <span className="text-lg font-bold text-violet-500">{storeData.total}</span>
       </div>
       <Link to="/service-provider-info/confirmation-pending">
-        <button className="cursor-pointer bg-black rounded-xl justify-center text-white text-base font-semibold font-['Golos_Text'] leading-normal py-[10px] w-full text-center hover:bg-gray-800 transition-colors duration-200">
+        <button className="cursor-pointer bg-black rounded-xl justify-center text-white text-base font-semibold   leading-normal py-[10px] w-full text-center hover:bg-gray-800 transition-colors duration-200">
           {storeData.buttonTittle}
         </button>
       </Link>

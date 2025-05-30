@@ -39,11 +39,15 @@ import visa from "../assets/icons/visa.png";
 import Client from "../assets/icons/man.png";
 import amrican from "../assets/icons/amrican.png";
 import dollor from "../assets/icons/dollor.png";
+import seller_pink from "../assets/icons/Seller.png";
+import seller_white from "../assets/icons/Seller_white.png";
 
 export const imageProvider = {
   ChartLinePink,
+  seller_pink,
   TextLogo,
   PricingPink,
+  seller_white,
   SettingsPink,
   PeoplePink,
   ServicePink,

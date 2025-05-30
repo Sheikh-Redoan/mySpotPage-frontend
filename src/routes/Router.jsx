@@ -55,6 +55,7 @@ import SelectTime from "../pages/client/SelectTime";
 import ConfirmBooking from "../pages/client/ConfirmBooking";
 import ConfirmStaff from "../pages/client/ConfirmStaff";
 import ConfirmPending from "../pages/client/ConfirmPending";
+import StaffManagement from "../pages/seller/StaffManagement";
 
 export const routes = createBrowserRouter([
   {
@@ -91,6 +92,10 @@ export const routes = createBrowserRouter([
       {
         path: "/client-management",
         element: <ClientPage />,
+      },
+      {
+        path: "/seller-management",
+        element: <StaffManagement />,
       },
       {
         path: "/client",
@@ -140,7 +145,6 @@ export const routes = createBrowserRouter([
       },
     ],
   },
-
   {
     path: "/service-provider-info",
     element: <ClientLayout />,

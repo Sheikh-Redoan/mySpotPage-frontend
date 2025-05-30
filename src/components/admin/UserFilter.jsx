@@ -13,7 +13,7 @@ const planOptions = [
   "Radiance plan",
 ];
 
-export default function UserFilter({ open, onClose }) {
+export default function UserFilter({ closePopup }) {
   const [selectedGenders, setSelectedGenders] = useState(genderOptions);
   const [selectedPlans, setSelectedPlans] = useState(planOptions);
 
@@ -32,7 +32,7 @@ export default function UserFilter({ open, onClose }) {
 
   const handleApply = () => {
     console.log("Apply filters:", { selectedGenders, selectedPlans });
-    onClose();
+    closePopup();
   };
 
   return (
@@ -88,25 +88,3 @@ export default function UserFilter({ open, onClose }) {
     </div>
   );
 }
-
-const data = [
-  {
-    type: "Gender",
-    data: [
-      { value: "all_genders", label: "All genders" },
-      { value: "male", label: "Male" },
-      { value: "female", label: "Female" },
-      { value: "others", label: "Others" },
-    ],
-  },
-  {
-    type: "Plan",
-    data: [
-      { value: "all_plans", label: "All plans" },
-      { value: "spark_plan", label: "Spark Plan" },
-      { value: "glow_plan", label: "Glow Plan" },
-      { value: "bloom_plan", label: "Bloom Plan" },
-      { value: "radiance_plan", label: "Radiance Plan" },
-    ],
-  },
-];

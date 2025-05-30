@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Breadcrumb from "../../components/client/Breadcrumb";
+import ConfirmDetails from "../../components/client/ConfirmDetails";
 import StaffCard from "../../components/client/StaffCard";
+import { getBreadcrumbs } from "../../lib/staticData";
 import { setSelectedStaff } from "../../redux/features/staffSlice";
 import Container from "./Container";
 
@@ -25,7 +27,14 @@ export default function SelectStaff() {
   return (
     <section className="bg-[#F9FAFC]">
       <Container>
-        <Breadcrumb />
+        <Breadcrumb
+          breadcrumbs={getBreadcrumbs(1, 0, [
+            {
+              name: "Select staff",
+              link: "/service-provider-info/select-staff",
+            },
+          ])}
+        />
         <div className="flex justify-between flex-col lg:flex-row w-full gap-8">
           <div className="flex-1 bg-white rounded-xl p-5">
             <h2 className="text-xl font-semibold font-golos">Select staff</h2>
@@ -83,7 +92,6 @@ import staff4 from "../../assets/images/staff/staff4.jpg";
 import staff5 from "../../assets/images/staff/staff5.jpg";
 import staff6 from "../../assets/images/staff/staff6.jpg";
 import staff7 from "../../assets/images/staff/staff7.jpg";
-import ConfirmDetails from "../../components/client/ConfirmDetails";
 
 const staffData = [
   {

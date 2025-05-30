@@ -75,3 +75,28 @@ export const adminTabs = [
     link: "settings",
   },
 ];
+
+// Initial breadcrumbs
+export const breadcrumbs = [
+  {
+    name: "Service",
+    link: "/service-provider-info",
+  },
+  {
+    name: "Select time",
+    link: "/service-provider-info/select-time",
+  },
+  {
+    name: "Confirm",
+    link: "/service-provider-info/confirm",
+  },
+];
+
+// Reusable utility function to insert breadcrumb at a given index
+export const getBreadcrumbs = (from, to, breadcrumb) => {
+  if (!breadcrumb) return [...breadcrumbs];
+  const data = [...breadcrumbs];
+  // Mutate and return the updated breadcrumbs array
+  data.splice(from, to, ...breadcrumb);
+  return [...data]; // Return a cloned updated array
+};

@@ -41,7 +41,7 @@ export default function Popup({ name, icon, buttonComp, children, className }) {
       )}
 
       {buttonComp && (
-        <Button type="default" onClick={handlePopup} variant="outlined">
+        <Button type="text" onClick={handlePopup} variant="text">
           {buttonComp(handlePopup)}
         </Button>
       )}

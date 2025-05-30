@@ -192,7 +192,7 @@ export const routes = createBrowserRouter([
     ],
   },
   {
-    path: "/admin-portal",
+    path: "/user-management",
     element: <MainLayout tabs={adminTabs} />,
     errorElement: <ErrorPage />,
     children: [
@@ -203,6 +203,10 @@ export const routes = createBrowserRouter([
       {
         path: "data-management",
         element: <UserManagement />,
+      },
+      {
+        path: ":name/Business Information",
+        element: <div>Business Information</div>,
       },
     ],
   },

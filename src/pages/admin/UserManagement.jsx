@@ -30,7 +30,7 @@ export default function UserManagement() {
         </div>
       </div>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 p-5">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 p-5 pb-28">
         {users.map((user) => (
           <UserCard key={user.id} user={user} />
         ))}

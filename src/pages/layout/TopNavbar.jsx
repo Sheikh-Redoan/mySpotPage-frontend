@@ -1,13 +1,21 @@
 import { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router";
+import UserMenuPopUp from "../../components/admin/UserMenuPopUp";
+import Popup from "../../components/shared/Popup";
 import { imageProvider } from "../../lib/imageProvider";
 import NotificationPopup from "./NotificationPopup";
-import Popup from "../../components/shared/Popup";
-import UserMenuPopUp from "../../components/admin/UserMenuPopUp";
 
 function TopNavbar({ currentTab }) {
   const [toggle, setToggle] = useState(true);
   const popupRef = useRef(null);
   const iconRef = useRef(null);
+
+  const location = useLocation();
+  const currentPath = location.pathname;
+  console.log(
+    "Current path:",
+    currentPath.split("/")[currentPath.split("/").length - 1]
+  );
 
   const notificationButtons = ["All", "Read", "Unread"];
 
@@ -60,20 +68,20 @@ function TopNavbar({ currentTab }) {
             toggle={toggle}
           />
         </div>
-       
-          <Popup
-            buttonComp={()=> <div className="cursor-pointer">
-          <img
-            className="w-10 h-10 rounded-full bg-white"
-            src="https://png.pngtree.com/png-vector/20231019/ourmid/pngtree-user-profile-avatar-png-image_10211467.png"
-            alt=""
-          />
-            </div>}
-            className="-left-[152px] top-18 w-56 "
-          >
-            {(handlePopup) => <UserMenuPopUp handlePopup={handlePopup} />}
-          </Popup>
-      
+
+        <Popup
+          buttonComp={() => (
+            <div className="cursor-pointer">
+              <img
+                className="w-10 h-10 rounded-full bg-white"
+                src="https://png.pngtree.com/png-vector/20231019/ourmid/pngtree-user-profile-avatar-png-image_10211467.png"
+                alt=""
+              />
+            </div>
+          )}
+          className="-left-[152px] top-18 w-56 ">
+          {(handlePopup) => <UserMenuPopUp handlePopup={handlePopup} />}
+        </Popup>
       </div>
     </div>
   );

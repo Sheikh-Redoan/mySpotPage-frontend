@@ -1,6 +1,7 @@
 import { FiLogOut } from "react-icons/fi";
 import { NavLink, Outlet, useLocation } from "react-router";
 import { profileTabs, userManagementTabs } from "../../lib/staticData";
+import { cn } from "../../lib/utils";
 
 const MyProfileLayout = () => {
   const location = useLocation();
@@ -22,11 +23,12 @@ const MyProfileLayout = () => {
               <NavLink key={tab.id} to={tab.link}>
                 {({ isActive }) => (
                   <li
-                    className={`px-3 py-3 my-4 rounded-xl flex items-center gap-4 ${
+                    className={cn(
                       isActive
                         ? "bg-[#ECEBFC] text-[#744CDB]"
-                        : "hover:bg-gray-100 text-[#242528]"
-                    }`}>
+                        : "hover:bg-gray-100 text-[#242528]",
+                      "px-3 py-3 my-4 rounded-xl flex items-center gap-4 transition duration-300 ease-in-out"
+                    )}>
                     {isActive ? (
                       <img src={tab.imagePink} alt="" />
                     ) : (

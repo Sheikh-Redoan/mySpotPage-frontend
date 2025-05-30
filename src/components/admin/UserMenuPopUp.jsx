@@ -4,14 +4,14 @@ import { CircleUserRound } from 'lucide-react';
 import { imageProvider } from '../../lib/imageProvider';
 import { Link } from 'react-router';
 
-const UserMenuPopUp = () => {
+const UserMenuPopUp = ({handlePopup}) => {
     return (
         <div
             className="font-golos"
         >
             <ul className="p-5 flex flex-col items-start space-y-4">
-                <Link to="/profile-management">
-                    <li className="flex items-center gap-2 text-gray-700 cursor-pointer">
+                <Link to="/user-management/my-profile">
+                    <li onClick={handlePopup} className="flex items-center gap-2 text-gray-700 cursor-pointer">
                         <CircleUserRound size={20} strokeWidth={1.75} />
                         My profile
                     </li>

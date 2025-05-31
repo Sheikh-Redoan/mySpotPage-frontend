@@ -1,7 +1,6 @@
 import Authentication from "@/layout/Authentication";
 import OnboardLayout from "@/layout/OnboardLayout";
 import { dashboardTabs } from "@/lib/staticData";
-import CalendarPage from "@/pages/CalendarPage";
 import ClientPage from "@/pages/ClientPage";
 import DashboardPage from "@/pages/DashboardPage";
 import ServicePage from "@/pages/ServicePage";
@@ -17,7 +16,6 @@ import SignupVerifyNumber from "@/pages/authentication/SignupVerifyNumber";
 import VerifyNumber from "@/pages/authentication/VerifyNumber";
 import SetUpBusiness from "@/pages/onboarding/SetUpBusiness";
 import { createBrowserRouter } from "react-router";
-import ClientInformation from "../components/CalenderClientInformation/ClientInformation";
 import BusinessInfo from "../components/SettingsPages/BusinessInfo";
 import Location from "../components/SettingsPages/Location";
 import Subscription from "../components/SettingsPages/Subscription";
@@ -27,7 +25,6 @@ import CheckOut from "../components/SettingsPages/UpgradePlan/CheckOut";
 import SuccessDowngrade from "../components/SettingsPages/UpgradePlan/SuccessDowngrade";
 import SuccessUpgrade from "../components/SettingsPages/UpgradePlan/SuccessUpgrade";
 import Upgradeplan from "../components/SettingsPages/UpgradePlan/Upgradeplan";
-import AllAppoimtment from "../components/calendarManagement/AllAppointment";
 import ClientLayout from "../layout/ClientLayout";
 import MainLayout from "../layout/MainLayout";
 import { adminTabs, profileMainTabs, profileTabs } from "../lib/staticData";
@@ -67,6 +64,8 @@ import Subscriptions from "../pages/admin/Subscriptions";
 import OTPVerificationPage from "../pages/onboarding/OTPVerificationPage";
 import StaffInformationPage from "../pages/onboarding/StaffInformationPage";
 import ClientAppointmentCal from "../pages/client/ClientAppointmentCal";
+import AddBookingByProvider from "../pages/calenderManagement/addBookingByProvider/AddBookingByProvider";
+import CalendarManagementPage from "../pages/calenderManagement/CalendarManagementPage";
 
 export const routes = createBrowserRouter([
   {
@@ -80,17 +79,11 @@ export const routes = createBrowserRouter([
       },
       {
         path: "/calendar",
-        element: <CalendarPage />,
-        children: [
-          {
-            path: "/calendar",
-            element: <AllAppoimtment></AllAppoimtment>,
-          },
-        ],
+        element: <CalendarManagementPage />
       },
       {
-        path: "/ClientInformation",
-        element: <ClientInformation></ClientInformation>,
+        path: "/add-booking-by-provider",
+        element: <AddBookingByProvider/>,
       },
       {
         path: "/service-menu",

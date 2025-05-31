@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Tabs } from "antd";
-import { PlusIcon } from "../assets/icons/icons";
-import { Link } from "react-router";
-import ClientInformation from "../components/CalenderClientInformation/ClientInformation";
-import AllAppoimtment from "../components/calendarManagement/AllAppointment";
+import { Link } from "react-router"; 
+import AllAppoimtment from "../../components/calendarManagement/AllAppointment";
+import PendingBookings from "../../components/calendarManagement/PendingBookings";
+import WaitlistsOverview from "../../components/calendarManagement/WaitlistsOverview";
+import BlacklistsOverview from "../../components/calendarManagement/BlacklistsOverview";
 
 const items = [
   {
@@ -23,17 +24,34 @@ const items = [
     label: "Blacklists Overview",
   },
 ];
-function CalendarPage() {
-  
- const [isModalOpen, setIsModalOpen] = useState(false);
+
+function CalendarManagementPage() {
+  const [activeTabKey, setActiveTabKey] = useState("1"); 
+  const [isModalOpen, setIsModalOpen] = useState(false); 
 
   const onChange = (key) => {
+    setActiveTabKey(key); 
     console.log(key);
   };
 
-  const handleAddBooking = () =>{
+  const handleAddBooking = () => {
     setIsModalOpen(!isModalOpen);
-  }
+  };
+
+  const renderContent = () => {
+    switch (activeTabKey) {
+      case "1":
+        return <AllAppoimtment />;
+      case "2":
+        return <PendingBookings />;
+      case "3":
+        return <WaitlistsOverview />;
+      case "4":
+        return <BlacklistsOverview />;
+      default:
+        return <AllAppoimtment />; 
+    }
+  };
 
   return (
     <div className="w-full p-5">
@@ -46,7 +64,9 @@ function CalendarPage() {
         />
 
         <div className="flex items-center gap-3">
-          <Link  to="/ClientInformation" onClick={handleAddBooking}
+          <Link
+            to="/add-booking-by-provider"
+            onClick={handleAddBooking}
             type="button"
             className="inline-flex items-center px-3 py-2 gap-2 text-sm font-semibold text-white bg-primary01 border border-primary01 rounded-lg hover:bg-primary01 focus:outline-none focus:ring-2 focus:ring-primary01 focus:ring-offset-2"
           >
@@ -86,11 +106,11 @@ function CalendarPage() {
         </div>
       </div>
 
-     {
-       <AllAppoimtment></AllAppoimtment>
-     }
+      {/* Render content based on activeTabKey */}
+      {renderContent()}
 
     </div>
   );
 }
-export default CalendarPage;
+
+export default CalendarManagementPage;

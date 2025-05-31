@@ -50,8 +50,9 @@
   box-sizing: border-box;
   margin-top: 20px;
 }
-.fc .fc-daygrid-day.fc-day-today {
-  background-color: transparent;
+/* Make the specific time slots for "today" transparent in timeGrid views */
+.fc-timegrid-cols .fc-day-today {
+  background-color: transparent !important;
 }
 
 /* custom stye for selected and busy state */

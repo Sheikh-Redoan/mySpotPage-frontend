@@ -86,6 +86,7 @@ export default function SelectTime() {
   // Triggered when a date/time selection is made
   function handleDateSelect(selectInfo) {
     const startDateStr = toYYYYMMDD(selectInfo.start);
+    console.log("selectInfo", selectInfo.start, selectInfo.end);
     const endDateStr = toYYYYMMDD(selectInfo.end);
 
     if (
@@ -117,17 +118,19 @@ export default function SelectTime() {
       (sd) => sd.date === clickedDateStr
     );
 
+    if (!specialDateInfo || !specialDateInfo.isBusy) {
+      setHighlightedDate(clickedDateStr);
+    } else {
+      console.log("This date is busy and cannot be selected.");
+      setHighlightedDate(null); 
+    }
+
     if (currentView === "dayGridMonth") {
       if (!specialDateInfo || !specialDateInfo.isBusy) {
-        setHighlightedDate(clickedDateStr);
         setModalSelectInfo(clickInfo);
         setIsModalOpen(true);
-      } else {
-        console.log("This date is busy and cannot be selected.");
-        setHighlightedDate(null);
       }
     } else {
-      setHighlightedDate(null);
       console.log(`Date clicked in ${currentView} view. Modal will not open.`);
     }
 
@@ -261,6 +264,22 @@ export default function SelectTime() {
     return true;
   };
 
+  // custom day header content for timeGridWeek and timeGridDay
+  const renderCustomDayHeaderContent = (arg) => {
+    const dayNumber = arg.date.getDate();
+    const formattedDayNumber =
+      dayNumber < 10 ? `0${dayNumber}` : dayNumber.toString();
+
+    return (
+      <div className="custom-day-header-content">
+        <div className="custom-day-header-weekday">
+          {arg.date.toLocaleString("en-US", { weekday: "short" })}
+        </div>
+        <div className="custom-day-header-day">{formattedDayNumber}</div>
+      </div>
+    );
+  };
+
   return (
     <section className="bg-[#F9FAFC] py-4 px-2 md:px-0 md:py-8">
       <Container>
@@ -376,20 +395,9 @@ export default function SelectTime() {
               hour12: false,
               meridiem: false,
             }}
-            slotLabelClassNames="custom-slot-label"
-            // Conditionally render dayHeaderContent based on currentView
             dayHeaderContent={
               currentView === "timeGridWeek" || currentView === "timeGridDay"
-                ? (arg) => (
-                    <div className="custom-day-header-content">
-                      <div className="custom-day-header-weekday">
-                        {arg.date.toLocaleString("en-US", { weekday: "short" })}
-                      </div>
-                      <div className="custom-day-header-day">
-                        {arg.date.getDate()}
-                      </div>
-                    </div>
-                  )
+                ? renderCustomDayHeaderContent
                 : null
             }
             slotLaneContent={renderTimeSlotContent}

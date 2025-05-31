@@ -10,7 +10,7 @@ const UserMenuPopUp = ({handlePopup}) => {
             className="font-golos"
         >
             <ul className="p-5 flex flex-col items-start space-y-4">
-                <Link to="/user-management/my-profile">
+                <Link to="/profile-management/my-profile/basic-information" onClick={handlePopup}>
                     <li onClick={handlePopup} className="flex items-center gap-2 text-gray-700 cursor-pointer">
                         <CircleUserRound size={20} strokeWidth={1.75} />
                         My profile

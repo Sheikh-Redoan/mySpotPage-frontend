@@ -50,13 +50,15 @@
   box-sizing: border-box;
   margin-top: 20px;
 }
-.fc .fc-daygrid-day.fc-day-today {
-  background-color: transparent;
+/* Make the specific time slots for "today" transparent in timeGrid views */
+.fc-timegrid-cols .fc-day-today {
+  background-color: transparent !important;
 }
 
 /* custom stye for selected and busy state */
-.custom-selected-date .fc-daygrid-day-frame {
-  background-color: #f6f4ff !important;
+.fc .fc-highlight{
+    background: #F5F4FE !important;
+    border: 1px solid #866BE7 !important;
 }
 .custom-selected-date .custom-day-number {
   color: #53389e !important;
@@ -73,24 +75,6 @@
 }
 .custom-busy-date .custom-day-number {
   opacity: 0.7;
-}
-
-/* Responsive */
-@media only screen and (max-width: 600px) {
-  .fc {
-    height: 535px !important;
-  }
-  .custom-day-cell-content {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  .sale-badge {
-    border: none;
-    color: #866be7;
-    padding: 0;
-    white-space: wrap;
-  }
 }
 
 /* Sale Badge Styling */
@@ -132,16 +116,19 @@
 .fc-timeGridWeek-view .fc-scrollgrid {
   border: none;
 }
-
-.fc-timeGridWeek-view .fc-scrollgrid table {
-  border-left-style: hidden;
-  border-right-style: solid;
-  border-top-style: hidden;
+.fc .fc-timegrid-slot{
+    border-bottom: 0px;
+    height: 84px;
 }
-
-/* .fc-timeGridWeek-view .fc-scrollgrid .fc-scrollgrid-section  {
-  background-color: black;
-} */
+.fc-timeGridWeek-view .custom-day-number {
+  display: none;
+}
+.fc-timeGridDay-view .custom-day-number {
+  display: none;
+}
+.fc .fc-timegrid-slot-label {
+    vertical-align: top;
+}
 
 /* Customize Day Headers in TimeGrid View */
 .custom-day-header-content {
@@ -165,8 +152,8 @@
   color: #3D3D3D; 
 }
 
-/* Style for current day header in timeGridWeek */
-.fc-timeGridWeek-view .fc-day-today .custom-day-header-day {
+/* Style for current day header in timeGridWeek and timeGridDay */
+.fc-day-today .custom-day-header-day {
   background-color: #744CDB;
   color: white;
   width: 32px;
@@ -176,3 +163,27 @@
   align-items: center;
   justify-content: center;
 }
+
+/* Responsive */
+@media only screen and (max-width: 600px) {
+  .fc {
+    height: 563px !important;
+  }
+  .custom-day-cell-content {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .sale-badge {
+    border: none;
+    color: #866be7;
+    padding: 0;
+    white-space: wrap;
+  }
+
+  /* .fc-timeGridWeek-view {
+    height: 535px !important;
+  } */
+}
+
+

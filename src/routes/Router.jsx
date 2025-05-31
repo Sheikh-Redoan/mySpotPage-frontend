@@ -30,7 +30,7 @@ import Upgradeplan from "../components/SettingsPages/UpgradePlan/Upgradeplan";
 import AllAppoimtment from "../components/calendarManagement/AllAppointment";
 import ClientLayout from "../layout/ClientLayout";
 import MainLayout from "../layout/MainLayout";
-import { adminTabs } from "../lib/staticData";
+import { adminTabs, profileMainTabs, profileTabs } from "../lib/staticData";
 import BasicInfo from "../pages/BasicInfo";
 import BookingInfo from "../pages/BookingInfo";
 import DynamicSubSideBarLayout from "../pages/DynamicSubSideBarLayout";
@@ -199,6 +199,7 @@ export const routes = createBrowserRouter([
       },
     ],
   },
+
   {
     path: "/user-management",
     element: <MainLayout tabs={adminTabs} />,
@@ -226,13 +227,20 @@ export const routes = createBrowserRouter([
           },
         ],
       },
+    ],
+  },
+  {
+    path: "/profile-management",
+    element: <MainLayout tabs={profileMainTabs} />,
+    errorElement: <ErrorPage />,
+    children: [
       {
         path: "my-profile",
         element: <MyProfileLayout />,
         errorElement: <ErrorPage />,
         children: [
           {
-            index: true,
+            path: "basic-information",
             element: <ProfileBesicInformation />,
           },
           {
@@ -241,7 +249,7 @@ export const routes = createBrowserRouter([
           },
         ],
       },
-    ],
+    ]
   },
 
   {

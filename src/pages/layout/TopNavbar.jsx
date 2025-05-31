@@ -71,7 +71,7 @@ function TopNavbar({ currentTab }) {
               />
             </div>
           )}
-          className="-left-[152px] top-18 w-56 ">
+          className="-left-18 top-18 w-56 ">
           {(handlePopup) => <UserMenuPopUp handlePopup={handlePopup} />}
         </Popup>
       </div>

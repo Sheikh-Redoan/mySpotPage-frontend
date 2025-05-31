@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "react";
+import UserMenuPopUp from "../../components/admin/UserMenuPopUp";
+import Popup from "../../components/shared/Popup";
 import { imageProvider } from "../../lib/imageProvider";
 import NotificationPopup from "./NotificationPopup";
+
 function TopNavbar({ currentTab }) {
   const [toggle, setToggle] = useState(true);
   const popupRef = useRef(null);
@@ -57,13 +60,20 @@ function TopNavbar({ currentTab }) {
             toggle={toggle}
           />
         </div>
-        <div className="cursor-pointer">
-          <img
-            className="w-10 h-10 rounded-full bg-white"
-            src="https://png.pngtree.com/png-vector/20231019/ourmid/pngtree-user-profile-avatar-png-image_10211467.png"
-            alt=""
-          />
-        </div>
+
+        <Popup
+          buttonComp={() => (
+            <div className="cursor-pointer">
+              <img
+                className="w-10 h-10 rounded-full bg-white"
+                src="https://png.pngtree.com/png-vector/20231019/ourmid/pngtree-user-profile-avatar-png-image_10211467.png"
+                alt=""
+              />
+            </div>
+          )}
+          className="-left-[152px] top-18 w-56 ">
+          {(handlePopup) => <UserMenuPopUp handlePopup={handlePopup} />}
+        </Popup>
       </div>
     </div>
   );

@@ -1,16 +1,17 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
+import "/src/styles/fullCalender.css";
 
 // react query components
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { RouterProvider } from "react-router";
-import { routes } from "./routes/Router";
-import StateContextProvider from "./provider/StateContextProvider";
 import { ConfigProvider } from "antd";
 import { Provider } from "react-redux";
+import { RouterProvider } from "react-router";
+import StateContextProvider from "./provider/StateContextProvider";
 import { store } from "./redux/store";
+import { routes } from "./routes/Router";
 
 // Create a client
 const queryClient = new QueryClient();

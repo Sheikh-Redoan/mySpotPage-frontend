@@ -14,6 +14,14 @@ const services = [
     duration: "1h",
     price: "from ₦70.00",
     image: service1,
+    treatments: [
+      { name: "Smooth / Scalp Treatment", duration: "1h", price: "₦70.00" },
+      { name: "Shadow Root", duration: "1h 15m", price: "₦80.00" },
+      { name: "Keratin Treatment", duration: "1h 30m", price: "₦100.00" },
+      { name: "Perm / Texture Wave", duration: "1h 45m", price: "₦110.00" },
+      { name: "Deep Conditioning Treatment", duration: "1h 20m", price: "₦90.00" },
+      { name: "Hair Botox", duration: "1h 40m", price: "₦120.00" },
+    ],
   },
   {
     id: 2,
@@ -23,6 +31,14 @@ const services = [
     duration: "1h 45m",
     price: "from ₦100.00",
     image: service2,
+    treatments: [
+      { name: "Smooth ", duration: "1h", price: "₦70.00" },
+      { name: "Shadow Root", duration: "1h 15m", price: "₦80.00" },
+      { name: "Keratin Treatment", duration: "1h 30m", price: "₦100.00" },
+      { name: "Perm ", duration: "1h 45m", price: "₦110.00" },
+      { name: "Deep Conditioning Treatment", duration: "1h 20m", price: "₦90.00" },
+      { name: "Hair Botox", duration: "1h 40m", price: "₦120.00" },
+    ],
   },
   {
     id: 3,
@@ -32,6 +48,14 @@ const services = [
     duration: "1h 30m",
     price: "from ₦80.00",
     image: service3,
+    treatments: [
+      { name: "Smooth / Scalp Treatment", duration: "1h", price: "₦70.00" },
+      { name: "Shadow Root", duration: "1h 15m", price: "₦80.00" },
+      { name: "Keratin Treatment", duration: "1h 30m", price: "₦100.00" },
+      { name: "Perm / Texture Wave", duration: "1h 45m", price: "₦110.00" },
+      { name: "Deep Conditioning Treatment", duration: "1h 20m", price: "₦90.00" },
+      { name: "Hair Botox", duration: "1h 40m", price: "₦120.00" },
+    ],
   },
   {
     id: 4,
@@ -41,6 +65,14 @@ const services = [
     duration: "30m",
     price: "₦100.00",
     image: service4,
+    treatments: [
+      { name: "Smooth / Scalp Treatment", duration: "1h", price: "₦70.00" },
+      { name: "Shadow Root", duration: "1h 15m", price: "₦80.00" },
+      { name: "Keratin Treatment", duration: "1h 30m", price: "₦100.00" },
+      { name: "Perm / Texture Wave", duration: "1h 45m", price: "₦110.00" },
+      { name: "Deep Conditioning Treatment", duration: "1h 20m", price: "₦90.00" },
+      { name: "Hair Botox", duration: "1h 40m", price: "₦120.00" },
+    ],
   },
   {
     id: 5,
@@ -50,8 +82,17 @@ const services = [
     duration: "2h 30m",
     price: "from ₦90.00",
     image: service5,
+    treatments: [
+      { name: "Smooth / Scalp Treatment", duration: "1h", price: "₦70.00" },
+      { name: "Shadow Root", duration: "1h 15m", price: "₦80.00" },
+      { name: "Keratin Treatment", duration: "1h 30m", price: "₦100.00" },
+      { name: "Perm / Texture Wave", duration: "1h 45m", price: "₦110.00" },
+      { name: "Deep Conditioning Treatment", duration: "1h 20m", price: "₦90.00" },
+      { name: "Hair Botox", duration: "1h 40m", price: "₦120.00" },
+    ],
   },
 ];
+
 
 export default function ServicesList({ selected, setSelected }) {
 

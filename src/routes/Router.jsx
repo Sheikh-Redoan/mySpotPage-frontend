@@ -1,5 +1,6 @@
 import Authentication from "@/layout/Authentication";
-import OnboardLayout from "@/layout/OnboardLayout"; // Assuming this is your general onboarding layout
+import OnboardLayout from "@/layout/OnboardLayout";
+import { dashboardTabs } from "@/lib/staticData";
 import CalendarPage from "@/pages/CalendarPage";
 import ClientPage from "@/pages/ClientPage";
 import DashboardPage from "@/pages/DashboardPage";
@@ -29,16 +30,26 @@ import Upgradeplan from "../components/SettingsPages/UpgradePlan/Upgradeplan";
 import AllAppoimtment from "../components/calendarManagement/AllAppointment";
 import ClientLayout from "../layout/ClientLayout";
 import MainLayout from "../layout/MainLayout";
+import { adminTabs } from "../lib/staticData";
 import BasicInfo from "../pages/BasicInfo";
 import BookingInfo from "../pages/BookingInfo";
 import DynamicSubSideBarLayout from "../pages/DynamicSubSideBarLayout";
 import ErrorPage from "../pages/ErrorPage";
 import ProviderNotes from "../pages/ProviderNotes";
+import BasicInformation from "../pages/admin/BasicInformation";
+import ProfileBesicInformation from "../pages/admin/ProfileBesicInformation";
+import ProfileSecurity from "../pages/admin/ProfileSecurity";
+import UserManagement from "../pages/admin/UserManagement";
+import ConfirmBooking from "../pages/client/ConfirmBooking";
 import ConfirmPage from "../pages/client/ConfirmPage";
+import ConfirmPending from "../pages/client/ConfirmPending";
+import ConfirmStaff from "../pages/client/ConfirmStaff";
 import EnterAddress from "../pages/client/EnterAddress";
 import SelectStaff from "../pages/client/SelectStaff";
+import SelectTime from "../pages/client/SelectTime";
 import OurWorkDetails from "../pages/client/ServiceProviderInfo/OurWorkDetails";
 import ServiceProviderInfo from "../pages/client/ServiceProviderInfo/ServiceProviderInfo";
+import MyProfileLayout from "../pages/layout/MyProfileLayout";
 import {
   clientNavItems,
   settingsNavItems,
@@ -51,10 +62,6 @@ import SetupLocationServices1 from "../pages/onboarding/solo/SetupLocationServic
 import SetupLocationServices2 from "../pages/onboarding/solo/SetupLocationServices2";
 import SetupTeamLocationServices1 from "../pages/onboarding/team/SetupTeamLocationServices1";
 import SetupTeamLocationServices2 from "../pages/onboarding/team/SetupTeamLocationServices2";
-import SelectTime from "../pages/client/SelectTime";
-import ConfirmBooking from "../pages/client/ConfirmBooking";
-import ConfirmStaff from "../pages/client/ConfirmStaff";
-import ConfirmPending from "../pages/client/ConfirmPending";
 import StaffManagement from "../pages/seller/StaffManagement";
 
 import OTPVerificationPage from "../pages/onboarding/OTPVerificationPage";
@@ -64,7 +71,7 @@ import StaffInformationPage from "../pages/onboarding/StaffInformationPage";
 export const routes = createBrowserRouter([
   {
     path: "/",
-    element: <MainLayout />,
+    element: <MainLayout tabs={dashboardTabs} />,
     errorElement: <ErrorPage />,
     children: [
       {
@@ -163,12 +170,16 @@ export const routes = createBrowserRouter([
         element: <div>Service Page</div>,
       },
       {
+        path: "enter-address",
+        element: <EnterAddress />,
+      },
+      {
         path: "select-staff",
         element: <SelectStaff />,
       },
       {
         path: "select-time",
-        element: <SelectTime/>,
+        element: <SelectTime />,
       },
       {
         path: "confirm",
@@ -180,14 +191,59 @@ export const routes = createBrowserRouter([
       },
       {
         path: "confirmation-pending",
-        element: <ConfirmPending/>,
+        element: <ConfirmPending />,
       },
       {
         path: "confirmation",
-        element: <ConfirmBooking/>,
+        element: <ConfirmBooking />,
       },
     ],
   },
+  {
+    path: "/user-management",
+    element: <MainLayout tabs={adminTabs} />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        index: true,
+        element: <UserManagement />,
+      },
+      {
+        path: "data-management",
+        element: <UserManagement />,
+      },
+      {
+        path: ":name",
+        element: <MyProfileLayout />,
+        children: [
+          {
+            path: "business-information",
+            element: <BasicInformation />,
+          },
+          {
+            path: "subscription",
+            element: <BasicInformation />,
+          },
+        ],
+      },
+      {
+        path: "my-profile",
+        element: <MyProfileLayout />,
+        errorElement: <ErrorPage />,
+        children: [
+          {
+            index: true,
+            element: <ProfileBesicInformation />,
+          },
+          {
+            path: "security",
+            element: <ProfileSecurity />,
+          },
+        ],
+      },
+    ],
+  },
+
   {
     path: "/our-work",
     element: <OurWorkDetails />,

@@ -1,7 +1,7 @@
 import { Breadcrumb as Breadcrumbs } from "antd";
 import { ChevronRight } from "lucide-react";
 import { Link, useLocation } from "react-router";
-export default function Breadcrumb({ isAddressPage, isStaffPage }) {
+export default function Breadcrumb({ breadcrumbs }) {
   let location = useLocation();
   const currentPath = location.pathname;
 
@@ -13,43 +13,13 @@ export default function Breadcrumb({ isAddressPage, isStaffPage }) {
     );
   }
 
+  const data = breadcrumbs.map((item) => ({
+    title: activePath(item.link, item.name),
+  }));
+
   return (
     <div className="my-4">
-      <Breadcrumbs
-        separator={<ChevronRight strokeWidth={1} />}
-        items={[
-          {
-            title: activePath("/service-provider-info", "Service"),
-          },
-          {
-            ...(isAddressPage && {
-              title: activePath(
-                "/service-provider-info/enter-address",
-                "Enter address"
-              ),
-            }),
-          },
-          {
-            ...(isStaffPage && {
-              title: activePath(
-                "/service-provider-info/select-staff",
-                "Select staff"
-              ),
-            }),
-          },
-          {
-            title: activePath(
-              "/service-provider-info/select-time",
-              "Select time"
-            ),
-          },
-          isStaffPage? {
-            title: activePath("/service-provider-info/confirm", "Confirm"),
-          }: {
-            title: activePath("/service-provider-info/confirm-staff", "Confirm"),
-          },
-        ]}
-      />
+      <Breadcrumbs separator={<ChevronRight strokeWidth={1} />} items={data} />
     </div>
   );
 }

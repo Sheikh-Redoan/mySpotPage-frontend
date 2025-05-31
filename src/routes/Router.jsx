@@ -64,9 +64,9 @@ import SetupTeamLocationServices1 from "../pages/onboarding/team/SetupTeamLocati
 import SetupTeamLocationServices2 from "../pages/onboarding/team/SetupTeamLocationServices2";
 import StaffManagement from "../pages/seller/StaffManagement";
 
+import Subscriptions from "../pages/admin/Subscriptions";
 import OTPVerificationPage from "../pages/onboarding/OTPVerificationPage";
 import StaffInformationPage from "../pages/onboarding/StaffInformationPage";
-
 
 export const routes = createBrowserRouter([
   {
@@ -222,7 +222,7 @@ export const routes = createBrowserRouter([
           },
           {
             path: "subscription",
-            element: <BasicInformation />,
+            element: <Subscriptions />,
           },
         ],
       },

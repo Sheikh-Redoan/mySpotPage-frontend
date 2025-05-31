@@ -34,7 +34,7 @@ function TopNavbar({ currentTab }) {
   }, []);
 
   return (
-    <div className="flex justify-between border-b border-black/5 items-center px-6 py-4 absolute  top-0 left-0 right-0">
+    <div className="flex justify-between border-b border-black/5 items-center px-6 py-4 absolute top-0 left-0 right-0 h-fit">
       <h3 className="font-semibold text-lg">{currentTab}</h3>
 
       <div className="flex items-center gap-4">

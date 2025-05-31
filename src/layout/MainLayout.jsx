@@ -104,10 +104,10 @@ function MainLayout({ tabs }) {
         </div>
       </div>
 
-      <div className="flex-1 relative ml-20  min-h-screen h-full ">
+      <div className="flex-1 relative ml-20  min-h-screen h-full">
         {/* topnav */}
         <TopNavbar currentTab={currentTab} />
-        <div className="pt-18 px-1">
+        <div className="pt-20">
           <Outlet />
         </div>
       </div>

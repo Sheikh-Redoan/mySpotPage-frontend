@@ -377,7 +377,7 @@ export default function SelectTime() {
             dayMaxEvents={true}
             weekends={weekendsVisible}
             initialEvents={INITIAL_EVENTS}
-            select={handleDateSelect}
+            // select={handleDateSelect}
             dateClick={handleDateClickForHighlight}
             dayCellClassNames={dayCellClassNamesFunc}
             selectAllow={handleSelectAllow}

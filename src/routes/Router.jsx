@@ -46,7 +46,6 @@ import ConfirmPending from "../pages/client/ConfirmPending";
 import ConfirmStaff from "../pages/client/ConfirmStaff";
 import EnterAddress from "../pages/client/EnterAddress";
 import SelectStaff from "../pages/client/SelectStaff";
-import SelectTime from "../pages/client/SelectTime";
 import OurWorkDetails from "../pages/client/ServiceProviderInfo/OurWorkDetails";
 import ServiceProviderInfo from "../pages/client/ServiceProviderInfo/ServiceProviderInfo";
 import MyProfileLayout from "../pages/layout/MyProfileLayout";
@@ -67,6 +66,7 @@ import StaffManagement from "../pages/seller/StaffManagement";
 import Subscriptions from "../pages/admin/Subscriptions";
 import OTPVerificationPage from "../pages/onboarding/OTPVerificationPage";
 import StaffInformationPage from "../pages/onboarding/StaffInformationPage";
+import ClientAppointmentCal from "../pages/client/ClientAppointmentCal";
 
 export const routes = createBrowserRouter([
   {
@@ -179,7 +179,7 @@ export const routes = createBrowserRouter([
       },
       {
         path: "select-time",
-        element: <SelectTime />,
+        element: <ClientAppointmentCal />,
       },
       {
         path: "confirm",

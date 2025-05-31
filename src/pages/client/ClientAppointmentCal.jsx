@@ -11,6 +11,7 @@ import Container from "./Container";
 import Breadcrumb from "../../components/client/Breadcrumb";
 import { getBreadcrumbs } from "../../lib/staticData";
 import "/src/styles/fullCalender.css";
+import AppointmentActionsBtn from "../../components/client/client-appointment/AppointmentActionsBtn";
 
 let eventGuid = 0;
 let todayStr = dayjs().format("YYYY-MM-DD");
@@ -57,7 +58,7 @@ const toYYYYMMDD = (dateInput) => {
   return `${year}-${month}-${day}`;
 };
 
-export default function SelectTime() {
+export default function ClientAppointmentCal() {
   const [weekendsVisible, setWeekendsVisible] = useState(true);
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [currentView, setCurrentView] = useState("dayGridMonth");
@@ -122,7 +123,7 @@ export default function SelectTime() {
       setHighlightedDate(clickedDateStr);
     } else {
       console.log("This date is busy and cannot be selected.");
-      setHighlightedDate(null); 
+      setHighlightedDate(null);
     }
 
     if (currentView === "dayGridMonth") {
@@ -416,20 +417,8 @@ export default function SelectTime() {
             timeSlots={timeSlots}
           />
 
-          <div className="mt-6 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0">
-            <p className="text-[#3D3D3D] text-sm">
-              No suitable time slot?{" "}
-              <Link
-                to="#"
-                className="hover:text-indigo-700 text-[#744CDB] text-sm underline"
-              >
-                Join our waitlist!
-              </Link>
-            </p>
-            <button className="px-6 py-2 text-[#82868E] bg-[#E5E7E8] rounded-md hover:bg-[#ECEBFC] transition-colors cursor-pointer">
-              Continue
-            </button>
-          </div>
+          {/* Appointment Actions Button */}
+          <AppointmentActionsBtn />
         </div>
       </Container>
     </section>

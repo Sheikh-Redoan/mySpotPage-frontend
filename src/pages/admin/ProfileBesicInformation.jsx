@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { imageProvider } from "../../lib/imageProvider";
+import { ChevronDown } from "lucide-react";
+import { ChevronUp } from "lucide-react";
 
 const ProfileBasicInformation = () => {
     const user = {
@@ -16,6 +18,8 @@ const ProfileBasicInformation = () => {
     const [preview, setPreview] = useState(user?.photoURL || "");
     const fileInputRef = useRef(null);
 
+    const [isSelectOpen, setIsSelectOpen] = useState(false);
+
     const {
         register,
         handleSubmit,
@@ -27,7 +31,7 @@ const ProfileBasicInformation = () => {
         defaultValues: {
             name: user.firstName || "",
             lastName: user.lastName || "",
-            role: user.role || "Super Admin",
+            role: user.role,
             gender: user.gender,
             photo: null,
         },
@@ -54,12 +58,20 @@ const ProfileBasicInformation = () => {
         formData.append("name", fullName);
         formData.append("role", data.role);
         formData.append("gender", data.gender);
+
+        // Check if a new photo is selected
         if (data.photo?.[0]) {
             formData.append("photo", data.photo[0]);
+        } else {
+            // If no new photo, append the existing photo URL
+            formData.append("photoURL", user.photoURL);
         }
 
+        // Debug logs
         console.log("Full Name:", fullName);
-        console.log("FormData:", data);
+        console.log("data:", data);
+
+        // TODO: Submit the `formData` to backend
     };
 
     return (
@@ -120,16 +132,26 @@ const ProfileBasicInformation = () => {
             </div>
 
             {/* Role Dropdown */}
-            <div className="mb-6 flex items-center gap-[150px]">
-                <label className="block text-sm font-medium text-description mb-1">Role</label>
-                <select
-                    {...register("role")}
-                    className="w-full border text-gray-600 border-border rounded-md px-3 py-2 focus:outline-none focus:ring focus:ring-primary01"
-                >
-                    <option>Super Admin</option>
-                    <option>Admin</option>
-                    <option>Editor</option>
-                </select>
+            <div className="mb-6 flex items-center gap-[150px] relative w-full">
+                <label className="block text-sm font-medium text-description mb-1 whitespace-nowrap">Role</label>
+                <div className="relative w-full">
+                    <select
+                        {...register("role")}
+                        className="appearance-none w-full border text-gray-600 border-border rounded-md px-3 py-2 pr-10 focus:outline-none focus:ring focus:ring-primary01"
+                        onClick={() => setIsSelectOpen(!isSelectOpen)}
+                        onBlur={() => setIsSelectOpen(false)} // Close when clicking away
+                    >
+                        <option>Super Admin</option>
+                        <option>Admin</option>
+                        <option>Editor</option>
+                    </select>
+
+                    {/* Rotating icon */}
+                    <ChevronDown
+                        className={`absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500 w-6 h-6 transform transition-transform duration-400 ease-in-out ${isSelectOpen ? "rotate-180" : "rotate-360"
+                            }`}
+                    />
+                </div>
             </div>
 
             {/* Phone Field */}

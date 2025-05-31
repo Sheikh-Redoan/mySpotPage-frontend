@@ -24,7 +24,8 @@ export default function UserManagement() {
         <div className="w-[200px]">
           <Popup
             name="Filter"
-            icon={<ListFilter size={20} className="text-gray-400" />}>
+            icon={<ListFilter size={20} className="text-gray-400" />}
+            className="xl:left-[280px]">
             {(handlePopup) => <UserFilter closePopup={handlePopup} />}
           </Popup>
         </div>

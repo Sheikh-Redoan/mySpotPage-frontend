@@ -1,6 +1,6 @@
-// src/components/Header.jsx
+// src/components/seller/Header.jsx
 import React from "react";
-import SettingsIcon from "./SettingsIcon";
+import { GoGear } from "react-icons/go";
 
 const Header = ({ activeTab, onTabChange }) => {
   const tabs = ["Active Staff", "Inactive Staff", "Calendar View"];
@@ -10,7 +10,7 @@ const Header = ({ activeTab, onTabChange }) => {
       <div className="flex justify-start items-center">
         {tabs.map((tab) => (
           <button
-            key={tab}
+            key={tab} // Key for list item
             className={`px-8 py-3 border-b-2 transition-colors duration-200 ${
               activeTab === tab
                 ? "border-violet-500 text-violet-500 font-semibold"
@@ -25,7 +25,7 @@ const Header = ({ activeTab, onTabChange }) => {
         ))}
       </div>
       <button className="h-10 px-3 py-2 bg-white rounded-lg border border-neutral-300 flex justify-center items-center gap-2 hover:bg-gray-50 transition-colors duration-200">
-        <SettingsIcon className="w-5 h-5 text-neutral-700" />
+        <GoGear className="w-5 h-5 text-neutral-700" />
         <span className="text-neutral-700 text-sm font-semibold font-['Golos_Text'] leading-tight">
           Settings
         </span>

@@ -30,7 +30,7 @@ import Upgradeplan from "../components/SettingsPages/UpgradePlan/Upgradeplan";
 import AllAppoimtment from "../components/calendarManagement/AllAppointment";
 import ClientLayout from "../layout/ClientLayout";
 import MainLayout from "../layout/MainLayout";
-import { adminTabs, profileMainTabs, profileTabs } from "../lib/staticData";
+import { adminTabs, profileMainTabs, } from "../lib/staticData";
 import BasicInfo from "../pages/BasicInfo";
 import BookingInfo from "../pages/BookingInfo";
 import DynamicSubSideBarLayout from "../pages/DynamicSubSideBarLayout";
@@ -211,7 +211,17 @@ export const routes = createBrowserRouter([
       },
       {
         path: "data-management",
-        element: <UserManagement />,
+        element: <MyProfileLayout/>,
+        children: [
+          {
+            path: "service-classification",
+            element: <div>Service Classification</div>
+          },
+          {
+            path: "menu-category",
+            element: <div>Menu Category</div>
+          }
+        ]
       },
       {
         path: ":name",

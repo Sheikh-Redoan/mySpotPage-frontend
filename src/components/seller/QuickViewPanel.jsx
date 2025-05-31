@@ -69,8 +69,7 @@ const QuickViewPanel = ({ selectedStaff }) => {
         </div>
       </div>
       <div className="w-full border-t border-[#7979799c] "></div>
-      <div className="self-stretch flex-1 flex flex-col justify-start items-start gap-3 overflow-y-scroll scrollbar-hidden
-scrollbar-hidden">
+      <div className="self-stretch flex-1 flex flex-col justify-start items-start gap-3 overflow-y-scroll scrollbar-hidden">
         {selectedStaff.phone && (
           <div className="self-stretch inline-flex justify-start items-center gap-2">
             <div className="py-0.5 flex justify-start items-center">

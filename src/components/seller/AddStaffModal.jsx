@@ -85,29 +85,12 @@ const AddStaffModal = ({ onClose, onAddStaff, allStaffData }) => {
     });
     alert(`SMS with onboarding link sent to ${phoneNumber}! New staff can use OTP '123456'.`);
 
-    // Optionally, if the admin also gets redirected after sending SMS, you could do:
-    // navigate('/admin-sms-sent-confirmation-page');
+    onClose(); // Close the add staff modal
 
-    // For the current flow, we'll *just* close the modal.
-    // The actual onboarding flow for the *new staff* starts when they click the link.
-    // We are simulating that link click leads to OTPVerificationPage.
-    onClose();
-
-    // You could also auto-add the staff to the list immediately with a 'pending' status
-    // if your UI requires it, even before they complete onboarding.
-    // const newStaff = {
-    //   id: allStaffData.length + 1,
-    //   name: tempStaffName,
-    //   image: "https://randomuser.me/api/portraits/men/99.jpg",
-    //   status: "Pending Onboarding", // Or some other status
-    //   roles: selectedRoles,
-    //   position: jobTitle,
-    //   phone: phoneNumber,
-    //   services: [],
-    //   hasUpcomingBookings: false,
-    //   workingShifts: [],
-    // };
-    // onAddStaff(newStaff); // Add to the main list immediately if desired
+    // Redirect to the new standalone OTP verification page, passing necessary state
+    navigate("/verify-staff-otp", { // Changed path here
+      state: { phoneNumber, roles: selectedRoles, jobTitle, staffName: tempStaffName },
+    });
   };
 
   return (
@@ -199,7 +182,7 @@ const AddStaffModal = ({ onClose, onAddStaff, allStaffData }) => {
                       )}
                       <input
                         type="checkbox"
-                        className="hidden"
+                        className="hidden" // Hide native checkbox
                         checked={selectedRoles.includes(role)}
                         onChange={() => handleRoleChange(role)}
                       />

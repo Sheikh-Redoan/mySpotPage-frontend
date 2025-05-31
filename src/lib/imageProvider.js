@@ -48,6 +48,7 @@ import databaseCol from "../assets/icons/database.png"
 import securityBlack from "../assets/icons/securityblack.png";
 import securityPink from "../assets/icons/securityPink.png";
 import PeopleBlack from "../assets/icons/PeopleBlack.png";
+import pencile from "../assets/icons/pencil-simple-line.png";
 
 export const imageProvider = {
   ChartLinePink,
@@ -99,5 +100,6 @@ export const imageProvider = {
   databaseCol,
   PeopleBlack,
   securityPink,
-  securityBlack
+  securityBlack,
+  pencile
 };

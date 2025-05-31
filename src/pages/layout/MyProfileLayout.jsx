@@ -48,7 +48,7 @@ const MyProfileLayout = () => {
       </aside>
 
       {/* Main content */}
-      <main className=" flex-1 h-full p-6">
+      <main className="flex-1 p-6">
         <Outlet />
       </main>
     </div>

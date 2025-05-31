@@ -180,8 +180,8 @@ const StaffManagement = () => {
 
 
   return (
-    <div className="min-h-screen bg-gray-100 p-5 font-['Golos_Text']">
-      <div className="self-stretch bg-white p-5 rounded-lg shadow-md flex flex-col justify-start items-start gap-4">
+    <div className="min-h-screen  p-5 font-['Golos_Text']">
+      <div className="self-stretch bg-white p-5 rounded-lg flex flex-col justify-start items-start gap-4">
         <Header activeTab={activeTab} onTabChange={handleTabChange} />
         <SearchBarAndFilter
           searchTerm={searchTerm}
@@ -221,7 +221,7 @@ const StaffManagement = () => {
 
       {/* Modals */}
       {showResolveBookingsModal && staffToInactivate && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-40">
+        <div className="fixed inset-0 bg-[#00000081] flex justify-center items-center z-40">
           <ResolveBookingsModal
             onClose={() => {
               setShowResolveBookingsModal(false);
@@ -234,7 +234,7 @@ const StaffManagement = () => {
       )}
 
       {showConfirmInactivationModal && staffToInactivate && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-40">
+        <div className="fixed inset-0 bg-[#00000081] flex justify-center items-center z-40">
           <ConfirmInactivationModal
             onClose={() => {
               setShowConfirmInactivationModal(false);

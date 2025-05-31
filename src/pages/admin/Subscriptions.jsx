@@ -1,5 +1,6 @@
 import { useParams } from "react-router";
 import Breadcrumb from "../../components/client/Breadcrumb";
+import Table from "../../components/shared/Table";
 import { imageProvider } from "../../lib/imageProvider";
 import { getBreadcrumbs } from "../../lib/staticData";
 
@@ -23,7 +24,7 @@ export default function Subscriptions() {
           },
         ])}
       />
-      <div className="space-y-4">
+      <div className="space-y-4 mb-10">
         <h1 className="text-xl font-bold">Plan</h1>
         <div className="bg-white p-8 rounded-xl border border-gray-200 min-w-xs w-fit space-y-2">
           <div className="flex items-center gap-2">
@@ -37,6 +38,11 @@ export default function Subscriptions() {
           </p>
           <p>Set the Standard</p>
         </div>
+      </div>
+
+      <div className="space-y-4">
+        <h1 className="text-xl font-bold">Billing History</h1>
+        <Table className="border-0" />
       </div>
     </section>
   );

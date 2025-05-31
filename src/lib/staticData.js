@@ -65,7 +65,7 @@ export const adminTabs = [
     name: "Data Management",
     imagePink: imageProvider.database,
     imageWhite: imageProvider.databaseCol,
-    link: "data-management",
+    link: "data-management/service-classification",
   },
   {
     id: 5,
@@ -88,14 +88,14 @@ export const profileMainTabs = [
     name: "Data Management",
     imagePink: imageProvider.database,
     imageWhite: imageProvider.databaseCol,
-    link: "data-management",
+    link: "/user-management/data-management",
   },
   {
-    id: 5,
+    id: 2,
     name: "Settings",
     imagePink: imageProvider.SettingsPink,
     imageWhite: imageProvider.SettingsWhite,
-    link: "settings",
+    link: "/user-management/settings",
   },
 ];
 
@@ -132,6 +132,25 @@ export const userManagementTabs = [
     link: "subscription",
   },
 ];
+
+export const dataManagementTabs = [
+  {
+    id: 0,
+    name: "Service Classification ",
+    // imagePink: imageProvider.buildingCol,
+    // imageWhite: imageProvider.building,
+    link: "/user-management/data-management/service-classification",
+  },
+  {
+    id: 1,
+    name: "Menu Category",
+    // imagePink: imageProvider.cardCol,
+    // imageWhite: imageProvider.card,
+    link: "/user-management/data-management/menu-category",
+  },
+];
+
+
 // Initial breadcrumbs
 export const breadcrumbs = [
   {

@@ -212,7 +212,17 @@ export const routes = createBrowserRouter([
       },
       {
         path: "data-management",
-        element: <UserManagement />,
+        element: <MyProfileLayout />,
+        children: [
+          {
+            path: "service-classification",
+            element: <div>Service Classification</div>,
+          },
+          {
+            path: "menu-category",
+            element: <div>Menu Category</div>,
+          },
+        ],
       },
       {
         path: ":name",

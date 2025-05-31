@@ -1,17 +1,37 @@
 import { FiLogOut } from "react-icons/fi";
 import { NavLink, Outlet, useLocation } from "react-router";
-import { profileTabs, userManagementTabs } from "../../lib/staticData";
+import { dataManagementTabs, profileTabs, userManagementTabs } from "../../lib/staticData";
 import { cn } from "../../lib/utils";
 
 const MyProfileLayout = () => {
   const location = useLocation();
   const currentPath = location.pathname;
 
-  const tabs =
-    currentPath === "/profile-management/my-profile/basic-information" ||
-    currentPath === "/profile-management/my-profile/security"
-      ? profileTabs
-      : userManagementTabs;
+  const profilePaths = [
+  "/profile-management/my-profile/basic-information",
+  "/profile-management/my-profile/security",
+];
+
+const dataManagementPaths = [
+  "/user-management/data-management/service-classification",
+  "/user-management/data-management/menu-category",
+];
+
+let tabs;
+
+if (profilePaths.includes(currentPath)) {
+  tabs = profileTabs;
+} else if (dataManagementPaths.includes(currentPath)) {
+  tabs = dataManagementTabs;
+} else {
+  tabs = userManagementTabs;
+}
+
+  // const tabs =
+  //   currentPath === "/profile-management/my-profile/basic-information" ||
+  //   currentPath === "/profile-management/my-profile/security"
+  //     ? profileTabs
+  //     : userManagementTabs;
 
   return (
     <div className="flex min-h-[calc(100vh-80px)] overflow-hidden bg-[#F9FAFC] ">

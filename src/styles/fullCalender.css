@@ -55,8 +55,8 @@
 }
 
 /* custom stye for selected and busy state */
-.custom-selected-date .fc-daygrid-day-frame {
-  background-color: #f6f4ff !important;
+.fc .fc-highlight{
+    background: #F5F4FE !important;
 }
 .custom-selected-date .custom-day-number {
   color: #53389e !important;
@@ -133,15 +133,14 @@
   border: none;
 }
 
-.fc-timeGridWeek-view .fc-scrollgrid table {
-  border-left-style: hidden;
-  border-right-style: solid;
-  border-top-style: hidden;
+.fc .fc-timegrid-slot{
+    border-bottom: 0px;
+    height: 84px;
 }
 
-/* .fc-timeGridWeek-view .fc-scrollgrid .fc-scrollgrid-section  {
-  background-color: black;
-} */
+.fc-timeGridWeek-view .custom-day-number {
+  display: none;
+}
 
 /* Customize Day Headers in TimeGrid View */
 .custom-day-header-content {
@@ -176,3 +175,5 @@
   align-items: center;
   justify-content: center;
 }
+
+

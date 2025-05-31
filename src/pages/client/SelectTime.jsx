@@ -8,9 +8,12 @@ import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
 import EventModal from "../../components/selectTimeComponents/EventModal";
 import Container from "./Container";
+import Breadcrumb from "../../components/client/Breadcrumb";
+import { getBreadcrumbs } from "../../lib/staticData";
+import "/src/styles/fullCalender.css";
 
 let eventGuid = 0;
-let todayStr = dayjs().format('YYYY-MM-DD'); 
+let todayStr = dayjs().format("YYYY-MM-DD");
 
 const specialDatesData = [
   { date: "2025-05-01", isBusy: true },
@@ -46,15 +49,6 @@ export function createEventId() {
   return String(eventGuid++);
 }
 
-function renderEventContent(eventInfo) {
-  return (
-    <>
-      {/* <b>{eventInfo.timeText}</b>
-      <i>{eventInfo.event.title}</i> */}
-    </>
-  );
-}
-
 const toYYYYMMDD = (dateInput) => {
   const d = new Date(dateInput);
   const year = d.getFullYear();
@@ -65,9 +59,8 @@ const toYYYYMMDD = (dateInput) => {
 
 export default function SelectTime() {
   const [weekendsVisible, setWeekendsVisible] = useState(true);
-  const [currentEvents, setCurrentEvents] = useState([]);
   const [selectedDate, setSelectedDate] = useState(dayjs());
-  const [currentView, setCurrentView] = useState("dayGridMonth"); 
+  const [currentView, setCurrentView] = useState("dayGridMonth");
   const calendarRef = useRef(null);
   const [highlightedDate, setHighlightedDate] = useState(null);
 
@@ -100,19 +93,19 @@ export default function SelectTime() {
       (selectInfo.allDay &&
         new Date(selectInfo.start).getTime() ===
           new Date(selectInfo.end).getTime() - 86400000)
-      )
-    if (
-      startDateStr === endDateStr ||
-      (selectInfo.allDay &&
-        new Date(selectInfo.start).getTime() ===
-          new Date(selectInfo.end).getTime() - 86400000)
-    ) {
-      setHighlightedDate(startDateStr);
-      selectInfo.view.calendar.unselect();
-    } else {
-      console.log("Multi-day selection detected:", selectInfo);
-      selectInfo.view.calendar.unselect();
-    }
+    )
+      if (
+        startDateStr === endDateStr ||
+        (selectInfo.allDay &&
+          new Date(selectInfo.start).getTime() ===
+            new Date(selectInfo.end).getTime() - 86400000)
+      ) {
+        setHighlightedDate(startDateStr);
+        selectInfo.view.calendar.unselect();
+      } else {
+        console.log("Multi-day selection detected:", selectInfo);
+        selectInfo.view.calendar.unselect();
+      }
   }
 
   // Triggered when the user clicks on a date or a time
@@ -134,7 +127,7 @@ export default function SelectTime() {
         setHighlightedDate(null);
       }
     } else {
-      setHighlightedDate(null); 
+      setHighlightedDate(null);
       console.log(`Date clicked in ${currentView} view. Modal will not open.`);
     }
 
@@ -157,23 +150,9 @@ export default function SelectTime() {
       start: startDate.toISOString(),
       allDay: false,
     });
-    setHighlightedDate(toYYYYMMDD(startDate)); 
+    setHighlightedDate(toYYYYMMDD(startDate));
     setIsModalOpen(false);
     calendarApi.select(startDate);
-  }
-
-  function handleEventClick(clickInfo) {
-    if (
-      confirm(
-        `Are you sure you want to delete the event '${clickInfo.event.title}'`
-      )
-    ) {
-      clickInfo.event.remove();
-    }
-  }
-
-  function handleEvents(events) {
-    setCurrentEvents(events);
   }
 
   const onDatePickerChange = (date) => {
@@ -248,7 +227,7 @@ export default function SelectTime() {
       (sd) =>
         sd.date === toYYYYMMDD(slotInfo.date) &&
         sd.isBusy &&
-        (specialTimeSlot ? specialTimeSlot.isBusy : false) 
+        (specialTimeSlot ? specialTimeSlot.isBusy : false)
     );
 
     if (isBusy) {
@@ -284,148 +263,165 @@ export default function SelectTime() {
 
   return (
     <section className="bg-[#F9FAFC] py-4 px-2 md:px-0 md:py-8">
-      <Container className="bg-white shadow-md rounded-lg max-sm:py-4 max-sm:px-2 lg:p-6">
-        <div className="flex flex-col md:flex-row gap-4 md:gap-0 items-center justify-between mb-4">
-          <div className="flex items-center space-x-4">
-            <button
-              className="cursor-pointer"
-              onClick={() => handleNavButtonClick("prev")}>
-              <img src="/src/assets/icons/left_arrow.svg" alt="Left Arrow" />
-            </button>
-            <DatePicker
-              onChange={onDatePickerChange}
-              picker="month"
-              value={selectedDate}
-              format="MMMM YYYY" 
-              allowClear={false}
-              className="w-40"
-            />
-            <button
-              className="cursor-pointer ml-1"
-              onClick={() => handleNavButtonClick("next")}>
-              <img src="/src/assets/icons/right_arrow.svg" alt="Right Arrow" />
-            </button>
-            <button
-              className="text-[#866be7] cursor-pointer text-[14px] font-semibold"
-              onClick={() => {
-                if (calendarRef.current) {
-                  const calendarApi = calendarRef.current.getApi();
-                  calendarApi.today();
-                  setSelectedDate(dayjs());
-                  setCurrentView(calendarApi.view.type);
-                }
-              }}>
-              Today
-            </button>
-          </div>
-
-          <div className="flex border border-gray-200 rounded-lg">
-            <button
-              className={`px-5 py-1 md:py-1.5 cursor-pointer rounded-md text-sm ${
-                currentView === "dayGridMonth"
-                  ? "bg-[#866BE7] text-white"
-                  : ""
-              }`}
-              onClick={() => handleViewChange("dayGridMonth")}
-            >
-              Month
-            </button>
-            <button
-              className={`px-5 py-1.5 cursor-pointer rounded-md text-sm ${
-                currentView === "timeGridWeek" ? "bg-[#866BE7] text-white" : ""
-              }`}
-              onClick={() => handleViewChange("timeGridWeek")}
-            >
-              Week
-            </button>
-            <button
-              className={`px-5 py-1.5 cursor-pointer rounded-md text-sm ${
-                currentView === "timeGridDay" ? "bg-[#866BE7] text-white" : ""
-              }`}
-              onClick={() => handleViewChange("timeGridDay")}
-            >
-              Day
-            </button>
-          </div>
-        </div>
-
-        <FullCalendar
-          key={currentView} 
-          ref={calendarRef}
-          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-          headerToolbar={false}
-          initialView={currentView}
-          editable={true}
-          selectable={true}
-          selectMirror={true}
-          dayMaxEvents={true}
-          weekends={weekendsVisible}
-          initialEvents={INITIAL_EVENTS}
-          select={handleDateSelect}
-          dateClick={handleDateClickForHighlight}
-          eventContent={renderEventContent}
-          eventClick={handleEventClick}
-          eventsSet={handleEvents}
-          dayCellClassNames={dayCellClassNamesFunc}
-          selectAllow={handleSelectAllow}
-          dayCellContent={renderDayCellContentWithSales} 
-          // TimeGrid specific props
-          slotMinTime="08:00:00"
-          slotMaxTime="18:00:00"
-          slotDuration="01:00:00"
-          snapDuration="01:00:00"
-          scrollTime="08:00:00"
-          allDaySlot={false}
-          slotLabelFormat={{
-            hour: "2-digit",
-            minute: "2-digit",
-            hour12: false,
-            meridiem: false,
-          }}
-          slotLabelClassNames="custom-slot-label"
-          // Conditionally render dayHeaderContent based on currentView
-          dayHeaderContent={
-            currentView === "timeGridWeek" || currentView === "timeGridDay"
-              ? (arg) => (
-                  <div className="custom-day-header-content">
-                    <div className="custom-day-header-weekday">
-                      {arg.date.toLocaleString("en-US", { weekday: "short" })}
-                    </div>
-                    <div className="custom-day-header-day">
-                      {arg.date.getDate()}
-                    </div>
-                  </div>
-                )
-              : null
-          }
-          slotLaneContent={renderTimeSlotContent}
+      <Container>
+        <Breadcrumb
+          breadcrumbs={getBreadcrumbs(1, 0, [
+            {
+              name: "Select staff",
+              link: "/service-provider-info/select-staff",
+            },
+          ])}
         />
 
-        <EventModal
-          isOpen={isModalOpen}
-          onClose={() => {
-            setIsModalOpen(false);
-            setHighlightedDate(null);
-          }}
-          onSubmit={handleModalSubmit}
-          selectedDate={
-            modalSelectInfo ? new Date(modalSelectInfo.date) : new Date()
-          }
-          timeSlots={timeSlots}
-        />
+        <div className="bg-white shadow-md rounded-lg max-sm:py-4 max-sm:px-2 lg:p-6">
+          <div className="flex flex-col md:flex-row gap-4 md:gap-0 items-center justify-between mb-4">
+            <div className="flex items-center space-x-4">
+              <button
+                className="cursor-pointer"
+                onClick={() => handleNavButtonClick("prev")}
+              >
+                <img src="/src/assets/icons/left_arrow.svg" alt="Left Arrow" />
+              </button>
+              <DatePicker
+                onChange={onDatePickerChange}
+                picker="month"
+                value={selectedDate}
+                format="MMMM YYYY"
+                allowClear={false}
+                className="w-40"
+              />
+              <button
+                className="cursor-pointer ml-1"
+                onClick={() => handleNavButtonClick("next")}
+              >
+                <img
+                  src="/src/assets/icons/right_arrow.svg"
+                  alt="Right Arrow"
+                />
+              </button>
+              <button
+                className="text-[#866be7] cursor-pointer text-[14px] font-semibold"
+                onClick={() => {
+                  if (calendarRef.current) {
+                    const calendarApi = calendarRef.current.getApi();
+                    calendarApi.today();
+                    setSelectedDate(dayjs());
+                    setCurrentView(calendarApi.view.type);
+                  }
+                }}
+              >
+                Today
+              </button>
+            </div>
 
-        <div className="mt-6 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0">
-          <p className="text-[#3D3D3D] text-sm">
-            No suitable time slot?{" "}
-            <Link
-              to="#"
-              className="hover:text-indigo-700 text-[#744CDB] text-sm underline">
-              Join our waitlist!
-            </Link>
-          </p>
-          <button className="px-6 py-2 text-[#82868E] bg-[#E5E7E8] rounded-md hover:bg-[#ECEBFC] transition-colors cursor-pointer">
-            Continue
-          </button>
+            <div className="flex border border-gray-200 rounded-lg">
+              <button
+                className={`px-5 py-1 md:py-1.5 cursor-pointer rounded-md text-sm ${
+                  currentView === "dayGridMonth"
+                    ? "bg-[#866BE7] text-white"
+                    : ""
+                }`}
+                onClick={() => handleViewChange("dayGridMonth")}
+              >
+                Month
+              </button>
+              <button
+                className={`px-5 py-1.5 cursor-pointer rounded-md text-sm ${
+                  currentView === "timeGridWeek"
+                    ? "bg-[#866BE7] text-white"
+                    : ""
+                }`}
+                onClick={() => handleViewChange("timeGridWeek")}
+              >
+                Week
+              </button>
+              <button
+                className={`px-5 py-1.5 cursor-pointer rounded-md text-sm ${
+                  currentView === "timeGridDay" ? "bg-[#866BE7] text-white" : ""
+                }`}
+                onClick={() => handleViewChange("timeGridDay")}
+              >
+                Day
+              </button>
+            </div>
+          </div>
+
+          <FullCalendar
+            key={currentView}
+            ref={calendarRef}
+            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+            headerToolbar={false}
+            initialView={currentView}
+            editable={true}
+            selectable={true}
+            selectMirror={true}
+            dayMaxEvents={true}
+            weekends={weekendsVisible}
+            initialEvents={INITIAL_EVENTS}
+            select={handleDateSelect}
+            dateClick={handleDateClickForHighlight}
+            dayCellClassNames={dayCellClassNamesFunc}
+            selectAllow={handleSelectAllow}
+            dayCellContent={renderDayCellContentWithSales}
+            // TimeGrid specific props
+            slotMinTime="08:00:00"
+            slotMaxTime="18:00:00"
+            slotDuration="01:00:00"
+            snapDuration="01:00:00"
+            scrollTime="08:00:00"
+            allDaySlot={false}
+            slotLabelFormat={{
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: false,
+              meridiem: false,
+            }}
+            slotLabelClassNames="custom-slot-label"
+            // Conditionally render dayHeaderContent based on currentView
+            dayHeaderContent={
+              currentView === "timeGridWeek" || currentView === "timeGridDay"
+                ? (arg) => (
+                    <div className="custom-day-header-content">
+                      <div className="custom-day-header-weekday">
+                        {arg.date.toLocaleString("en-US", { weekday: "short" })}
+                      </div>
+                      <div className="custom-day-header-day">
+                        {arg.date.getDate()}
+                      </div>
+                    </div>
+                  )
+                : null
+            }
+            slotLaneContent={renderTimeSlotContent}
+          />
+
+          <EventModal
+            isOpen={isModalOpen}
+            onClose={() => {
+              setIsModalOpen(false);
+              setHighlightedDate(null);
+            }}
+            onSubmit={handleModalSubmit}
+            selectedDate={
+              modalSelectInfo ? new Date(modalSelectInfo.date) : new Date()
+            }
+            timeSlots={timeSlots}
+          />
+
+          <div className="mt-6 flex flex-col md:flex-row justify-between items-center gap-4 md:gap-0">
+            <p className="text-[#3D3D3D] text-sm">
+              No suitable time slot?{" "}
+              <Link
+                to="#"
+                className="hover:text-indigo-700 text-[#744CDB] text-sm underline"
+              >
+                Join our waitlist!
+              </Link>
+            </p>
+            <button className="px-6 py-2 text-[#82868E] bg-[#E5E7E8] rounded-md hover:bg-[#ECEBFC] transition-colors cursor-pointer">
+              Continue
+            </button>
+          </div>
         </div>
       </Container>
     </section>

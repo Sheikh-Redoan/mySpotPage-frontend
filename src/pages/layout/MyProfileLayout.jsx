@@ -8,8 +8,8 @@ const MyProfileLayout = () => {
   const currentPath = location.pathname;
 
   const tabs =
-    currentPath === "/user-management/my-profile" ||
-    currentPath === "/user-management/my-profile/security"
+    currentPath === "/profile-management/my-profile/basic-information" ||
+    currentPath === "/profile-management/my-profile/security"
       ? profileTabs
       : userManagementTabs;
 

@@ -14,13 +14,13 @@ const MyProfileLayout = () => {
       : userManagementTabs;
 
   return (
-    <div className="flex min-h-[calc(100vh-73px)] overflow-hidden bg-[#F9FAFC] ">
+    <div className="flex min-h-[calc(100vh-80px)] overflow-hidden bg-[#F9FAFC] ">
       {/* Sidebar */}
       <aside className="w-[280px] bg-white  left-[65px] top-[73px] shadow-md py-6 px-5 flex flex-col justify-between">
         <ul className="space-y-3">
           {tabs.map((tab) => {
             return (
-              <NavLink key={tab.id} to={tab.link}>
+              <NavLink key={tab.id} to={tab.link} end>
                 {({ isActive }) => (
                   <li
                     className={cn(

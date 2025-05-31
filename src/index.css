@@ -1,8 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
-
-@theme inline {
+@theme inline{
   --color-primary01: #866be7;
   --color-highlight01: #f5f4fe;
   --font-golos: "Golos Text", sans-serif;
@@ -10,6 +9,31 @@
   --color-primary02: #1e7d5d;
   --color-border: #ecebfc;
   --color-testimonial-avatar: #3f8bac;
+  
+  /* Extended color palette */
+  --color-violet-50: #F5F3FF;
+  --color-violet-500: #8B5CF6;
+  --color-violet-600: #7C3AED;
+  --color-violet-700: #6D28D9;
+  
+  --color-gray-50: #F9FAFB;
+  --color-gray-200: #E5E7EB;
+  --color-gray-400: #9CA3AF;
+  --color-gray-500: #6B7280;
+  --color-gray-600: #4B5563;
+  --color-gray-950: #0F172A;
+  
+  --color-green-500: #22C55E;
+  --color-amber-400: #FACC15;
+
+  --color-Boulder-400 : #888888;
+  --color-Boulder-100 : #E7E7E7;
+}
+
+@layer base {
+  :root {
+    font-family: var(--font-golos);
+  }
 }
 
 .stork_dasharray {
@@ -329,6 +353,17 @@
   line-height: 1.2;
   white-space: nowrap;
   z-index: 2;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollbar-hidden {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
 @media only screen and (max-width: 600px) {

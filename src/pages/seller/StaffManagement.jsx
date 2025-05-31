@@ -1,39 +1,183 @@
-import React, { useState, useEffect } from "react";
+// src/components/seller/StaffManagement.jsx
+import React, { useState, useEffect, useCallback } from "react";
 import Header from "../../components/seller/Header";
-import SearchBarAndFilter from "../../components/seller//SearchBarAndFilter";
-import StaffCard from "../../components/seller//StaffCard";
-import QuickViewPanel from "../../components/seller//QuickViewPanel";
-import { staffData } from "../../lib/staffData"; // Import your mock data
-
-
+import SearchBarAndFilter from "../../components/seller/SearchBarAndFilter";
+import StaffCard from "../../components/seller/StaffCard";
+import QuickViewPanel from "../../components/seller/QuickViewPanel";
+import ResolveBookingsModal from "../../components/seller/ResolveBookingsModal";
+import ConfirmInactivationModal from "../../components/seller/ConfirmInactivationModal";
+import { staffData as initialStaffData } from "../../lib/staffData";
 const StaffManagement = () => {
-const [activeTab, setActiveTab] = useState("Active Staff");
+  const [activeTab, setActiveTab] = useState("Active Staff");
+  const [allStaffData, setAllStaffData] = useState(initialStaffData);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredStaff, setFilteredStaff] = useState([]);
-  const [selectedStaff, setSelectedStaff] = useState(null); // State for quick view
+  const [filters, setFilters] = useState(() => {
+    const allUniqueRoles = [
+      ...new Set(initialStaffData.flatMap((staff) => staff.roles)),
+    ];
+    return { roles: allUniqueRoles, serviceSearchTerm: "" };
+  });
+  const [selectedStaff, setSelectedStaff] = useState(null);
 
-  useEffect(() => {
-    // For this example, we'll filter all staff data.
-    // In a real application, you might filter based on 'active' status as well.
-    const results = staffData.filter((staff) =>
+  const [showResolveBookingsModal, setShowResolveBookingsModal] = useState(false);
+  const [showConfirmInactivationModal, setShowConfirmInactivationModal] = useState(false);
+  const [staffToInactivate, setStaffToInactivate] = useState(null);
+
+  const applyFilters = useCallback(() => {
+    let currentFilteredStaff = allStaffData;
+
+    if (activeTab === "Active Staff") {
+      currentFilteredStaff = currentFilteredStaff.filter(
+        (staff) => staff.status === "Online" || staff.status === "Break"
+      );
+    } else if (activeTab === "Inactive Staff") {
+      currentFilteredStaff = currentFilteredStaff.filter(
+        (staff) => staff.status === "Offline"
+      );
+    }
+
+    if (filters.roles.length > 0) {
+      currentFilteredStaff = currentFilteredStaff.filter((staff) =>
+        staff.roles.some((role) => filters.roles.includes(role))
+      );
+    } else if (filters.roles.length === 0 && activeTab !== "Calendar View") {
+      currentFilteredStaff = [];
+    }
+
+    if (filters.serviceSearchTerm) {
+      const lowerCaseSearchTerm = filters.serviceSearchTerm.toLowerCase();
+      currentFilteredStaff = currentFilteredStaff.filter((staff) =>
+        staff.services.some((service) =>
+          service.toLowerCase().includes(lowerCaseSearchTerm)
+        )
+      );
+    }
+
+    const results = currentFilteredStaff.filter((staff) =>
       staff.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
+
     setFilteredStaff(results);
-  }, [searchTerm, activeTab]); // Re-run filter if tab changes or search term changes
+
+    if (
+      selectedStaff &&
+      !results.some((staff) => staff.id === selectedStaff.id)
+    ) {
+      setSelectedStaff(null);
+    } else if (!selectedStaff && results.length > 0) {
+      setSelectedStaff(results[0]);
+    }
+  }, [searchTerm, activeTab, allStaffData, filters, selectedStaff]);
+
+  useEffect(() => {
+    applyFilters();
+  }, [applyFilters]);
+
+  useEffect(() => {
+    if (filteredStaff.length > 0 && !selectedStaff) {
+      const ava = filteredStaff.find((staff) => staff.name === "Ava Thompson");
+      if (ava) {
+        setSelectedStaff(ava);
+      } else {
+        setSelectedStaff(filteredStaff[0]);
+      }
+    }
+  }, [filteredStaff, selectedStaff]);
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
-    setSearchTerm(""); // Clear search when changing tabs
-    setSelectedStaff(null); // Clear selected staff when changing tabs
+    setSearchTerm("");
+    const allUniqueRoles = [
+      ...new Set(initialStaffData.flatMap((s) => s.roles)),
+    ];
+    setFilters({ roles: allUniqueRoles, serviceSearchTerm: "" });
+    setSelectedStaff(null);
   };
 
   const handleSearchChange = (term) => {
     setSearchTerm(term);
   };
 
-  const handleSelectStaff = (staff) => {
+  const handleApplyFilters = useCallback((newFilters) => {
+    setFilters(newFilters);
+  }, []);
+
+  const handleSelectStaff = useCallback((staff) => {
     setSelectedStaff(staff);
-  };
+  }, []);
+
+  const handleToggleStatus = useCallback((staffId) => {
+    const staff = allStaffData.find((s) => s.id === staffId);
+    if (!staff) return;
+
+    if (staff.status === "Offline") {
+      setAllStaffData((prevStaffData) =>
+        prevStaffData.map((s) =>
+          s.id === staffId ? { ...s, status: "Online" } : s
+        )
+      );
+      setSelectedStaff((prevSelected) =>
+        prevSelected && prevSelected.id === staffId
+          ? { ...prevSelected, status: "Online" }
+          : prevSelected
+      );
+    } else {
+      setStaffToInactivate(staff);
+      if (staff.hasUpcomingBookings) {
+        setShowResolveBookingsModal(true);
+      } else {
+        setShowConfirmInactivationModal(true);
+      }
+    }
+  }, [allStaffData]);
+
+
+  const confirmInactivation = useCallback(() => {
+    if (staffToInactivate) {
+      setAllStaffData((prevStaffData) =>
+        prevStaffData.map((s) =>
+          s.id === staffToInactivate.id ? { ...s, status: "Offline" } : s
+        )
+      );
+      setSelectedStaff((prevSelected) =>
+        prevSelected && prevSelected.id === staffToInactivate.id
+          ? { ...prevSelected, status: "Offline" }
+          : prevSelected
+      );
+    }
+    setShowConfirmInactivationModal(false);
+    setStaffToInactivate(null);
+  }, [staffToInactivate]);
+
+  const handleReassignOrCancelClick = useCallback(() => {
+    console.log("Navigating to booking reassignment/cancellation for:", staffToInactivate.name);
+    setShowResolveBookingsModal(false);
+  }, [staffToInactivate]);
+
+  const handleRemoveStaff = useCallback((staffId) => {
+    if (window.confirm("Are you sure you want to remove this staff member?")) {
+      setAllStaffData((prevStaffData) =>
+        prevStaffData.filter((staff) => staff.id !== staffId)
+      );
+      setSelectedStaff((prevSelected) =>
+        prevSelected && prevSelected.id === staffId ? null : prevSelected
+      );
+    }
+  }, []);
+
+  const handleEditStaff = useCallback((staffId) => {
+    console.log(`Edit staff with ID: ${staffId}`);
+  }, []);
+
+  // New handler for adding staff
+  const handleAddStaff = useCallback((newStaff) => {
+    setAllStaffData((prevStaffData) => [...prevStaffData, newStaff]);
+    console.log("Added new staff:", newStaff);
+    // Optionally, select the newly added staff member
+    setSelectedStaff(newStaff);
+  }, []);
+
 
   return (
     <div className="min-h-screen bg-gray-100 p-5 font-['Golos_Text']">
@@ -42,6 +186,10 @@ const [activeTab, setActiveTab] = useState("Active Staff");
         <SearchBarAndFilter
           searchTerm={searchTerm}
           onSearchChange={handleSearchChange}
+          allStaffData={allStaffData}
+          onApplyFilters={handleApplyFilters}
+          currentFilters={filters}
+          onAddStaff={handleAddStaff} // Pass the new handler
         />
 
         <div className="self-stretch flex-1 flex justify-start items-start gap-8">
@@ -52,50 +200,52 @@ const [activeTab, setActiveTab] = useState("Active Staff");
                   key={staff.id}
                   staff={staff}
                   onSelectStaff={handleSelectStaff}
+                  isActive={selectedStaff && selectedStaff.id === staff.id}
+                  onEdit={handleEditStaff}
+                  onToggleStatus={handleToggleStatus}
+                  onRemove={handleRemoveStaff}
                 />
               ))
             ) : (
               <p className="text-gray-500 w-full text-center py-10">
-                No staff members found.
+                No staff members found matching your criteria.
               </p>
             )}
           </div>
 
-          <div className="w-80 h-full">
-            {selectedStaff ? (
-              <div className="p-4 bg-white rounded-xl border border-gray-200 flex flex-col justify-start items-center gap-4 h-full">
-                {/* This section would display detailed info of selectedStaff */}
-                <h3 className="text-lg font-semibold">{selectedStaff.name}</h3>
-                <img
-                  src={selectedStaff.image}
-                  alt={selectedStaff.name}
-                  className="w-24 h-24 rounded-full object-cover"
-                />
-                <p>
-                  <strong>Roles:</strong> {selectedStaff.roles.join(", ")}
-                </p>
-                <p>
-                  <strong>Position:</strong> {selectedStaff.position}
-                </p>
-                <p>
-                  <strong>Status:</strong> {selectedStaff.status}
-                </p>
-                {/* Add more details here based on your data structure */}
-                <button
-                  className="mt-4 px-4 py-2 bg-violet-600 text-white rounded-md hover:bg-violet-700"
-                  onClick={() => setSelectedStaff(null)}
-                >
-                  Clear Selection
-                </button>
-              </div>
-            ) : (
-              <QuickViewPanel />
-            )}
+          <div className="w-80 h-full sticky top-5">
+            <QuickViewPanel selectedStaff={selectedStaff} />
           </div>
         </div>
       </div>
-    </div>
-  )
-}
 
-export default StaffManagement
+      {/* Modals */}
+      {showResolveBookingsModal && staffToInactivate && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-40">
+          <ResolveBookingsModal
+            onClose={() => {
+              setShowResolveBookingsModal(false);
+              setStaffToInactivate(null);
+            }}
+            staffName={staffToInactivate.name}
+            onReassignOrCancelClick={handleReassignOrCancelClick}
+          />
+        </div>
+      )}
+
+      {showConfirmInactivationModal && staffToInactivate && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-40">
+          <ConfirmInactivationModal
+            onClose={() => {
+              setShowConfirmInactivationModal(false);
+              setStaffToInactivate(null);
+            }}
+            staffName={staffToInactivate.name}
+            onConfirmInactivate={confirmInactivation}
+          />
+        </div>
+      )}
+    </div>
+  );
+};
+export default StaffManagement;

@@ -1,5 +1,5 @@
 import Authentication from "@/layout/Authentication";
-import OnboardLayout from "@/layout/OnboardLayout";
+import OnboardLayout from "@/layout/OnboardLayout"; // Assuming this is your general onboarding layout
 import CalendarPage from "@/pages/CalendarPage";
 import ClientPage from "@/pages/ClientPage";
 import DashboardPage from "@/pages/DashboardPage";
@@ -57,6 +57,10 @@ import ConfirmStaff from "../pages/client/ConfirmStaff";
 import ConfirmPending from "../pages/client/ConfirmPending";
 import StaffManagement from "../pages/seller/StaffManagement";
 
+import OTPVerificationPage from "../pages/onboarding/OTPVerificationPage";
+import StaffInformationPage from "../pages/onboarding/StaffInformationPage";
+
+
 export const routes = createBrowserRouter([
   {
     path: "/",
@@ -85,7 +89,7 @@ export const routes = createBrowserRouter([
         path: "/service-menu",
         element: <ServicePage />,
       },
-      { 
+      {
         path: "/pricing",
         element: <TimePage />,
       },
@@ -190,8 +194,8 @@ export const routes = createBrowserRouter([
   },
 
   {
-    path: "/onboard",
-    element: <OnboardLayout />,
+    path: "/onboard", // Main path for general onboarding flows
+    element: <OnboardLayout />, // Assuming OnboardLayout handles overall onboarding UI
     errorElement: <ErrorPage />,
     children: [
       {
@@ -225,6 +229,14 @@ export const routes = createBrowserRouter([
       {
         path: "service-table",
         element: <ServiceTable />,
+      },
+      {
+        path: "verify-otp", // Example path for OTP verification
+        element: <OTPVerificationPage />,
+      },
+      {
+        path: "staff-info", // Example path for staff information entry
+        element: <StaffInformationPage />,
       },
     ],
   },

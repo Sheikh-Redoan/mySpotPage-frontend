@@ -8,19 +8,19 @@ const MyProfileLayout = () => {
   const currentPath = location.pathname;
 
   const tabs =
-    currentPath === "/user-management/my-profile" ||
-    currentPath === "/user-management/my-profile/security"
+    currentPath === "/profile-management/my-profile/basic-information" ||
+    currentPath === "/profile-management/my-profile/security"
       ? profileTabs
       : userManagementTabs;
 
   return (
-    <div className="flex h-[calc(100vh-73px)] overflow-hidden">
+    <div className="flex min-h-[calc(100vh-80px)] overflow-hidden bg-[#F9FAFC] ">
       {/* Sidebar */}
       <aside className="w-[280px] bg-white  left-[65px] top-[73px] shadow-md py-6 px-5 flex flex-col justify-between">
         <ul className="space-y-3">
           {tabs.map((tab) => {
             return (
-              <NavLink key={tab.id} to={tab.link}>
+              <NavLink key={tab.id} to={tab.link} end>
                 {({ isActive }) => (
                   <li
                     className={cn(
@@ -48,7 +48,7 @@ const MyProfileLayout = () => {
       </aside>
 
       {/* Main content */}
-      <main className=" flex-1 bg-[#F9FAFC] h-full p-6">
+      <main className="flex-1 p-6">
         <Outlet />
       </main>
     </div>

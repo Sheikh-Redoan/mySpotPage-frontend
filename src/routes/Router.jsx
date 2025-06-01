@@ -211,20 +211,6 @@ export const routes = createBrowserRouter([
         element: <UserManagement />,
       },
       {
-        path: "data-management",
-        element: <MyProfileLayout />,
-        children: [
-          {
-            path: "service-classification",
-            element: <div>Service Classification</div>,
-          },
-          {
-            path: "menu-category",
-            element: <div>Menu Category</div>,
-          },
-        ],
-      },
-      {
         path: ":name",
         element: <MyProfileLayout />,
         children: [
@@ -251,6 +237,34 @@ export const routes = createBrowserRouter([
       },
     ],
   },
+
+  {
+    path: "/data-management",
+    element: <MainLayout tabs={adminTabs} />,
+    children: [
+      {
+        path: "service-classification",
+        element: <MyProfileLayout />,
+        children: [
+          {
+            index: true,
+            element: <div>Service Classification</div>,
+          },
+        ],
+      },
+      {
+        path: "menu-category",
+        element: <MyProfileLayout />,
+        children: [
+          {
+            index: true,
+            element: <div>Menu Category</div>,
+          },
+        ],
+      },
+    ],
+  },
+
   {
     path: "/profile-management",
     element: <MainLayout tabs={profileMainTabs} />,

@@ -1,6 +1,10 @@
 import { FiLogOut } from "react-icons/fi";
 import { NavLink, Outlet, useLocation } from "react-router";
-import { dataManagementTabs, profileTabs, userManagementTabs } from "../../lib/staticData";
+import {
+  dataManagementTabs,
+  profileTabs,
+  userManagementTabs,
+} from "../../lib/staticData";
 import { cn } from "../../lib/utils";
 
 const MyProfileLayout = () => {
@@ -8,24 +12,24 @@ const MyProfileLayout = () => {
   const currentPath = location.pathname;
 
   const profilePaths = [
-  "/profile-management/my-profile/basic-information",
-  "/profile-management/my-profile/security",
-];
+    "/profile-management/my-profile/basic-information",
+    "/profile-management/my-profile/security",
+  ];
 
-const dataManagementPaths = [
-  "/user-management/data-management/service-classification",
-  "/user-management/data-management/menu-category",
-];
+  const dataManagementPaths = [
+    "/data-management/service-classification",
+    "/data-management/menu-category",
+  ];
 
-let tabs;
+  let tabs;
 
-if (profilePaths.includes(currentPath)) {
-  tabs = profileTabs;
-} else if (dataManagementPaths.includes(currentPath)) {
-  tabs = dataManagementTabs;
-} else {
-  tabs = userManagementTabs;
-}
+  if (profilePaths.includes(currentPath)) {
+    tabs = profileTabs;
+  } else if (dataManagementPaths.includes(currentPath)) {
+    tabs = dataManagementTabs;
+  } else {
+    tabs = userManagementTabs;
+  }
 
   // const tabs =
   //   currentPath === "/profile-management/my-profile/basic-information" ||

@@ -71,6 +71,7 @@ import ClientInfoFormPage from "../pages/calenderManagement/addBookingByProvider
 import StaffServicesPage from "../pages/onboarding/StaffServicesPage";
 import StaffWorkingHoursPage from "../pages/onboarding/StaffWorkingHoursPage";
 import StaffSecurityPage from "../pages/onboarding/StaffSecurityPage";
+import ServicesPageForProvider from "../pages/calenderManagement/addBookingByProvider/ServicesPageForProvider";
 
 export const routes = createBrowserRouter([
   {
@@ -97,7 +98,7 @@ export const routes = createBrowserRouter([
           },
           {
             path: "select-services",
-            element: <div>Service Page</div>,
+            element: <ServicesPageForProvider />,
           },
           {
             path: "select-staff",
@@ -362,11 +363,11 @@ export const routes = createBrowserRouter([
         path: "services-settings", // NEW ROUTE FOR STAFF SERVICES
         element: <StaffServicesPage />,
       },
-       {
+      {
         path: "working-shift-settings", // NEW ROUTE FOR WORKING SHIFT SETTINGS
         element: <StaffWorkingHoursPage />,
       },
-       {
+      {
         path: "security-settings", // NEW ROUTE FOR SECURITY SETTINGS
         element: <StaffSecurityPage />,
       },

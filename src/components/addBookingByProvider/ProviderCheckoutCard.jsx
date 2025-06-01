@@ -12,7 +12,7 @@ const ProviderCheckoutCard = ({ businessData, selected, handleBookNow }) => {
   const total = subtotalAfterVat - discountAmount;
 
   return (
-    <section className="w-full max-w-sm p-4 rounded-xl shadow-sm space-y-5 bg-[#FFFFFF] mx-auto">
+    <section className="w-full max-w-sm p-4 rounded-xl shadow-sm space-y-3 bg-[#FFFFFF] mx-auto">
       <div className="space-y-2">
         <h2 className="text-lg font-semibold mb-3 text-[#262626]">
           {studioName}
@@ -99,12 +99,7 @@ const ProviderCheckoutCard = ({ businessData, selected, handleBookNow }) => {
       {/* Continue Button */}
       <button
         onClick={handleBookNow}
-        className={`w-full bg-[#242528] text-white py-2 px-4 rounded-lg transition ${
-          selected && selected.length === 0
-            ? "opacity-50 cursor-not-allowed"
-            : "hover:bg-gray-800"
-        }`}
-        disabled={selected && selected.length === 0}
+        className="w-full bg-[#242528] text-white py-2 px-4 rounded-lg transition hover:bg-gray-800 cursor-pointer"
       >
         Continue
       </button>

@@ -3,19 +3,12 @@ import { imageProvider } from "@/lib/imageProvider";
 import { Tooltip } from "antd";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
-import { Link, Outlet } from "react-router";
+import { NavLink, Outlet } from "react-router";
+import { cn } from "../lib/utils";
 import TopNavbar from "../pages/layout/TopNavbar";
 import "../styles/antdCustom.css";
 function MainLayout({ tabs }) {
-  // const {currentTab} = useContext(MainContext)
   const [toggle, setToggle] = useState(true);
-  const [activeTab, setActiveTab] = useState(0);
-  const [currentTab, setCurrentTab] = useState(tabs[0].name);
-  const handleActiveTab = (index, tab) => {
-    console.log(activeTab);
-    setActiveTab(index);
-    setCurrentTab(tab);
-  };
 
   return (
     <div className="relative font-golos h-screen">
@@ -24,11 +17,12 @@ function MainLayout({ tabs }) {
         {/* sidebar close button */}
         <button
           onClick={() => setToggle(!toggle)}
-          className={` transition-all p-2 cursor-pointer rounded-full absolute top-3 right-1 bg-primary01  duration-300 whitespace-nowrap overflow-hidden ${
+          className={cn(
             toggle
               ? "w-0 opacity-0 invisible "
-              : "size-9 flex justify-center items-center object-cover  opacity-100"
-          }`}>
+              : "size-9 flex justify-center items-center object-cover  opacity-100",
+            "transition-all p-2 cursor-pointer rounded-full absolute top-3 right-1 bg-primary01  duration-300 whitespace-nowrap overflow-hidden"
+          )}>
           <ChevronLeft size={18} className="text-white" />
         </button>
         {/* sidebar top */}
@@ -58,32 +52,31 @@ function MainLayout({ tabs }) {
                   placement="right"
                   color="white"
                   title={toggle ? tab.name : ""}>
-                  <Link
+                  <NavLink
                     to={tab.link}
-                    onClick={() => handleActiveTab(index, tab.name)}
                     key={tab.id}
-                    className={` ${
-                      activeTab === index ? "bg-primary01 text-white" : ""
-                    } py-2 justify-center items-center px-3 transiton-all duration-300 flex w-fit text-white cursor-pointer rounded-xl `}>
-                    <img
-                      className=""
-                      src={
-                        index === activeTab && activeTab === tab.id
-                          ? tab.imageWhite
-                          : tab.imagePink
-                      }
-                    />
-                    <h4
-                      className={` ${
-                        index === activeTab ? "text-white" : ""
-                      } transition-all text-primary01 duration-300 whitespace-nowrap overflow-hidden ${
-                        toggle
-                          ? "w-0 opacity-0 invisible  "
-                          : "w-48 pl-2 opacity-100"
-                      }`}>
-                      {tab.name}
-                    </h4>
-                  </Link>
+                    className={({ isActive }) =>
+                      cn(
+                        isActive && "bg-primary01 text-white",
+                        "py-2 justify-center items-center px-3 transiton-all duration-300 flex w-fit text-white cursor-pointer rounded-xl"
+                      )
+                    }>
+                    {({ isActive }) => (
+                      <>
+                        <img src={isActive ? tab.imageWhite : tab.imagePink} />
+                        <h4
+                          className={cn(
+                            isActive && "text-white",
+                            "transition-all text-primary01 duration-300 whitespace-nowrap overflow-hidden",
+                            toggle
+                              ? "w-0 opacity-0 invisible  "
+                              : "w-48 pl-2 opacity-100"
+                          )}>
+                          {tab.name}
+                        </h4>
+                      </>
+                    )}
+                  </NavLink>
                 </Tooltip>
               ))}
             </div>
@@ -94,20 +87,21 @@ function MainLayout({ tabs }) {
         <div>
           <button
             onClick={() => setToggle(!toggle)}
-            className={` transition-all p-2 rounded-full cursor-pointer  bg-primary01  duration-300 whitespace-nowrap overflow-hidden ${
+            className={cn(
               !toggle
                 ? "w-0 opacity-0 invisible -translate-x-6 "
-                : "size-9 flex justify-center items-center  opacity-100"
-            }`}>
+                : "size-9 flex justify-center items-center  opacity-100",
+              "transition-all p-2 rounded-full cursor-pointer  bg-primary01  duration-300 whitespace-nowrap overflow-hidden"
+            )}>
             <ChevronRight className="text-white" />
           </button>
         </div>
       </div>
 
-      <div className="flex-1 relative ml-20  min-h-screen h-full ">
+      <div className="flex-1 relative ml-20  min-h-screen h-full">
         {/* topnav */}
-        <TopNavbar currentTab={currentTab} />
-        <div className="pt-18 px-1">
+        <TopNavbar />
+        <div className="pt-20">
           <Outlet />
         </div>
       </div>

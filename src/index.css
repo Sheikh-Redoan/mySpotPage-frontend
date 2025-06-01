@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Golos+Text:wght@400..900&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
-@theme inline{
+@theme inline {
   --color-primary01: #866be7;
   --color-highlight01: #f5f4fe;
   --font-golos: "Golos Text", sans-serif;
@@ -9,25 +9,25 @@
   --color-primary02: #1e7d5d;
   --color-border: #ecebfc;
   --color-testimonial-avatar: #3f8bac;
-  
-  /* Extended color palette */
-  --color-violet-50: #F5F3FF;
-  --color-violet-500: #8B5CF6;
-  --color-violet-600: #7C3AED;
-  --color-violet-700: #6D28D9;
-  
-  --color-gray-50: #F9FAFB;
-  --color-gray-200: #E5E7EB;
-  --color-gray-400: #9CA3AF;
-  --color-gray-500: #6B7280;
-  --color-gray-600: #4B5563;
-  --color-gray-950: #0F172A;
-  
-  --color-green-500: #22C55E;
-  --color-amber-400: #FACC15;
 
-  --color-Boulder-400 : #888888;
-  --color-Boulder-100 : #E7E7E7;
+  /* Extended color palette */
+  --color-violet-50: #f5f3ff;
+  --color-violet-500: #8b5cf6;
+  --color-violet-600: #7c3aed;
+  --color-violet-700: #6d28d9;
+
+  --color-gray-50: #f9fafb;
+  --color-gray-200: #e5e7eb;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-950: #0f172a;
+
+  --color-green-500: #22c55e;
+  --color-amber-400: #facc15;
+
+  --color-Boulder-400: #888888;
+  --color-Boulder-100: #e7e7e7;
 }
 
 @layer base {
@@ -41,13 +41,13 @@
 }
 
 .scrollbar-hidden::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .scrollbar-hidden {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .ant-tooltip .ant-tooltip-inner {

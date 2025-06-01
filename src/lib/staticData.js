@@ -65,14 +65,38 @@ export const adminTabs = [
     name: "Data Management",
     imagePink: imageProvider.database,
     imageWhite: imageProvider.databaseCol,
-    link: "data-management",
+    link: "/data-management/service-classification",
   },
   {
     id: 5,
     name: "Settings",
     imagePink: imageProvider.SettingsPink,
     imageWhite: imageProvider.SettingsWhite,
-    link: "settings",
+    link: "/settings",
+  },
+];
+
+export const profileMainTabs = [
+  {
+    id: 0,
+    name: "My profile",
+    imagePink: imageProvider.PeoplePink,
+    imageWhite: imageProvider.PeopleWhite,
+    link: "/user-management",
+  },
+  {
+    id: 1,
+    name: "Data Management",
+    imagePink: imageProvider.database,
+    imageWhite: imageProvider.databaseCol,
+    link: "/data-management/service-classification",
+  },
+  {
+    id: 2,
+    name: "Settings",
+    imagePink: imageProvider.SettingsPink,
+    imageWhite: imageProvider.SettingsWhite,
+    link: "/settings",
   },
 ];
 
@@ -82,14 +106,14 @@ export const profileTabs = [
     name: "Basic Information",
     imagePink: imageProvider.PeoplePink,
     imageWhite: imageProvider.PeopleBlack,
-    link: "/user-management/my-profile",
+    link: "/profile-management/my-profile/basic-information",
   },
   {
     id: 1,
     name: "Security",
     imagePink: imageProvider.securityPink,
     imageWhite: imageProvider.securityBlack,
-    link: "/user-management/my-profile/security",
+    link: "/profile-management/my-profile/security",
   },
 ];
 
@@ -109,6 +133,24 @@ export const userManagementTabs = [
     link: "subscription",
   },
 ];
+
+export const dataManagementTabs = [
+  {
+    id: 0,
+    name: "Service Classification ",
+    // imagePink: imageProvider.buildingCol,
+    // imageWhite: imageProvider.building,
+    link: "/data-management/service-classification",
+  },
+  {
+    id: 1,
+    name: "Menu Category",
+    // imagePink: imageProvider.cardCol,
+    // imageWhite: imageProvider.card,
+    link: "/data-management/menu-category",
+  },
+];
+
 // Initial breadcrumbs
 export const breadcrumbs = [
   {

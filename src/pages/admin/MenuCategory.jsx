@@ -9,9 +9,10 @@ const MenuCategory = () => {
     const [openIndex, setOpenIndex] = useState(null);
     console.log(categories)
 
-    useEffect(() => {
+    useEffect(() => { 
         const fetchCategories = async () => {
             try {
+                // TODO: Implement fatch category data
                 const data = defaultCategories;
                 const formatted = data.map((cat) => ({
                     name: cat,

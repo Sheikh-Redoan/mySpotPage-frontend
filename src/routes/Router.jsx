@@ -27,7 +27,14 @@ import SuccessUpgrade from "../components/SettingsPages/UpgradePlan/SuccessUpgra
 import Upgradeplan from "../components/SettingsPages/UpgradePlan/Upgradeplan";
 import ClientLayout from "../layout/ClientLayout";
 import MainLayout from "../layout/MainLayout";
-import { adminTabs, profileMainTabs } from "../lib/staticData";
+import {
+  accountManagementProfileTabs,
+  adminTabs,
+  dataManagementTabs,
+  profileMainTabs,
+  profileTabs,
+  userManagementTabs,
+} from "../lib/staticData";
 import BasicInfo from "../pages/BasicInfo";
 import BookingInfo from "../pages/BookingInfo";
 import DynamicSubSideBarLayout from "../pages/DynamicSubSideBarLayout";
@@ -61,21 +68,21 @@ import SetupTeamLocationServices2 from "../pages/onboarding/team/SetupTeamLocati
 import StaffManagement from "../pages/seller/StaffManagement";
 
 import AccountManagement from "../pages/admin/AccountManagement";
+import MenuCategory from "../pages/admin/MenuCategory";
+import ServiceClassification from "../pages/admin/ServiceClassification";
 import Subscriptions from "../pages/admin/Subscriptions";
+import CalendarManagementPage from "../pages/calenderManagement/CalendarManagementPage";
+import AddBookingByProvider from "../pages/calenderManagement/addBookingByProvider/AddBookingByProvider";
+import ClientAppointmentCalForProvider from "../pages/calenderManagement/addBookingByProvider/ClientAppointmentCalForProvider";
+import ClientInfoFormPage from "../pages/calenderManagement/addBookingByProvider/ClientInfoFormPage";
+import SelectStaffForProvider from "../pages/calenderManagement/addBookingByProvider/SelectStaffForProvider";
+import ServicesPageForProvider from "../pages/calenderManagement/addBookingByProvider/ServicesPageForProvider";
+import ClientAppointmentCal from "../pages/client/ClientAppointmentCal";
 import OTPVerificationPage from "../pages/onboarding/OTPVerificationPage";
 import StaffInformationPage from "../pages/onboarding/StaffInformationPage";
-import ClientAppointmentCal from "../pages/client/ClientAppointmentCal";
-import AddBookingByProvider from "../pages/calenderManagement/addBookingByProvider/AddBookingByProvider";
-import CalendarManagementPage from "../pages/calenderManagement/CalendarManagementPage";
-import ClientInfoFormPage from "../pages/calenderManagement/addBookingByProvider/ClientInfoFormPage";
+import StaffSecurityPage from "../pages/onboarding/StaffSecurityPage";
 import StaffServicesPage from "../pages/onboarding/StaffServicesPage";
 import StaffWorkingHoursPage from "../pages/onboarding/StaffWorkingHoursPage";
-import StaffSecurityPage from "../pages/onboarding/StaffSecurityPage";
-import ServicesPageForProvider from "../pages/calenderManagement/addBookingByProvider/ServicesPageForProvider";
-import SelectStaffForProvider from "../pages/calenderManagement/addBookingByProvider/SelectStaffForProvider";
-import ClientAppointmentCalForProvider from "../pages/calenderManagement/addBookingByProvider/ClientAppointmentCalForProvider";
-import ServiceClassification from "../pages/admin/ServiceClassification";
-import MenuCategory from "../pages/admin/MenuCategory";
 
 export const routes = createBrowserRouter([
   {
@@ -237,7 +244,7 @@ export const routes = createBrowserRouter([
       },
       {
         path: ":name",
-        element: <MyProfileLayout />,
+        element: <MyProfileLayout tabs={userManagementTabs} />,
         children: [
           {
             path: "business-information",
@@ -260,6 +267,20 @@ export const routes = createBrowserRouter([
         index: true,
         element: <AccountManagement />,
       },
+      {
+        path: ":name",
+        element: <MyProfileLayout tabs={accountManagementProfileTabs} />,
+        children: [
+          {
+            path: "basic-information",
+            element: <ProfileBesicInformation />,
+          },
+          {
+            path: "security",
+            element: <ProfileSecurity />,
+          },
+        ],
+      },
     ],
   },
 
@@ -269,11 +290,11 @@ export const routes = createBrowserRouter([
     children: [
       {
         path: "service-classification",
-        element: <MyProfileLayout />,
+        element: <MyProfileLayout tabs={dataManagementTabs} />,
         children: [
           {
             index: true,
-            element: <ServiceClassification/>,
+            element: <ServiceClassification />,
           },
         ],
       },
@@ -283,7 +304,7 @@ export const routes = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <MenuCategory/>,
+            element: <MenuCategory />,
           },
         ],
       },
@@ -297,7 +318,7 @@ export const routes = createBrowserRouter([
     children: [
       {
         path: "my-profile",
-        element: <MyProfileLayout />,
+        element: <MyProfileLayout tabs={profileTabs} />,
         errorElement: <ErrorPage />,
         children: [
           {
@@ -316,6 +337,10 @@ export const routes = createBrowserRouter([
   {
     path: "/our-work",
     element: <OurWorkDetails />,
+  },
+  {
+    path: "/setup", // Example path for OTP verification
+    element: <OTPVerificationPage />,
   },
 
   {

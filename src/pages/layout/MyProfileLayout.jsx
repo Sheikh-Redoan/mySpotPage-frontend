@@ -1,13 +1,8 @@
 import { FiLogOut } from "react-icons/fi";
 import { NavLink, Outlet, useLocation } from "react-router";
-import {
-  dataManagementTabs,
-  profileTabs,
-  userManagementTabs,
-} from "../../lib/staticData";
 import { cn } from "../../lib/utils";
 
-const MyProfileLayout = () => {
+const MyProfileLayout = ({ tabs = [] }) => {
   const location = useLocation();
   const currentPath = location.pathname;
 
@@ -15,21 +10,6 @@ const MyProfileLayout = () => {
     "/profile-management/my-profile/basic-information",
     "/profile-management/my-profile/security",
   ];
-
-  const dataManagementPaths = [
-    "/data-management/service-classification",
-    "/data-management/menu-category",
-  ];
-
-  let tabs;
-
-  if (profilePaths.includes(currentPath)) {
-    tabs = profileTabs;
-  } else if (dataManagementPaths.includes(currentPath)) {
-    tabs = dataManagementTabs;
-  } else {
-    tabs = userManagementTabs;
-  }
 
   return (
     <div className="flex min-h-[calc(100vh-80px)] overflow-hidden bg-[#F9FAFC] ">
@@ -59,10 +39,12 @@ const MyProfileLayout = () => {
             );
           })}
         </ul>
-        { profilePaths.includes(currentPath) && <button className="flex items-center gap-2 px-3 text-red-500 cursor-pointer">
-          <FiLogOut className="text-lg" />
-          Sign out
-        </button>}
+        {profilePaths.includes(currentPath) && (
+          <button className="flex items-center gap-2 px-3 text-red-500 cursor-pointer">
+            <FiLogOut className="text-lg" />
+            Sign out
+          </button>
+        )}
       </aside>
 
       {/* Main content */}

@@ -31,7 +31,7 @@ export default function AddAccount() {
 
   return (
     <>
-      <Button type="primary" onClick={showModal}>
+      <Button type="primary" onClick={showModal} size="large">
         <Plus size={16} /> Add account
       </Button>
       <Modal

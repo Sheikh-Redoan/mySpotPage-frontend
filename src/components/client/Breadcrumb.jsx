@@ -9,11 +9,11 @@ export default function Breadcrumb({ breadcrumbs }) {
     return path === currentPath ? (
       <span className="text-black cursor-pointer">{title}</span>
     ) : (
-      <Link to={path}> {title}</Link>
+      <Link to={path}>{title}</Link>
     );
   }
 
-  const data = breadcrumbs.map((item) => ({
+  const data = breadcrumbs.filter(Boolean).map((item) => ({
     title: activePath(item.link, item.name),
   }));
 

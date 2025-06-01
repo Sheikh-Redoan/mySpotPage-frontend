@@ -51,6 +51,7 @@ export default function MultipleSelector({ name, data }) {
 
   return (
     <Select
+      size="large"
       value={displayValue}
       open={selectOpen}
       onOpenChange={setSelectOpen}
@@ -94,10 +95,18 @@ export default function MultipleSelector({ name, data }) {
 
           {/* Action Buttons (Reset and Apply) */}
           <div className="flex justify-between p-4 gap-2">
-            <Button type="default" onClick={handleReset} className="flex-1">
+            <Button
+              type="default"
+              onClick={handleReset}
+              className="flex-1"
+              size="large">
               Reset
             </Button>
-            <Button type="primary" onClick={handleApply} className="flex-1">
+            <Button
+              type="primary"
+              onClick={handleApply}
+              className="flex-1"
+              size="large">
               Apply
             </Button>
           </div>

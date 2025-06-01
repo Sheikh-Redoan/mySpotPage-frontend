@@ -31,12 +31,6 @@ const MyProfileLayout = () => {
     tabs = userManagementTabs;
   }
 
-  // const tabs =
-  //   currentPath === "/profile-management/my-profile/basic-information" ||
-  //   currentPath === "/profile-management/my-profile/security"
-  //     ? profileTabs
-  //     : userManagementTabs;
-
   return (
     <div className="flex min-h-[calc(100vh-80px)] overflow-hidden bg-[#F9FAFC] ">
       {/* Sidebar */}
@@ -65,10 +59,10 @@ const MyProfileLayout = () => {
             );
           })}
         </ul>
-        <button className="flex items-center gap-2 px-3 text-red-500 cursor-pointer">
+        { profilePaths.includes(currentPath) && <button className="flex items-center gap-2 px-3 text-red-500 cursor-pointer">
           <FiLogOut className="text-lg" />
           Sign out
-        </button>
+        </button>}
       </aside>
 
       {/* Main content */}

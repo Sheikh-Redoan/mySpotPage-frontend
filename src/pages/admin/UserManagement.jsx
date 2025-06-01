@@ -8,7 +8,7 @@ import Search from "../../components/shared/Search";
 
 export default function UserManagement() {
   return (
-    <div>
+    <section>
       <div className="flex w-full gap-4 mb-4 p-5">
         <div className="relative w-[300px]">
           <Search name="search" placeholder="Search by name, or phone number" />
@@ -47,7 +47,7 @@ export default function UserManagement() {
           <Paginate total={500} current={4} />
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 

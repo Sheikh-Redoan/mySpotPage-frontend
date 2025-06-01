@@ -74,6 +74,8 @@ import StaffSecurityPage from "../pages/onboarding/StaffSecurityPage";
 import ServicesPageForProvider from "../pages/calenderManagement/addBookingByProvider/ServicesPageForProvider";
 import SelectStaffForProvider from "../pages/calenderManagement/addBookingByProvider/SelectStaffForProvider";
 import ClientAppointmentCalForProvider from "../pages/calenderManagement/addBookingByProvider/ClientAppointmentCalForProvider";
+import ServiceClassification from "../pages/admin/ServiceClassification";
+import MenuCategory from "../pages/admin/MenuCategory";
 
 export const routes = createBrowserRouter([
   {
@@ -271,7 +273,7 @@ export const routes = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <div>Service Classification</div>,
+            element: <ServiceClassification/>,
           },
         ],
       },
@@ -281,7 +283,7 @@ export const routes = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <div>Menu Category</div>,
+            element: <MenuCategory/>,
           },
         ],
       },

@@ -66,6 +66,9 @@ import StaffManagement from "../pages/seller/StaffManagement";
 
 import OTPVerificationPage from "../pages/onboarding/OTPVerificationPage";
 import StaffInformationPage from "../pages/onboarding/StaffInformationPage";
+import StaffServicesPage from "../pages/onboarding/StaffServicesPage";
+import StaffWorkingHoursPage from "../pages/onboarding/StaffWorkingHoursPage";
+import StaffSecurityPage from "../pages/onboarding/StaffSecurityPage";
 
 
 export const routes = createBrowserRouter([
@@ -287,12 +290,24 @@ export const routes = createBrowserRouter([
         element: <ServiceTable />,
       },
       {
-        path: "verify-otp", // Example path for OTP verification
+        path: "verify-staff-otp", // Example path for OTP verification
         element: <OTPVerificationPage />,
       },
       {
         path: "staff-info", // Example path for staff information entry
         element: <StaffInformationPage />,
+      },
+      {
+        path: "services-settings", // NEW ROUTE FOR STAFF SERVICES
+        element: <StaffServicesPage />,
+      },
+       {
+        path: "working-shift-settings", // NEW ROUTE FOR WORKING SHIFT SETTINGS
+        element: <StaffWorkingHoursPage />,
+      },
+       {
+        path: "security-settings", // NEW ROUTE FOR SECURITY SETTINGS
+        element: <StaffSecurityPage />,
       },
     ],
   },

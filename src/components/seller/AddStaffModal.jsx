@@ -88,7 +88,7 @@ const AddStaffModal = ({ onClose, onAddStaff, allStaffData }) => {
     onClose(); // Close the add staff modal
 
     // Redirect to the new standalone OTP verification page, passing necessary state
-    navigate("/verify-staff-otp", { // Changed path here
+    navigate("/onboard/verify-staff-otp", { // Changed path here
       state: { phoneNumber, roles: selectedRoles, jobTitle, staffName: tempStaffName },
     });
   };

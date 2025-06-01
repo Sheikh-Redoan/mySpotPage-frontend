@@ -1,4 +1,3 @@
-// src/components/seller/StaffManagement.jsx
 import React, { useState, useEffect, useCallback } from "react";
 import Header from "../../components/seller/Header";
 import SearchBarAndFilter from "../../components/seller/SearchBarAndFilter";
@@ -6,7 +5,9 @@ import StaffCard from "../../components/seller/StaffCard";
 import QuickViewPanel from "../../components/seller/QuickViewPanel";
 import ResolveBookingsModal from "../../components/seller/ResolveBookingsModal";
 import ConfirmInactivationModal from "../../components/seller/ConfirmInactivationModal";
+import StaffDetailModal from "../../components/seller/StaffDetailModal"; // Import the new modal
 import { staffData as initialStaffData } from "../../lib/staffData";
+
 const StaffManagement = () => {
   const [activeTab, setActiveTab] = useState("Active Staff");
   const [allStaffData, setAllStaffData] = useState(initialStaffData);
@@ -23,6 +24,7 @@ const StaffManagement = () => {
   const [showResolveBookingsModal, setShowResolveBookingsModal] = useState(false);
   const [showConfirmInactivationModal, setShowConfirmInactivationModal] = useState(false);
   const [staffToInactivate, setStaffToInactivate] = useState(null);
+  const [showStaffDetailModal, setShowStaffDetailModal] = useState(false); // State for StaffDetailModal
 
   const applyFilters = useCallback(() => {
     let currentFilteredStaff = allStaffData;
@@ -163,11 +165,29 @@ const StaffManagement = () => {
       setSelectedStaff((prevSelected) =>
         prevSelected && prevSelected.id === staffId ? null : prevSelected
       );
+      // Close the detail modal if the removed staff was being edited
+      if (selectedStaff && selectedStaff.id === staffId) {
+        setShowStaffDetailModal(false);
+      }
     }
-  }, []);
+  }, [selectedStaff]);
 
   const handleEditStaff = useCallback((staffId) => {
-    console.log(`Edit staff with ID: ${staffId}`);
+    const staffToEdit = allStaffData.find(s => s.id === staffId);
+    if (staffToEdit) {
+      setSelectedStaff(staffToEdit); // Ensure the selected staff is the one being edited
+      setShowStaffDetailModal(true); // Show the staff detail modal
+    }
+  }, [allStaffData]);
+
+  const handleSaveStaffDetail = useCallback((updatedStaff) => {
+    setAllStaffData((prevStaffData) =>
+      prevStaffData.map((s) =>
+        s.id === updatedStaff.id ? updatedStaff : s
+      )
+    );
+    setSelectedStaff(updatedStaff); // Update selected staff in QuickViewPanel
+    setShowStaffDetailModal(false); // Close the modal
   }, []);
 
   // New handler for adding staff
@@ -180,7 +200,7 @@ const StaffManagement = () => {
 
 
   return (
-    <div className="min-h-screen  p-5 font-['Golos_Text']">
+    <div className="min-h-screen  p-5 font-['Golos_Text']">
       <div className="self-stretch bg-white p-5 rounded-lg flex flex-col justify-start items-start gap-4">
         <Header activeTab={activeTab} onTabChange={handleTabChange} />
         <SearchBarAndFilter
@@ -244,6 +264,16 @@ const StaffManagement = () => {
             onConfirmInactivate={confirmInactivation}
           />
         </div>
+      )}
+
+      {/* Staff Detail Modal */}
+      {showStaffDetailModal && selectedStaff && (
+        <StaffDetailModal
+          staff={selectedStaff}
+          onClose={() => setShowStaffDetailModal(false)}
+          onSave={handleSaveStaffDetail}
+          onRemove={handleRemoveStaff} // Pass onRemove to the modal for direct removal
+        />
       )}
     </div>
   );

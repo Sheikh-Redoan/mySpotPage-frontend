@@ -5,16 +5,16 @@ import { getBreadcrumbs } from '../../lib/staticData';
 
 
 const ServiceClassification = () => {
-    const [services, setServices] = useState([]);
-  console.log(services)
+    const [dataCategory, setDataCategory] = useState([]);
+  console.log(dataCategory)
 
     
 
     const handleAddService = () => {
-        setServices([
-            ...services,
+        setDataCategory([
+            ...dataCategory,
             {
-                id: services.length + 1,
+                id: dataCategory.length + 1,
                 english: '',
                 hebrew: '',
             },
@@ -22,9 +22,9 @@ const ServiceClassification = () => {
     };
 
     const handleChange = (index, field, value) => {
-        const updated = [...services];
+        const updated = [...dataCategory];
         updated[index][field] = value;
-        setServices(updated);
+        setDataCategory(updated);
     };
 
     return (
@@ -44,7 +44,7 @@ const ServiceClassification = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {services.map((service, index) => (
+                        {dataCategory.map((service, index) => (
                             <tr key={service.id} className='gap-10'>
                                 <td className="text-description text-sm">{index + 1}</td>
                                 <td className='pr-2'>

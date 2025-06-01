@@ -33,6 +33,7 @@ const ProfileSecurity = () => {
                             <input
                                 type={showCurrent ? "text" : "password"}
                                 {...register("currentPassword", { required: true })}
+                                autoComplete="current-password" 
                                 placeholder="Current password"
                                 className="w-full border text-sm border-gray-300 rounded-md px-3 py-2.5 pr-10 focus:outline-none focus:ring focus:ring-primary01 mb-1"
                             />
@@ -55,6 +56,7 @@ const ProfileSecurity = () => {
                             <input
                                 type={showNew ? "text" : "password"}
                                 {...register("newPassword", { required: true })}
+                                autoComplete="new-password"
                                 placeholder="New password"
                                 className="w-full border text-sm border-gray-300 rounded-md px-3 py-2.5 pr-10 focus:outline-none focus:ring focus:ring-primary01"
                             />
@@ -80,6 +82,7 @@ const ProfileSecurity = () => {
                                     required: true,
                                     validate: (value) => value === watch("newPassword") || "Passwords do not match",
                                 })}
+                                autoComplete="new-password"
                                 placeholder="Re-enter new password"
                                 className="w-full border text-sm border-gray-300 rounded-md px-3 py-2.5 pr-10 focus:outline-none focus:ring focus:ring-primary01"
                             />

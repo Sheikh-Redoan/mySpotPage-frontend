@@ -1,13 +1,16 @@
 import { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router";
 import UserMenuPopUp from "../../components/admin/UserMenuPopUp";
 import Popup from "../../components/shared/Popup";
 import { imageProvider } from "../../lib/imageProvider";
 import NotificationPopup from "./NotificationPopup";
 
-function TopNavbar({ currentTab }) {
+function TopNavbar() {
   const [toggle, setToggle] = useState(true);
   const popupRef = useRef(null);
   const iconRef = useRef(null);
+  const location = useLocation();
+  const tab = location?.pathname?.split("/")[1]?.split("-")?.join(" ");
 
   const notificationButtons = ["All", "Read", "Unread"];
 
@@ -35,7 +38,9 @@ function TopNavbar({ currentTab }) {
 
   return (
     <div className="flex justify-between border-b border-black/5 items-center px-6 py-4 absolute top-0 left-0 right-0 h-fit">
-      <h3 className="font-semibold text-lg">{currentTab}</h3>
+      <h3 className="font-semibold text-lg capitalize">
+        {tab ? tab : "Dashboard"}
+      </h3>
 
       <div className="flex items-center gap-4">
         <div

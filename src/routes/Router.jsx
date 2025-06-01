@@ -27,7 +27,7 @@ import SuccessUpgrade from "../components/SettingsPages/UpgradePlan/SuccessUpgra
 import Upgradeplan from "../components/SettingsPages/UpgradePlan/Upgradeplan";
 import ClientLayout from "../layout/ClientLayout";
 import MainLayout from "../layout/MainLayout";
-import { adminTabs, profileMainTabs, profileTabs } from "../lib/staticData";
+import { adminTabs, profileMainTabs } from "../lib/staticData";
 import BasicInfo from "../pages/BasicInfo";
 import BookingInfo from "../pages/BookingInfo";
 import DynamicSubSideBarLayout from "../pages/DynamicSubSideBarLayout";
@@ -60,6 +60,7 @@ import SetupTeamLocationServices1 from "../pages/onboarding/team/SetupTeamLocati
 import SetupTeamLocationServices2 from "../pages/onboarding/team/SetupTeamLocationServices2";
 import StaffManagement from "../pages/seller/StaffManagement";
 
+import AccountManagement from "../pages/admin/AccountManagement";
 import Subscriptions from "../pages/admin/Subscriptions";
 import OTPVerificationPage from "../pages/onboarding/OTPVerificationPage";
 import StaffInformationPage from "../pages/onboarding/StaffInformationPage";
@@ -227,10 +228,6 @@ export const routes = createBrowserRouter([
         element: <UserManagement />,
       },
       {
-        path: "data-management",
-        element: <UserManagement />,
-      },
-      {
         path: ":name",
         element: <MyProfileLayout />,
         children: [
@@ -246,6 +243,45 @@ export const routes = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "/account-management",
+    element: <MainLayout tabs={adminTabs} />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        index: true,
+        element: <AccountManagement />,
+      },
+    ],
+  },
+
+  {
+    path: "/data-management",
+    element: <MainLayout tabs={adminTabs} />,
+    children: [
+      {
+        path: "service-classification",
+        element: <MyProfileLayout />,
+        children: [
+          {
+            index: true,
+            element: <div>Service Classification</div>,
+          },
+        ],
+      },
+      {
+        path: "menu-category",
+        element: <MyProfileLayout />,
+        children: [
+          {
+            index: true,
+            element: <div>Menu Category</div>,
+          },
+        ],
+      },
+    ],
+  },
+
   {
     path: "/profile-management",
     element: <MainLayout tabs={profileMainTabs} />,

@@ -6,7 +6,7 @@ import { Outlet } from "react-router";
 
 const AddBookingByProvider = () => {
   return (
-    <Container>
+    <Container className="">
       <Breadcrumb
         breadcrumbs={getBreadcrumbs(0, 3, [
           {

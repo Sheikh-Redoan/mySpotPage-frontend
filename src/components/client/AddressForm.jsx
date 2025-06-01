@@ -5,7 +5,7 @@ export default function AddressForm() {
   const [form] = Form.useForm();
   const [address, setAddress] = useState("");
   const onChange = ({ address }) => {
-    setFormLayout(address);
+    setAddress(address);
   };
 
   const onFinish = (values) => {

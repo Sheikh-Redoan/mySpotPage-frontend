@@ -94,7 +94,7 @@ const services = [
 ];
 
 
-export default function ServicesList({ selected, setSelected }) {
+export default function ServicesList({ selected, setSelected, label="Our Services" }) {
 
   const toggleSelect = (service) => {
     const isSelected = selected.some((item) => item.id === service.id);
@@ -107,7 +107,7 @@ export default function ServicesList({ selected, setSelected }) {
 
   return (
     <div className="font-golos">
-      <h2 className="text-2xl font-semibold mb-4">Our Services</h2>
+      <h2 className="text-2xl font-semibold mb-4">{label}</h2>
       <div className="space-y-4">
         {services.map((service, index) => {
           const isChecked = selected.some((item) => item.id === service.id);

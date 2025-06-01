@@ -28,6 +28,7 @@
     "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
     "framer-motion": "^12.10.1",
+    "libphonenumber-js": "^1.12.8",
     "lucide-react": "^0.507.0",
     "pnpm": "^10.11.0",
     "react": "^19.1.0",

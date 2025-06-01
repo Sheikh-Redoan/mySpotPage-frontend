@@ -71,6 +71,9 @@ import ClientInfoFormPage from "../pages/calenderManagement/addBookingByProvider
 import StaffServicesPage from "../pages/onboarding/StaffServicesPage";
 import StaffWorkingHoursPage from "../pages/onboarding/StaffWorkingHoursPage";
 import StaffSecurityPage from "../pages/onboarding/StaffSecurityPage";
+import ServicesPageForProvider from "../pages/calenderManagement/addBookingByProvider/ServicesPageForProvider";
+import SelectStaffForProvider from "../pages/calenderManagement/addBookingByProvider/SelectStaffForProvider";
+import ClientAppointmentCalForProvider from "../pages/calenderManagement/addBookingByProvider/ClientAppointmentCalForProvider";
 import ServiceClassification from "../pages/admin/ServiceClassification";
 import MenuCategory from "../pages/admin/MenuCategory";
 
@@ -99,15 +102,15 @@ export const routes = createBrowserRouter([
           },
           {
             path: "select-services",
-            element: <div>Service Page</div>,
+            element: <ServicesPageForProvider />,
           },
           {
             path: "select-staff",
-            element: <div>Staff Page</div>,
+            element: <SelectStaffForProvider />,
           },
           {
             path: "select-time",
-            element: <div>Time Page</div>,
+            element: <ClientAppointmentCalForProvider />,
           },
           {
             path: "confirm",
@@ -364,11 +367,11 @@ export const routes = createBrowserRouter([
         path: "services-settings", // NEW ROUTE FOR STAFF SERVICES
         element: <StaffServicesPage />,
       },
-       {
+      {
         path: "working-shift-settings", // NEW ROUTE FOR WORKING SHIFT SETTINGS
         element: <StaffWorkingHoursPage />,
       },
-       {
+      {
         path: "security-settings", // NEW ROUTE FOR SECURITY SETTINGS
         element: <StaffSecurityPage />,
       },

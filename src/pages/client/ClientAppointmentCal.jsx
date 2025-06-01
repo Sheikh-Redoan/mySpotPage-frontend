@@ -2,10 +2,8 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import { DatePicker } from "antd";
 import dayjs from "dayjs";
-import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router";
+import {  useRef, useState } from "react";
 import EventModal from "../../components/selectTimeComponents/EventModal";
 import Container from "./Container";
 import Breadcrumb from "../../components/client/Breadcrumb";
@@ -222,8 +220,12 @@ export default function ClientAppointmentCal() {
     const specialDateInfo = specialDatesData.find((sd) => sd.date === dateStr);
 
     return (
-      <div className="custom-day-cell-content">
-        <span className="custom-day-number">{formattedDayNumber}</span>
+      <div className="relative w-full h-full flex flex-col md:flex-row items-center justify-center md:justify-start gap-3">
+        {
+          currentView === "dayGridMonth" && (
+            <span className="text-[0.875rem] p-[4px] z-1">{formattedDayNumber}</span>
+          )
+        }
         {specialDateInfo &&
           specialDateInfo.sale &&
           !dayCellInfo.isOtherMonth && (

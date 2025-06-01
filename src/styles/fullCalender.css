@@ -78,21 +78,6 @@
 }
 
 /* Sale Badge Styling */
-.custom-day-cell-content {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 12px;
-}
-.custom-day-number {
-  font-size: 0.875em;
-  padding: 2px;
-  z-index: 1;
-}
 .sale-badge {
   border: 1px solid #c3bcf6;
   color: #866be7;
@@ -119,12 +104,6 @@
 .fc .fc-timegrid-slot{
     border-bottom: 0px;
     height: 84px;
-}
-.fc-timeGridWeek-view .custom-day-number {
-  display: none;
-}
-.fc-timeGridDay-view .custom-day-number {
-  display: none;
 }
 .fc .fc-timegrid-slot-label {
     vertical-align: top;
@@ -168,11 +147,6 @@
 @media only screen and (max-width: 600px) {
   .fc {
     height: 563px !important;
-  }
-  .custom-day-cell-content {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
   }
   .sale-badge {
     border: none;

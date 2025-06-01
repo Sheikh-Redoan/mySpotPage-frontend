@@ -1,4 +1,3 @@
-// src/components/common/ReusableCalendar.jsx
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import FullCalendar from "@fullcalendar/react";
@@ -21,33 +20,58 @@ const toYYYYMMDD = (dateInput) => {
   return `${year}-${month}-${day}`;
 };
 
+/**
+ * A reusable calendar component that provides a full-featured calendar with event management,
+ * date selection, and customizable views. It supports both day and time grid views, allowing
+ * users to navigate, select dates, and view events. Special dates can be marked as busy or
+ * have custom styling. The component also includes a modal for adding new events with a
+ * selected time. 
+ * 
+ * @param {Array} initialEvents - An array of initial events to display on the calendar.
+ * @param {Array} specialDatesData - An array of special dates information including busy dates.
+ * @param {Array} timeSlots - An array of available time slots for event scheduling.
+ * @param {Function} renderDayCellContent - A function to render custom content in a day cell.
+ * @param {Function} renderSlotLaneContent - A function to render content in the slot lane.
+ * @param {Function} renderDayHeaderContent - A function to render custom content in the day header.
+ * @param {Function} onDayClick - A callback function to handle clicks on a day cell.
+ * @param {string} currentView - The initial view of the calendar (e.g., "dayGridMonth").
+ * @param {Function} setCurrentView - A function to update the current view state.
+ */
+
 export default function ReusableCalendar({
   initialEvents = [],
   specialDatesData = [],
   timeSlots = [],
-  // New props for custom rendering and date click behavior
   renderDayCellContent,
   renderSlotLaneContent,
   renderDayHeaderContent,
-  onDayClick, // A prop to override the default date click logic
+  onDayClick,
+  currentView = "dayGridMonth",
+  setCurrentView
 }) {
   const [weekendsVisible, setWeekendsVisible] = useState(true);
   const [selectedDate, setSelectedDate] = useState(dayjs());
-  const [currentView, setCurrentView] = useState("dayGridMonth");
   const calendarRef = useRef(null);
   const [highlightedDate, setHighlightedDate] = useState(null);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalSelectInfo, setModalSelectInfo] = useState(null);
 
-  // Default internal handler for date clicks (used if onDayClick prop is not provided)
+  /**
+   * Handles date clicks within the calendar. If the clicked date is not busy (i.e.
+   * marked as `isBusy` in the `specialDatesData` prop), it sets the `highlightedDate`
+   * state to the selected date and opens the modal if the current view is "dayGridMonth".
+   * If the clicked date is busy, it simply logs a message and resets the `highlightedDate`
+   * state to null.
+   * @param {import("@fullcalendar/react").DateClickArg} clickInfo
+   */
   const handleInternalDateClick = (clickInfo) => {
     const clickedDate = clickInfo.date;
     const clickedDateStr = toYYYYMMDD(clickedDate);
 
-    const specialDateInfo = specialDatesData.find(
-      (sd) => sd.date === clickedDateStr
-    );
+    const specialDateInfo =
+      specialDatesData &&
+      specialDatesData.find((sd) => sd.date === clickedDateStr);
 
     if (!specialDateInfo || !specialDateInfo.isBusy) {
       setHighlightedDate(clickedDateStr);
@@ -62,6 +86,14 @@ export default function ReusableCalendar({
     clickInfo.view.calendar.unselect();
   };
 
+  /**
+   * Handles the submission of the modal that appears when a date is clicked
+   * within the calendar. It takes the selected time from the modal and adds a
+   * new event to the calendar with the selected date and time. If the date is
+   * invalid, it logs an error and does not add the event.
+   * @param {{ time: string }} timeObj An object containing the selected time
+   * in the format "HH:MM".
+   */
   function handleModalSubmit({ time }) {
     const calendarApi = modalSelectInfo.view.calendar;
     const startDate = new Date(modalSelectInfo.date);
@@ -75,7 +107,7 @@ export default function ReusableCalendar({
 
     calendarApi.addEvent({
       id: createEventId(),
-      title: "New Appointment", // You might want to get this from the modal or pass as prop
+      title: "New Appointment",
       start: startDate.toISOString(),
       allDay: false,
     });
@@ -92,6 +124,11 @@ export default function ReusableCalendar({
     }
   };
 
+  /**
+   * Handles the navigation buttons (prev/next) in the calendar header.
+   * Changes the calendar view to the previous or next month, and updates the selected date and current view state accordingly.
+   * @param {string} direction - "prev" or "next" to navigate to the previous or next month.
+   */
   const handleNavButtonClick = (direction) => {
     if (calendarRef.current) {
       const calendarApi = calendarRef.current.getApi();
@@ -106,6 +143,10 @@ export default function ReusableCalendar({
     }
   };
 
+  /**
+   * Handles the "Today" button click in the calendar header.
+   * Sets the calendar view to the current day and updates the selected date and current view state accordingly.
+   */
   const handleTodayClick = () => {
     if (calendarRef.current) {
       const calendarApi = calendarRef.current.getApi();
@@ -115,6 +156,11 @@ export default function ReusableCalendar({
     }
   };
 
+  /**
+   * Handles the change of the calendar view.
+   * Changes the calendar to the specified view and updates the current view state.
+   * @param {string} view - The view type to change to (e.g., "dayGridMonth", "timeGridWeek").
+   */
   const handleViewChange = (view) => {
     if (calendarRef.current) {
       const calendarApi = calendarRef.current.getApi();
@@ -123,11 +169,19 @@ export default function ReusableCalendar({
     }
   };
 
-  // Keep dayCellClassNamesFunc internal as it depends on highlightedDate
+  /**
+   * Returns an array of class names to be applied to the day cells in the
+   * calendar based on the date and the specialDatesData.
+   * If the date matches the highlightedDate, the class "custom-selected-date" is added.
+   * If the date is in the specialDatesData and isBusy is true, the class "custom-busy-date" is added.
+   * @param {{ date: Date }} arg - The day cell date to be evaluated.
+   * @returns {string[]} An array of class names to be applied to the day cell.
+   */
   function dayCellClassNamesFunc(arg) {
     const dateStr = toYYYYMMDD(arg.date);
     const classes = [];
-    const specialDateInfo = specialDatesData.find((sd) => sd.date === dateStr);
+    const specialDateInfo =
+      specialDatesData && specialDatesData.find((sd) => sd.date === dateStr);
 
     if (dateStr === highlightedDate) {
       classes.push("custom-selected-date");
@@ -139,12 +193,20 @@ export default function ReusableCalendar({
     return classes;
   }
 
+  /**
+   * Determines whether a date/time selection is allowed in the calendar.
+   * If the current view is "dayGridMonth", it checks if the selected start
+   * date is marked as busy in the `specialDatesData` prop. If so, the selection
+   * is disallowed (returns false). Otherwise, the selection is allowed (returns true).
+   * @param {Object} selectInfo - An object containing details about the date/time selection.
+   * @returns {boolean} - Returns false if the date is busy and in "dayGridMonth" view, true otherwise.
+   */
   const handleSelectAllow = (selectInfo) => {
     if (currentView === "dayGridMonth") {
       const startDateStr = toYYYYMMDD(selectInfo.start);
-      const specialDateInfo = specialDatesData.find(
-        (sd) => sd.date === startDateStr
-      );
+      const specialDateInfo =
+        specialDatesData &&
+        specialDatesData.find((sd) => sd.date === startDateStr);
       if (specialDateInfo && specialDateInfo.isBusy) {
         return false;
       }
@@ -175,10 +237,9 @@ export default function ReusableCalendar({
         dayMaxEvents={true}
         weekends={weekendsVisible}
         initialEvents={initialEvents}
-        dateClick={onDayClick ? onDayClick : handleInternalDateClick} // Use prop or internal handler
+        dateClick={onDayClick ? onDayClick : handleInternalDateClick}
         dayCellClassNames={dayCellClassNamesFunc}
         selectAllow={handleSelectAllow}
-        // Use prop for day cell content, default to null for FC's default
         dayCellContent={renderDayCellContent || null}
         // TimeGrid specific props
         slotMinTime="08:00:00"
@@ -193,13 +254,14 @@ export default function ReusableCalendar({
           hour12: false,
           meridiem: false,
         }}
-        // Use prop for day header content, default to null for FC's default
-        dayHeaderContent={renderDayHeaderContent || null}
-        // Use prop for slot lane content, default to null for FC's default
+        dayHeaderContent={
+          currentView === "timeGridWeek" || currentView === "timeGridDay"
+            ? renderDayHeaderContent
+            : null
+        }
         slotLaneContent={renderSlotLaneContent || null}
       />
 
-      {/* The EventModal is kept here, but its triggering depends on onDayClick prop */}
       <EventModal
         isOpen={isModalOpen}
         onClose={() => {
@@ -207,7 +269,9 @@ export default function ReusableCalendar({
           setHighlightedDate(null);
         }}
         onSubmit={handleModalSubmit}
-        selectedDate={modalSelectInfo ? new Date(modalSelectInfo.date) : new Date()}
+        selectedDate={
+          modalSelectInfo ? new Date(modalSelectInfo.date) : new Date()
+        }
         timeSlots={timeSlots}
       />
     </>

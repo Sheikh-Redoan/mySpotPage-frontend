@@ -217,8 +217,12 @@ export default function ClientAppointmentCalForProvider() {
     const specialDateInfo = specialDatesData.find((sd) => sd.date === dateStr);
 
     return (
-      <div className="custom-day-cell-content">
-        <span className="custom-day-number">{formattedDayNumber}</span>
+      <div className="relative w-full h-full flex flex-col md:flex-row items-center justify-center md:justify-start gap-3">
+        {
+          currentView === "dayGridMonth" && (
+            <span className="text-[0.875rem] p-[4px] z-1">{formattedDayNumber}</span>
+          )
+        }
         {specialDateInfo &&
           specialDateInfo.sale &&
           !dayCellInfo.isOtherMonth && (

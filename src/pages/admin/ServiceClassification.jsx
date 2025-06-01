@@ -1,0 +1,113 @@
+import React, { useState } from 'react';
+import { Move } from 'lucide-react';
+import Breadcrumb from '../../components/client/Breadcrumb';
+import { getBreadcrumbs } from '../../lib/staticData';
+
+
+const ServiceClassification = () => {
+    const [services, setServices] = useState([]);
+  console.log(services)
+
+    
+
+    const handleAddService = () => {
+        setServices([
+            ...services,
+            {
+                id: services.length + 1,
+                english: '',
+                hebrew: '',
+            },
+        ]);
+    };
+
+    const handleChange = (index, field, value) => {
+        const updated = [...services];
+        updated[index][field] = value;
+        setServices(updated);
+    };
+
+    return (
+        <div>
+            <Breadcrumb breadcrumbs={getBreadcrumbs(0, 3, [
+                { name: "Data Management", link: "" },
+                { name: "Service Classification", link: "/data-management/service-classification" }
+            ])} />
+            <div className="">
+                <table className="w-full table-auto border-separate border-spacing-y-4">
+                    <thead>
+                        <tr className="text-sm text-description">
+                            <th className="w-10 text-left">#</th>
+                            <th className='text-left'>English</th>
+                            <th className='text-right'>Hebrew</th>
+                            <th className="w-20">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {services.map((service, index) => (
+                            <tr key={service.id} className='gap-10'>
+                                <td className="text-description text-sm">{index + 1}</td>
+                                <td className='pr-2'>
+                                    <input
+                                        type="text"
+                                        value={service.english}
+                                        onChange={(e) =>
+                                            handleChange(index, 'english', e.target.value)
+                                        }
+                                        className="w-full border border-border rounded-lg px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring-1 focus:ring-primary01 bg-white"
+                                    />
+                                </td>
+                                <td className='pl-2'>
+                                    <input
+                                        type="text"
+                                        value={service.hebrew}
+                                        onChange={(e) =>
+                                            handleChange(index, 'hebrew', e.target.value)
+                                        }
+                                        className="w-full border border-border rounded-lg px-3 py-2 text-sm text-right text-gray-400 focus:outline-none focus:ring-1 focus:ring-primary01 bg-white"
+                                    />
+                                </td>
+                                <td className="text-center">
+                                    <Move className="w-4 h-4 text-gray-400 cursor-move mx-auto" />
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+
+                <button
+                    onClick={handleAddService}
+                    className="text-sm text-gray-600 flex items-center gap-1 cursor-pointer ml-10"
+                >
+                    <span className="text-xl">+</span> Add more service
+                </button>
+
+                <div className=" flex justify-end mr-3">
+                    <button
+                    className="bg-black text-white px-6 py-2 rounded text-sm cursor-pointer">
+                        Save changes
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default ServiceClassification;
+
+
+// Default value for check ui
+// const defaultServices = [
+//     'Nail', 'Hair & Barber', 'Makeup', 'Lash & Brow', 'Waxing',
+//     'Tanning', 'Massage', 'Skincare', 'Spas & Wellness', 'Fitness',
+//     'Tattoo & Piercing', 'Teeth White', 'Holistic'
+// ];
+
+// show default value in ui
+// const [services, setServices] = useState(
+//     defaultServices.map((title, i) => ({
+//       id: i + 1,
+//       english: title,
+//       hebrew: 'שֵׁרוּת',
+//     }))
+// );

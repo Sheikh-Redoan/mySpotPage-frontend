@@ -73,6 +73,7 @@ import StaffWorkingHoursPage from "../pages/onboarding/StaffWorkingHoursPage";
 import StaffSecurityPage from "../pages/onboarding/StaffSecurityPage";
 import ServicesPageForProvider from "../pages/calenderManagement/addBookingByProvider/ServicesPageForProvider";
 import SelectStaffForProvider from "../pages/calenderManagement/addBookingByProvider/SelectStaffForProvider";
+import ClientAppointmentCalForProvider from "../pages/calenderManagement/addBookingByProvider/ClientAppointmentCalForProvider";
 
 export const routes = createBrowserRouter([
   {
@@ -107,7 +108,7 @@ export const routes = createBrowserRouter([
           },
           {
             path: "select-time",
-            element: <div>Time Page</div>,
+            element: <ClientAppointmentCalForProvider />,
           },
           {
             path: "confirm",

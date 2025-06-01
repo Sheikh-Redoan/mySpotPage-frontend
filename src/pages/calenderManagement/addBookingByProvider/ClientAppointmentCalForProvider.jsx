@@ -2,17 +2,12 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import { DatePicker } from "antd";
 import dayjs from "dayjs";
-import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router";
-import EventModal from "../../components/selectTimeComponents/EventModal";
-import Container from "./Container";
-import Breadcrumb from "../../components/client/Breadcrumb";
-import { getBreadcrumbs } from "../../lib/staticData";
+import { useRef, useState } from "react";
 import "/src/styles/fullCalender.css";
-import AppointmentActionsBtn from "../../components/client/client-appointment/AppointmentActionsBtn";
-import CalendarToolbar from "../../components/reuseableComponent/CalendarToolbar";
+import EventModal from "../../../components/selectTimeComponents/EventModal";
+import AppointmentActionsBtn from "../../../components/client/client-appointment/AppointmentActionsBtn";
+import CalendarToolbar from "../../../components/reuseableComponent/CalendarToolbar";
 
 let eventGuid = 0;
 let todayStr = dayjs().format("YYYY-MM-DD");
@@ -59,7 +54,7 @@ const toYYYYMMDD = (dateInput) => {
   return `${year}-${month}-${day}`;
 };
 
-export default function ClientAppointmentCal() {
+export default function ClientAppointmentCalForProvider() {
   const [weekendsVisible, setWeekendsVisible] = useState(true);
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [currentView, setCurrentView] = useState("dayGridMonth");
@@ -84,15 +79,6 @@ export default function ClientAppointmentCal() {
   function handleWeekendsToggle() {
     setWeekendsVisible(!weekendsVisible);
   }
-
-  const handleTodayClick = () => {
-    if (calendarRef.current) {
-      const calendarApi = calendarRef.current.getApi();
-      calendarApi.today();
-      setSelectedDate(dayjs());
-      setCurrentView(calendarApi.view.type);
-    }
-  };
 
   // Triggered when a date/time selection is made
   function handleDateSelect(selectInfo) {
@@ -187,6 +173,15 @@ export default function ClientAppointmentCal() {
       }
       const currentDate = calendarApi.getDate();
       setSelectedDate(dayjs(currentDate));
+      setCurrentView(calendarApi.view.type);
+    }
+  };
+
+  const handleTodayClick = () => {
+    if (calendarRef.current) {
+      const calendarApi = calendarRef.current.getApi();
+      calendarApi.today();
+      setSelectedDate(dayjs());
       setCurrentView(calendarApi.view.type);
     }
   };
@@ -292,83 +287,72 @@ export default function ClientAppointmentCal() {
   };
 
   return (
-    <section className="bg-[#F9FAFC] py-4 px-2 md:px-0 md:py-8">
-      <Container>
-        <Breadcrumb
-          breadcrumbs={getBreadcrumbs(1, 0, [
-            {
-              name: "Select staff",
-              link: "/service-provider-info/select-staff",
-            },
-          ])}
+    <section className="bg-[#F9FAFC] py-4 px-2 md:px-0">
+      <div className="bg-white shadow-md rounded-lg max-sm:py-4 max-sm:px-2 lg:p-6">
+        {/* Calender Header Toolbar */}
+        <CalendarToolbar
+          selectedDate={selectedDate}
+          onDatePickerChange={onDatePickerChange}
+          handleNavButtonClick={handleNavButtonClick}
+          handleTodayClick={handleTodayClick}
+          currentView={currentView}
+          handleViewChange={handleViewChange}
         />
 
-        <div className="bg-white shadow-md rounded-lg max-sm:py-4 max-sm:px-2 lg:p-6">
-          {/* Calender Header Toolbar */}
-          <CalendarToolbar
-            selectedDate={selectedDate}
-            onDatePickerChange={onDatePickerChange}
-            handleNavButtonClick={handleNavButtonClick}
-            handleTodayClick={handleTodayClick}
-            currentView={currentView}
-            handleViewChange={handleViewChange}
-          />
+        <FullCalendar
+          key={currentView}
+          ref={calendarRef}
+          plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+          headerToolbar={false}
+          initialView={currentView}
+          editable={true}
+          selectable={true}
+          selectMirror={true}
+          dayMaxEvents={true}
+          weekends={weekendsVisible}
+          initialEvents={INITIAL_EVENTS}
+          // select={handleDateSelect}
+          dateClick={handleDateClickForHighlight}
+          dayCellClassNames={dayCellClassNamesFunc}
+          selectAllow={handleSelectAllow}
+          dayCellContent={renderDayCellContentWithSales}
+          // TimeGrid specific props
+          slotMinTime="08:00:00"
+          slotMaxTime="18:00:00"
+          slotDuration="01:00:00"
+          snapDuration="01:00:00"
+          scrollTime="08:00:00"
+          allDaySlot={false}
+          slotLabelFormat={{
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false,
+            meridiem: false,
+          }}
+          dayHeaderContent={
+            currentView === "timeGridWeek" || currentView === "timeGridDay"
+              ? renderCustomDayHeaderContent
+              : null
+          }
+          slotLaneContent={renderTimeSlotContent}
+        />
 
-          <FullCalendar
-            key={currentView}
-            ref={calendarRef}
-            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-            headerToolbar={false}
-            initialView={currentView}
-            editable={true}
-            selectable={true}
-            selectMirror={true}
-            dayMaxEvents={true}
-            weekends={weekendsVisible}
-            initialEvents={INITIAL_EVENTS}
-            // select={handleDateSelect}
-            dateClick={handleDateClickForHighlight}
-            dayCellClassNames={dayCellClassNamesFunc}
-            selectAllow={handleSelectAllow}
-            dayCellContent={renderDayCellContentWithSales}
-            // TimeGrid specific props
-            slotMinTime="08:00:00"
-            slotMaxTime="18:00:00"
-            slotDuration="01:00:00"
-            snapDuration="01:00:00"
-            scrollTime="08:00:00"
-            allDaySlot={false}
-            slotLabelFormat={{
-              hour: "2-digit",
-              minute: "2-digit",
-              hour12: false,
-              meridiem: false,
-            }}
-            dayHeaderContent={
-              currentView === "timeGridWeek" || currentView === "timeGridDay"
-                ? renderCustomDayHeaderContent
-                : null
-            }
-            slotLaneContent={renderTimeSlotContent}
-          />
+        <EventModal
+          isOpen={isModalOpen}
+          onClose={() => {
+            setIsModalOpen(false);
+            setHighlightedDate(null);
+          }}
+          onSubmit={handleModalSubmit}
+          selectedDate={
+            modalSelectInfo ? new Date(modalSelectInfo.date) : new Date()
+          }
+          timeSlots={timeSlots}
+        />
 
-          <EventModal
-            isOpen={isModalOpen}
-            onClose={() => {
-              setIsModalOpen(false);
-              setHighlightedDate(null);
-            }}
-            onSubmit={handleModalSubmit}
-            selectedDate={
-              modalSelectInfo ? new Date(modalSelectInfo.date) : new Date()
-            }
-            timeSlots={timeSlots}
-          />
-
-          {/* Appointment Actions Button */}
-          <AppointmentActionsBtn />
-        </div>
-      </Container>
+        {/* Appointment Actions Button */}
+        <AppointmentActionsBtn />
+      </div>
     </section>
   );
 }

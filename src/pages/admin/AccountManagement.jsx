@@ -27,7 +27,7 @@ export default function AccountManagement() {
         </div>
         <div className="flex gap-2">
           <AddAccount />
-          <Button type="default" className="flex items-center">
+          <Button type="default" className="flex items-center" size="large">
             <Settings size={16} /> Settings
           </Button>
         </div>

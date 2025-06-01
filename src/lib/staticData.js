@@ -117,6 +117,23 @@ export const profileTabs = [
   },
 ];
 
+export const accountManagementProfileTabs = [
+  {
+    id: 0,
+    name: "Basic Information",
+    imagePink: imageProvider.PeoplePink,
+    imageWhite: imageProvider.PeopleBlack,
+    link: "basic-information",
+  },
+  {
+    id: 1,
+    name: "Security",
+    imagePink: imageProvider.securityPink,
+    imageWhite: imageProvider.securityBlack,
+    link: "security",
+  },
+];
+
 export const userManagementTabs = [
   {
     id: 0,

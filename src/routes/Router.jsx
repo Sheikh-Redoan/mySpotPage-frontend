@@ -76,6 +76,7 @@ import SelectStaffForProvider from "../pages/calenderManagement/addBookingByProv
 import ClientAppointmentCalForProvider from "../pages/calenderManagement/addBookingByProvider/ClientAppointmentCalForProvider";
 import ServiceClassification from "../pages/admin/ServiceClassification";
 import MenuCategory from "../pages/admin/MenuCategory";
+import ConfirmPageForProvider from "../pages/calenderManagement/addBookingByProvider/ConfirmPageForProvider";
 
 export const routes = createBrowserRouter([
   {
@@ -114,7 +115,7 @@ export const routes = createBrowserRouter([
           },
           {
             path: "confirm",
-            element: <div>Confirm Page</div>,
+            element: <ConfirmPageForProvider/>,
           },
         ],
       },

@@ -2,6 +2,7 @@ import React from "react";
 import Container from "../../client/Container";
 import Breadcrumb from "../../../components/client/Breadcrumb";
 import { getBreadcrumbs } from "../../../lib/staticData";
+import { Outlet } from "react-router";
 
 const AddBookingByProvider = () => {
   return (
@@ -10,28 +11,29 @@ const AddBookingByProvider = () => {
         breadcrumbs={getBreadcrumbs(0, 3, [
           {
             name: "Client information",
-            link: "/client-info",
+            link: "/add-booking-by-provider",
           },
           {
             name: "Select Services",
-            link: "/service-provider-info/select-staff",
+            link: "/add-booking-by-provider/select-services",
           },
           {
             name: "Select staff",
-            link: "/service-provider-info/select-staff",
+            link: "/add-booking-by-provider/select-staff",
           },
           {
             name: "Select Time",
-            link: "/service-provider-info/select-staff",
+            link: "/add-booking-by-provider/select-time",
           },
           {
             name: "Confirm",
-            link: "/service-provider-info/select-staff",
+            link: "/add-booking-by-provider/confirm",
           },
         ])}
       />
 
-      {/* Client Information Form */}
+      {/* All form Form Step for add booking by Provider */}
+        <Outlet />
     </Container>
   );
 };

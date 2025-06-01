@@ -66,6 +66,7 @@ import StaffInformationPage from "../pages/onboarding/StaffInformationPage";
 import ClientAppointmentCal from "../pages/client/ClientAppointmentCal";
 import AddBookingByProvider from "../pages/calenderManagement/addBookingByProvider/AddBookingByProvider";
 import CalendarManagementPage from "../pages/calenderManagement/CalendarManagementPage";
+import ClientInfoFormPage from "../pages/calenderManagement/addBookingByProvider/ClientInfoFormPage";
 
 export const routes = createBrowserRouter([
   {
@@ -79,11 +80,34 @@ export const routes = createBrowserRouter([
       },
       {
         path: "/calendar",
-        element: <CalendarManagementPage />
+        element: <CalendarManagementPage />,
       },
       {
         path: "/add-booking-by-provider",
-        element: <AddBookingByProvider/>,
+        element: <AddBookingByProvider />,
+        errorElement: <ErrorPage />,
+        children: [
+          {
+            index: true,
+            element: <ClientInfoFormPage />,
+          },
+          {
+            path: "select-services",
+            element: <div>Service Page</div>,
+          },
+          {
+            path: "select-staff",
+            element: <div>Staff Page</div>,
+          },
+          {
+            path: "select-time",
+            element: <div>Time Page</div>,
+          },
+          {
+            path: "confirm",
+            element: <div>Confirm Page</div>,
+          },
+        ],
       },
       {
         path: "/service-menu",
@@ -242,7 +266,7 @@ export const routes = createBrowserRouter([
           },
         ],
       },
-    ]
+    ],
   },
 
   {

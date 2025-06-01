@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Plus, Save, ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronUp } from 'lucide-react';
 import Breadcrumb from '../../components/client/Breadcrumb';
 import { getBreadcrumbs } from '../../lib/staticData';
 import { Move } from 'lucide-react';
@@ -91,11 +91,7 @@ const MenuCategory = () => {
                                 onClick={() => toggleOpen(catIndex)}
                             >
                                 <span className="">{cat.name}</span>
-                                {openIndex === catIndex ? (
-                                    <ChevronUp size={18} />
-                                ) : (
-                                    <ChevronDown size={18} />
-                                )}
+                                <ChevronUp size={18} className={`text-gray-500 size-6 transform transition-transform duration-400 ease-in-out ${openIndex === catIndex ? "rotate-0" : "rotate-180"}`}/>
                             </div>
 
                             {/* Content */}

@@ -27,7 +27,14 @@ import SuccessUpgrade from "../components/SettingsPages/UpgradePlan/SuccessUpgra
 import Upgradeplan from "../components/SettingsPages/UpgradePlan/Upgradeplan";
 import ClientLayout from "../layout/ClientLayout";
 import MainLayout from "../layout/MainLayout";
-import { adminTabs, profileMainTabs } from "../lib/staticData";
+import {
+  accountManagementProfileTabs,
+  adminTabs,
+  dataManagementTabs,
+  profileMainTabs,
+  profileTabs,
+  userManagementTabs,
+} from "../lib/staticData";
 import BasicInfo from "../pages/BasicInfo";
 import BookingInfo from "../pages/BookingInfo";
 import DynamicSubSideBarLayout from "../pages/DynamicSubSideBarLayout";
@@ -237,7 +244,7 @@ export const routes = createBrowserRouter([
       },
       {
         path: ":name",
-        element: <MyProfileLayout />,
+        element: <MyProfileLayout tabs={userManagementTabs} />,
         children: [
           {
             path: "business-information",
@@ -260,6 +267,20 @@ export const routes = createBrowserRouter([
         index: true,
         element: <AccountManagement />,
       },
+      {
+        path: ":name",
+        element: <MyProfileLayout tabs={accountManagementProfileTabs} />,
+        children: [
+          {
+            path: "basic-information",
+            element: <ProfileBesicInformation />,
+          },
+          {
+            path: "security",
+            element: <ProfileSecurity />,
+          },
+        ],
+      },
     ],
   },
 
@@ -269,7 +290,7 @@ export const routes = createBrowserRouter([
     children: [
       {
         path: "service-classification",
-        element: <MyProfileLayout />,
+        element: <MyProfileLayout tabs={dataManagementTabs} />,
         children: [
           {
             index: true,
@@ -297,7 +318,7 @@ export const routes = createBrowserRouter([
     children: [
       {
         path: "my-profile",
-        element: <MyProfileLayout />,
+        element: <MyProfileLayout tabs={profileTabs} />,
         errorElement: <ErrorPage />,
         children: [
           {

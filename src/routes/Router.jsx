@@ -29,6 +29,7 @@ import MainLayout from "../layout/MainLayout";
 import {
   accountManagementProfileTabs,
   adminTabs,
+  dashboardTabs,
   dataManagementTabs,
   profileMainTabs,
   profileTabs,
@@ -91,7 +92,7 @@ export const routes = createBrowserRouter([
     path: "/",
     element: (
       <ProtectedRoute>
-        <MainLayout tabs={profileMainTabs} />
+        <MainLayout tabs={dashboardTabs} />
       </ProtectedRoute>
     ),
     errorElement: <ErrorPage />,

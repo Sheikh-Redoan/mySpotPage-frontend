@@ -9,7 +9,7 @@ export default function ProtectedRoute({ children }) {
     return <Navigate to="/signin" />;
   }
 
-  if (user.role.includes("Admin")) {
+  if (user.role.includes("admin")) {
     <Navigate to="/admin-dashboard" />;
   }
 

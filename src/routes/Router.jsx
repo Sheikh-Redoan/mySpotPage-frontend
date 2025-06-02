@@ -74,6 +74,7 @@ import CalendarManagementPage from "../pages/calenderManagement/CalendarManageme
 import AddBookingByProvider from "../pages/calenderManagement/addBookingByProvider/AddBookingByProvider";
 import ClientAppointmentCalForProvider from "../pages/calenderManagement/addBookingByProvider/ClientAppointmentCalForProvider";
 import ClientInfoFormPage from "../pages/calenderManagement/addBookingByProvider/ClientInfoFormPage";
+import ConfirmPageForProvider from "../pages/calenderManagement/addBookingByProvider/ConfirmPageForProvider";
 import SelectStaffForProvider from "../pages/calenderManagement/addBookingByProvider/SelectStaffForProvider";
 import ServicesPageForProvider from "../pages/calenderManagement/addBookingByProvider/ServicesPageForProvider";
 import ClientAppointmentCal from "../pages/client/ClientAppointmentCal";
@@ -83,7 +84,6 @@ import StaffInformationPage from "../pages/onboarding/StaffInformationPage";
 import StaffSecurityPage from "../pages/onboarding/StaffSecurityPage";
 import StaffServicesPage from "../pages/onboarding/StaffServicesPage";
 import StaffWorkingHoursPage from "../pages/onboarding/StaffWorkingHoursPage";
-import ConfirmPageForProvider from "../pages/calenderManagement/addBookingByProvider/ConfirmPageForProvider";
 
 export const routes = createBrowserRouter([
   // Seller Routes / Protected
@@ -127,7 +127,7 @@ export const routes = createBrowserRouter([
           },
           {
             path: "confirm",
-            element: <ConfirmPageForProvider/>,
+            element: <ConfirmPageForProvider />,
           },
         ],
       },
@@ -267,7 +267,11 @@ export const routes = createBrowserRouter([
 
   {
     path: "/user-management",
-    element: <MainLayout tabs={adminTabs} />,
+    element: (
+      <ProtectedRoute>
+        <MainLayout tabs={adminTabs} />
+      </ProtectedRoute>
+    ),
     errorElement: <ErrorPage />,
     children: [
       {

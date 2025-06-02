@@ -9,8 +9,8 @@ export default function ProtectedRoute({ children }) {
     return <Navigate to="/signin" />;
   }
 
-  if (user.role === "client") {
-    return <Navigate to="/client" />;
+  if (user.role.includes("Admin")) {
+    <Navigate to="/admin-dashboard" />;
   }
 
   return children;

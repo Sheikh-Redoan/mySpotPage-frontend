@@ -7,7 +7,7 @@ import { NavLink, Outlet } from "react-router";
 import { cn } from "../lib/utils";
 import TopNavbar from "../pages/layout/TopNavbar";
 import "../styles/antdCustom.css";
-function MainLayout({ tabs }) {
+function MainLayout({ tabs, activeTab }) {
   const [toggle, setToggle] = useState(true);
 
   return (
@@ -100,7 +100,7 @@ function MainLayout({ tabs }) {
 
       <div className="flex-1 relative ml-[74px]  min-h-screen h-full bg-[#F9FAFC]">
         {/* topnav */}
-        <TopNavbar />
+        <TopNavbar activeTab={activeTab} />
         <div className="pt-20">
           <Outlet />
         </div>

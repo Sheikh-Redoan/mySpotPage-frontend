@@ -83,6 +83,7 @@ import StaffInformationPage from "../pages/onboarding/StaffInformationPage";
 import StaffSecurityPage from "../pages/onboarding/StaffSecurityPage";
 import StaffServicesPage from "../pages/onboarding/StaffServicesPage";
 import StaffWorkingHoursPage from "../pages/onboarding/StaffWorkingHoursPage";
+import ConfirmPageForProvider from "../pages/calenderManagement/addBookingByProvider/ConfirmPageForProvider";
 
 export const routes = createBrowserRouter([
   // Seller Routes / Protected
@@ -126,7 +127,7 @@ export const routes = createBrowserRouter([
           },
           {
             path: "confirm",
-            element: <div>Confirm Page</div>,
+            element: <ConfirmPageForProvider/>,
           },
         ],
       },

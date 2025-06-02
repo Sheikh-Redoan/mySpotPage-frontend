@@ -98,7 +98,7 @@ function MainLayout({ tabs }) {
         </div>
       </div>
 
-      <div className="flex-1 relative ml-18  min-h-screen h-full bg-[#F9FAFC]">
+      <div className="flex-1 relative ml-20  min-h-screen h-full bg-[#F9FAFC]">
         {/* topnav */}
         <TopNavbar />
         <div className="pt-20">

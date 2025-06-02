@@ -15,7 +15,7 @@ import SignupSuccessfull from "@/pages/authentication/SignupSuccessfull";
 import SignupVerifyNumber from "@/pages/authentication/SignupVerifyNumber";
 import VerifyNumber from "@/pages/authentication/VerifyNumber";
 import SetUpBusiness from "@/pages/onboarding/SetUpBusiness";
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, Navigate } from "react-router";
 import BusinessInfo from "../components/SettingsPages/BusinessInfo";
 import Location from "../components/SettingsPages/Location";
 import Subscription from "../components/SettingsPages/Subscription";
@@ -289,6 +289,10 @@ export const routes = createBrowserRouter([
     element: <MainLayout tabs={adminTabs} />,
     children: [
       {
+        index: true,
+        element: <Navigate to="service-classification" />,
+      },
+      {
         path: "service-classification",
         element: <MyProfileLayout tabs={dataManagementTabs} />,
         children: [
@@ -300,7 +304,7 @@ export const routes = createBrowserRouter([
       },
       {
         path: "menu-category",
-        element: <MyProfileLayout />,
+        element: <MyProfileLayout tabs={dataManagementTabs} />,
         children: [
           {
             index: true,

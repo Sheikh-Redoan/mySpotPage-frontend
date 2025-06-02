@@ -65,7 +65,7 @@ export const adminTabs = [
     name: "Data Management",
     imagePink: imageProvider.database,
     imageWhite: imageProvider.databaseCol,
-    link: "/data-management/service-classification",
+    link: "/data-management",
   },
   {
     id: 5,

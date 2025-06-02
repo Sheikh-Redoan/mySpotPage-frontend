@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Tabs } from "antd";
-import { Link } from "react-router"; 
+import { Link } from "react-router"; // Make sure this is react-router-dom
 import AllAppoimtment from "../../components/calendarManagement/AllAppointment";
 import PendingBookings from "../../components/calendarManagement/PendingBookings";
 import WaitlistsOverview from "../../components/calendarManagement/WaitlistsOverview";
@@ -26,11 +26,11 @@ const items = [
 ];
 
 function CalendarManagementPage() {
-  const [activeTabKey, setActiveTabKey] = useState("1"); 
-  const [isModalOpen, setIsModalOpen] = useState(false); 
+  const [activeTabKey, setActiveTabKey] = useState("1");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onChange = (key) => {
-    setActiveTabKey(key); 
+    setActiveTabKey(key);
     console.log(key);
   };
 
@@ -41,6 +41,7 @@ function CalendarManagementPage() {
   const renderContent = () => {
     switch (activeTabKey) {
       case "1":
+        // AllAppoimtment now renders the CustomStaffCalendar internally
         return <AllAppoimtment />;
       case "2":
         return <PendingBookings />;
@@ -49,7 +50,7 @@ function CalendarManagementPage() {
       case "4":
         return <BlacklistsOverview />;
       default:
-        return <AllAppoimtment />; 
+        return <AllAppoimtment />;
     }
   };
 
@@ -108,7 +109,6 @@ function CalendarManagementPage() {
 
       {/* Render content based on activeTabKey */}
       {renderContent()}
-
     </div>
   );
 }

@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 // const initialState = null;
 const initialState = {
   name: "User",
-  role: "admin",
+  role: "client",
   photoURL: null,
 };
 

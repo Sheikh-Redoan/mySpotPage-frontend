@@ -5,12 +5,16 @@ import Popup from "../../components/shared/Popup";
 import { imageProvider } from "../../lib/imageProvider";
 import NotificationPopup from "./NotificationPopup";
 
-function TopNavbar() {
+function TopNavbar({ activeTab }) {
   const [toggle, setToggle] = useState(true);
   const popupRef = useRef(null);
   const iconRef = useRef(null);
   const location = useLocation();
-  const tab = location?.pathname?.split("/")[1]?.split("-")?.join(" ");
+  const pathname = location?.pathname?.split("/");
+
+  const tab = activeTab
+    ? activeTab.split("-").join(" ")
+    : pathname[2].split("-").join(" ");
 
   const notificationButtons = ["All", "Read", "Unread"];
 

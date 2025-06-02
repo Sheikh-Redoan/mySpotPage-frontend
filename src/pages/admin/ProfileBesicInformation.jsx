@@ -85,20 +85,20 @@ const ProfileBasicInformation = () => {
         breadcrumbs={getBreadcrumbs(0, 3, [
           {
             name: nameParam ? "Account Management" : "My Profile",
-            link: nameParam && `/account-management`,
+            link: nameParam && `/admin/account-management`,
           },
 
           nameParam
             ? {
                 name: nameParam.split("-").join(" "),
-                link: `/account-management/${nameParam}`,
+                link: `/admin/account-management/${nameParam}`,
               }
             : false,
 
           {
             name: "Basic Information",
             link: nameParam
-              ? `/account-management/${nameParam}/basic-information`
+              ? `/admin/account-management/${nameParam}/basic-information`
               : "/profile-management/my-profile/basic-information",
           },
         ])}

@@ -1,6 +1,3 @@
-
-
-
 import SalesChart from "../components/DashboardPageComponents/SalesChart";
 import RepeatClientChart from "../components/DashboardPageComponents/RepeatClientChart";
 import { GoArrowUp } from "react-icons/go";

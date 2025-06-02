@@ -3,6 +3,7 @@ import "/src/styles/fullCalender.css";
 import ReusableCalendar, { createEventId } from "../reuseableComponent/ReuseableCalendar";
 import AppointmentActionsBtn from "../client/client-appointment/AppointmentActionsBtn";
 import { useState } from "react";
+import { toYYYYMMDD } from "../../utils/toYYYYMMDD";
 
 export const INITIAL_EVENTS = [
   {
@@ -16,15 +17,6 @@ export const INITIAL_EVENTS = [
     start: dayjs().format("YYYY-MM-DD") + "T12:00:00",
   },
 ];
-
-// Helper to convert date to YYYY-MM-DD (could be a utility function)
-const toYYYYMMDD = (dateInput) => {
-  const d = new Date(dateInput);
-  const year = d.getFullYear();
-  const month = `0${d.getMonth() + 1}`.slice(-2);
-  const day = `0${d.getDate()}`.slice(-2);
-  return `${year}-${month}-${day}`;
-};
 
 export default function AllAppointment() {
   const [currentView, setCurrentView] = useState("dayGridMonth");

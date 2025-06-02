@@ -1,10 +1,9 @@
-import LangSettings from "@/pages/authentication/LangSettings";
-import React from "react";
+import { Outlet } from "react-router";
 
 const Authentication = () => {
   return (
     <div>
-      <LangSettings />
+      <Outlet />
     </div>
   );
 };

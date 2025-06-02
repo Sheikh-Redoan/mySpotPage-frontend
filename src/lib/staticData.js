@@ -58,21 +58,21 @@ export const adminTabs = [
     name: "User Management",
     imagePink: imageProvider.PeoplePink,
     imageWhite: imageProvider.PeopleWhite,
-    link: "/user-management",
+    link: "/admin/user-management",
   },
   {
     id: 1,
     name: "Data Management",
     imagePink: imageProvider.database,
     imageWhite: imageProvider.databaseCol,
-    link: "/data-management/service-classification",
+    link: "/admin/data-management",
   },
   {
     id: 5,
     name: "Settings",
     imagePink: imageProvider.SettingsPink,
     imageWhite: imageProvider.SettingsWhite,
-    link: "/settings",
+    link: "/dashboard/settings",
   },
 ];
 

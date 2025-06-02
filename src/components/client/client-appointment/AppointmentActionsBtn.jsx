@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import { Button } from "antd";
+import { useState } from "react";
+import { Link } from "react-router";
 import WaitingListModal from "./WaitingListModal";
 
 const AppointmentActionsBtn = () => {
@@ -19,19 +21,20 @@ const AppointmentActionsBtn = () => {
           No suitable time slot?{" "}
           <button
             onClick={handleOpenWaitlistModal}
-            className="hover:text-indigo-700 text-[#744CDB] text-sm underline bg-transparent border-none p-0 cursor-pointer"
-          >
+            className="hover:text-indigo-700 text-[#744CDB] text-sm underline bg-transparent border-none p-0 cursor-pointer">
             Join our waitlist!
           </button>
         </p>
-        <button className="px-6 py-2 text-[#82868E] bg-[#E5E7E8] rounded-md hover:bg-[#ECEBFC] transition-colors cursor-pointer">
-          Continue
-        </button>
+        <Link to="/service-provider-info/confirm">
+          <Button type="default" className="!bg-black !text-white">
+            Continue
+          </Button>
+        </Link>
       </div>
 
       <WaitingListModal
-        isOpen={isWaitlistModalOpen} 
-        onClose={handleCloseWaitlistModal} 
+        isOpen={isWaitlistModalOpen}
+        onClose={handleCloseWaitlistModal}
       />
     </>
   );

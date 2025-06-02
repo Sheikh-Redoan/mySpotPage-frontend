@@ -1,6 +1,7 @@
 // src/components/seller/Header.jsx
 import React from "react";
 import { GoGear } from "react-icons/go";
+import { Link } from "react-router"; // Import Link from react-router-dom
 
 const Header = ({ activeTab, onTabChange }) => {
   const tabs = ["Active Staff", "Inactive Staff", "Calendar View"];
@@ -24,12 +25,18 @@ const Header = ({ activeTab, onTabChange }) => {
           </button>
         ))}
       </div>
-      <button className="h-10 px-3 py-2 bg-white rounded-lg border border-neutral-300 flex justify-center items-center gap-2 hover:bg-gray-50 transition-colors duration-200">
-        <GoGear className="w-5 h-5 text-neutral-700" />
-        <span className="text-neutral-700 text-sm font-semibold font-['Golos_Text'] leading-tight">
-          Settings
-        </span>
-      </button>
+      {/*
+        Corrected usage: Wrap the entire button element with the Link component.
+        This makes the whole button clickable and handles navigation via React Router.
+      */}
+      <Link to="/staff-management/settings"> {/* Link to the new staff settings route */}
+        <button className="h-10 px-3 py-2 bg-white rounded-lg border border-neutral-300 flex justify-center items-center gap-2 hover:bg-gray-50 transition-colors duration-200">
+          <GoGear className="w-5 h-5 text-neutral-700" />
+          <span className="text-neutral-700 text-sm font-semibold font-['Golos_Text'] leading-tight">
+            Settings
+          </span>
+        </button>
+      </Link>
     </div>
   );
 };

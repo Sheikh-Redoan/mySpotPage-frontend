@@ -61,7 +61,7 @@ function MainLayout({ tabs, activeTab }) {
                         "py-2 justify-center items-center px-3 transiton-all duration-300 flex w-fit text-white cursor-pointer rounded-xl"
                       )
                     }
-                    end>
+                    end={tab?.end}>
                     {({ isActive }) => (
                       <>
                         <img src={isActive ? tab.imageWhite : tab.imagePink} />

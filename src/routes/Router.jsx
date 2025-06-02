@@ -34,6 +34,7 @@ import {
   dataManagementTabs,
   profileMainTabs,
   profileTabs,
+  staffSettingsTabs,
   userManagementTabs,
 } from "../lib/staticData";
 import BasicInfo from "../pages/BasicInfo";
@@ -254,6 +255,19 @@ export const routes = createBrowserRouter([
       { path: "pricing", element: <TimePage /> },
       { path: "client-management", element: <ClientPage /> },
       { path: "staff-management", element: <StaffManagement /> }, // Staff management for seller
+      {
+        path: "staff-settings",
+        element: <MyProfileLayout tabs={staffSettingsTabs} />,
+        children: [
+          { index: true, element: <div>Modal</div> },
+          {
+            path: "basic-information",
+            element: <BusinessInfo />,
+          },
+          { path: "location", element: <Location /> },
+          { path: "subscription", element: <Subscription /> },
+        ],
+      },
 
       {
         path: "client",

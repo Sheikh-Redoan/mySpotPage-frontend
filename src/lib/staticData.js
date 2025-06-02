@@ -7,6 +7,7 @@ export const dashboardTabs = [
     imagePink: imageProvider.ChartLinePink,
     imageWhite: imageProvider.ChartLineWhite,
     link: "/dashboard",
+    end: true,
   },
   {
     id: 1,
@@ -14,6 +15,7 @@ export const dashboardTabs = [
     imagePink: imageProvider.CalendarPink,
     imageWhite: imageProvider.CalendarWhite,
     link: "/dashboard/calendar",
+    end: true,
   },
   {
     id: 2,
@@ -21,6 +23,7 @@ export const dashboardTabs = [
     imagePink: imageProvider.ServicePink,
     imageWhite: imageProvider.ServiceWhite,
     link: "/dashboard/service-menu",
+    end: true,
   },
   {
     id: 3,
@@ -28,6 +31,7 @@ export const dashboardTabs = [
     imagePink: imageProvider.PricingPink,
     imageWhite: imageProvider.PricingWhite,
     link: "/dashboard/pricing",
+    end: true,
   },
   {
     id: 4,
@@ -35,6 +39,7 @@ export const dashboardTabs = [
     imagePink: imageProvider.seller_pink,
     imageWhite: imageProvider.seller_white,
     link: "/dashboard/staff-management",
+    end: true,
   },
   {
     id: 5,
@@ -42,6 +47,7 @@ export const dashboardTabs = [
     imagePink: imageProvider.PeoplePink,
     imageWhite: imageProvider.PeopleWhite,
     link: "/dashboard/client-management",
+    end: true,
   },
   {
     id: 6,
@@ -49,6 +55,7 @@ export const dashboardTabs = [
     imagePink: imageProvider.SettingsPink,
     imageWhite: imageProvider.SettingsWhite,
     link: "/dashboard/settings",
+    end: true,
   },
 ];
 
@@ -165,6 +172,30 @@ export const dataManagementTabs = [
     // imagePink: imageProvider.cardCol,
     // imageWhite: imageProvider.card,
     link: "/admin/data-management/menu-category",
+  },
+];
+
+export const staffSettingsTabs = [
+  {
+    id: 0,
+    name: "Basic Information",
+    imagePink: imageProvider.buildingCol,
+    imageWhite: imageProvider.building,
+    link: "basic-information",
+  },
+  {
+    id: 1,
+    name: "Location",
+    imagePink: imageProvider.location,
+    imageWhite: imageProvider.location,
+    link: "location",
+  },
+  {
+    id: 1,
+    name: "Subscription",
+    imagePink: imageProvider.securityPink,
+    imageWhite: imageProvider.securityBlack,
+    link: "subscription",
   },
 ];
 

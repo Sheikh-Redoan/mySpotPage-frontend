@@ -1,6 +1,5 @@
 import Authentication from "@/layout/Authentication";
 import OnboardLayout from "@/layout/OnboardLayout";
-import { dashboardTabs } from "@/lib/staticData";
 import ClientPage from "@/pages/ClientPage";
 import DashboardPage from "@/pages/DashboardPage";
 import ServicePage from "@/pages/ServicePage";
@@ -78,6 +77,7 @@ import ClientInfoFormPage from "../pages/calenderManagement/addBookingByProvider
 import SelectStaffForProvider from "../pages/calenderManagement/addBookingByProvider/SelectStaffForProvider";
 import ServicesPageForProvider from "../pages/calenderManagement/addBookingByProvider/ServicesPageForProvider";
 import ClientAppointmentCal from "../pages/client/ClientAppointmentCal";
+import ProtectedRoute from "../pages/layout/ProtectedRoute";
 import OTPVerificationPage from "../pages/onboarding/OTPVerificationPage";
 import StaffInformationPage from "../pages/onboarding/StaffInformationPage";
 import StaffSecurityPage from "../pages/onboarding/StaffSecurityPage";
@@ -85,9 +85,14 @@ import StaffServicesPage from "../pages/onboarding/StaffServicesPage";
 import StaffWorkingHoursPage from "../pages/onboarding/StaffWorkingHoursPage";
 
 export const routes = createBrowserRouter([
+  // Seller Routes / Protected
   {
     path: "/",
-    element: <MainLayout tabs={dashboardTabs} />,
+    element: (
+      <ProtectedRoute>
+        <MainLayout tabs={profileMainTabs} />
+      </ProtectedRoute>
+    ),
     errorElement: <ErrorPage />,
     children: [
       {
@@ -189,6 +194,8 @@ export const routes = createBrowserRouter([
       },
     ],
   },
+
+  // Client Routes/Public route
   {
     path: "/service-provider-info",
     element: <ClientLayout />,
@@ -199,36 +206,60 @@ export const routes = createBrowserRouter([
         element: <ServiceProviderInfo />,
       },
       {
-        path: "service",
-        element: <div>Service Page</div>,
-      },
-      {
         path: "enter-address",
-        element: <EnterAddress />,
+        element: (
+          <ProtectedRoute>
+            <EnterAddress />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "select-staff",
-        element: <SelectStaff />,
+        element: (
+          <ProtectedRoute>
+            <SelectStaff />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "select-time",
-        element: <ClientAppointmentCal />,
+        element: (
+          <ProtectedRoute>
+            <ClientAppointmentCal />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "confirm",
-        element: <ConfirmPage />,
+        element: (
+          <ProtectedRoute>
+            <ConfirmPage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "confirm-staff",
-        element: <ConfirmStaff />,
+        element: (
+          <ProtectedRoute>
+            <ConfirmStaff />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "confirmation-pending",
-        element: <ConfirmPending />,
+        element: (
+          <ProtectedRoute>
+            <ConfirmPending />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "confirmation",
-        element: <ConfirmBooking />,
+        element: (
+          <ProtectedRoute>
+            <ConfirmBooking />
+          </ProtectedRoute>
+        ),
       },
     ],
   },

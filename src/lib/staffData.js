@@ -1,3 +1,4 @@
+// src/data/staffData.js
 export const staffData = [
   {
     id: 1,

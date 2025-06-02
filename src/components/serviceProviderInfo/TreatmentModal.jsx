@@ -109,7 +109,7 @@ const TreatmentModal = ({ open, onCancel, onContinue, services }) => {
               onClick={onCancel}>
               Cancel
             </button>
-            <Link to="select-staff">
+            <Link to="service-provider-info">
               <button
                 className="bg-gray-900 text-white py-2 px-6 rounded-lg text-sm font-semibold cursor-pointer"
                 disabled={!getSelectedTreatment(selectedService?.id)}

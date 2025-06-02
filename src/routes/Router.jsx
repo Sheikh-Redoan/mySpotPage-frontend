@@ -1,4 +1,5 @@
-import Authentication from "@/layout/Authentication";
+// src/routes/index.jsx (or wherever your routes are defined)
+
 import OnboardLayout from "@/layout/OnboardLayout";
 import ClientPage from "@/pages/ClientPage";
 import DashboardPage from "@/pages/DashboardPage";
@@ -14,7 +15,7 @@ import SignupSuccessfull from "@/pages/authentication/SignupSuccessfull";
 import SignupVerifyNumber from "@/pages/authentication/SignupVerifyNumber";
 import VerifyNumber from "@/pages/authentication/VerifyNumber";
 import SetUpBusiness from "@/pages/onboarding/SetUpBusiness";
-import { createBrowserRouter, Navigate } from "react-router";
+import { createBrowserRouter, Navigate, Outlet } from "react-router"; // Use react-router-dom for Navigate and Outlet
 import BusinessInfo from "../components/SettingsPages/BusinessInfo";
 import Location from "../components/SettingsPages/Location";
 import Subscription from "../components/SettingsPages/Subscription";
@@ -39,6 +40,7 @@ import BasicInfo from "../pages/BasicInfo";
 import BookingInfo from "../pages/BookingInfo";
 import DynamicSubSideBarLayout from "../pages/DynamicSubSideBarLayout";
 import ErrorPage from "../pages/ErrorPage";
+import ForbiddenPage from "../pages/ForbiddenPage";
 import ProviderNotes from "../pages/ProviderNotes";
 import BasicInformation from "../pages/admin/BasicInformation";
 import ProfileBesicInformation from "../pages/admin/ProfileBesicInformation";
@@ -67,6 +69,7 @@ import SetupTeamLocationServices1 from "../pages/onboarding/team/SetupTeamLocati
 import SetupTeamLocationServices2 from "../pages/onboarding/team/SetupTeamLocationServices2";
 import StaffManagement from "../pages/seller/StaffManagement";
 
+// Adjust path
 import AccountManagement from "../pages/admin/AccountManagement";
 import MenuCategory from "../pages/admin/MenuCategory";
 import ServiceClassification from "../pages/admin/ServiceClassification";
@@ -79,7 +82,12 @@ import ConfirmPageForProvider from "../pages/calenderManagement/addBookingByProv
 import SelectStaffForProvider from "../pages/calenderManagement/addBookingByProvider/SelectStaffForProvider";
 import ServicesPageForProvider from "../pages/calenderManagement/addBookingByProvider/ServicesPageForProvider";
 import ClientAppointmentCal from "../pages/client/ClientAppointmentCal";
+
+import Authentication from "../layout/Authentication";
+import AdminRoute from "../pages/layout/AdminRoute";
+import ClientOnlyRoute from "../pages/layout/ClientOnlyRoute";
 import ProtectedRoute from "../pages/layout/ProtectedRoute";
+import SellerRoute from "../pages/layout/SellerRoute";
 import OTPVerificationPage from "../pages/onboarding/OTPVerificationPage";
 import StaffInformationPage from "../pages/onboarding/StaffInformationPage";
 import StaffSecurityPage from "../pages/onboarding/StaffSecurityPage";
@@ -87,12 +95,141 @@ import StaffServicesPage from "../pages/onboarding/StaffServicesPage";
 import StaffWorkingHoursPage from "../pages/onboarding/StaffWorkingHoursPage";
 
 export const routes = createBrowserRouter([
-  // Seller Routes / Protected
+  // Public Routes (Accessible to everyone)
   {
     path: "/",
+    element: <ClientLayout />, // Assuming this is the layout for public/client-facing pages
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        index: true,
+        element: <ServiceProviderInfo />, // Public landing page
+      },
+      {
+        path: "our-work", // Public route
+        element: <OurWorkDetails />,
+      },
+      // Client-specific booking flow (can be accessed by authenticated clients)
+      {
+        path: "service-provider-info",
+        element: (
+          <ProtectedRoute>
+            <ClientOnlyRoute>
+              {/* Ensure only clients can access this specific flow */}
+              <Outlet />
+            </ClientOnlyRoute>
+          </ProtectedRoute>
+        ),
+        children: [
+          {
+            index: true,
+            element: <SelectStaff />,
+          },
+          {
+            path: "enter-address",
+            element: <EnterAddress />,
+          },
+          {
+            path: "select-time",
+            element: <ClientAppointmentCal />,
+          },
+          {
+            path: "confirm",
+            element: <ConfirmPage />,
+          },
+          {
+            path: "confirm-staff",
+            element: <ConfirmStaff />,
+          },
+          {
+            path: "confirmation-pending",
+            element: <ConfirmPending />,
+          },
+          {
+            path: "confirmation",
+            element: <ConfirmBooking />,
+          },
+        ],
+      },
+    ],
+  },
+
+  // Authentication/Onboarding Routes (Generally public, but some steps might be restricted)
+  {
+    path: "/auth",
+    element: <Authentication />,
+    children: [
+      { path: "signin", element: <Signin /> },
+      { path: "forgot-password", element: <ForgotPassword /> },
+      { path: "verify-number", element: <VerifyNumber /> },
+      { path: "reset-password", element: <ResetPassword /> },
+      { path: "reset-successfull", element: <ResetSuccessfull /> },
+      { path: "signup", element: <Signup /> },
+      { path: "signup-verify-number", element: <SignupVerifyNumber /> },
+      { path: "setup-signup", element: <SetupSignup /> },
+      { path: "signup-successfull", element: <SignupSuccessfull /> },
+    ],
+  },
+
+  // Individual auth pages outside the /auth nested route
+  { path: "/signin", element: <Signin /> },
+  { path: "/forgot-password", element: <ForgotPassword /> },
+  { path: "/verify-number", element: <VerifyNumber /> },
+  { path: "/reset-password", element: <ResetPassword /> },
+  { path: "/reset-successfull", element: <ResetSuccessfull /> },
+  { path: "/signup", element: <Signup /> },
+  { path: "/signup-verify-number", element: <SignupVerifyNumber /> },
+  { path: "/setup-signup", element: <SetupSignup /> },
+  { path: "/signup-successfull", element: <SignupSuccessfull /> },
+
+  // Onboarding Routes (Protected after initial setup, generally for new sellers/staff)
+  {
+    path: "/onboard",
     element: (
       <ProtectedRoute>
-        <MainLayout tabs={dashboardTabs} />
+        <OnboardLayout />{" "}
+        {/* Assuming OnboardLayout handles overall onboarding UI */}
+      </ProtectedRoute>
+    ),
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        index: true,
+        element: <SetUpBusiness />,
+      },
+      { path: "setup-location", element: <SetUpLocation /> },
+      { path: "setup-services1", element: <SetupLocationServices1 /> },
+      { path: "setup-services2", element: <SetupLocationServices2 /> },
+      { path: "setup-teamservices1", element: <SetupTeamLocationServices1 /> },
+      { path: "setup-teamservices2", element: <SetupTeamLocationServices2 /> },
+      { path: "service", element: <SetUpService /> },
+      { path: "service-table", element: <ServiceTable /> },
+      { path: "verify-staff-otp", element: <OTPVerificationPage /> },
+      { path: "staff-info", element: <StaffInformationPage /> },
+      { path: "services-settings", element: <StaffServicesPage /> },
+      { path: "working-shift-settings", element: <StaffWorkingHoursPage /> },
+      { path: "security-settings", element: <StaffSecurityPage /> },
+    ],
+  },
+
+  // General Success/Subscription Pages (Can be accessed after certain actions, might need protection)
+  { path: "/success-notification", element: <SuccessNotifications /> },
+  { path: "/upgrade-plan", element: <Upgradeplan /> }, // Consider if this needs ProtectedRoute
+  { path: "/checkout", element: <CheckOut /> }, // Consider if this needs ProtectedRoute
+  { path: "/success-upgrade", element: <SuccessUpgrade /> },
+  { path: "/success-downgrade", element: <SuccessDowngrade /> },
+  { path: "/cancel-subscription", element: <CancelSubscription /> },
+  { path: "/add-card", element: <AddCard /> },
+
+  // Seller/Provider Dashboard Routes (Protected by SellerRoute)
+  {
+    path: "/dashboard", // This is the seller's main dashboard
+    element: (
+      <ProtectedRoute>
+        <SellerRoute>
+          <MainLayout tabs={dashboardTabs} />{" "}
+          {/* MainLayout for seller dashboard */}
+        </SellerRoute>
       </ProtectedRoute>
     ),
     errorElement: <ErrorPage />,
@@ -101,415 +238,160 @@ export const routes = createBrowserRouter([
         index: true,
         element: <DashboardPage />,
       },
+      { path: "calendar", element: <CalendarManagementPage /> },
       {
-        path: "/calendar",
-        element: <CalendarManagementPage />,
-      },
-      {
-        path: "/add-booking-by-provider",
+        path: "add-booking-by-provider",
         element: <AddBookingByProvider />,
-        errorElement: <ErrorPage />,
         children: [
-          {
-            index: true,
-            element: <ClientInfoFormPage />,
-          },
-          {
-            path: "select-services",
-            element: <ServicesPageForProvider />,
-          },
-          {
-            path: "select-staff",
-            element: <SelectStaffForProvider />,
-          },
-          {
-            path: "select-time",
-            element: <ClientAppointmentCalForProvider />,
-          },
-          {
-            path: "confirm",
-            element: <ConfirmPageForProvider />,
-          },
+          { index: true, element: <ClientInfoFormPage /> },
+          { path: "select-services", element: <ServicesPageForProvider /> },
+          { path: "select-staff", element: <SelectStaffForProvider /> },
+          { path: "select-time", element: <ClientAppointmentCalForProvider /> },
+          { path: "confirm", element: <ConfirmPageForProvider /> },
         ],
       },
+      { path: "service-menu", element: <ServicePage /> },
+      { path: "pricing", element: <TimePage /> },
+      { path: "client-management", element: <ClientPage /> },
+      { path: "staff-management", element: <StaffManagement /> }, // Staff management for seller
       {
-        path: "/service-menu",
-        element: <ServicePage />,
-      },
-      {
-        path: "/pricing",
-        element: <TimePage />,
-      },
-      {
-        path: "/client-management",
-        element: <ClientPage />,
-      },
-      {
-        path: "/seller-management",
-        element: <StaffManagement />,
-      },
-      {
-        path: "/client",
+        path: "client",
         element: (
           <DynamicSubSideBarLayout
-            indexPath="/client/basic-info"
+            indexPath="/dashboard/client/basic-info"
             items={clientNavItems}
           />
         ),
         children: [
-          {
-            path: "basic-info",
-            element: <BasicInfo />,
-          },
-          {
-            path: "booking-info",
-            element: <BookingInfo />,
-          },
-          {
-            path: "provider-notes",
-            element: <ProviderNotes />,
-          },
+          { path: "basic-info", element: <BasicInfo /> },
+          { path: "booking-info", element: <BookingInfo /> },
+          { path: "provider-notes", element: <ProviderNotes /> },
         ],
       },
       {
-        path: "/settings",
+        path: "settings",
         element: (
           <DynamicSubSideBarLayout
-            indexPath="/settings"
+            indexPath="/dashboard/settings"
             items={settingsNavItems}
           />
         ),
         children: [
-          {
-            index: true,
-            element: <BusinessInfo />,
-          },
-          {
-            path: "location",
-            element: <Location />,
-          },
-          {
-            path: "subscription",
-            element: <Subscription />,
-          },
+          { index: true, element: <BusinessInfo /> },
+          { path: "location", element: <Location /> },
+          { path: "subscription", element: <Subscription /> },
         ],
       },
+      // Consider adding specific routes for subscription changes if they are part of seller settings
+      { path: "settings/upgrade-plan", element: <Upgradeplan /> },
+      { path: "settings/checkout", element: <CheckOut /> },
+      { path: "settings/success-upgrade", element: <SuccessUpgrade /> },
+      { path: "settings/success-downgrade", element: <SuccessDowngrade /> },
+      { path: "settings/cancel-subscription", element: <CancelSubscription /> },
+      { path: "settings/add-card", element: <AddCard /> },
     ],
   },
 
-  // Client Routes/Public route
+  // Admin Dashboard Routes (Protected by AdminRoute)
   {
-    path: "/service-provider-info",
-    element: <ClientLayout />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        index: true,
-        element: <ServiceProviderInfo />,
-      },
-      {
-        path: "enter-address",
-        element: (
-          <ProtectedRoute>
-            <EnterAddress />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "select-staff",
-        element: (
-          <ProtectedRoute>
-            <SelectStaff />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "select-time",
-        element: (
-          <ProtectedRoute>
-            <ClientAppointmentCal />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "confirm",
-        element: (
-          <ProtectedRoute>
-            <ConfirmPage />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "confirm-staff",
-        element: (
-          <ProtectedRoute>
-            <ConfirmStaff />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "confirmation-pending",
-        element: (
-          <ProtectedRoute>
-            <ConfirmPending />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "confirmation",
-        element: (
-          <ProtectedRoute>
-            <ConfirmBooking />
-          </ProtectedRoute>
-        ),
-      },
-    ],
-  },
-
-  {
-    path: "/user-management",
+    path: "/admin", // Changed from /user-management to a more general /admin path
     element: (
       <ProtectedRoute>
-        <MainLayout tabs={adminTabs} />
+        <AdminRoute>
+          <MainLayout tabs={adminTabs} /> {/* MainLayout for admin dashboard */}
+        </AdminRoute>
       </ProtectedRoute>
     ),
     errorElement: <ErrorPage />,
     children: [
       {
         index: true,
-        element: <UserManagement />,
+        element: <Navigate to="user-management" />, // Redirect to user-management by default
       },
       {
-        path: ":name",
-        element: <MyProfileLayout tabs={userManagementTabs} />,
+        path: "user-management", // Nested under /admin
+        element: <Outlet />, // Use Outlet for nested routes
         children: [
+          { index: true, element: <UserManagement /> },
           {
-            path: "business-information",
-            element: <BasicInformation />,
-          },
-          {
-            path: "subscription",
-            element: <Subscriptions />,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    path: "/account-management",
-    element: <MainLayout tabs={adminTabs} />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        index: true,
-        element: <AccountManagement />,
-      },
-      {
-        path: ":name",
-        element: <MyProfileLayout tabs={accountManagementProfileTabs} />,
-        children: [
-          {
-            path: "basic-information",
-            element: <ProfileBesicInformation />,
-          },
-          {
-            path: "security",
-            element: <ProfileSecurity />,
-          },
-        ],
-      },
-    ],
-  },
-
-  {
-    path: "/data-management",
-    element: <MainLayout tabs={adminTabs} />,
-    children: [
-      {
-        index: true,
-        element: <Navigate to="service-classification" />,
-      },
-      {
-        path: "service-classification",
-        element: <MyProfileLayout tabs={dataManagementTabs} />,
-        children: [
-          {
-            index: true,
-            element: <ServiceClassification />,
+            path: ":name", // Use userId for specific user
+            element: <MyProfileLayout tabs={userManagementTabs} />,
+            children: [
+              { path: "business-information", element: <BasicInformation /> },
+              { path: "subscription", element: <Subscriptions /> },
+            ],
           },
         ],
       },
       {
-        path: "menu-category",
-        element: <MyProfileLayout tabs={dataManagementTabs} />,
+        path: "account-management", // Nested under /admin
+        element: <Outlet />,
         children: [
+          { index: true, element: <AccountManagement /> },
           {
-            index: true,
-            element: <MenuCategory />,
+            path: ":accountId", // Use accountId for specific account
+            element: <MyProfileLayout tabs={accountManagementProfileTabs} />,
+            children: [
+              {
+                path: "basic-information",
+                element: <ProfileBesicInformation />,
+              },
+              { path: "security", element: <ProfileSecurity /> },
+            ],
+          },
+        ],
+      },
+      {
+        path: "data-management", // Nested under /admin
+        element: <Outlet />,
+        children: [
+          { index: true, element: <Navigate to="service-classification" /> },
+          {
+            path: "service-classification",
+            element: <MyProfileLayout tabs={dataManagementTabs} />,
+            children: [{ index: true, element: <ServiceClassification /> }],
+          },
+          {
+            path: "menu-category",
+            element: <MyProfileLayout tabs={dataManagementTabs} />,
+            children: [{ index: true, element: <MenuCategory /> }],
           },
         ],
       },
     ],
   },
 
+  // User Profile Management (Accessible by all authenticated users, potentially with different views)
   {
-    path: "/profile-management",
-    element: <MainLayout tabs={profileMainTabs} />,
+    path: "/profile", // Renamed from /profile-management for brevity and clarity
+    element: (
+      <ProtectedRoute>
+        <MainLayout tabs={profileMainTabs} />
+        {/* Assuming MainLayout is used for profiles */}
+      </ProtectedRoute>
+    ),
     errorElement: <ErrorPage />,
     children: [
       {
         path: "my-profile",
         element: <MyProfileLayout tabs={profileTabs} />,
-        errorElement: <ErrorPage />,
         children: [
-          {
-            path: "basic-information",
-            element: <ProfileBesicInformation />,
-          },
-          {
-            path: "security",
-            element: <ProfileSecurity />,
-          },
+          { path: "basic-information", element: <ProfileBesicInformation /> },
+          { path: "security", element: <ProfileSecurity /> },
         ],
       },
     ],
   },
 
+  // Forbidden Page
   {
-    path: "/our-work",
-    element: <OurWorkDetails />,
-  },
-  {
-    path: "/setup", // Example path for OTP verification
-    element: <OTPVerificationPage />,
+    path: "/forbidden",
+    element: <ForbiddenPage />,
   },
 
+  // Catch-all for 404
   {
-    path: "/onboard", // Main path for general onboarding flows
-    element: <OnboardLayout />, // Assuming OnboardLayout handles overall onboarding UI
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        index: true,
-        element: <SetUpBusiness />,
-      },
-      {
-        path: "setup-location",
-        element: <SetUpLocation />,
-      },
-      {
-        path: "setup-services1",
-        element: <SetupLocationServices1 />,
-      },
-      {
-        path: "setup-services2",
-        element: <SetupLocationServices2 />,
-      },
-      {
-        path: "setup-teamservices1",
-        element: <SetupTeamLocationServices1 />,
-      },
-      {
-        path: "setup-teamservices2",
-        element: <SetupTeamLocationServices2 />,
-      },
-      {
-        path: "service",
-        element: <SetUpService />,
-      },
-      {
-        path: "service-table",
-        element: <ServiceTable />,
-      },
-      {
-        path: "verify-staff-otp", // Example path for OTP verification
-        element: <OTPVerificationPage />,
-      },
-      {
-        path: "staff-info", // Example path for staff information entry
-        element: <StaffInformationPage />,
-      },
-      {
-        path: "services-settings", // NEW ROUTE FOR STAFF SERVICES
-        element: <StaffServicesPage />,
-      },
-      {
-        path: "working-shift-settings", // NEW ROUTE FOR WORKING SHIFT SETTINGS
-        element: <StaffWorkingHoursPage />,
-      },
-      {
-        path: "security-settings", // NEW ROUTE FOR SECURITY SETTINGS
-        element: <StaffSecurityPage />,
-      },
-    ],
-  },
-
-  {
-    path: "/success-notification",
-    element: <SuccessNotifications />,
-  },
-  {
-    path: "/auth",
-    element: <Authentication />,
-  },
-  {
-    path: "/signin",
-    element: <Signin />,
-  },
-  {
-    path: "/forgot-password",
-    element: <ForgotPassword />,
-  },
-  {
-    path: "/verify-number",
-    element: <VerifyNumber />,
-  },
-  {
-    path: "/reset-password",
-    element: <ResetPassword />,
-  },
-  {
-    path: "/reset-successfull",
-    element: <ResetSuccessfull />,
-  },
-  {
-    path: "/signup",
-    element: <Signup />,
-  },
-  {
-    path: "/signup-verify-number",
-    element: <SignupVerifyNumber />,
-  },
-  {
-    path: "/setup-signup",
-    element: <SetupSignup />,
-  },
-  {
-    path: "/signup-successfull",
-    element: <SignupSuccessfull />,
-  },
-  {
-    path: "/upgrade-plan",
-    element: <Upgradeplan />,
-  },
-  {
-    path: "/checkout",
-    element: <CheckOut />,
-  },
-  {
-    path: "/success-upgrade",
-    element: <SuccessUpgrade />,
-  },
-  {
-    path: "/success-downgrade",
-    element: <SuccessDowngrade />,
-  },
-  {
-    path: "/cancel-subscription",
-    element: <CancelSubscription />,
-  },
-  {
-    path: "/add-card",
-    element: <AddCard />,
+    path: "*",
+    element: <ErrorPage />,
   },
 ]);

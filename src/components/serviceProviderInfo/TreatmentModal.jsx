@@ -60,16 +60,14 @@ const TreatmentModal = ({ open, onCancel, onContinue, services }) => {
           {services.map((service, index) => (
             <div
               key={service.id}
-              className={`p-4 rounded-lg cursor-pointer mb-2 shrink-0 md:shrink ${
-                selectedServiceIndex === index ? "bg-highlight01" : ""
-              }`}
+              className={`p-4 rounded-lg cursor-pointer mb-2 shrink-0 md:shrink ${selectedServiceIndex === index ? "bg-highlight01" : ""
+                }`}
               onClick={() => setSelectedServiceIndex(index)}>
               <div
-                className={`font-semibold ${
-                  selectedServiceIndex === index
+                className={`font-semibold ${selectedServiceIndex === index
                     ? "text-primary01"
                     : "text-gray-800"
-                }`}>
+                  }`}>
                 {service.title}
               </div>
               <div className="text-sm text-description mt-1">
@@ -93,9 +91,12 @@ const TreatmentModal = ({ open, onCancel, onContinue, services }) => {
                 <div className="text-start md:w-[14%]">
                   <div className="flex flex-row md:flex-col items-center md:items-start gap-2 md:gap-0 text-sm py-3 ml-6 md:ml-0">
                     <p className="text-description">{treatment?.duration}</p>
-                    <p className="text-primary01 font-semibold md:mt-2">
-                      {treatment?.price}
-                    </p>
+                    <div>
+                      <span className="font-semibold text-lg text-primary01">&#8362;</span>
+                      <span className="text-primary01 font-semibold md:mt-2">
+                        {treatment?.price}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>

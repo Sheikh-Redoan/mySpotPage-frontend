@@ -34,7 +34,7 @@ export const dashboardTabs = [
     name: "Seller Menu",
     imagePink: imageProvider.seller_pink,
     imageWhite: imageProvider.seller_white,
-    link: "/dashboard/seller-management",
+    link: "/dashboard/staff-management",
   },
   {
     id: 5,

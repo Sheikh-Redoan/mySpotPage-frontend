@@ -254,7 +254,7 @@ export const routes = createBrowserRouter([
       { path: "pricing", element: <TimePage /> },
       { path: "client-management", element: <ClientPage /> },
       { path: "staff-management", element: <StaffManagement /> }, // Staff management for seller
-      { path: "seller-management", element: <div>Seller management</div> },
+
       {
         path: "client",
         element: (

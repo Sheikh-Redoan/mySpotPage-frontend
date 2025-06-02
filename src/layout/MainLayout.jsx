@@ -67,7 +67,7 @@ function MainLayout({ tabs, activeTab }) {
                         <img src={isActive ? tab.imageWhite : tab.imagePink} />
                         <h4
                           className={cn(
-                            isActive && "text-white",
+                            isActive && "!text-white",
                             "transition-all text-primary01 duration-300 whitespace-nowrap overflow-hidden",
                             toggle
                               ? "w-0 opacity-0 invisible  "

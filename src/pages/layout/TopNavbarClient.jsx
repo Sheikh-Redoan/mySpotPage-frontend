@@ -1,10 +1,13 @@
+import { useSelector } from "react-redux";
 import logo from "../../assets/images/logo.png";
 import UserMenuPopUp from "../../components/admin/UserMenuPopUp";
 import LanguageSelectModal from "../../components/modal/LanguageSelectModal";
 import Popup from "../../components/shared/Popup";
+import { selectUser } from "../../redux/features/userSlice";
 import Container from "../client/Container";
 
 export default function TopNavbarClient({ isLoggedIn = true }) {
+  const user = useSelector(selectUser);
   return (
     <header className="border-b border-black/5 sticky top-0 bg-white z-50">
       <nav>

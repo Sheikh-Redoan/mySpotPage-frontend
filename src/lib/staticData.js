@@ -72,7 +72,7 @@ export const adminTabs = [
     name: "Settings",
     imagePink: imageProvider.SettingsPink,
     imageWhite: imageProvider.SettingsWhite,
-    link: "/settings",
+    link: "/dashboard/settings",
   },
 ];
 

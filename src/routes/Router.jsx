@@ -84,6 +84,9 @@ import StaffSecurityPage from "../pages/onboarding/StaffSecurityPage";
 import StaffServicesPage from "../pages/onboarding/StaffServicesPage";
 import StaffWorkingHoursPage from "../pages/onboarding/StaffWorkingHoursPage";
 import ConfirmPageForProvider from "../pages/calenderManagement/addBookingByProvider/ConfirmPageForProvider";
+import StaffSettingsPage from "../pages/seller/StaffSettingsPage";
+import ManagerPermissions from "../components/staff-settings/ManagerPermissions";
+import ReceptionistPermissions from "../components/staff-settings/ReceptionistPermissions";
 
 export const routes = createBrowserRouter([
   {
@@ -98,6 +101,24 @@ export const routes = createBrowserRouter([
       {
         path: "/calendar",
         element: <CalendarManagementPage />,
+      },
+      {
+        path: "/staff-management/settings", // This is your StaffSettingsPage route
+        element: <StaffSettingsPage />, // Currently, it's not a child of MainLayout
+        children: [
+          {
+            index: true,
+            element: <ManagerPermissions />,
+          },
+          {
+            path: "manager",
+            element: <ManagerPermissions />,
+          },
+          {
+            path: "receptionist",
+            element: <ReceptionistPermissions />,
+          },
+        ],
       },
       {
         path: "/add-booking-by-provider",
@@ -122,7 +143,7 @@ export const routes = createBrowserRouter([
           },
           {
             path: "confirm",
-            element: <ConfirmPageForProvider/>,
+            element: <ConfirmPageForProvider />,
           },
         ],
       },
@@ -284,6 +305,7 @@ export const routes = createBrowserRouter([
       },
     ],
   },
+ 
 
   {
     path: "/data-management",

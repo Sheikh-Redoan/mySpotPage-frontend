@@ -6,7 +6,7 @@ import Popup from "../../components/shared/Popup";
 import { selectUser } from "../../redux/features/userSlice";
 import Container from "../client/Container";
 
-export default function TopNavbarClient({ isLoggedIn = true }) {
+export default function TopNavbarClient() {
   const user = useSelector(selectUser);
   return (
     <header className="border-b border-black/5 sticky top-0 bg-white z-50">
@@ -21,18 +21,7 @@ export default function TopNavbarClient({ isLoggedIn = true }) {
               />
             </div>
 
-            <div className="cursor-pointer">
-              {user ? (
-                <img
-                  className="w-10 h-10 rounded-full bg-white"
-                  src="https://png.pngtree.com/png-vector/20231019/ourmid/pngtree-user-profile-avatar-png-image_10211467.png"
-                  alt=""
-                />
-              ) : (
-                <LanguageSelectModal />
-              )}
-            </div>
-            {isLoggedIn ? (
+            {user ? (
               <Popup
                 buttonComp={() => (
                   <div className="cursor-pointer">

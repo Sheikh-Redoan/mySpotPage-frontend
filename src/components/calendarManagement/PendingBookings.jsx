@@ -1,9 +1,18 @@
 import React, { useState } from "react";
-import { Table, Select, Pagination, Tooltip } from "antd";
+import {
+  Table,
+  Select,
+  Pagination,
+  Tooltip,
+  Input,
+  Checkbox,
+  Button,
+  Space,
+} from "antd";
 import { MdCheckCircleOutline } from "react-icons/md";
 import { IoArrowDownOutline, IoCloseCircleOutline } from "react-icons/io5";
 import CustomEmptyTable from "../DashboardPageComponents/shared/CustomEmptyTable";
-import { FilterFilled } from "../../assets/icons/icons";
+import { FilterFilled, SearchOutlined } from "../../assets/icons/icons";
 
 // Mock service for pending bookings data
 const getPendingBookings = () => {
@@ -126,12 +135,51 @@ const PendingBookings = () => {
     getPendingBookings().length
   );
 
+  // State for service filter dropdown
+  const [selectedServiceFilters, setSelectedServiceFilters] = useState([]);
+  const [
+    serviceFilterDropdownSearchQuery,
+    setServiceFilterDropdownSearchQuery,
+  ] = useState("");
+  const [serviceFilterOpen, setServiceFilterOpen] = useState(false); 
+
+  const applyFilters = (currentSearchQuery, currentServiceFilters) => {
+    let results = getPendingBookings();
+
+    // Apply main search query
+    if (currentSearchQuery) {
+      results = results.filter(
+        (booking) =>
+          booking.clientName
+            .toLowerCase()
+            .includes(currentSearchQuery.toLowerCase()) ||
+          booking.clientPhone
+            .toLowerCase()
+            .includes(currentSearchQuery.toLowerCase()) ||
+          booking.staffName
+            .toLowerCase()
+            .includes(currentSearchQuery.toLowerCase())
+      );
+    }
+
+    // Apply service filters
+    if (currentServiceFilters.length > 0) {
+      results = results.filter((booking) =>
+        currentServiceFilters.some((filterService) =>
+          booking.services.includes(filterService)
+        )
+      );
+    }
+
+    setBookings(results);
+    setTotalBookings(results.length);
+    setCurrentPage(1);
+  };
+
   const handleSearch = (value) => {
     setSearchQuery(value);
-    const filteredResults = searchPendingBookings(value);
-    setBookings(filteredResults);
-    setTotalBookings(filteredResults.length);
-    setCurrentPage(1);
+    // Apply filters based on current search and previously selected service filters
+    applyFilters(value, selectedServiceFilters);
   };
 
   const handlePageSizeChange = (value) => {
@@ -140,21 +188,47 @@ const PendingBookings = () => {
   };
 
   const handleApproveBooking = (id) => {
-    // Logic to approve booking
     console.log(`Booking ${id} approved`);
-    // In a real application, you would update the backend and then refetch data
-    // For this mock, we'll just filter it out or change its status
     setBookings(bookings.filter((booking) => booking.id !== id));
     setTotalBookings(totalBookings - 1);
   };
 
   const handleRejectBooking = (id) => {
-    // Logic to reject booking
     console.log(`Booking ${id} rejected`);
-    // In a real application, you would update the backend and then refetch data
-    // For this mock, we'll just filter it out or change its status
     setBookings(bookings.filter((booking) => booking.id !== id));
     setTotalBookings(totalBookings - 1);
+  };
+
+  // Extract unique services for filter dropdown
+  const allUniqueServices = [
+    ...new Set(getPendingBookings().flatMap((booking) => booking.services)),
+  ];
+
+  // Filtered services for the dropdown search
+  const filteredDropdownServices = allUniqueServices.filter((service) =>
+    service
+      .toLowerCase()
+      .includes(serviceFilterDropdownSearchQuery.toLowerCase())
+  );
+
+  const handleServiceFilterChange = (service) => {
+    setSelectedServiceFilters((prev) =>
+      prev.includes(service)
+        ? prev.filter((s) => s !== service)
+        : [...prev, service]
+    );
+  };
+
+  const handleApplyServiceFilter = (confirm) => {
+    applyFilters(searchQuery, selectedServiceFilters);
+    confirm(); // Close the filter dropdown
+  };
+
+  const handleResetServiceFilter = (clearFilters) => {
+    setSelectedServiceFilters([]);
+    setServiceFilterDropdownSearchQuery("");
+    applyFilters(searchQuery, []); 
+    clearFilters(); 
   };
 
   const columns = [
@@ -192,35 +266,83 @@ const PendingBookings = () => {
       title: "Service",
       dataIndex: "services",
       key: "service",
-      filters: [
-        {
-          text: "London",
-          value: "London",
-        },
-        {
-          text: "New York",
-          value: "New York",
-        },
-      ],
-      onFilter: (value, record) => record.address.startsWith(value),
-      filterSearch: true,
-      // render: (services) => (
-      //   <div className="flex flex-col">
-      //     <span className="text-[#262626] text-sm font-medium">
-      //       {services[0]}
-      //     </span>
-      //     {services.slice(1).map((service, index) => (
-      //       <span key={index} className="text-[#888] text-xs">
-      //         {service}
-      //       </span>
-      //     ))}
-      //   </div>
-      // ),
+      render: (services) => (
+        <div className="flex flex-col">
+          <span className="text-[#262626] text-sm font-medium">
+            {services[0]}
+          </span>
+          {services.slice(1).map((service, index) => (
+            <span key={index} className="text-[#888] text-xs">
+              {service}
+            </span>
+          ))}
+        </div>
+      ),
+      // --- CUSTOM FILTER DROPDOWN IMPLEMENTATION ---
+      filterDropdown: ({
+        setSelectedKeys,
+        selectedKeys,
+        confirm,
+        clearFilters,
+        close,
+      }) => (
+        <div className="p-2 bg-white rounded-lg shadow-lg w-[320px]">
+          <div className="mb-4">
+            <Input
+              placeholder="Search services"
+              value={serviceFilterDropdownSearchQuery}
+              onChange={(e) => {
+                setServiceFilterDropdownSearchQuery(e.target.value);
+              }}
+              className="w-full px-4 py-2 border border-[#E5E7EB] rounded-lg focus:ring-1 focus:ring-[#111827] focus:border-[#111827]"
+              prefix={<SearchOutlined className="text-gray-400" />}
+            />
+          </div>
+          <div className="max-h-[280px] overflow-y-auto space-y-2 mb-4">
+            {filteredDropdownServices.map((service) => (
+              <div key={service} className="flex items-center">
+                <Checkbox
+                  checked={selectedServiceFilters.includes(service)}
+                  onChange={() => handleServiceFilterChange(service)}
+                  className="rounded border-[#E5E7EB] checked:bg-[#111827] checked:border-[#111827] checked:hover:bg-[#111827] hover:border-[#111827]"
+                >
+                  <span className="text-sm text-[#111827]">{service}</span>
+                </Checkbox>
+              </div>
+            ))}
+          </div>
+          <div className="flex gap-3">
+            <button
+              onClick={() => handleResetServiceFilter(clearFilters)}
+              className="flex-1 px-4 py-2 text-sm font-medium text-[#111827] bg-white border border-[#E5E7EB] rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              Reset
+            </button>
+            <button
+              onClick={() => handleApplyServiceFilter(confirm)}
+              className="flex-1 px-4 py-2 text-sm font-medium text-white bg-[#111827] rounded-lg hover:bg-black transition-colors"
+            >
+              Apply
+            </button>
+          </div>
+        </div>
+      ),
       filterIcon: (filtered) => (
         <FilterFilled
-          className="fill-[#797979]"
+          className={
+            selectedServiceFilters.length > 0 || filtered
+              ? "fill-[#F6F6F6]"
+              : "fill-[#797979]"
+          }
         />
       ),
+      onFilterDropdownVisibleChange: (visible) => {
+        setServiceFilterOpen(visible);
+        // When the dropdown closes, apply the filters based on current state
+        if (!visible) {
+          applyFilters(searchQuery, selectedServiceFilters);
+        }
+      },
     },
     {
       title: "Staff Name",
@@ -234,7 +356,6 @@ const PendingBookings = () => {
       dataIndex: "totalDuration",
       key: "totalDuration",
       sorter: (a, b) => {
-        // Simple duration sorting, can be improved for more complex formats
         const parseDuration = (duration) => {
           const parts = duration.match(/(\d+h)?\s*(\d+m)?/);
           let hours = parseInt(parts[1] || "0h") || 0;
@@ -257,10 +378,8 @@ const PendingBookings = () => {
       dataIndex: "status",
       key: "status",
       render: (text) => (
-        <div className="flex items-center gap-1">
-          <span className="size-2 rounded-full bg-[#FFC107]"></span>{" "}
-          {/* Orange dot for Pending */}
-          <span className="text-[#262626] text-sm">{text}</span>
+        <div className="rounded-full bg-[#FFF4EA] text-center">
+          <span className="text-xs text-[#FC8B23]">{text}</span>
         </div>
       ),
     },

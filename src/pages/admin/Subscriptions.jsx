@@ -17,15 +17,15 @@ export default function Subscriptions() {
         breadcrumbs={getBreadcrumbs(0, 3, [
           {
             name: "User Management",
-            link: "/user-management",
+            link: "/admin/user-management",
           },
           {
             name: name.split("-").join(" "),
-            link: `/user-management${name}`,
+            link: `/admin/user-management${name}`,
           },
           {
             name: "Subscription",
-            link: `/user-management/${name}/subscription`,
+            link: `/admin/user-management/${name}/subscription`,
           },
         ])}
       />

@@ -6,49 +6,56 @@ export const dashboardTabs = [
     name: "Dashboard",
     imagePink: imageProvider.ChartLinePink,
     imageWhite: imageProvider.ChartLineWhite,
-    link: "/",
+    link: "/dashboard",
+    end: true,
   },
   {
     id: 1,
     name: "Calendar Management",
     imagePink: imageProvider.CalendarPink,
     imageWhite: imageProvider.CalendarWhite,
-    link: "/calendar",
+    link: "/dashboard/calendar",
+    end: true,
   },
   {
     id: 2,
     name: "Service Menu",
     imagePink: imageProvider.ServicePink,
     imageWhite: imageProvider.ServiceWhite,
-    link: "/service-menu",
+    link: "/dashboard/service-menu",
+    end: true,
   },
   {
     id: 3,
     name: "Time-based Pricing",
     imagePink: imageProvider.PricingPink,
     imageWhite: imageProvider.PricingWhite,
-    link: "/pricing",
+    link: "/dashboard/pricing",
+    end: true,
   },
   {
     id: 4,
     name: "Seller Menu",
     imagePink: imageProvider.seller_pink,
     imageWhite: imageProvider.seller_white,
-    link: "/seller-management",
+    link: "/dashboard/staff-management",
+    end: true,
   },
   {
     id: 5,
     name: "Client Management",
     imagePink: imageProvider.PeoplePink,
     imageWhite: imageProvider.PeopleWhite,
-    link: "/client-management",
+    link: "/dashboard/client-management",
+    end: true,
   },
   {
     id: 6,
     name: "Settings",
     imagePink: imageProvider.SettingsPink,
     imageWhite: imageProvider.SettingsWhite,
-    link: "/settings",
+    link: "/dashboard/settings",
+    end: true,
   },
 ];
 
@@ -72,31 +79,31 @@ export const adminTabs = [
     name: "Settings",
     imagePink: imageProvider.SettingsPink,
     imageWhite: imageProvider.SettingsWhite,
-    link: "/dashboard/settings",
+    link: "/admin/admin-settings",
   },
 ];
 
 export const profileMainTabs = [
   {
     id: 0,
-    name: "My profile",
+    name: "User Management",
     imagePink: imageProvider.PeoplePink,
     imageWhite: imageProvider.PeopleWhite,
-    link: "/user-management",
+    link: "/admin/user-management",
   },
   {
     id: 1,
     name: "Data Management",
     imagePink: imageProvider.database,
     imageWhite: imageProvider.databaseCol,
-    link: "/data-management/service-classification",
+    link: "/admin/data-management/service-classification",
   },
   {
     id: 2,
     name: "Settings",
     imagePink: imageProvider.SettingsPink,
     imageWhite: imageProvider.SettingsWhite,
-    link: "/settings",
+    link: "/admin/admin-settings",
   },
 ];
 
@@ -106,14 +113,14 @@ export const profileTabs = [
     name: "Basic Information",
     imagePink: imageProvider.PeoplePink,
     imageWhite: imageProvider.PeopleBlack,
-    link: "/profile-management/my-profile/basic-information",
+    link: "/my-profile/basic-information",
   },
   {
     id: 1,
     name: "Security",
     imagePink: imageProvider.securityPink,
     imageWhite: imageProvider.securityBlack,
-    link: "/profile-management/my-profile/security",
+    link: "/my-profile/security",
   },
 ];
 
@@ -157,14 +164,38 @@ export const dataManagementTabs = [
     name: "Service Classification ",
     // imagePink: imageProvider.buildingCol,
     // imageWhite: imageProvider.building,
-    link: "/data-management/service-classification",
+    link: "/admin/data-management/service-classification",
   },
   {
     id: 1,
     name: "Menu Category",
     // imagePink: imageProvider.cardCol,
     // imageWhite: imageProvider.card,
-    link: "/data-management/menu-category",
+    link: "/admin/data-management/menu-category",
+  },
+];
+
+export const staffSettingsTabs = [
+  {
+    id: 0,
+    name: "Basic Information",
+    imagePink: imageProvider.buildingCol,
+    imageWhite: imageProvider.building,
+    link: "basic-information",
+  },
+  {
+    id: 1,
+    name: "Location",
+    imagePink: imageProvider.location,
+    imageWhite: imageProvider.location,
+    link: "location",
+  },
+  {
+    id: 1,
+    name: "Subscription",
+    imagePink: imageProvider.securityPink,
+    imageWhite: imageProvider.securityBlack,
+    link: "subscription",
   },
 ];
 

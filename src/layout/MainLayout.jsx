@@ -60,13 +60,14 @@ function MainLayout({ tabs, activeTab }) {
                         isActive && "bg-primary01 text-white",
                         "py-2 justify-center items-center px-3 transiton-all duration-300 flex w-fit text-white cursor-pointer rounded-xl"
                       )
-                    }>
+                    }
+                    end={tab?.end}>
                     {({ isActive }) => (
                       <>
                         <img src={isActive ? tab.imageWhite : tab.imagePink} />
                         <h4
                           className={cn(
-                            isActive && "text-white",
+                            isActive && "!text-white",
                             "transition-all text-primary01 duration-300 whitespace-nowrap overflow-hidden",
                             toggle
                               ? "w-0 opacity-0 invisible  "

@@ -1,5 +1,4 @@
 // src/components/seller/Header.jsx
-import React from "react";
 import { GoGear } from "react-icons/go";
 import { Link } from "react-router"; // Import Link from react-router-dom
 
@@ -17,8 +16,7 @@ const Header = ({ activeTab, onTabChange }) => {
                 ? "border-violet-500 text-violet-500 font-semibold"
                 : "border-gray-200 text-gray-500 font-normal hover:border-gray-300"
             }`}
-            onClick={() => onTabChange(tab)}
-          >
+            onClick={() => onTabChange(tab)}>
             <span className="text-center text-base font-['Golos_Text'] leading-normal">
               {tab}
             </span>
@@ -29,7 +27,8 @@ const Header = ({ activeTab, onTabChange }) => {
         Corrected usage: Wrap the entire button element with the Link component.
         This makes the whole button clickable and handles navigation via React Router.
       */}
-      <Link to="/staff-management/settings"> {/* Link to the new staff settings route */}
+      <Link to="/dashboard/staff-settings">
+        {/* Link to the new staff settings route */}
         <button className="h-10 px-3 py-2 bg-white rounded-lg border border-neutral-300 flex justify-center items-center gap-2 hover:bg-gray-50 transition-colors duration-200">
           <GoGear className="w-5 h-5 text-neutral-700" />
           <span className="text-neutral-700 text-sm font-semibold font-['Golos_Text'] leading-tight">

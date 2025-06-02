@@ -13,8 +13,8 @@ function TopNavbar({ activeTab }) {
   const pathname = location?.pathname?.split("/");
 
   const tab = activeTab
-    ? activeTab.split("-").join(" ")
-    : pathname[2].split("-").join(" ");
+    ? activeTab?.split("-").join(" ")
+    : pathname[2]?.split("-").join(" ");
 
   const notificationButtons = ["All", "Read", "Unread"];
 

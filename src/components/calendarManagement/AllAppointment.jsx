@@ -6,7 +6,26 @@ import ReusableCalendar, {
 import AppointmentActionsBtn from "../client/client-appointment/AppointmentActionsBtn";
 import { useState } from "react";
 import { toYYYYMMDD } from "../../utils/toYYYYMMDD";
-import AppointmentStatusesAction from "./AppointmentStatusesAction";
+import { ClientAppointmentItem } from "./allAppointment/ClientAppointmentItem";
+
+const appointments = [
+  {
+    date: "2025-06-01",
+    appointments: [
+      { time: "10:00", clientName: "John Doe" },
+      { time: "11:00", clientName: "Jane Smith" },
+      { time: "12:00", clientName: "Alice Johnson" },
+    ],
+  },
+  {
+    date: "2025-06-02",
+    appointments: [
+      { time: "10:00", clientName: "John Doe" },
+      { time: "11:00", clientName: "Jane Smith" },
+      { time: "12:00", clientName: "Alice Johnson" },
+    ],
+  },
+];
 
 export const INITIAL_EVENTS = [
   {
@@ -29,6 +48,9 @@ export default function AllAppointment() {
     const formattedDayNumber =
       dayNumber < 10 ? `0${dayNumber}` : dayNumber.toString();
     const dateStr = toYYYYMMDD(dayCellInfo.date);
+    console.log("dateStr", dateStr);
+    const foundAppointments = appointments.find((a) => a.date === dateStr);
+    console.log("foundAppointments", foundAppointments);
 
     if (currentView === "dayGridMonth") {
       return (
@@ -39,7 +61,17 @@ export default function AllAppointment() {
             </span>
           </div>
 
-          <AppointmentStatusesAction />
+          {/* All Client Appointments List */}
+          <div className="flex flex-col gap-1">
+            {foundAppointments?.appointments &&
+              foundAppointments?.appointments.map((appointment, index) => (
+                <ClientAppointmentItem
+                  key={index}
+                  time={appointment.time}
+                  clientName={appointment.clientName}
+                />
+              ))}
+          </div>
         </div>
       );
     }

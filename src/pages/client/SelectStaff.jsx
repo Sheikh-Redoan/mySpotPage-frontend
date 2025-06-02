@@ -76,7 +76,8 @@ export default function SelectStaff() {
             discountAmount={0}
             total={0}
             paymentInstruction={""}
-            buttonTitle={"Continue"}
+            buttonTittle={"Continue"}
+            buttonpath="/service-provider-info/select-time"
           />
         </div>
       </Container>

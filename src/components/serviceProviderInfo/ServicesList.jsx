@@ -12,15 +12,15 @@ const services = [
     description:
       "Classic Ombre is a hair coloring technique that gradually transitions from a darker shade at the roots to a lighter shade at the ends, creating a natural, sun-kissed effect.",
     duration: "1h",
-    price: "from ₦70.00",
+    price: "70.00",
     image: service1,
     treatments: [
-      { name: "Smooth / Scalp Treatment", duration: "1h", price: "₦70.00" },
-      { name: "Shadow Root", duration: "1h 15m", price: "₦80.00" },
-      { name: "Keratin Treatment", duration: "1h 30m", price: "₦100.00" },
-      { name: "Perm / Texture Wave", duration: "1h 45m", price: "₦110.00" },
-      { name: "Deep Conditioning Treatment", duration: "1h 20m", price: "₦90.00" },
-      { name: "Hair Botox", duration: "1h 40m", price: "₦120.00" },
+      { name: "Smooth / Scalp Treatment", duration: "1h", price: "70.00" },
+      { name: "Shadow Root", duration: "1h 15m", price: "80.00" },
+      { name: "Keratin Treatment", duration: "1h 30m", price: "100.00" },
+      { name: "Perm / Texture Wave", duration: "1h 45m", price: "110.00" },
+      { name: "Deep Conditioning Treatment", duration: "1h 20m", price: "90.00" },
+      { name: "Hair Botox", duration: "1h 40m", price: "120.00" },
     ],
   },
   {
@@ -29,15 +29,15 @@ const services = [
     description:
       "Reverse Ombre is a hair coloring style where the hair fades from a lighter shade at the roots to a darker shade at the ends, offering a bold and modern contrast.",
     duration: "1h 45m",
-    price: "from ₦100.00",
+    price: "100.00",
     image: service2,
     treatments: [
-      { name: "Smooth ", duration: "1h", price: "₦70.00" },
-      { name: "Shadow Root", duration: "1h 15m", price: "₦80.00" },
-      { name: "Keratin Treatment", duration: "1h 30m", price: "₦100.00" },
-      { name: "Perm ", duration: "1h 45m", price: "₦110.00" },
-      { name: "Deep Conditioning Treatment", duration: "1h 20m", price: "₦90.00" },
-      { name: "Hair Botox", duration: "1h 40m", price: "₦120.00" },
+      { name: "Smooth ", duration: "1h", price: "70.00" },
+      { name: "Shadow Root", duration: "1h 15m", price: "80.00" },
+      { name: "Keratin Treatment", duration: "1h 30m", price: "100.00" },
+      { name: "Perm ", duration: "1h 45m", price: "110.00" },
+      { name: "Deep Conditioning Treatment", duration: "1h 20m", price: "90.00" },
+      { name: "Hair Botox", duration: "1h 40m", price: "120.00" },
     ],
   },
   {
@@ -46,15 +46,15 @@ const services = [
     description:
       "Smoothing Keratin Treatment is a hair treatment that smooths and strengthens hair by infusing keratin protein, reducing frizz, enhancing shine, and making hair more manageable.",
     duration: "1h 30m",
-    price: "from ₦80.00",
+    price: "80.00",
     image: service3,
     treatments: [
-      { name: "Smooth / Scalp Treatment", duration: "1h", price: "₦70.00" },
-      { name: "Shadow Root", duration: "1h 15m", price: "₦80.00" },
-      { name: "Keratin Treatment", duration: "1h 30m", price: "₦100.00" },
-      { name: "Perm / Texture Wave", duration: "1h 45m", price: "₦110.00" },
-      { name: "Deep Conditioning Treatment", duration: "1h 20m", price: "₦90.00" },
-      { name: "Hair Botox", duration: "1h 40m", price: "₦120.00" },
+      { name: "Smooth / Scalp Treatment", duration: "1h", price: "70.00" },
+      { name: "Shadow Root", duration: "1h 15m", price: "80.00" },
+      { name: "Keratin Treatment", duration: "1h 30m", price: "100.00" },
+      { name: "Perm / Texture Wave", duration: "1h 45m", price: "110.00" },
+      { name: "Deep Conditioning Treatment", duration: "1h 20m", price: "90.00" },
+      { name: "Hair Botox", duration: "1h 40m", price: "120.00" },
     ],
   },
   {
@@ -63,15 +63,15 @@ const services = [
     description:
       "Balayage with Toner is a freehand hair-coloring technique that creates soft, natural highlights, with a toner applied to refine the shade and ensure a seamless, blended finish.",
     duration: "30m",
-    price: "₦100.00",
+    price: "100.00",
     image: service4,
     treatments: [
-      { name: "Smooth / Scalp Treatment", duration: "1h", price: "₦70.00" },
-      { name: "Shadow Root", duration: "1h 15m", price: "₦80.00" },
-      { name: "Keratin Treatment", duration: "1h 30m", price: "₦100.00" },
-      { name: "Perm / Texture Wave", duration: "1h 45m", price: "₦110.00" },
-      { name: "Deep Conditioning Treatment", duration: "1h 20m", price: "₦90.00" },
-      { name: "Hair Botox", duration: "1h 40m", price: "₦120.00" },
+      { name: "Smooth / Scalp Treatment", duration: "1h", price: "70.00" },
+      { name: "Shadow Root", duration: "1h 15m", price: "80.00" },
+      { name: "Keratin Treatment", duration: "1h 30m", price: "100.00" },
+      { name: "Perm / Texture Wave", duration: "1h 45m", price: "110.00" },
+      { name: "Deep Conditioning Treatment", duration: "1h 20m", price: "90.00" },
+      { name: "Hair Botox", duration: "1h 40m", price: "120.00" },
     ],
   },
   {
@@ -80,21 +80,21 @@ const services = [
     description:
       "Balayage & Root Shadow is a balayage technique combined with a root shadow, where a darker shade is blended into the roots for a soft, natural transition and effortless regrowth.",
     duration: "2h 30m",
-    price: "from ₦90.00",
+    price: "90.00",
     image: service5,
     treatments: [
-      { name: "Smooth / Scalp Treatment", duration: "1h", price: "₦70.00" },
-      { name: "Shadow Root", duration: "1h 15m", price: "₦80.00" },
-      { name: "Keratin Treatment", duration: "1h 30m", price: "₦100.00" },
-      { name: "Perm / Texture Wave", duration: "1h 45m", price: "₦110.00" },
-      { name: "Deep Conditioning Treatment", duration: "1h 20m", price: "₦90.00" },
-      { name: "Hair Botox", duration: "1h 40m", price: "₦120.00" },
+      { name: "Smooth / Scalp Treatment", duration: "1h", price: "70.00" },
+      { name: "Shadow Root", duration: "1h 15m", price: "80.00" },
+      { name: "Keratin Treatment", duration: "1h 30m", price: "100.00" },
+      { name: "Perm / Texture Wave", duration: "1h 45m", price: "110.00" },
+      { name: "Deep Conditioning Treatment", duration: "1h 20m", price: "90.00" },
+      { name: "Hair Botox", duration: "1h 40m", price: "120.00" },
     ],
   },
 ];
 
 
-export default function ServicesList({ selected, setSelected, label="Our Services" }) {
+export default function ServicesList({ selected, setSelected, label = "Our Services" }) {
 
   const toggleSelect = (service) => {
     const isSelected = selected.some((item) => item.id === service.id);
@@ -126,10 +126,14 @@ export default function ServicesList({ selected, setSelected, label="Our Service
                 <p className="text-sm text-description mt-1">
                   {service.description}
                 </p>
-                <div className="text-sm flex items-center gap-3 mt-4 md:mt-2">
-                  <span>{service.duration}</span>
-                  <span className="bg-[#d1d1d1] size-2 rounded-full"></span>
-                  <span className="text-primary01 font-semibold">{service.price}</span>
+                <div className=" flex items-center gap-3 mt-4 md:mt-2">
+                    <p className="text-sm">{service.duration}</p>
+                    <p className="bg-[#d1d1d1] size-2 rounded-full"></p>
+                  <div className="flex items-center">
+                    <p className="text-primary01 font-semibold text-base">from</p>
+                    <p className="font-semibold text-lg text-primary01 ml-2">&#8362;</p>
+                    <p className="text-primary01 font-semibold">{service.price}</p>
+                  </div>
                 </div>
               </div>
               <input

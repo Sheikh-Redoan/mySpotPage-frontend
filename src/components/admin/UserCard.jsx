@@ -11,7 +11,9 @@ export default function UserCard({ user }) {
 
   return (
     <Link
-      to={`/user-management/${name.split(" ").join("-")}/business-information`}>
+      to={`/admin/user-management/${name
+        .split(" ")
+        .join("-")}/business-information`}>
       <Card variant="outlined">
         <div className="flex items-start justify-between border-b border-dashed border-gray-200 pb-4">
           <Space>

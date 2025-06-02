@@ -1,9 +1,12 @@
 import dayjs from "dayjs";
 import "/src/styles/fullCalender.css";
-import ReusableCalendar, { createEventId } from "../reuseableComponent/ReuseableCalendar";
+import ReusableCalendar, {
+  createEventId,
+} from "../reuseableComponent/ReuseableCalendar";
 import AppointmentActionsBtn from "../client/client-appointment/AppointmentActionsBtn";
 import { useState } from "react";
 import { toYYYYMMDD } from "../../utils/toYYYYMMDD";
+import AppointmentStatusesAction from "./AppointmentStatusesAction";
 
 export const INITIAL_EVENTS = [
   {
@@ -27,15 +30,19 @@ export default function AllAppointment() {
       dayNumber < 10 ? `0${dayNumber}` : dayNumber.toString();
     const dateStr = toYYYYMMDD(dayCellInfo.date);
 
-    return (
-      <div className="relative w-full h-full flex flex-col md:flex-row items-center justify-center md:justify-start gap-3">
-        {
-          currentView === "dayGridMonth" && (
-            <span className="text-[0.875rem] p-[4px] z-1">{formattedDayNumber}</span>
-          )
-        }
-      </div>
-    );
+    if (currentView === "dayGridMonth") {
+      return (
+        <div className="w-full h-full flex flex-col justify-center md:justify-start gap-3">
+          <div>
+            <span className="text-[0.875rem] p-[4px] z-1">
+              {formattedDayNumber}
+            </span>
+          </div>
+
+          <AppointmentStatusesAction />
+        </div>
+      );
+    }
   };
 
   const renderCustomDayHeaderContent = (arg) => {
@@ -63,6 +70,7 @@ export default function AllAppointment() {
           onDayClick={() => null}
           currentView={currentView}
           setCurrentView={setCurrentView}
+          applyFilter={true}
         />
       </div>
     </section>

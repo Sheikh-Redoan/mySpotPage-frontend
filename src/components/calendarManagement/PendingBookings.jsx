@@ -13,102 +13,8 @@ import { MdCheckCircleOutline } from "react-icons/md";
 import { IoArrowDownOutline, IoCloseCircleOutline } from "react-icons/io5";
 import CustomEmptyTable from "../DashboardPageComponents/shared/CustomEmptyTable";
 import { FilterFilled, SearchOutlined } from "../../assets/icons/icons";
-
-// Mock service for pending bookings data
-const getPendingBookings = () => {
-  return [
-    {
-      id: "1",
-      scheduledDate: "09/01/2025",
-      scheduledTime: "13:00",
-      clientName: "Emily",
-      clientPhone: "(+1) 234 567 890",
-      services: [
-        "Classic Ombre",
-        "Smooth/Scalp treatment",
-        "Cut + Treatment",
-        "Moisture treatment",
-      ],
-      staffName: "Pixe Nomad",
-      totalDuration: "1h 45m",
-      totalPrice: "264.60",
-      status: "Pending",
-      avatar: "E",
-    },
-    {
-      id: "2",
-      scheduledDate: "12/01/2025",
-      scheduledTime: "14:00",
-      clientName: "Alexander",
-      clientPhone: "(+1) 234 567 890",
-      services: [
-        "Haircut",
-        "Smooth/Scalp treatment",
-        "Cut + Treatment",
-        "Moisture treatment",
-      ],
-      staffName: "Code Voyager",
-      totalDuration: "2h 30m",
-      totalPrice: "264.60",
-      status: "Pending",
-      avatar: "A",
-    },
-    {
-      id: "3",
-      scheduledDate: "14/01/2025",
-      scheduledTime: "14:00",
-      clientName: "Scarlett",
-      clientPhone: "(+1) 234 567 890",
-      services: [
-        "Haircut",
-        "Smooth/Scalp treatment",
-        "Cut + Treatment",
-        "Moisture treatment",
-      ],
-      staffName: "Pixe Nomad",
-      totalDuration: "30m",
-      totalPrice: "264.60",
-      status: "Pending",
-      avatar: "S",
-    },
-    {
-      id: "4",
-      scheduledDate: "18/01/2025",
-      scheduledTime: "14:00",
-      clientName: "Joseph",
-      clientPhone: "(+1) 234 567 890",
-      services: [
-        "Haircut",
-        "Smooth/Scalp treatment",
-        "Cut + Treatment",
-        "Moisture treatment",
-      ],
-      staffName: "John Doe",
-      totalDuration: "1h",
-      totalPrice: "264.60",
-      status: "Pending",
-      avatar: "J",
-    },
-    {
-      id: "5",
-      scheduledDate: "20/01/2025",
-      scheduledTime: "14:00",
-      clientName: "Thomas",
-      clientPhone: "(+1) 234 567 890",
-      services: [
-        "Haircut",
-        "Smooth/Scalp treatment",
-        "Cut + Treatment",
-        "Moisture treatment",
-      ],
-      staffName: "Echo Sage",
-      totalDuration: "1h 45m",
-      totalPrice: "264.60",
-      status: "Pending",
-      avatar: "T",
-    },
-  ];
-};
+import { getPendingBookings } from "../../dummy-data/bookingsData";
+import { useNavigate } from "react-router";
 
 const searchPendingBookings = (query) => {
   const allBookings = getPendingBookings();
@@ -127,6 +33,7 @@ const searchPendingBookings = (query) => {
 const { Option } = Select;
 
 const PendingBookings = () => {
+  const navigate = useNavigate();
   const [bookings, setBookings] = useState(getPendingBookings());
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -141,7 +48,7 @@ const PendingBookings = () => {
     serviceFilterDropdownSearchQuery,
     setServiceFilterDropdownSearchQuery,
   ] = useState("");
-  const [serviceFilterOpen, setServiceFilterOpen] = useState(false); 
+  const [serviceFilterOpen, setServiceFilterOpen] = useState(false);
 
   const applyFilters = (currentSearchQuery, currentServiceFilters) => {
     let results = getPendingBookings();
@@ -227,8 +134,8 @@ const PendingBookings = () => {
   const handleResetServiceFilter = (clearFilters) => {
     setSelectedServiceFilters([]);
     setServiceFilterDropdownSearchQuery("");
-    applyFilters(searchQuery, []); 
-    clearFilters(); 
+    applyFilters(searchQuery, []);
+    clearFilters();
   };
 
   const columns = [
@@ -417,6 +324,10 @@ const PendingBookings = () => {
   const endIndex = startIndex + pageSize;
   const paginatedBookings = bookings.slice(startIndex, endIndex);
 
+  const handleRowClick = (record) => {
+    navigate(`/dashboard/calendar/bookings-details/${record.id}`);
+  };
+
   return (
     <div className="w-full py-2">
       <Table
@@ -438,6 +349,10 @@ const PendingBookings = () => {
             ? "bg-highlight01"
             : ""
         }
+        onRow={(record) => ({
+          onClick: () => handleRowClick(record),
+          className: "cursor-pointer hover:bg-gray-50",
+        })}
       />
 
       {/* Pagination */}

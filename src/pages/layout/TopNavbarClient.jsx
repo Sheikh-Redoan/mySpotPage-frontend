@@ -1,12 +1,9 @@
-import { useSelector } from "react-redux";
 import logo from "../../assets/images/logo.png";
 import UserMenuPopUp from "../../components/admin/UserMenuPopUp";
 import LanguageSelectModal from "../../components/modal/LanguageSelectModal";
-import { selectUser } from "../../redux/features/userSlice";
 import Popup from "../../components/shared/Popup";
 import Container from "../client/Container";
-export default function TopNavbarClient() {
-  const user = useSelector(selectUser);
+
 export default function TopNavbarClient({ isLoggedIn = true }) {
   return (
     <header className="border-b border-black/5 sticky top-0 bg-white z-50">
@@ -43,15 +40,12 @@ export default function TopNavbarClient({ isLoggedIn = true }) {
                     />
                   </div>
                 )}
-                className="-left-18 top-18 w-56"
-              >
+                className="-left-18 top-18 w-56">
                 {(handlePopup) => <UserMenuPopUp handlePopup={handlePopup} />}
               </Popup>
             ) : (
               <LanguageSelectModal />
             )}
-
-
           </div>
         </Container>
       </nav>

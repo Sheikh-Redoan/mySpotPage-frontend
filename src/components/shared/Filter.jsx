@@ -12,7 +12,7 @@ export default function Filter({ name, data, defaultValue, search = false }) {
       searchQuery.set(name, value);
     }
 
-    if (value?.includes("All")) {
+    if (value?.includes(data[0])) {
       searchQuery.delete(name);
     }
 

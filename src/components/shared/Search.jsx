@@ -35,6 +35,7 @@ export default function Search({ name, placeholder }) {
 
   return (
     <Input
+      size="large"
       placeholder={placeholder}
       prefix={<SearchOutlined />}
       onChange={handleSearch}

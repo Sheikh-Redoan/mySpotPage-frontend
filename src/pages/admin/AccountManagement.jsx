@@ -1,7 +1,8 @@
 import { Button } from "antd";
-import { Plus, Settings } from "lucide-react";
+import { Settings } from "lucide-react";
+import AddAccount from "../../components/admin/AddAccount";
 import RoleCard from "../../components/admin/roleCard";
-import MultipleSelector from "../../components/DashboardPageComponents/shared/MultipleSelector";
+import MultipleSelector from "../../components/shared/MultipleSelector";
 import Search from "../../components/shared/Search";
 
 export default function AccountManagement() {
@@ -25,10 +26,8 @@ export default function AccountManagement() {
           </div>
         </div>
         <div className="flex gap-2">
-          <Button type="primary">
-            <Plus size={16} /> Add account
-          </Button>
-          <Button type="default" className="flex items-center">
+          <AddAccount />
+          <Button type="default" className="flex items-center" size="large">
             <Settings size={16} /> Settings
           </Button>
         </div>

@@ -107,7 +107,7 @@ const ServiceProviderInfo = () => {
             ? `${selected.length} service selected`
             : "0 service selected"}
         </div>
-        <Link to="select-staff">
+        <Link to="service-provider-info">
           <button
             className={`bg-gray-900 text-white py-2 px-8 rounded-lg transition ${
               selected.length === 0

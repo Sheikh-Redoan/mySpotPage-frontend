@@ -72,31 +72,31 @@ export const adminTabs = [
     name: "Settings",
     imagePink: imageProvider.SettingsPink,
     imageWhite: imageProvider.SettingsWhite,
-    link: "/dashboard/settings",
+    link: "/admin/admin-settings",
   },
 ];
 
 export const profileMainTabs = [
   {
     id: 0,
-    name: "My profile",
+    name: "User Management",
     imagePink: imageProvider.PeoplePink,
     imageWhite: imageProvider.PeopleWhite,
-    link: "/user-management",
+    link: "/admin/user-management",
   },
   {
     id: 1,
     name: "Data Management",
     imagePink: imageProvider.database,
     imageWhite: imageProvider.databaseCol,
-    link: "/data-management/service-classification",
+    link: "/admin/data-management/service-classification",
   },
   {
     id: 2,
     name: "Settings",
     imagePink: imageProvider.SettingsPink,
     imageWhite: imageProvider.SettingsWhite,
-    link: "/settings",
+    link: "/admin/admin-settings",
   },
 ];
 
@@ -106,14 +106,14 @@ export const profileTabs = [
     name: "Basic Information",
     imagePink: imageProvider.PeoplePink,
     imageWhite: imageProvider.PeopleBlack,
-    link: "/profile-management/my-profile/basic-information",
+    link: "/my-profile/basic-information",
   },
   {
     id: 1,
     name: "Security",
     imagePink: imageProvider.securityPink,
     imageWhite: imageProvider.securityBlack,
-    link: "/profile-management/my-profile/security",
+    link: "/my-profile/security",
   },
 ];
 
@@ -157,14 +157,14 @@ export const dataManagementTabs = [
     name: "Service Classification ",
     // imagePink: imageProvider.buildingCol,
     // imageWhite: imageProvider.building,
-    link: "/data-management/service-classification",
+    link: "/admin/data-management/service-classification",
   },
   {
     id: 1,
     name: "Menu Category",
     // imagePink: imageProvider.cardCol,
     // imageWhite: imageProvider.card,
-    link: "/data-management/menu-category",
+    link: "/admin/data-management/menu-category",
   },
 ];
 

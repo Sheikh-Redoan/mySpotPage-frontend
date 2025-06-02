@@ -2,7 +2,7 @@ import { FiLogOut } from "react-icons/fi";
 import { NavLink, Outlet, useLocation } from "react-router";
 import { cn } from "../../lib/utils";
 
-const MyProfileLayout = ({ tabs = [] }) => {
+const MyProfileLayout = ({ tabs = [], children }) => {
   const location = useLocation();
   const currentPath = location.pathname;
 

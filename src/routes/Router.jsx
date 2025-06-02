@@ -227,7 +227,7 @@ export const routes = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <SellerRoute>
-          <MainLayout tabs={dashboardTabs} />{" "}
+          <MainLayout tabs={dashboardTabs} />
           {/* MainLayout for seller dashboard */}
         </SellerRoute>
       </ProtectedRoute>
@@ -294,11 +294,12 @@ export const routes = createBrowserRouter([
 
   // Admin Dashboard Routes (Protected by AdminRoute)
   {
-    path: "/admin", // Changed from /user-management to a more general /admin path
+    path: "/admin", // This is the base path for admin sections
     element: (
       <ProtectedRoute>
         <AdminRoute>
-          <MainLayout tabs={adminTabs} /> {/* MainLayout for admin dashboard */}
+          {/* MainLayout for admin dashboard, renders its children via <Outlet /> */}
+          <MainLayout tabs={adminTabs} />
         </AdminRoute>
       </ProtectedRoute>
     ),
@@ -306,56 +307,111 @@ export const routes = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Navigate to="user-management" />, // Redirect to user-management by default
+        element: <Navigate to="user-management" replace />, // Redirect to user-management by default
       },
+      // --- User Management Section ---
       {
-        path: "user-management", // Nested under /admin
-        element: <Outlet />, // Use Outlet for nested routes
+        path: "user-management", // Nested under /admin/user-management
+        element: <Outlet />, // This Outlet will render the children of 'user-management'
         children: [
-          { index: true, element: <UserManagement /> },
           {
-            path: ":name", // Use userId for specific user
+            index: true,
+            element: <UserManagement />, // /admin/user-management
+          },
+          {
+            path: ":name", // e.g., /admin/user-management/john-doe
+            // MyProfileLayout will be the 'element' for this level
+            // It will then render its children via its OWN <Outlet />
             element: <MyProfileLayout tabs={userManagementTabs} />,
             children: [
-              { path: "business-information", element: <BasicInformation /> },
-              { path: "subscription", element: <Subscriptions /> },
+              {
+                path: "business-information", // e.g., /admin/user-management/john-doe/business-information
+                element: <BasicInformation />, // BasicInformation is now a direct child element
+              },
+              {
+                path: "subscription", // e.g., /admin/user-management/john-doe/subscription
+                element: <Subscriptions />, // Subscriptions is now a direct child element
+              },
             ],
           },
         ],
       },
+      // --- Account Management Section ---
       {
-        path: "account-management", // Nested under /admin
-        element: <Outlet />,
+        path: "account-management", // Nested under /admin/account-management
+        element: <Outlet />, // This Outlet will render the children of 'account-management'
         children: [
-          { index: true, element: <AccountManagement /> },
           {
-            path: ":accountId", // Use accountId for specific account
-            element: <MyProfileLayout tabs={accountManagementProfileTabs} />,
+            index: true,
+            element: <AccountManagement />, // /admin/account-management
+          },
+          {
+            path: ":name", // e.g., /admin/account-management/acme-corp
+            // MyProfileLayout for account-specific profile
+            element: <MyProfileLayout tabs={accountManagementProfileTabs} />, // Correctly using accountManagementProfileTabs
             children: [
               {
-                path: "basic-information",
+                path: "basic-information", // e.g., /admin/account-management/acme-corp/basic-information
                 element: <ProfileBesicInformation />,
               },
-              { path: "security", element: <ProfileSecurity /> },
+              {
+                path: "security", // e.g., /admin/account-management/acme-corp/security
+                element: <ProfileSecurity />,
+              },
             ],
           },
         ],
       },
+      // --- Data Management Section ---
       {
-        path: "data-management", // Nested under /admin
-        element: <Outlet />,
+        path: "data-management", // Nested under /admin/data-management
+        element: <Outlet />, // This Outlet will render the children of 'data-management'
         children: [
-          { index: true, element: <Navigate to="service-classification" /> },
           {
-            path: "service-classification",
-            element: <MyProfileLayout tabs={dataManagementTabs} />,
-            children: [{ index: true, element: <ServiceClassification /> }],
+            index: true,
+            element: <Navigate to="service-classification" replace />,
           },
           {
-            path: "menu-category",
-            element: <MyProfileLayout tabs={dataManagementTabs} />,
-            children: [{ index: true, element: <MenuCategory /> }],
+            path: "service-classification", // e.g., /admin/data-management/service-classification
+            element: <MyProfileLayout tabs={dataManagementTabs} />, // Correctly using dataManagementTabs
+            children: [
+              {
+                index: true,
+                element: <ServiceClassification />, // /admin/data-management/service-classification
+              },
+            ],
           },
+          {
+            path: "menu-category", // e.g., /admin/data-management/menu-category
+            element: <MyProfileLayout tabs={dataManagementTabs} />, // Correctly using dataManagementTabs
+            children: [
+              {
+                index: true,
+                element: <MenuCategory />, // /admin/data-management/menu-category
+              },
+            ],
+          },
+        ],
+      },
+
+      // --- Admin Settings (if distinct from seller settings) ---
+      // If these settings are truly *admin* specific, keep them here.
+      // Otherwise, they belong under the /dashboard (seller) route.
+      // Note: The indexPath in DynamicSubSideBarLayout needs to reflect the current path.
+      {
+        path: "admin-settings", // Renamed from 'settings' to be more specific to admin
+        element: (
+          <DynamicSubSideBarLayout
+            // Corrected indexPath to reflect admin path
+            indexPath="/admin/admin-settings"
+            items={settingsNavItems} // Assuming you have admin-specific settingsNavItems
+          />
+        ),
+        children: [
+          { index: true, element: <BusinessInfo /> }, // Example: Admin's view of a business's info
+          { path: "location", element: <Location /> },
+          { path: "subscription", element: <Subscription /> },
+          // ... potentially other admin-specific settings
         ],
       },
     ],
@@ -363,21 +419,36 @@ export const routes = createBrowserRouter([
 
   // User Profile Management (Accessible by all authenticated users, potentially with different views)
   {
-    path: "/profile", // Renamed from /profile-management for brevity and clarity
+    path: "/my-profile",
     element: (
       <ProtectedRoute>
-        <MainLayout tabs={profileMainTabs} />
-        {/* Assuming MainLayout is used for profiles */}
+        <MainLayout tabs={profileMainTabs} activeTab="my-profile" />
+        {/* MainLayout expects <Outlet /> to render children */}
       </ProtectedRoute>
     ),
-    errorElement: <ErrorPage />,
     children: [
       {
-        path: "my-profile",
+        index: true,
+        element: <Navigate to="basic-information" />,
+      },
+      {
+        path: "basic-information",
         element: <MyProfileLayout tabs={profileTabs} />,
         children: [
-          { path: "basic-information", element: <ProfileBesicInformation /> },
-          { path: "security", element: <ProfileSecurity /> },
+          {
+            index: true,
+            element: <ProfileBesicInformation />,
+          },
+        ],
+      },
+      {
+        path: "security",
+        element: <MyProfileLayout tabs={profileTabs} />,
+        children: [
+          {
+            index: true,
+            element: <ProfileSecurity />,
+          },
         ],
       },
     ],

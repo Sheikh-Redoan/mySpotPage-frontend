@@ -45,7 +45,7 @@ export const ClientAppointmentItem = ({ time, clientName }) => {
       </button>
 
       {showActions && (
-        <div ref={actionsRef} className="absolute top-full right-0 mt-2">
+        <div ref={actionsRef} className="absolute top-full right-0 z-10">
           <AppointmentStatusesAction />
         </div>
       )}

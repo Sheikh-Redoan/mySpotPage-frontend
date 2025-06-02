@@ -234,7 +234,6 @@ export default function ReusableCalendar({
         headerToolbar={false}
         initialView={currentView}
         editable={true}
-        selectable={true}
         selectMirror={true}
         dayMaxEvents={true}
         weekends={weekendsVisible}

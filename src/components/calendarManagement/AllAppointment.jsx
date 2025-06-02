@@ -1,9 +1,8 @@
 import dayjs from "dayjs";
-import "/src/styles/fullCalender.css";
+import "/src/styles/sellerAppointmentCalender.css";
 import ReusableCalendar, {
   createEventId,
 } from "../reuseableComponent/ReuseableCalendar";
-import AppointmentActionsBtn from "../client/client-appointment/AppointmentActionsBtn";
 import { useState } from "react";
 import { toYYYYMMDD } from "../../utils/toYYYYMMDD";
 import { ClientAppointmentItem } from "./allAppointment/ClientAppointmentItem";

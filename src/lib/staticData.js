@@ -55,7 +55,7 @@ export const dashboardTabs = [
     imagePink: imageProvider.SettingsPink,
     imageWhite: imageProvider.SettingsWhite,
     link: "/dashboard/settings",
-    end: true,
+    end: false,
   },
 ];
 
@@ -79,7 +79,7 @@ export const adminTabs = [
     name: "Settings",
     imagePink: imageProvider.SettingsPink,
     imageWhite: imageProvider.SettingsWhite,
-    link: "/admin/admin-settings",
+    link: "/",
   },
 ];
 

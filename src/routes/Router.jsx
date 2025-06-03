@@ -436,27 +436,6 @@ export const routes = createBrowserRouter([
           },
         ],
       },
-
-      // --- Admin Settings (if distinct from seller settings) ---
-      // If these settings are truly *admin* specific, keep them here.
-      // Otherwise, they belong under the /dashboard (seller) route.
-      // Note: The indexPath in DynamicSubSideBarLayout needs to reflect the current path.
-      {
-        path: "admin-settings", // Renamed from 'settings' to be more specific to admin
-        element: (
-          <DynamicSubSideBarLayout
-            // Corrected indexPath to reflect admin path
-            indexPath="/admin/admin-settings"
-            items={settingsNavItems} // Assuming you have admin-specific settingsNavItems
-          />
-        ),
-        children: [
-          { index: true, element: <BusinessInfo /> }, // Example: Admin's view of a business's info
-          { path: "location", element: <Location /> },
-          { path: "subscription", element: <Subscription /> },
-          // ... potentially other admin-specific settings
-        ],
-      },
     ],
   },
 

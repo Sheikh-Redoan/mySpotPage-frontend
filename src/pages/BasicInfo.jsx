@@ -1,19 +1,22 @@
 import { DatePicker, Modal, Select, Switch } from "antd";
+import { useState } from "react";
+import { useParams } from "react-router";
 import {
   CalenderIcon,
   DownArrowIcon,
   ErrorIcon,
   ErrorIcon2,
-  ForwardIcon,
   ImageIcon,
   InfoCircleOutlined,
   SearchIcon,
   UpdateIcon,
 } from "../assets/icons/icons";
-import { useState } from "react";
-import ClientDetailsBreadCrumb from "../components/DashboardPageComponents/shared/ClientDetailsBreadCrumb";
+import Breadcrumb from "../components/client/Breadcrumb";
+import { getBreadcrumbs } from "../lib/staticData";
 
 const BasicInfo = () => {
+  const { client } = useParams();
+
   const [isBlackListed, setIsBlackListed] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -39,7 +42,22 @@ const BasicInfo = () => {
 
   return (
     <div>
-      <ClientDetailsBreadCrumb />
+      <Breadcrumb
+        breadcrumbs={getBreadcrumbs(0, 3, [
+          {
+            name: "Client Management",
+            link: "/dashboard/client-management",
+          },
+          {
+            name: client?.split("-").join(" "),
+            link: "",
+          },
+          {
+            name: "Basic Information",
+            link: `/dashboard/client-management/${client}/basic-info`,
+          },
+        ])}
+      />
       <div className="bg-white p-6 max-w-[540px] rounded-xl mx-auto border border-[#E7E7E7]">
         <div className="text-[#3A3B3F] flex flex-col justify-between h-full space-y-5 text-sm">
           <div className="">
@@ -94,8 +112,7 @@ const BasicInfo = () => {
               onChange={handleGenderChange}
               placeholder="Select Gender"
               className="border border-[#E0E0E0] rounded-lg w-full !h-10"
-              suffixIcon={<DownArrowIcon />}
-            >
+              suffixIcon={<DownArrowIcon />}>
               {["fjgvhjg", "jdfgghfg"].map((city) => (
                 <Option key={city} value={city}>
                   {city}
@@ -126,8 +143,7 @@ const BasicInfo = () => {
               {isBlackListed && (
                 <div
                   className="flex items-center gap-1"
-                  onClick={() => setIsBlackListed(false)}
-                >
+                  onClick={() => setIsBlackListed(false)}>
                   <p className="text-[#ED4245] font-medium">Unverified</p>
                   <InfoCircleOutlined className="size-5" />
                 </div>
@@ -155,8 +171,7 @@ const BasicInfo = () => {
               suffixIcon={<SearchIcon />}
               filterOption={(input, option) =>
                 option.children.toLowerCase().includes(input.toLowerCase())
-              }
-            >
+              }>
               {["Jerusalem, Israel", "Tel Aviv, Israel", "Haifa, Israel"].map(
                 (phone) => (
                   <Option key={phone} value={phone}>
@@ -177,8 +192,7 @@ const BasicInfo = () => {
             {!isBlackListed && (
               <div
                 className="flex items-center gap-1 cursor-pointer"
-                onClick={() => setIsModalOpen(true)}
-              >
+                onClick={() => setIsModalOpen(true)}>
                 <InfoCircleOutlined className="size-5" />
                 <p className="text-[#ED4245] font-semibold">Add to blacklist</p>
               </div>
@@ -192,8 +206,7 @@ const BasicInfo = () => {
         open={isModalOpen}
         onCancel={() => setIsModalOpen(false)}
         footer={null}
-        width={420}
-      >
+        width={420}>
         <div className="mt-8">
           <div className="size-11 bg-[#FBD9DA] rounded-full flex items-center justify-center mx-auto mb-3">
             <ErrorIcon2 className="size-5" />
@@ -211,8 +224,7 @@ const BasicInfo = () => {
             <button
               type="button"
               className="flex-1 cursor-pointer border border-[#242528] py-2 px-3 text-[#242528] rounded-lg"
-              onClick={() => setIsModalOpen(false)}
-            >
+              onClick={() => setIsModalOpen(false)}>
               Cancel
             </button>
             <button
@@ -221,8 +233,7 @@ const BasicInfo = () => {
               onClick={() => {
                 setIsBlackListed(true);
                 setIsModalOpen(false);
-              }}
-            >
+              }}>
               Yes, confirm
             </button>
           </div>

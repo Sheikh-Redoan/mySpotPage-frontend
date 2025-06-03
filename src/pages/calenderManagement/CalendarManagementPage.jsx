@@ -1,10 +1,10 @@
 import { Tabs } from "antd";
 import { useEffect, useState } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router";
-import AllAppoimtment from "../../components/calendarManagement/AllAppointment";
-import BlacklistsOverview from "../../components/calendarManagement/BlacklistsOverview";
-import PendingBookings from "../../components/calendarManagement/PendingBookings";
-import WaitlistsOverview from "../../components/calendarManagement/WaitlistsOverview";
+import AllAppoimtment from "./AllAppointment";
+import BlacklistsOverview from "./BlacklistsOverview";
+import PendingBookings from "./PendingBookings";
+import WaitlistsOverview from "./WaitlistsOverview";
 
 const items = [
   {

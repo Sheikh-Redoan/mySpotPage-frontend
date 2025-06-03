@@ -5,6 +5,7 @@ import { Crown } from "lucide-react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router";
+import StaffReassignSelect from "./StaffReassignSelect";
 
 const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
   console.log("booking", booking);
@@ -17,8 +18,9 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
     }).format(date);
   };
 
-  const handleChange = (value) => {
-    console.log("Selected:", value);
+  const handleReassign = (newStaff) => {
+    console.log("Re-assigned to:", newStaff);
+    // Add logic to update booking.staffName if needed
   };
 
   return (
@@ -54,30 +56,7 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
             <CircleUserRound className="size-5 text-gray-600" />
             <p className="text-[#242528] text-[14px] font-normal">Staff - </p>
           </div>
-
-          <Select
-            defaultValue="lucy"
-            style={{ width: 200 }}
-            onChange={handleChange}
-            options={[
-              {
-                label: <span>manager</span>,
-                title: "manager",
-                options: [
-                  { label: <span>Jack</span>, value: "Jack" },
-                  { label: <span>Lucy</span>, value: "Lucy" },
-                ],
-              },
-              {
-                label: <span>engineer</span>,
-                title: "engineer",
-                options: [
-                  { label: <span>Chloe</span>, value: "Chloe" },
-                  { label: <span>Lucas</span>, value: "Lucas" },
-                ],
-              },
-            ]}
-          />
+          <StaffReassignSelect booking={booking} onReassign={handleReassign} />
         </div>
 
         {/* Date and Time */}

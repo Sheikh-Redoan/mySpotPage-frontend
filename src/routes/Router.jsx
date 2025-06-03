@@ -91,10 +91,10 @@ import StaffInformationPage from "../pages/onboarding/StaffInformationPage";
 import StaffSecurityPage from "../pages/onboarding/StaffSecurityPage";
 import StaffServicesPage from "../pages/onboarding/StaffServicesPage";
 import StaffWorkingHoursPage from "../pages/onboarding/StaffWorkingHoursPage";
-import AllAppointment from "../components/calendarManagement/AllAppointment";
-import PendingBookings from "../components/calendarManagement/PendingBookings";
-import WaitlistsOverview from "../components/calendarManagement/WaitlistsOverview";
-import BlacklistsOverview from "../components/calendarManagement/BlacklistsOverview";
+import AllAppointment from "../pages/calenderManagement/AllAppointment";
+import PendingBookings from "../pages/calenderManagement/PendingBookings";
+import WaitlistsOverview from "../pages/calenderManagement/WaitlistsOverview";
+import BlacklistsOverview from "../pages/calenderManagement/BlacklistsOverview";
 import BookingsDetailsOfEachStatus from "../pages/calenderManagement/BookingsDetailsOfEachStatus";
 
 export const routes = createBrowserRouter([

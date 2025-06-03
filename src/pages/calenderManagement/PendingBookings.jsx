@@ -11,7 +11,7 @@ import {
 } from "antd";
 import { MdCheckCircleOutline } from "react-icons/md";
 import { IoArrowDownOutline, IoCloseCircleOutline } from "react-icons/io5";
-import CustomEmptyTable from "../DashboardPageComponents/shared/CustomEmptyTable";
+import CustomEmptyTable from "../../components/DashboardPageComponents/shared/CustomEmptyTable";
 import { FilterFilled, SearchOutlined } from "../../assets/icons/icons";
 import { getPendingBookings } from "../../dummy-data/bookingsData";
 import { useNavigate } from "react-router";

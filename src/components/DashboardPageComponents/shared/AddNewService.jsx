@@ -10,6 +10,7 @@ import ServiceBasicDetails from "./ServiceBasicDetails";
 const AddNewService = ({ setAddNewService }) => {
   const [activeKey, setActiveKey] = useState(["1"]);
   const [isStepComplete, setIsStepComplete] = useState(false);
+  console.log(isStepComplete)
   const { register, handleSubmit, trigger, control } = useForm({
     mode: "onChange",
   });
@@ -23,8 +24,11 @@ const AddNewService = ({ setAddNewService }) => {
   const [workCroppedImage, setWorkCroppedImage] = useState(null);
   const fileInputRef = useRef();
   const [hoursCount, setHoursCount] = useState(0);
-  const [minuteCount,setMinuteCount] = useState(0)
-
+  const [minuteCount,setMinuteCount] = useState(0);
+  const [priceModalList, setPriceModalList] = useState([
+      { id: 1, name: "", hour: 0, minute: 0, priceType: "", amount: "" },
+    ]);
+    
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
@@ -111,7 +115,7 @@ const AddNewService = ({ setAddNewService }) => {
 
           <ServiceBasicDetails activeKey={activeKey} handleCollapseChange={handleCollapseChange} isStepComplete={isStepComplete} handleSubmit={handleSubmit} onSubmit={onSubmit} image={image} thumbnailName={thumbnailName} handleFileChange={handleFileChange} register={register} control={control} croppedImage={croppedImage} handleRemoveImage={handleRemoveImage} setIsModalOpen={setIsModalOpen} />
 
-          <ServicePriceSetting priceModal2={priceModal2} priceModal1={priceModal1} setMinuteCount={setMinuteCount} minuteCount={minuteCount} hoursCount={hoursCount} setHoursCount={setHoursCount} priceCheckboxChange1={priceCheckboxChange1} priceCheckboxChange2={priceCheckboxChange2}/>
+          <ServicePriceSetting priceModal2={priceModal2} priceModal1={priceModal1} setMinuteCount={setMinuteCount} minuteCount={minuteCount} hoursCount={hoursCount} setHoursCount={setHoursCount} priceCheckboxChange1={priceCheckboxChange1} priceCheckboxChange2={priceCheckboxChange2} priceModalList={priceModalList} setPriceModalList={setPriceModalList}/>
 
           <ServiceImageUpload workImage={workImage} handleWorkRemoveImage={handleWorkRemoveImage} handleWorkFileChange={handleWorkFileChange} handleButtonClick={handleButtonClick} setIsModalOpen={setIsModalOpen} fileInputRef={fileInputRef} workCroppedImage={workCroppedImage}/>
 

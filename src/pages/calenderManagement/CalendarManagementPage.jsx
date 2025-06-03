@@ -40,7 +40,7 @@ function CalendarManagementPage() {
       case "/dashboard/calendar":
         setActiveTabKey("1");
         break;
-      case "/dashboard/calendar/pending":
+      case "/dashboard/calendar/pending-bookings":
         setActiveTabKey("2");
         break;
       case "/dashboard/calendar/waitlist":
@@ -62,7 +62,7 @@ function CalendarManagementPage() {
         navigate("/dashboard/calendar");
         break;
       case "2":
-        navigate("/dashboard/calendar/pending");
+        navigate("/dashboard/calendar/pending-bookings");
         break;
       case "3":
         navigate("/dashboard/calendar/waitlist");

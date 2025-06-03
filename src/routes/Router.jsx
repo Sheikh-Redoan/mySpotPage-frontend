@@ -80,12 +80,7 @@ import SelectStaffForProvider from "../pages/calenderManagement/addBookingByProv
 import ServicesPageForProvider from "../pages/calenderManagement/addBookingByProvider/ServicesPageForProvider";
 import ClientAppointmentCal from "../pages/client/ClientAppointmentCal";
 
-import AllAppointment from "../components/calendarManagement/AllAppointment";
-import BlacklistsOverview from "../components/calendarManagement/BlacklistsOverview";
-import PendingBookings from "../components/calendarManagement/PendingBookings";
-import WaitlistsOverview from "../components/calendarManagement/WaitlistsOverview";
 import Authentication from "../layout/Authentication";
-import BookingsDetailsPage from "../pages/calenderManagement/BookingsDetailsPage";
 import AdminRoute from "../pages/layout/AdminRoute";
 import ClientOnlyRoute from "../pages/layout/ClientOnlyRoute";
 import ProtectedRoute from "../pages/layout/ProtectedRoute";
@@ -95,6 +90,11 @@ import StaffInformationPage from "../pages/onboarding/StaffInformationPage";
 import StaffSecurityPage from "../pages/onboarding/StaffSecurityPage";
 import StaffServicesPage from "../pages/onboarding/StaffServicesPage";
 import StaffWorkingHoursPage from "../pages/onboarding/StaffWorkingHoursPage";
+import AllAppointment from "../components/calendarManagement/AllAppointment";
+import PendingBookings from "../components/calendarManagement/PendingBookings";
+import WaitlistsOverview from "../components/calendarManagement/WaitlistsOverview";
+import BlacklistsOverview from "../components/calendarManagement/BlacklistsOverview";
+import BookingsDetailsOfEachStatus from "../pages/calenderManagement/BookingsDetailsOfEachStatus";
 
 export const routes = createBrowserRouter([
   // Public Routes (Accessible to everyone)
@@ -249,7 +249,7 @@ export const routes = createBrowserRouter([
             element: <AllAppointment />,
           },
           {
-            path: "pending",
+            path: "pending-bookings",
             element: <PendingBookings />,
           },
           {
@@ -262,7 +262,7 @@ export const routes = createBrowserRouter([
           },
           {
             path: "bookings-details/:id",
-            element: <BookingsDetailsPage />,
+            element: <BookingsDetailsOfEachStatus />,
           },
         ],
       },

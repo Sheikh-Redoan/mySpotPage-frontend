@@ -91,11 +91,11 @@ import StaffInformationPage from "../pages/onboarding/StaffInformationPage";
 import StaffSecurityPage from "../pages/onboarding/StaffSecurityPage";
 import StaffServicesPage from "../pages/onboarding/StaffServicesPage";
 import StaffWorkingHoursPage from "../pages/onboarding/StaffWorkingHoursPage";
-import BookingsDetailsPage from "../pages/calenderManagement/BookingsDetailsPage";
 import AllAppointment from "../components/calendarManagement/AllAppointment";
 import PendingBookings from "../components/calendarManagement/PendingBookings";
 import WaitlistsOverview from "../components/calendarManagement/WaitlistsOverview";
 import BlacklistsOverview from "../components/calendarManagement/BlacklistsOverview";
+import BookingsDetailsOfEachStatus from "../pages/calenderManagement/BookingsDetailsOfEachStatus";
 
 export const routes = createBrowserRouter([
   // Public Routes (Accessible to everyone)
@@ -250,7 +250,7 @@ export const routes = createBrowserRouter([
             element: <AllAppointment />,
           },
           {
-            path: "pending",
+            path: "pending-bookings",
             element: <PendingBookings />,
           },
           {
@@ -263,7 +263,7 @@ export const routes = createBrowserRouter([
           },
           {
             path: "bookings-details/:id",
-            element: <BookingsDetailsPage />,
+            element: <BookingsDetailsOfEachStatus />,
           },
         ],
       },

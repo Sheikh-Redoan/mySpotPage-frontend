@@ -103,6 +103,7 @@ export const routes = createBrowserRouter([
     path: "/",
     element: <ClientLayout />, // Assuming this is the layout for public/client-facing pages
     errorElement: <ErrorPage />,
+    hydrateFallbackElement: <div>Loading...</div>,
     children: [
       {
         index: true,
@@ -112,6 +113,7 @@ export const routes = createBrowserRouter([
         path: "our-work", // Public route
         element: <OurWorkDetails />,
       },
+
       // Client-specific booking flow (can be accessed by authenticated clients)
       {
         path: "service-provider-info",
@@ -161,6 +163,7 @@ export const routes = createBrowserRouter([
   {
     path: "/auth",
     element: <Authentication />,
+    hydrateFallbackElement: <div>Loading...</div>,
     children: [
       { path: "signin", element: <Signin /> },
       { path: "forgot-password", element: <ForgotPassword /> },
@@ -195,6 +198,7 @@ export const routes = createBrowserRouter([
       </ProtectedRoute>
     ),
     errorElement: <ErrorPage />,
+    hydrateFallbackElement: <div>Loading...</div>,
     children: [
       {
         index: true,
@@ -235,6 +239,7 @@ export const routes = createBrowserRouter([
         </SellerRoute>
       </ProtectedRoute>
     ),
+    hydrateFallbackElement: <div>Loading...</div>,
     errorElement: <ErrorPage />,
     children: [
       {
@@ -346,6 +351,7 @@ export const routes = createBrowserRouter([
         </AdminRoute>
       </ProtectedRoute>
     ),
+    hydrateFallbackElement: <div>Loading...</div>,
     errorElement: <ErrorPage />,
     children: [
       {
@@ -448,6 +454,8 @@ export const routes = createBrowserRouter([
         {/* MainLayout expects <Outlet /> to render children */}
       </ProtectedRoute>
     ),
+    hydrateFallbackElement: <div>Loading...</div>,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,

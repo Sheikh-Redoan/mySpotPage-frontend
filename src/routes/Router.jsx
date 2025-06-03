@@ -81,7 +81,12 @@ import SelectStaffForProvider from "../pages/calenderManagement/addBookingByProv
 import ServicesPageForProvider from "../pages/calenderManagement/addBookingByProvider/ServicesPageForProvider";
 import ClientAppointmentCal from "../pages/client/ClientAppointmentCal";
 
+import AllAppointment from "../components/calendarManagement/AllAppointment";
+import BlacklistsOverview from "../components/calendarManagement/BlacklistsOverview";
+import PendingBookings from "../components/calendarManagement/PendingBookings";
+import WaitlistsOverview from "../components/calendarManagement/WaitlistsOverview";
 import Authentication from "../layout/Authentication";
+import BookingsDetailsPage from "../pages/calenderManagement/BookingsDetailsPage";
 import AdminRoute from "../pages/layout/AdminRoute";
 import ClientOnlyRoute from "../pages/layout/ClientOnlyRoute";
 import ProtectedRoute from "../pages/layout/ProtectedRoute";
@@ -276,6 +281,7 @@ export const routes = createBrowserRouter([
           { path: "select-staff", element: <SelectStaffForProvider /> },
           { path: "select-time", element: <ClientAppointmentCalForProvider /> },
           { path: "confirm", element: <ConfirmPageForProvider /> },
+          { path: "confirmation", element: <ConfirmBooking /> },
         ],
       },
       { path: "service-menu", element: <ServicePage /> },

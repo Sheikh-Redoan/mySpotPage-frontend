@@ -1,8 +1,13 @@
-import React from "react";
 import { MapPin, Star } from "lucide-react";
 import { TbArrowBadgeDown } from "react-icons/tb";
+import { Link } from "react-router";
 
-const ProviderCheckoutCard = ({ businessData, selected, handleBookNow }) => {
+const ProviderCheckoutCard = ({
+  businessData,
+  selected,
+  handleBookNow,
+  to,
+}) => {
   const { studioName, label, rating, reviewCount, address } = businessData;
 
   const subtotal = 0.0;
@@ -40,8 +45,7 @@ const ProviderCheckoutCard = ({ businessData, selected, handleBookNow }) => {
             href={`https://maps.google.com/?q=$${address}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:underline text-sm font-medium"
-          >
+            className="hover:underline text-sm font-medium">
             {address}
           </a>
         </div>
@@ -92,20 +96,23 @@ const ProviderCheckoutCard = ({ businessData, selected, handleBookNow }) => {
         <div className="border-t border-dashed border-gray-200 pt-3"></div>
         <div className="flex justify-between items-center text-sm font-semibold text-[#888888]">
           <span>Total</span>
-          <span className="text-[#866BE7] text-[18px] text-semibold">₪ {total.toFixed(2)}</span>
+          <span className="text-[#866BE7] text-[18px] text-semibold">
+            ₪ {total.toFixed(2)}
+          </span>
         </div>
       </div>
 
       {/* Continue Button */}
-      <button
-        onClick={handleBookNow}
-        className="w-full bg-[#242528] text-white py-2 px-4 rounded-lg transition hover:bg-gray-800 cursor-pointer"
-      >
-        Continue
-      </button>
+      <Link to={to}>
+        <button
+          onClick={handleBookNow}
+          className="w-full bg-[#242528] text-white py-2 px-4 rounded-lg transition hover:bg-gray-800 cursor-pointer">
+          Continue
+        </button>
+      </Link>
 
       {/* Payment Note */}
-      <p className="text-xs font-normal text-center text-[#797979]">
+      <p className="text-xs font-normal text-center text-[#797979] mt-4">
         You will pay at the appointment location
       </p>
     </section>

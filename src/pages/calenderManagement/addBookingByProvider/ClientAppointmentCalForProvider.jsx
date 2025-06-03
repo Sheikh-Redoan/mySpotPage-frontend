@@ -1,11 +1,15 @@
 import dayjs from "dayjs";
 import { useState } from "react";
-import "/src/styles/fullCalender.css"; 
+import Breadcrumb from "../../../components/client/Breadcrumb";
 import AppointmentActionsBtn from "../../../components/client/client-appointment/AppointmentActionsBtn";
-import ReusableCalendar, { createEventId } from "../../../components/reuseableComponent/ReuseableCalendar";
+import ReusableCalendar, {
+  createEventId,
+} from "../../../components/reuseableComponent/ReuseableCalendar";
+import { getBreadcrumbs } from "../../../lib/staticData";
 import { toYYYYMMDD } from "../../../utils/toYYYYMMDD";
+import "/src/styles/fullCalender.css";
 
-let eventGuid = 0; 
+let eventGuid = 0;
 let todayStr = dayjs().format("YYYY-MM-DD");
 
 const specialDatesData = [
@@ -63,7 +67,9 @@ export default function ClientAppointmentCalForProvider() {
     return (
       <div className="relative w-full h-full flex flex-col md:flex-row items-center justify-center md:justify-start gap-3">
         {currentView === "dayGridMonth" && (
-          <span className="text-[0.875rem] p-[4px] z-1">{formattedDayNumber}</span>
+          <span className="text-[0.875rem] p-[4px] z-1">
+            {formattedDayNumber}
+          </span>
         )}
         {specialDateInfo &&
           specialDateInfo.sale &&
@@ -120,13 +126,37 @@ export default function ClientAppointmentCalForProvider() {
 
   return (
     <section className="bg-[#F9FAFC] py-4 px-2 md:px-0">
+      <Breadcrumb
+        breadcrumbs={getBreadcrumbs(0, 3, [
+          {
+            name: "Client information",
+            link: "/dashboard/add-booking-by-provider",
+          },
+          {
+            name: "Select Services",
+            link: "/dashboard/add-booking-by-provider/select-services",
+          },
+          {
+            name: "Select staff",
+            link: "/dashboard/add-booking-by-provider/select-staff",
+          },
+          {
+            name: "Select Time",
+            link: "/dashboard/add-booking-by-provider/select-time",
+          },
+          {
+            name: "Confirm",
+            link: "/dashboard/add-booking-by-provider/confirm",
+          },
+        ])}
+      />
       <div className="bg-white shadow-md rounded-lg max-sm:py-4 max-sm:px-2 lg:p-6">
         <ReusableCalendar
           initialEvents={INITIAL_EVENTS}
           specialDatesData={specialDatesData}
           timeSlots={timeSlots}
-          currentView={currentView} 
-          setCurrentView={setCurrentView} 
+          currentView={currentView}
+          setCurrentView={setCurrentView}
           renderDayCellContent={renderDayCellContentWithSales}
           renderSlotLaneContent={renderTimeSlotContent}
           renderDayHeaderContent={renderCustomDayHeaderContent}

@@ -47,7 +47,7 @@ export const dashboardTabs = [
     imagePink: imageProvider.PeoplePink,
     imageWhite: imageProvider.PeopleWhite,
     link: "/dashboard/client-management",
-    end: true,
+    end: false,
   },
   {
     id: 6,

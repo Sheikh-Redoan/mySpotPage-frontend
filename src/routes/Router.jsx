@@ -67,7 +67,6 @@ import SetupTeamLocationServices1 from "../pages/onboarding/team/SetupTeamLocati
 import SetupTeamLocationServices2 from "../pages/onboarding/team/SetupTeamLocationServices2";
 import StaffManagement from "../pages/seller/StaffManagement";
 
-// Adjust path
 import AccountManagement from "../pages/admin/AccountManagement";
 import MenuCategory from "../pages/admin/MenuCategory";
 import ServiceClassification from "../pages/admin/ServiceClassification";
@@ -281,7 +280,19 @@ export const routes = createBrowserRouter([
       },
       { path: "service-menu", element: <ServicePage /> },
       { path: "pricing", element: <TimePage /> },
-      { path: "client-management", element: <ClientPage /> },
+      {
+        path: "client-management",
+        element: <ClientPage />,
+      },
+      {
+        path: "client-management/:client",
+        element: <MyProfileLayout tabs={clientNavItems} />,
+        children: [
+          { path: "basic-info", element: <BasicInfo /> },
+          { path: "booking-info", element: <BookingInfo /> },
+          { path: "provider-notes", element: <ProviderNotes /> },
+        ],
+      },
       { path: "staff-management", element: <StaffManagement /> }, // Staff management for seller
       {
         path: "staff-settings",
@@ -294,21 +305,6 @@ export const routes = createBrowserRouter([
           },
           { path: "location", element: <Location /> },
           { path: "subscription", element: <Subscription /> },
-        ],
-      },
-
-      {
-        path: "client",
-        element: (
-          <DynamicSubSideBarLayout
-            indexPath="/dashboard/client/basic-info"
-            items={clientNavItems}
-          />
-        ),
-        children: [
-          { path: "basic-info", element: <BasicInfo /> },
-          { path: "booking-info", element: <BookingInfo /> },
-          { path: "provider-notes", element: <ProviderNotes /> },
         ],
       },
 

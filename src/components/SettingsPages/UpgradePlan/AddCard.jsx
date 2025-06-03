@@ -27,8 +27,8 @@ const AddCard = () => {
 
   const onSubmit = (data) => {
     console.log("Submitted Data:", data);
-   
-    navigate("/settings/subscription");
+
+    navigate("/dashboard/settings/subscription");
   };
 
   return (
@@ -37,8 +37,7 @@ const AddCard = () => {
         variants={slideInFromBottom()}
         initial="hidden"
         animate="visible"
-        className="bg-[#ffffff] min-h-[430px] w-[490px] rounded-lg"
-      >
+        className="bg-[#ffffff] min-h-[430px] w-[490px] rounded-lg">
         <div className=" my-2 py-3 px-6">
           <p className="text-xl font-semibold"> Add Card</p>
         </div>
@@ -126,14 +125,13 @@ const AddCard = () => {
               />
               <label
                 htmlFor="setDefault"
-                className="text-[#262626] cursor-pointer"
-              >
+                className="text-[#262626] cursor-pointer">
                 Set as Default
               </label>
             </div>
 
             <div className="flex items-center justify-end gap-4 py-2">
-              <Link to={"/settings/subscription"}>
+              <Link to={"/dashboard/settings/subscription"}>
                 <button className="text-[#242528] font-semibold">Cancel</button>
               </Link>
               <button
@@ -143,8 +141,7 @@ const AddCard = () => {
                     ? "bg-[#242528] text-white"
                     : "bg-gray-300 text-gray-500"
                 }`}
-                disabled={!isValid}
-              >
+                disabled={!isValid}>
                 Save
               </button>
             </div>

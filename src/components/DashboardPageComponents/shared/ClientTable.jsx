@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { Table, Input, Select, Pagination, Tooltip } from "antd";
-import { getClients, searchClients } from "../clientService";
+import { Input, Pagination, Select, Table, Tooltip } from "antd";
+import { useState } from "react";
+import { Link } from "react-router";
 import {
   DetailsIcon,
   DownArrowIcon,
@@ -12,8 +12,8 @@ import {
   SearchOutlined,
   VipIcon,
 } from "../../../assets/icons/icons";
+import { getClients, searchClients } from "../clientService";
 import CustomEmptyTable from "./CustomEmptyTable";
-import { Link } from "react-router";
 // import { Checkbox } from "@/components/ui/checkbox";
 
 const { Option } = Select;
@@ -153,8 +153,7 @@ const ClientTable = () => {
       render: (text, record) => (
         <div className="flex items-center gap-2">
           <figure
-            className={`size-10 rounded-full flex items-center justify-center text-white bg-primary01 overflow-hidden`}
-          >
+            className={`size-10 rounded-full flex items-center justify-center text-white bg-primary01 overflow-hidden`}>
             {record.avatar}
           </figure>
           <span className="text-sm text-[#262626]">{text}</span>
@@ -240,8 +239,7 @@ const ClientTable = () => {
             <Tooltip
               placement="top"
               color="white"
-              title={"Pending Phone Confirmation"}
-            >
+              title={"Pending Phone Confirmation"}>
               <div className="px-2 py-1 inline-flex items-center gap-1 bg-[#FBD9DA] rounded-full text-[#ED4245] text-xs font-medium">
                 Unverified <InfoCircleOutlined className="size-4" />
               </div>
@@ -262,7 +260,7 @@ const ClientTable = () => {
       render: () => (
         <div className="flex gap-4">
           <Tooltip placement="top" color="white" title="View detail">
-            <Link to="/client/basic-info">
+            <Link to="/dashboard/client-management/client/basic-info">
               <DetailsIcon />
             </Link>
           </Tooltip>
@@ -298,8 +296,7 @@ const ClientTable = () => {
             defaultValue="All cities"
             onChange={handleCityFilter}
             className="w-full"
-            suffixIcon={<DownArrowIcon />}
-          >
+            suffixIcon={<DownArrowIcon />}>
             {uniqueCities.map((city) => (
               <Option key={city} value={city}>
                 {city}
@@ -378,8 +375,7 @@ const ClientTable = () => {
             onChange={handlePageSizeChange}
             className="mx-2"
             popupMatchSelectWidth={false}
-            suffixIcon=""
-          >
+            suffixIcon="">
             <Option value={5}>5</Option>
             <Option value={10}>10</Option>
             <Option value={20}>20</Option>

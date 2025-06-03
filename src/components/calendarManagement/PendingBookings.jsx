@@ -21,7 +21,6 @@ const { Option } = Select;
 const PendingBookings = () => {
   const navigate = useNavigate();
   const [bookings, setBookings] = useState(getPendingBookings());
-  console.log("bookings", bookings);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);

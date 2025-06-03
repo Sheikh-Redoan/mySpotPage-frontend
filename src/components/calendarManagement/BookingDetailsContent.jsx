@@ -1,7 +1,13 @@
+import { Select } from "antd";
+import { CircleUserRound } from "lucide-react";
+import { PhoneCall } from "lucide-react";
+import { Crown } from "lucide-react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { Link } from "react-router";
 
-const BookingDetailsContent = ({selectedDate, setSelectedDate, booking}) => {
+const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
+  console.log("booking", booking);
   const formatDate = (date) => {
     return new Intl.DateTimeFormat("en-US", {
       weekday: "short",
@@ -11,18 +17,67 @@ const BookingDetailsContent = ({selectedDate, setSelectedDate, booking}) => {
     }).format(date);
   };
 
+  const handleChange = (value) => {
+    console.log("Selected:", value);
+  };
+
   return (
-    <div className="w-full flex flex-col lg:flex-row gap-4">
+    <div className="w-full flex flex-col lg:flex-row">
       {/* Left Section: Client and Booking Info */}
-      <div className="flex-1">
-        <div className="flex items-center mb-4">
-          <div className="w-12 h-12 bg-purple-500 text-white flex items-center justify-center rounded-full text-xl font-bold">
+      <div className="flex-1 border-r-[1px] border-t-[1px] border-t-gray-300 border-r-gray-300 p-4">
+        <div className="space-y-4 border-b-[1px] border-b-gray-300 pb-3">
+          <div className="w-16 h-16 bg-primary01 text-white flex items-center justify-center rounded-full text-xl font-bold">
             {booking.avatar}
           </div>
-          <div className="ml-4">
-            <h1 className="text-xl font-bold">{booking.clientName}</h1>
-            <p className="text-gray-600">{booking.clientPhone}</p>
+          <div className="flex items-center gap-2">
+            <Link
+              to={"#"}
+              className="text-[#3E70DD] underline decoration-1 decoration-Boulder-400 text-[20px] font-medium"
+            >
+              {booking.clientName}
+            </Link>
+            <div className="w-5 h-5 rounded-full bg-[#FFB743] flex items-center justify-center">
+              <Crown className="text-white size-3" />
+            </div>
           </div>
+        </div>
+
+        <div className="py-3 flex itcems-center gap-2">
+          <div className="flex items-center gap-2">
+            <PhoneCall className="size-5 text-gray-600" />
+            <p className="text-[#242528] text-[14px] font-normal">
+              {booking.clientPhone}
+            </p>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <CircleUserRound className="size-5 text-gray-600" />
+            <p className="text-[#242528] text-[14px] font-normal">Staff - </p>
+          </div>
+
+          <Select
+            defaultValue="lucy"
+            style={{ width: 200 }}
+            onChange={handleChange}
+            options={[
+              {
+                label: <span>manager</span>,
+                title: "manager",
+                options: [
+                  { label: <span>Jack</span>, value: "Jack" },
+                  { label: <span>Lucy</span>, value: "Lucy" },
+                ],
+              },
+              {
+                label: <span>engineer</span>,
+                title: "engineer",
+                options: [
+                  { label: <span>Chloe</span>, value: "Chloe" },
+                  { label: <span>Lucas</span>, value: "Lucas" },
+                ],
+              },
+            ]}
+          />
         </div>
 
         {/* Date and Time */}
@@ -37,13 +92,6 @@ const BookingDetailsContent = ({selectedDate, setSelectedDate, booking}) => {
             className="border border-gray-300 rounded-lg p-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
             dateFormat="dd/MM/yyyy"
           />
-        </div>
-
-        {/* Staff */}
-        <div className="mb-4">
-          <p className="text-gray-600">
-            <span className="font-semibold">Staff:</span> {booking.staffName}
-          </p>
         </div>
 
         {/* Services */}
@@ -77,7 +125,7 @@ const BookingDetailsContent = ({selectedDate, setSelectedDate, booking}) => {
       </div>
 
       {/* Right Section: Summary */}
-      <div className="w-full lg:w-1/3 bg-white p-6 rounded-lg shadow-md">
+      <div className="w-full lg:w-1/3 border-t-[1px] border-t-gray-300 p-4">
         <h2 className="text-lg font-semibold mb-4">Summary</h2>
         <div className="flex justify-between mb-2">
           <p className="text-gray-600">Travel Fee</p>

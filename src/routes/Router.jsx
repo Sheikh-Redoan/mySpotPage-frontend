@@ -1,5 +1,4 @@
 // src/routes/index.jsx (or wherever your routes are defined)
-
 import OnboardLayout from "@/layout/OnboardLayout";
 import ClientPage from "@/pages/ClientPage";
 import DashboardPage from "@/pages/DashboardPage";
@@ -80,14 +79,14 @@ import SelectStaffForProvider from "../pages/calenderManagement/addBookingByProv
 import ServicesPageForProvider from "../pages/calenderManagement/addBookingByProvider/ServicesPageForProvider";
 import ClientAppointmentCal from "../pages/client/ClientAppointmentCal";
 
-import AllAppointment from "../components/calendarManagement/AllAppointment";
-import BlacklistsOverview from "../components/calendarManagement/BlacklistsOverview";
-import PendingBookings from "../components/calendarManagement/PendingBookings";
-import WaitlistsOverview from "../components/calendarManagement/WaitlistsOverview";
 import ManagerPermissions from "../components/staff-settings/ManagerPermissions";
 import ReceptionistPermissions from "../components/staff-settings/ReceptionistPermissions";
 import Authentication from "../layout/Authentication";
+import AllAppointment from "../pages/calenderManagement/AllAppointment";
+import BlacklistsOverview from "../pages/calenderManagement/BlacklistsOverview";
 import BookingsDetailsOfEachStatus from "../pages/calenderManagement/BookingsDetailsOfEachStatus";
+import PendingBookings from "../pages/calenderManagement/PendingBookings";
+import WaitlistsOverview from "../pages/calenderManagement/WaitlistsOverview";
 import AdminRoute from "../pages/layout/AdminRoute";
 import ClientOnlyRoute from "../pages/layout/ClientOnlyRoute";
 import ProtectedRoute from "../pages/layout/ProtectedRoute";

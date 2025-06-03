@@ -3,12 +3,16 @@ import { imageProvider } from "@/lib/imageProvider";
 import { Tooltip } from "antd";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useState } from "react";
-import { NavLink, Outlet } from "react-router";
+import { useSelector } from "react-redux";
+import { Link, NavLink, Outlet } from "react-router";
+import { tabs } from "../lib/staticData";
 import { cn } from "../lib/utils";
 import TopNavbar from "../pages/layout/TopNavbar";
+import { selectUser } from "../redux/features/userSlice";
 import "../styles/antdCustom.css";
-function MainLayout({ tabs, activeTab }) {
+function MainLayout({ activeTab }) {
   const [toggle, setToggle] = useState(true);
+  const user = useSelector(selectUser);
 
   return (
     <div className="relative font-golos h-screen">
@@ -29,9 +33,9 @@ function MainLayout({ tabs, activeTab }) {
         <div className="">
           {/* logo */}
           <div className="flex items-center ">
-            <div>
+            <Link to="/">
               <img src="/my_spot_page_favicon.png" alt="" />
-            </div>
+            </Link>
             <div>
               <img
                 className={` transition-all duration-300 whitespace-nowrap overflow-hidden ${
@@ -46,40 +50,43 @@ function MainLayout({ tabs, activeTab }) {
           {/* tabs */}
           <div className="pt-6  flex flex-col w-fit  justify-between">
             <div className="flex sidebar-tabs w-fit flex-col gap-4">
-              {tabs.map((tab, index) => (
-                <Tooltip
-                  key={tab.id}
-                  placement="right"
-                  color="white"
-                  title={toggle ? tab.name : ""}>
-                  <NavLink
-                    to={tab.link}
+              {tabs[user?.role].length > 0 &&
+                tabs[user?.role]?.map((tab) => (
+                  <Tooltip
                     key={tab.id}
-                    className={({ isActive }) =>
-                      cn(
-                        isActive && "bg-primary01 text-white",
-                        "py-2 justify-center items-center px-3 transiton-all duration-300 flex w-fit text-white cursor-pointer rounded-xl"
-                      )
-                    }
-                    end={tab?.end}>
-                    {({ isActive }) => (
-                      <>
-                        <img src={isActive ? tab.imageWhite : tab.imagePink} />
-                        <h4
-                          className={cn(
-                            isActive && "!text-white",
-                            "transition-all text-primary01 duration-300 whitespace-nowrap overflow-hidden",
-                            toggle
-                              ? "w-0 opacity-0 invisible  "
-                              : "w-48 pl-2 opacity-100"
-                          )}>
-                          {tab.name}
-                        </h4>
-                      </>
-                    )}
-                  </NavLink>
-                </Tooltip>
-              ))}
+                    placement="right"
+                    color="white"
+                    title={toggle ? tab.name : ""}>
+                    <NavLink
+                      to={tab.link}
+                      key={tab.id}
+                      className={({ isActive }) =>
+                        cn(
+                          isActive && "bg-primary01 text-white",
+                          "py-2 justify-center items-center px-3 transiton-all duration-300 flex w-fit text-white cursor-pointer rounded-xl"
+                        )
+                      }
+                      end={tab?.end}>
+                      {({ isActive }) => (
+                        <>
+                          <img
+                            src={isActive ? tab.imageWhite : tab.imagePink}
+                          />
+                          <h4
+                            className={cn(
+                              isActive && "!text-white",
+                              "transition-all text-primary01 duration-300 whitespace-nowrap overflow-hidden",
+                              toggle
+                                ? "w-0 opacity-0 invisible  "
+                                : "w-48 pl-2 opacity-100"
+                            )}>
+                            {tab.name}
+                          </h4>
+                        </>
+                      )}
+                    </NavLink>
+                  </Tooltip>
+                ))}
             </div>
           </div>
         </div>

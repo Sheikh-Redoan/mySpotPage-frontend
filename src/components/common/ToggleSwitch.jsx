@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 const ToggleSwitch = ({ label, description, initialState }) => {
   const [isOn, setIsOn] = useState(initialState);
-
+  
   const toggle = () => setIsOn(!isOn);
 
   return (
@@ -23,7 +23,7 @@ const ToggleSwitch = ({ label, description, initialState }) => {
             isOn ? "translate-x-5" : "translate-x-0"
           }`}
         />
-      </button>
+      </button> 
       <div className="flex-1">
         <p className="text-gray-950 text-base font-normal leading-normal">
           {label}

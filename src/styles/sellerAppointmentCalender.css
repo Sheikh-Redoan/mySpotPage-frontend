@@ -1,0 +1,141 @@
+/* ---------------------------------------------------- */
+/* Custom styles for fc-dayGridMonth-view */
+/* ---------------------------------------------------- */
+.fc .fc-view-harness {
+  border-radius: 12px;
+  overflow: hidden;
+}
+.fc .fc-scrollgrid {
+  border-radius: 12px;
+  overflow: hidden;
+}
+.fc .fc-theme-standard .fc-scrollgrid {
+  border-radius: 12px;
+  overflow: hidden;
+}
+.fc .fc-scrollgrid-sync-table thead {
+  background-color: #ecebfc;
+}
+.fc .fc-col-header-cell {
+  padding: 6px 0;
+  background-color: #ecebfc;
+  color: #866be7;
+  font-weight: 500;
+  font-size: 14px;
+}
+.fc-scroller {
+  overflow-y: hidden !important;
+}
+.fc .fc-daygrid-day-frame {
+  padding: 0 10px;
+}
+.fc-daygrid-day-number {
+  font-weight: 400;
+  font-size: 14px;
+}
+.fc .fc-daygrid-day-top {
+  display: block;
+}
+.fc .fc-day-today .fc-daygrid-day-number {
+  background-color: #866be7;
+  color: white;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  line-height: 1;
+  box-sizing: border-box;
+  margin-top: 20px;
+}
+/* Make the specific time slots for "today" transparent in timeGrid views */
+.fc-timegrid-cols .fc-day-today {
+  background-color: transparent !important;
+}
+
+/* Sale Badge Styling */
+.sale-badge {
+  border: 1px solid #c3bcf6;
+  color: #866be7;
+  padding: 4px 8px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+  z-index: 2;
+}
+
+/* Hide events from appearing on the grid */
+.fc-event {
+  display: none !important;
+}
+
+/* ---------------------------------------------------- */
+/* Custom styles for fc-timeGridWeek-view */
+/* ---------------------------------------------------- */
+.fc-timeGridWeek-view .fc-scrollgrid {
+  border: none;
+}
+.fc .fc-timegrid-slot{
+    border-bottom: 0px;
+    height: 84px;
+}
+.fc .fc-timegrid-slot-label {
+    vertical-align: top;
+}
+
+/* Customize Day Headers in TimeGrid View */
+.custom-day-header-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.custom-day-header-weekday {
+  font-size: 14px;
+  font-weight: 600;
+  color: #866BE7; 
+  text-transform: uppercase;
+}
+
+.custom-day-header-day {
+  font-size: 14px; 
+  font-weight: 400;
+  color: #3D3D3D; 
+}
+
+/* Style for current day header in timeGridWeek and timeGridDay */
+.fc-day-today .custom-day-header-day {
+  background-color: #744CDB;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Responsive */
+@media only screen and (max-width: 600px) {
+  .fc {
+    height: 563px !important;
+  }
+  .sale-badge {
+    border: none;
+    color: #866be7;
+    padding: 0;
+    white-space: wrap;
+  }
+
+  /* .fc-timeGridWeek-view {
+    height: 535px !important;
+  } */
+}
+
+

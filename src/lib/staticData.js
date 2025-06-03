@@ -55,7 +55,7 @@ export const dashboardTabs = [
     imagePink: imageProvider.SettingsPink,
     imageWhite: imageProvider.SettingsWhite,
     link: "/dashboard/settings",
-    end: true,
+    end: false,
   },
 ];
 
@@ -79,7 +79,7 @@ export const adminTabs = [
     name: "Settings",
     imagePink: imageProvider.SettingsPink,
     imageWhite: imageProvider.SettingsWhite,
-    link: "/admin/admin-settings",
+    link: "/",
   },
 ];
 
@@ -214,6 +214,12 @@ export const breadcrumbs = [
     link: "/service-provider-info/confirm",
   },
 ];
+
+export const tabs = {
+  admin: adminTabs,
+  seller: dashboardTabs,
+  client: [],
+};
 
 // Reusable utility function to insert breadcrumb at a given index
 export const getBreadcrumbs = (from, to, breadcrumb) => {

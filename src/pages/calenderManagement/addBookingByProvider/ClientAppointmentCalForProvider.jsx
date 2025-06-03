@@ -130,6 +130,7 @@ export default function ClientAppointmentCalForProvider() {
           renderDayCellContent={renderDayCellContentWithSales}
           renderSlotLaneContent={renderTimeSlotContent}
           renderDayHeaderContent={renderCustomDayHeaderContent}
+          selectable={true}
         />
 
         <AppointmentActionsBtn />

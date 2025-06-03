@@ -29,10 +29,7 @@ import ClientLayout from "../layout/ClientLayout";
 import MainLayout from "../layout/MainLayout";
 import {
   accountManagementProfileTabs,
-  adminTabs,
-  dashboardTabs,
   dataManagementTabs,
-  profileMainTabs,
   profileTabs,
   staffSettingsTabs,
   userManagementTabs,
@@ -94,6 +91,11 @@ import StaffInformationPage from "../pages/onboarding/StaffInformationPage";
 import StaffSecurityPage from "../pages/onboarding/StaffSecurityPage";
 import StaffServicesPage from "../pages/onboarding/StaffServicesPage";
 import StaffWorkingHoursPage from "../pages/onboarding/StaffWorkingHoursPage";
+import BookingsDetailsPage from "../pages/calenderManagement/BookingsDetailsPage";
+import AllAppointment from "../components/calendarManagement/AllAppointment";
+import PendingBookings from "../components/calendarManagement/PendingBookings";
+import WaitlistsOverview from "../components/calendarManagement/WaitlistsOverview";
+import BlacklistsOverview from "../components/calendarManagement/BlacklistsOverview";
 
 export const routes = createBrowserRouter([
   // Public Routes (Accessible to everyone)
@@ -228,7 +230,7 @@ export const routes = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <SellerRoute>
-          <MainLayout tabs={dashboardTabs} />
+          <MainLayout />
           {/* MainLayout for seller dashboard */}
         </SellerRoute>
       </ProtectedRoute>
@@ -239,7 +241,32 @@ export const routes = createBrowserRouter([
         index: true,
         element: <DashboardPage />,
       },
-      { path: "calendar", element: <CalendarManagementPage /> },
+      {
+        path: "calendar",
+        element: <CalendarManagementPage />,
+        children: [
+          {
+            index: true,
+            element: <AllAppointment />,
+          },
+          {
+            path: "pending",
+            element: <PendingBookings />,
+          },
+          {
+            path: "waitlist",
+            element: <WaitlistsOverview />,
+          },
+          {
+            path: "blacklist",
+            element: <BlacklistsOverview />,
+          },
+          {
+            path: "bookings-details/:id",
+            element: <BookingsDetailsPage />,
+          },
+        ],
+      },
       {
         path: "add-booking-by-provider",
         element: <AddBookingByProvider />,
@@ -283,6 +310,7 @@ export const routes = createBrowserRouter([
           { path: "provider-notes", element: <ProviderNotes /> },
         ],
       },
+
       {
         path: "settings",
         element: (
@@ -314,7 +342,7 @@ export const routes = createBrowserRouter([
       <ProtectedRoute>
         <AdminRoute>
           {/* MainLayout for admin dashboard, renders its children via <Outlet /> */}
-          <MainLayout tabs={adminTabs} />
+          <MainLayout />
         </AdminRoute>
       </ProtectedRoute>
     ),
@@ -408,36 +436,15 @@ export const routes = createBrowserRouter([
           },
         ],
       },
-
-      // --- Admin Settings (if distinct from seller settings) ---
-      // If these settings are truly *admin* specific, keep them here.
-      // Otherwise, they belong under the /dashboard (seller) route.
-      // Note: The indexPath in DynamicSubSideBarLayout needs to reflect the current path.
-      {
-        path: "admin-settings", // Renamed from 'settings' to be more specific to admin
-        element: (
-          <DynamicSubSideBarLayout
-            // Corrected indexPath to reflect admin path
-            indexPath="/admin/admin-settings"
-            items={settingsNavItems} // Assuming you have admin-specific settingsNavItems
-          />
-        ),
-        children: [
-          { index: true, element: <BusinessInfo /> }, // Example: Admin's view of a business's info
-          { path: "location", element: <Location /> },
-          { path: "subscription", element: <Subscription /> },
-          // ... potentially other admin-specific settings
-        ],
-      },
     ],
   },
 
   // User Profile Management (Accessible by all authenticated users, potentially with different views)
   {
-    path: "/my-profile",
+    path: "my-profile",
     element: (
       <ProtectedRoute>
-        <MainLayout tabs={profileMainTabs} activeTab="my-profile" />
+        <MainLayout activeTab="my-profile" />
         {/* MainLayout expects <Outlet /> to render children */}
       </ProtectedRoute>
     ),
@@ -467,9 +474,7 @@ export const routes = createBrowserRouter([
         ],
       },
     ],
-  },
-
-  // Forbidden Page
+  }, // Forbidden Page
   {
     path: "/forbidden",
     element: <ForbiddenPage />,

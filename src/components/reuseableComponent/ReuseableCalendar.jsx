@@ -37,7 +37,6 @@ const toYYYYMMDD = (dateInput) => {
  * @param {string} currentView - The initial view of the calendar (e.g., "dayGridMonth").
  * @param {Function} setCurrentView - A function to update the current view state.
  */
-
 export default function ReusableCalendar({
   initialEvents = [],
   specialDatesData = [],
@@ -47,7 +46,9 @@ export default function ReusableCalendar({
   renderDayHeaderContent,
   onDayClick,
   currentView = "dayGridMonth",
-  setCurrentView
+  setCurrentView,
+  applyFilter,
+  ...props
 }) {
   const [weekendsVisible, setWeekendsVisible] = useState(true);
   const [selectedDate, setSelectedDate] = useState(dayjs());
@@ -223,6 +224,7 @@ export default function ReusableCalendar({
         handleTodayClick={handleTodayClick}
         currentView={currentView}
         handleViewChange={handleViewChange}
+        applyFilter={applyFilter}
       />
 
       <FullCalendar
@@ -232,7 +234,6 @@ export default function ReusableCalendar({
         headerToolbar={false}
         initialView={currentView}
         editable={true}
-        selectable={true}
         selectMirror={true}
         dayMaxEvents={true}
         weekends={weekendsVisible}
@@ -260,6 +261,7 @@ export default function ReusableCalendar({
             : null
         }
         slotLaneContent={renderSlotLaneContent || null}
+        {...props}
       />
 
       <EventModal

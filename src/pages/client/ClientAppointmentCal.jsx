@@ -4,11 +4,13 @@ import "/src/styles/fullCalender.css";
 import AppointmentActionsBtn from "../../components/client/client-appointment/AppointmentActionsBtn";
 import Breadcrumb from "../../components/client/Breadcrumb";
 import { getBreadcrumbs } from "../../lib/staticData";
-import ReusableCalendar, { createEventId } from "../../components/reuseableComponent/ReuseableCalendar";
+import ReusableCalendar, {
+  createEventId,
+} from "../../components/reuseableComponent/ReuseableCalendar";
 import Container from "./Container";
 import { toYYYYMMDD } from "../../utils/toYYYYMMDD";
 
-let eventGuid = 0; 
+let eventGuid = 0;
 let todayStr = dayjs().format("YYYY-MM-DD");
 
 const specialDatesData = [
@@ -66,7 +68,9 @@ export default function ClientAppointmentCal() {
     return (
       <div className="relative w-full h-full flex flex-col md:flex-row items-center justify-center md:justify-start gap-3">
         {currentView === "dayGridMonth" && (
-          <span className="text-[0.875rem] p-[4px] z-1">{formattedDayNumber}</span>
+          <span className="text-[0.875rem] p-[4px] z-1">
+            {formattedDayNumber}
+          </span>
         )}
         {specialDateInfo &&
           specialDateInfo.sale &&
@@ -138,11 +142,12 @@ export default function ClientAppointmentCal() {
             initialEvents={INITIAL_EVENTS}
             specialDatesData={specialDatesData}
             timeSlots={timeSlots}
-            currentView={currentView} 
-            setCurrentView={setCurrentView} 
+            currentView={currentView}
+            setCurrentView={setCurrentView}
             renderDayCellContent={renderDayCellContentWithSales}
             renderSlotLaneContent={renderTimeSlotContent}
             renderDayHeaderContent={renderCustomDayHeaderContent}
+            selectable={true}
           />
 
           <AppointmentActionsBtn />

@@ -10,11 +10,9 @@ export default function ClientLayout() {
 
   useEffect(() => {
     if (user && user.role === "seller") {
-      return navigate("/dashboard");
-    }
-
-    if (user && user.role === "admin") {
-      return navigate("/admin");
+      navigate("/dashboard");
+    } else if (user && user.role === "admin") {
+      navigate("/admin");
     }
   }, [user]);
 

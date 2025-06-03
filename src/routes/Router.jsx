@@ -80,7 +80,14 @@ import SelectStaffForProvider from "../pages/calenderManagement/addBookingByProv
 import ServicesPageForProvider from "../pages/calenderManagement/addBookingByProvider/ServicesPageForProvider";
 import ClientAppointmentCal from "../pages/client/ClientAppointmentCal";
 
+import AllAppointment from "../components/calendarManagement/AllAppointment";
+import BlacklistsOverview from "../components/calendarManagement/BlacklistsOverview";
+import PendingBookings from "../components/calendarManagement/PendingBookings";
+import WaitlistsOverview from "../components/calendarManagement/WaitlistsOverview";
+import ManagerPermissions from "../components/staff-settings/ManagerPermissions";
+import ReceptionistPermissions from "../components/staff-settings/ReceptionistPermissions";
 import Authentication from "../layout/Authentication";
+import BookingsDetailsOfEachStatus from "../pages/calenderManagement/BookingsDetailsOfEachStatus";
 import AdminRoute from "../pages/layout/AdminRoute";
 import ClientOnlyRoute from "../pages/layout/ClientOnlyRoute";
 import ProtectedRoute from "../pages/layout/ProtectedRoute";
@@ -90,11 +97,6 @@ import StaffInformationPage from "../pages/onboarding/StaffInformationPage";
 import StaffSecurityPage from "../pages/onboarding/StaffSecurityPage";
 import StaffServicesPage from "../pages/onboarding/StaffServicesPage";
 import StaffWorkingHoursPage from "../pages/onboarding/StaffWorkingHoursPage";
-import AllAppointment from "../components/calendarManagement/AllAppointment";
-import PendingBookings from "../components/calendarManagement/PendingBookings";
-import WaitlistsOverview from "../components/calendarManagement/WaitlistsOverview";
-import BlacklistsOverview from "../components/calendarManagement/BlacklistsOverview";
-import BookingsDetailsOfEachStatus from "../pages/calenderManagement/BookingsDetailsOfEachStatus";
 
 export const routes = createBrowserRouter([
   // Public Routes (Accessible to everyone)
@@ -295,16 +297,18 @@ export const routes = createBrowserRouter([
       },
       { path: "staff-management", element: <StaffManagement /> }, // Staff management for seller
       {
-        path: "staff-settings",
+        path: "staff-management/settings",
         element: <MyProfileLayout tabs={staffSettingsTabs} />,
         children: [
-          { index: true, element: <div>Modal</div> },
+          { index: true, element: <Navigate to="manager-permissions" /> },
           {
-            path: "basic-information",
-            element: <BusinessInfo />,
+            path: "manager-permissions",
+            element: <ManagerPermissions />,
           },
-          { path: "location", element: <Location /> },
-          { path: "subscription", element: <Subscription /> },
+          {
+            path: "receptionist-permissions",
+            element: <ReceptionistPermissions />,
+          },
         ],
       },
 

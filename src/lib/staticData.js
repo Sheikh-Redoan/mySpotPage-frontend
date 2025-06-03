@@ -215,6 +215,12 @@ export const breadcrumbs = [
   },
 ];
 
+export const tabs = {
+  admin: adminTabs,
+  seller: dashboardTabs,
+  client: [],
+};
+
 // Reusable utility function to insert breadcrumb at a given index
 export const getBreadcrumbs = (from, to, breadcrumb) => {
   if (!breadcrumb) return [...breadcrumbs];

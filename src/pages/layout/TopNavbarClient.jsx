@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { Link } from "react-router";
 import logo from "../../assets/images/logo.png";
 import UserMenuPopUp from "../../components/admin/UserMenuPopUp";
 import LanguageSelectModal from "../../components/modal/LanguageSelectModal";
@@ -14,11 +15,13 @@ export default function TopNavbarClient() {
         <Container>
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center gap-2">
-              <img
-                className="w-20 h-8 object-contain"
-                src={logo}
-                alt="brand logo"
-              />
+              <Link to="/">
+                <img
+                  className="w-20 h-8 object-contain"
+                  src={logo}
+                  alt="brand logo"
+                />
+              </Link>
             </div>
 
             {user ? (

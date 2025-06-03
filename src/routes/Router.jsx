@@ -29,10 +29,7 @@ import ClientLayout from "../layout/ClientLayout";
 import MainLayout from "../layout/MainLayout";
 import {
   accountManagementProfileTabs,
-  adminTabs,
-  dashboardTabs,
   dataManagementTabs,
-  profileMainTabs,
   profileTabs,
   staffSettingsTabs,
   userManagementTabs,
@@ -233,7 +230,7 @@ export const routes = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <SellerRoute>
-          <MainLayout tabs={dashboardTabs} />
+          <MainLayout />
           {/* MainLayout for seller dashboard */}
         </SellerRoute>
       </ProtectedRoute>
@@ -313,6 +310,7 @@ export const routes = createBrowserRouter([
           { path: "provider-notes", element: <ProviderNotes /> },
         ],
       },
+
       {
         path: "settings",
         element: (
@@ -344,7 +342,7 @@ export const routes = createBrowserRouter([
       <ProtectedRoute>
         <AdminRoute>
           {/* MainLayout for admin dashboard, renders its children via <Outlet /> */}
-          <MainLayout tabs={adminTabs} />
+          <MainLayout />
         </AdminRoute>
       </ProtectedRoute>
     ),
@@ -464,10 +462,10 @@ export const routes = createBrowserRouter([
 
   // User Profile Management (Accessible by all authenticated users, potentially with different views)
   {
-    path: "/my-profile",
+    path: "my-profile",
     element: (
       <ProtectedRoute>
-        <MainLayout tabs={profileMainTabs} activeTab="my-profile" />
+        <MainLayout activeTab="my-profile" />
         {/* MainLayout expects <Outlet /> to render children */}
       </ProtectedRoute>
     ),
@@ -497,9 +495,7 @@ export const routes = createBrowserRouter([
         ],
       },
     ],
-  },
-
-  // Forbidden Page
+  }, // Forbidden Page
   {
     path: "/forbidden",
     element: <ForbiddenPage />,

@@ -87,6 +87,7 @@ function CalendarManagementPage() {
 
     switch (activeTabKey) {
       case "1":
+        // AllAppoimtment now renders the CustomStaffCalendar internally
         return <AllAppoimtment />;
       case "2":
         return <PendingBookings />;
@@ -95,6 +96,7 @@ function CalendarManagementPage() {
       case "4":
         return <BlacklistsOverview />;
       default:
+        return <AllAppoimtment />;
         return <AllAppoimtment />;
     }
   };

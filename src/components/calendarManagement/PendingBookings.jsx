@@ -243,12 +243,14 @@ const PendingBookings = () => {
           }
         />
       ),
-      onFilterDropdownVisibleChange: (visible) => {
-        setServiceFilterOpen(visible);
-        // When the dropdown closes, apply the filters based on current state
-        if (!visible) {
-          applyFilters(searchQuery, selectedServiceFilters);
-        }
+      filterDropdownProps: {
+        onOpenChange: (visible) => {
+          setServiceFilterOpen(visible);
+          // When the dropdown closes, apply the filters based on current state
+          if (!visible) {
+            applyFilters(searchQuery, selectedServiceFilters);
+          }
+        },
       },
     },
     {
@@ -324,10 +326,6 @@ const PendingBookings = () => {
   const endIndex = startIndex + pageSize;
   const paginatedBookings = bookings.slice(startIndex, endIndex);
 
-  const handleRowClick = (record) => {
-    navigate(`/dashboard/calendar/bookings-details/${record.id}`);
-  };
-
   return (
     <div className="w-full py-2">
       <Table
@@ -350,7 +348,8 @@ const PendingBookings = () => {
             : ""
         }
         onRow={(record) => ({
-          onClick: () => handleRowClick(record),
+          onClick: () =>
+            navigate(`/dashboard/calendar/bookings-details/${record.id}`),
           className: "cursor-pointer hover:bg-gray-50",
         })}
       />

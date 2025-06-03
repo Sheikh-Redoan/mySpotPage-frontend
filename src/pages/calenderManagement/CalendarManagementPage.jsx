@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Tabs } from "antd";
-import { Link } from "react-router"; 
+import { Link, Outlet, useLocation, useNavigate } from "react-router";
 import AllAppoimtment from "../../components/calendarManagement/AllAppointment";
 import PendingBookings from "../../components/calendarManagement/PendingBookings";
 import WaitlistsOverview from "../../components/calendarManagement/WaitlistsOverview";
 import BlacklistsOverview from "../../components/calendarManagement/BlacklistsOverview";
+import { useEffect } from "react";
 
 const items = [
   {
@@ -26,12 +27,53 @@ const items = [
 ];
 
 function CalendarManagementPage() {
-  const [activeTabKey, setActiveTabKey] = useState("1"); 
-  const [isModalOpen, setIsModalOpen] = useState(false); 
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [activeTabKey, setActiveTabKey] = useState("1");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (location.pathname.includes("bookings-details")) {
+      return;
+    }
+
+    switch (location.pathname) {
+      case "/dashboard/calendar":
+        setActiveTabKey("1");
+        break;
+      case "/dashboard/calendar/pending":
+        setActiveTabKey("2");
+        break;
+      case "/dashboard/calendar/waitlist":
+        setActiveTabKey("3");
+        break;
+      case "/dashboard/calendar/blacklist":
+        setActiveTabKey("4");
+        break;
+      default:
+        setActiveTabKey("1");
+    }
+  }, [location.pathname]);
 
   const onChange = (key) => {
-    setActiveTabKey(key); 
-    console.log(key);
+    setActiveTabKey(key);
+
+    switch (key) {
+      case "1":
+        navigate("/dashboard/calendar");
+        break;
+      case "2":
+        navigate("/dashboard/calendar/pending");
+        break;
+      case "3":
+        navigate("/dashboard/calendar/waitlist");
+        break;
+      case "4":
+        navigate("/dashboard/calendar/blacklist");
+        break;
+      default:
+        navigate("/dashboard/calendar");
+    }
   };
 
   const handleAddBooking = () => {
@@ -39,6 +81,10 @@ function CalendarManagementPage() {
   };
 
   const renderContent = () => {
+    if (location.pathname.includes("bookings-details")) {
+      return <Outlet />;
+    }
+
     switch (activeTabKey) {
       case "1":
         return <AllAppoimtment />;
@@ -49,7 +95,7 @@ function CalendarManagementPage() {
       case "4":
         return <BlacklistsOverview />;
       default:
-        return <AllAppoimtment />; 
+        return <AllAppoimtment />;
     }
   };
 
@@ -106,9 +152,7 @@ function CalendarManagementPage() {
         </div>
       </div>
 
-      {/* Render content based on activeTabKey */}
       {renderContent()}
-
     </div>
   );
 }

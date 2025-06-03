@@ -1,11 +1,9 @@
 import {
-  AvatarIcon,
-  BookingIcon,
   BusinessIcon,
   LocationIcon,
-  NoteIcon,
   SubscriptionIcon,
 } from "../../assets/icons/icons";
+import { imageProvider } from "../../lib/imageProvider";
 
 export const settingsNavItems = [
   {
@@ -28,18 +26,21 @@ export const settingsNavItems = [
 
 export const clientNavItems = [
   {
-    path: "/client/basic-info",
-    title: "Basic Information",
-    icon: AvatarIcon,
+    link: "basic-info",
+    name: "Basic Information",
+    imagePink: imageProvider.PeoplePink,
+    imageWhite: imageProvider.PeopleBlack,
   },
   {
-    path: "/client/booking-info",
-    title: "Booking Information",
-    icon: BookingIcon,
+    link: "booking-info",
+    name: "Booking Information",
+    imagePink: imageProvider.bookingActive,
+    imageWhite: imageProvider.booking,
   },
   {
-    path: "/client/provider-notes",
-    title: "Provider Notes",
-    icon: NoteIcon,
+    link: "provider-notes",
+    name: "Provider Notes",
+    imagePink: imageProvider.noteActive,
+    imageWhite: imageProvider.note,
   },
 ];

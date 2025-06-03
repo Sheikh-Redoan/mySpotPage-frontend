@@ -16,31 +16,17 @@ import { FilterFilled, SearchOutlined } from "../../assets/icons/icons";
 import { getPendingBookings } from "../../dummy-data/bookingsData";
 import { useNavigate } from "react-router";
 
-const searchPendingBookings = (query) => {
-  const allBookings = getPendingBookings();
-  if (!query) {
-    return allBookings;
-  }
-  const lowerCaseQuery = query.toLowerCase();
-  return allBookings.filter(
-    (booking) =>
-      booking.clientName.toLowerCase().includes(lowerCaseQuery) ||
-      booking.clientPhone.toLowerCase().includes(lowerCaseQuery) ||
-      booking.staffName.toLowerCase().includes(lowerCaseQuery)
-  );
-};
-
 const { Option } = Select;
 
 const PendingBookings = () => {
   const navigate = useNavigate();
   const [bookings, setBookings] = useState(getPendingBookings());
+  console.log("bookings", bookings);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
-  const [totalBookings, setTotalBookings] = useState(
-    getPendingBookings().length
-  );
+
+  const [totalBookings, setTotalBookings] = useState(getPendingBookings().length);
 
   // State for service filter dropdown
   const [selectedServiceFilters, setSelectedServiceFilters] = useState([]);
@@ -73,7 +59,7 @@ const PendingBookings = () => {
     if (currentServiceFilters.length > 0) {
       results = results.filter((booking) =>
         currentServiceFilters.some((filterService) =>
-          booking.services.includes(filterService)
+          booking.serviceDetails.some((detail) => detail.name === filterService)
         )
       );
     }
@@ -85,7 +71,6 @@ const PendingBookings = () => {
 
   const handleSearch = (value) => {
     setSearchQuery(value);
-    // Apply filters based on current search and previously selected service filters
     applyFilters(value, selectedServiceFilters);
   };
 
@@ -108,7 +93,7 @@ const PendingBookings = () => {
 
   // Extract unique services for filter dropdown
   const allUniqueServices = [
-    ...new Set(getPendingBookings().flatMap((booking) => booking.services)),
+    ...new Set(bookings.flatMap((booking) => booking.serviceDetails.map((detail) => detail.name))),
   ];
 
   // Filtered services for the dropdown search
@@ -171,16 +156,16 @@ const PendingBookings = () => {
     },
     {
       title: "Service",
-      dataIndex: "services",
+      dataIndex: "serviceDetails",
       key: "service",
-      render: (services) => (
+      render: (serviceDetails) => (
         <div className="flex flex-col">
           <span className="text-[#262626] text-sm font-medium">
-            {services[0]}
+            {serviceDetails[0]?.name || "N/A"}
           </span>
-          {services.slice(1).map((service, index) => (
+          {serviceDetails.slice(1).map((detail, index) => (
             <span key={index} className="text-[#888] text-xs">
-              {service}
+              {detail.name}
             </span>
           ))}
         </div>
@@ -246,7 +231,6 @@ const PendingBookings = () => {
       filterDropdownProps: {
         onOpenChange: (visible) => {
           setServiceFilterOpen(visible);
-          // When the dropdown closes, apply the filters based on current state
           if (!visible) {
             applyFilters(searchQuery, selectedServiceFilters);
           }

@@ -1,6 +1,9 @@
 import spark from "../assets/icons/activePlan.png";
 import amrican from "../assets/icons/amrican.png";
 import bloom from "../assets/icons/bloom.png";
+import booking from "../assets/icons/booking.png";
+import bookingActive from "../assets/icons/bookingActive.png";
+import bookmark from "../assets/icons/bookmark.png";
 import building from "../assets/icons/building.png";
 import buildingCol from "../assets/icons/buildingCol.png";
 import businessinfo from "../assets/icons/businessInfo.png";
@@ -10,7 +13,10 @@ import card from "../assets/icons/card.png";
 import cardCol from "../assets/icons/cardCol.png";
 import ChartLinePink from "../assets/icons/ChartLine.png";
 import ChartLineWhite from "../assets/icons/chartLineWhite.png";
-import colDatabase from "../assets/icons/colDatabase.png";
+import {
+  default as colDatabase,
+  default as databaseCol,
+} from "../assets/icons/colDatabase.png";
 import colorPeople from "../assets/icons/colorPeople.png";
 import database from "../assets/icons/database.png";
 import deleteIcon from "../assets/icons/delete.png";
@@ -27,6 +33,8 @@ import mastard from "../assets/icons/mastard.png";
 import multipleCoPeo from "../assets/icons/multipleCoPeo.png";
 import multiplePeople from "../assets/icons/multiplePeople.png";
 import NoNotificationIcon from "../assets/icons/no_notification.png";
+import note from "../assets/icons/note.png";
+import noteActive from "../assets/icons/noteActive.png";
 import Notification from "../assets/icons/notification.png";
 import NotificationWhite from "../assets/icons/notification_white.png";
 import pencile from "../assets/icons/pencil-simple-line.png";
@@ -53,11 +61,13 @@ import upgradeIcon from "../assets/icons/upgradeIcon.png";
 import upload from "../assets/icons/upload.png";
 import visa from "../assets/icons/visa.png";
 import TextLogo from "../assets/images/my_spot_page_text_favicon.png";
-import bookmark from "../assets/icons/bookmark.png";
-import databaseCol from "../assets/icons/colDatabase.png"
 
 export const imageProvider = {
+  note,
+  noteActive,
   ChartLinePink,
+  booking,
+  bookingActive,
   seller_pink,
   TextLogo,
   PricingPink,

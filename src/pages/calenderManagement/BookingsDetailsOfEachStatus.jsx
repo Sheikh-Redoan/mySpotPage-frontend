@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router";
 import { getPendingBookingsById } from "../../dummy-data/bookingsData";
-import BookingDetailsContent from "../../components/calendarManagement/BookingDetailsContent";
+import BookingDetailsContent from "../../components/calendarManagement/pendingBookings/BookingDetailsContent";
 
 const BookingsDetailsOfEachStatus = () => {
   const { id } = useParams();

@@ -1,7 +1,7 @@
 import { ChevronDown, ChevronUp, X } from "lucide-react";
-import { imageProvider } from "../../../lib/imageProvider";
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
+import { imageProvider } from "../../../lib/imageProvider";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import { slideInFromBottom } from "./../../../animations/variants";
@@ -101,11 +101,12 @@ const Upgradeplan = () => {
         initial="hidden"
         animate="visible"
         ref={UpgradeCard}
-        className="bg-[#ffffff] min-h-[640px] w-[1110px] rounded-lg"
-      >
+        className="bg-[#ffffff] min-h-[640px] w-[1110px] rounded-lg">
         <div className="flex justify-between items-center my-2 py-3 px-4">
           <p className="text-lg font-semibold"> Select Plan</p>
-          <Link className="hover:scale-105" to={"/settings/subscription"}>
+          <Link
+            className="hover:scale-105"
+            to={"/dashboard/settings/subscription"}>
             <X />
           </Link>
         </div>
@@ -123,8 +124,7 @@ const Upgradeplan = () => {
                   currentPlan === plan.name
                     ? "bg-[#F5F4FE] border-[#866BE7] hover:scale-105"
                     : "hover:scale-95 border-[#D1D1D1]"
-                }`}
-              >
+                }`}>
                 <div className="mt-4">
                   <div className="flex items-center gap-3">
                     <img src={plan.image} alt="icon" />
@@ -157,8 +157,7 @@ const Upgradeplan = () => {
                        : "border border-[#ED4245] bg-[#FFFFFF] text-[#ED4245]"
                      : "bg-[#744CDB] text-[#FFFFFF]"
                  }
-                       `}
-                >
+                       `}>
                   {currentPlan === plan.name
                     ? plan.name === "Spark"
                       ? "Current Plan"
@@ -219,8 +218,7 @@ const Upgradeplan = () => {
             <div className="text-center mt-6 mx-2">
               <button
                 onClick={() => setShowAll(!showAll)}
-                className="text-[#744CDB] font-medium underline flex items-center justify-center gap-2 cursor-pointer"
-              >
+                className="text-[#744CDB] font-medium underline flex items-center justify-center gap-2 cursor-pointer">
                 {showAll ? "Show Less" : "Show More"}
                 <span>
                   {showAll ? (

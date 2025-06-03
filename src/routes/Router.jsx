@@ -67,7 +67,6 @@ import SetupTeamLocationServices1 from "../pages/onboarding/team/SetupTeamLocati
 import SetupTeamLocationServices2 from "../pages/onboarding/team/SetupTeamLocationServices2";
 import StaffManagement from "../pages/seller/StaffManagement";
 
-// Adjust path
 import AccountManagement from "../pages/admin/AccountManagement";
 import MenuCategory from "../pages/admin/MenuCategory";
 import ServiceClassification from "../pages/admin/ServiceClassification";

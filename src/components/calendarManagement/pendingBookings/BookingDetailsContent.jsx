@@ -9,6 +9,7 @@ import { CircleAlert } from "lucide-react";
 import { ChevronDown } from "lucide-react";
 import StyledDatePicker from "./StyledDatePicker";
 import TimePicker from "./TimePicker";
+import { Plus } from "lucide-react";
 
 const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
   console.log("booking", booking);
@@ -124,9 +125,34 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
             {/* Time Picker */}
             <TimePicker scheduledTime={booking?.scheduledTime} />
 
-            <div className="px-3 py-2 bg-[#FFFFFF] text-[#FC8B23] rounded-lg text-sm font-medium">
+            <div
+              className={`px-3 py-2 bg-[#FFFFFF] rounded-lg text-sm font-medium ${
+                booking.status === "Pending"
+                  ? "text-[#FC8B23]"
+                  : booking.status === "Confirmed"
+                  ? "text-[#3E70DD]"
+                  : booking.status === "Completed"
+                  ? "text-[#21C66E]"
+                  : booking.status === "Cancelled"
+                  ? "text-[#ED4245]"
+                  : booking.status === "No Show"
+                  ? "text-[#82868E]"
+                  : ""
+              }`}
+            >
               {booking.status}
             </div>
+          </div>
+        </div>
+
+        <div className="px-4 py-6 w-full">
+          <div className="flex justify-between">
+            <h3 className="text-lg font-semibold text-[#242528]">Services</h3>
+
+            <Button className="flex items-center gap-2 bg-[#FFFFFF] px-2 py-3 border-[1px] border-[#744CDB] rounded-lg">
+              <Plus size={18} color="#744CDB" />
+              <span className="text-[#744CDB] text-sm font-normal">Add service</span>
+            </Button>
           </div>
         </div>
       </div>

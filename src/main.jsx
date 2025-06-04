@@ -21,6 +21,13 @@ const theme = {
     borderRadius: 6,
     fontFamily: '"Golos Text", sans-serif',
   },
+  components: {
+    Segmented: {
+      itemSelectedBg: "#866BE7",
+      itemSelectedColor: "#FFFFFF",
+      trackBg: "#FFFFFF",
+    },
+  },
 };
 
 createRoot(document.getElementById("root")).render(

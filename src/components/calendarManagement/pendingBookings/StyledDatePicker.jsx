@@ -57,11 +57,11 @@ const StyledDatePicker = ({
         if (date.toDateString() === selectedDate?.toDateString()) {
           classes += " bg-[#6C5DD3] text-white";
         } else if (
-          date.getDate() === 3 &&
-          date.getMonth() === 0 &&
-          date.getFullYear() === 2025
+          date.getDate() === new Date().getDate() &&
+          date.getMonth() === new Date().getMonth() &&
+          date.getFullYear() === new Date().getFullYear()
         ) {
-          // Specific styling for day 3 of Jan 2025
+          // Specific styling for day today
           classes += " border border-[#6C5DD3] text-[#6C5DD3]";
         }
         // Days from previous/next month are lighter
@@ -76,7 +76,7 @@ const StyledDatePicker = ({
 
         // Override default selected/keyboard selected styles
         if (date.toDateString() === selectedDate?.toDateString()) {
-          classes += " react-datepicker__day--selected-override"; // Custom class to override specific default styles
+          classes += " react-datepicker__day--selected-override"; 
         }
 
         return classes;

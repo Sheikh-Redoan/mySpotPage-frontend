@@ -384,15 +384,81 @@
 
 /* FullCalendar customization end */
 
-
 input[type="time"]::-webkit-inner-spin-button,
 input[type="time"]::-webkit-calendar-picker-indicator {
-    display: none;
-    -webkit-appearance: none;
+  display: none;
+  -webkit-appearance: none;
 }
 
 input[type="date"]::-webkit-inner-spin-button,
 input[type="date"]::-webkit-calendar-picker-indicator {
-    display: none;
-    -webkit-appearance: none;
+  display: none;
+  -webkit-appearance: none;
+}
+
+/* Calendar Container */
+
+/* Day Cell Styles */
+.fc .fc-daygrid-day {
+  @apply !h-[150px];
+}
+
+.fc .fc-daygrid-day-frame {
+  @apply h-full min-h-full;
+}
+
+/* Event Styles */
+.fc .fc-daygrid-day-events {
+  @apply min-h-[2em] mb-4;
+}
+
+.fc-daygrid-day-frame {
+  @apply !p-2;
+}
+
+/* Today's Date Highlight */
+.fc-day-today {
+  @apply !bg-blue-50;
+}
+
+/* Event Content */
+.fc-event {
+  @apply rounded-md border-l-4 px-2 py-1;
+}
+
+.fc-event.confirmed {
+  @apply bg-green-100 text-green-800 border-l-green-500;
+}
+
+.fc-event.pending {
+  @apply bg-yellow-100 text-yellow-800 border-l-yellow-500;
+}
+
+/* Header Styles */
+.fc-header-toolbar {
+  @apply mb-4;
+}
+
+/* Custom Selected Date */
+.custom-selected-date {
+  @apply !bg-blue-100;
+}
+
+/* Busy Date */
+.custom-busy-date {
+  @apply !bg-gray-100;
+}
+
+/* Time Grid Styles */
+.fc-timegrid-slot {
+  @apply h-[60px] border-b border-gray-200;
+}
+
+/* Event Modal */
+.ant-modal-content {
+  @apply rounded-lg;
+}
+
+.ant-picker {
+  @apply w-full;
 }

@@ -1,7 +1,7 @@
 import { Tabs } from "antd";
 import { useEffect, useState } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router";
-import AllAppoimtment from "./AllAppointment";
+import AllAppointment from "./AllAppointment";
 import BlacklistsOverview from "./BlacklistsOverview";
 import PendingBookings from "./PendingBookings";
 import WaitlistsOverview from "./WaitlistsOverview";
@@ -87,7 +87,7 @@ function CalendarManagementPage() {
     switch (activeTabKey) {
       case "1":
         // AllAppoimtment now renders the CustomStaffCalendar internally
-        return <AllAppoimtment />;
+        return <AllAppointment />;
       case "2":
         return <PendingBookings />;
       case "3":

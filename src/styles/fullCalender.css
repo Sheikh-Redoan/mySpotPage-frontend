@@ -32,6 +32,7 @@
 .fc-daygrid-day-number {
   font-weight: 400;
   font-size: 14px;
+  text-align: start;
 }
 .fc .fc-daygrid-day-top {
   display: block;
@@ -39,16 +40,15 @@
 .fc .fc-day-today .fc-daygrid-day-number {
   background-color: #866be7;
   color: white;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  display: inline-flex;
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 500;
-  line-height: 1;
   box-sizing: border-box;
-  margin-top: 20px;
+  vertical-align: middle;
 }
 /* Make the specific time slots for "today" transparent in timeGrid views */
 .fc-timegrid-cols .fc-day-today {
@@ -56,9 +56,9 @@
 }
 
 /* custom stye for selected and busy state */
-.fc .fc-highlight{
-    background: #F5F4FE !important;
-    border: 1px solid #866BE7 !important;
+.fc .fc-highlight {
+  background: #f5f4fe !important;
+  border: 1px solid #866be7 !important;
 }
 .custom-selected-date .custom-day-number {
   color: #53389e !important;
@@ -101,12 +101,12 @@
 .fc-timeGridWeek-view .fc-scrollgrid {
   border: none;
 }
-.fc .fc-timegrid-slot{
-    border-bottom: 0px;
-    height: 84px;
+.fc .fc-timegrid-slot {
+  border-bottom: 0px;
+  height: 84px;
 }
 .fc .fc-timegrid-slot-label {
-    vertical-align: top;
+  vertical-align: top;
 }
 
 /* Customize Day Headers in TimeGrid View */
@@ -121,19 +121,19 @@
 .custom-day-header-weekday {
   font-size: 14px;
   font-weight: 600;
-  color: #866BE7; 
+  color: #866be7;
   text-transform: uppercase;
 }
 
 .custom-day-header-day {
-  font-size: 14px; 
+  font-size: 14px;
   font-weight: 400;
-  color: #3D3D3D; 
+  color: #3d3d3d;
 }
 
 /* Style for current day header in timeGridWeek and timeGridDay */
 .fc-day-today .custom-day-header-day {
-  background-color: #744CDB;
+  background-color: #744cdb;
   color: white;
   width: 32px;
   height: 32px;
@@ -159,5 +159,3 @@
     height: 535px !important;
   } */
 }
-
-

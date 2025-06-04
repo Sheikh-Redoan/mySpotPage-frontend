@@ -27,7 +27,7 @@ const Header = ({ activeTab, onTabChange }) => {
         Corrected usage: Wrap the entire button element with the Link component.
         This makes the whole button clickable and handles navigation via React Router.
       */}
-      <Link to="/dashboard/staff-settings">
+      <Link to="/dashboard/staff-management/settings">
         {/* Link to the new staff settings route */}
         <button className="h-10 px-3 py-2 bg-white rounded-lg border border-neutral-300 flex justify-center items-center gap-2 hover:bg-gray-50 transition-colors duration-200">
           <GoGear className="w-5 h-5 text-neutral-700" />

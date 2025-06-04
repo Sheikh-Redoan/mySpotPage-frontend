@@ -1,20 +1,17 @@
-import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Outlet, useNavigate } from "react-router";
+import { Navigate, Outlet } from "react-router";
 import TopNavbarClient from "../pages/layout/TopNavbarClient";
 import { selectUser } from "../redux/features/userSlice";
 
 export default function ClientLayout() {
   const user = useSelector(selectUser);
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    if (user && user.role === "seller") {
-      navigate("/dashboard");
-    } else if (user && user.role === "admin") {
-      navigate("/admin");
-    }
-  }, [user]);
+  if (user.role === "seller") {
+    return <Navigate to="/dashboard" />;
+  }
+  if (user.role === "admin") {
+    return <Navigate to="/admin" />;
+  }
 
   return (
     <div className="bg-[#F9FAFC] min-h-screen">

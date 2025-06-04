@@ -1,20 +1,28 @@
 // src/components/staff-settings/ManagerPermissions.jsx
-import React, { useState } from "react";
-import { GoChevronRight } from "react-icons/go";
+import { getBreadcrumbs } from "../../lib/staticData";
+import Breadcrumb from "../client/Breadcrumb";
 import ToggleSwitch from "../common/ToggleSwitch";
-
 
 function ManagerPermissions() {
   return (
     <div className="flex flex-col gap-6">
       {/* Breadcrumbs */}
-      <div className="inline-flex items-center gap-2 text-sm">
-        <span className="text-gray-400">Staff Management</span>
-        <GoChevronRight className="w-4 h-4 text-gray-400" />
-        <span className="text-gray-400">Settings</span>
-        <GoChevronRight className="w-4 h-4 text-gray-400" />
-        <span className="text-gray-950 font-normal">Manager Permissions</span>
-      </div>
+      <Breadcrumb
+        breadcrumbs={getBreadcrumbs(0, 3, [
+          {
+            name: "Staff Management",
+            link: "/dashboard/staff-management",
+          },
+          {
+            name: "Settings",
+            link: "",
+          },
+          {
+            name: "Manager Permissions",
+            link: "/dashboard/staff-management/settings/manager-permissions",
+          },
+        ])}
+      />
 
       {/* Permissions Section */}
       <div className="bg-white rounded-xl p-4 flex flex-col gap-6">

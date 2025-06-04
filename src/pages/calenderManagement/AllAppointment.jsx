@@ -5,7 +5,7 @@ import weekday from "dayjs/plugin/weekday";
 import { Dropdown, Checkbox, Button } from "antd";
 import { ChevronLeft, ChevronRight, ChevronDown } from "lucide-react"; // Using lucide-react for icons
 import { staffData } from "../../lib/staffData"; // Make sure this path is correct
-import StaffCalendarWeekView from "./StaffCalendarWeekView"; // Import the new component
+import StaffCalendarWeekView from "../../components/calendarManagement/StaffCalendarWeekView"; // Import the new component
 
 dayjs.extend(weekday);
 

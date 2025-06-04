@@ -26,7 +26,7 @@ export const ClientAppointmentItem = ({ time, clientName }) => {
       arrow={false}>
       <Button type="text" className="flex items-center">
         <span className="w-2 h-2 bg-blue-500 rounded-full flex-shrink-0"></span>
-        <span className="text-sm font-medium text-gray-900 whitespace-nowrap">
+        <span className="text-sm font-normal text-gray-900 whitespace-nowrap">
           {time} - {clientName}
         </span>
         <MoreVertical className="text-gray-600" size={16} />

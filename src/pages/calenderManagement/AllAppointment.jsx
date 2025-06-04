@@ -1,11 +1,13 @@
+import { Avatar } from "antd";
 import dayjs from "dayjs";
+import { User } from "lucide-react";
 import { useState } from "react";
 import { ClientAppointmentItem } from "../../components/calendarManagement/allAppointment/ClientAppointmentItem";
 import ReusableCalendar, {
   createEventId,
 } from "../../components/reuseableComponent/ReuseableCalendar";
 import { toYYYYMMDD } from "../../utils/toYYYYMMDD"; // Utility function to format date
-import "/src/styles/fullCalender.css";
+import "/src/styles/AllApointment.css";
 
 // Ensure AppointmentStatusesAction is a standalone component for import
 // If it was defined inside another component previously, it needs to be extracted.
@@ -45,11 +47,12 @@ export const INITIAL_EVENTS = [
 ];
 
 export default function AllAppointment() {
-  const [currentView, setCurrentView] = useState("dayGridMonth");
+  const [currentView, setCurrentView] = useState("resourceTimeGridDay"); // Default view
   // State to hold all appointments, keyed by date string
   const [allAppointments, setAllAppointments] = useState(dummyAllAppointments);
 
   const renderDayCellContent = (dayCellInfo) => {
+    // console.log("Rendering day cell content for:", dayCellInfo);
     const dayNumber = dayCellInfo.date.getDate();
     const formattedDayNumber =
       dayNumber < 10 ? `0${dayNumber}` : dayNumber.toString();
@@ -60,10 +63,15 @@ export default function AllAppointment() {
 
     if (currentView === "dayGridMonth") {
       return (
-        <div className="w-full h-full gap-3 p-1">
-          <div className="h-full w-full flex justify-center items-center">
-            <span className="text-[0.875rem] p-[4px] z-10 text-start">
+        <div className="flex flex-col justify-start w-full h-full p-2">
+          <div className="flex items-center justify-start active">
+            <span className="text-[0.875rem] p-[4px]">
               {formattedDayNumber}
+              {dayCellInfo.isToday && (
+                <span className="border border-primary01 rounded-full px-2 py-0.5 text-xs text-primary01 ml-3">
+                  Today
+                </span>
+              )}
             </span>
           </div>
 
@@ -88,6 +96,29 @@ export default function AllAppointment() {
       );
     }
     return null; // Return null for other views if not handled
+  };
+
+  const slotLabelContent = (arg) => {
+    return (
+      <div className="flex flex-col items-center justify-center h-full w-full">
+        <Avatar
+          size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 80 }}
+          icon={<User />}
+        />
+        <span className="text-lg font-medium">John doe</span>
+        {/* Additional content can be added here if needed */}
+      </div>
+    );
+  };
+
+  const renderSlotLaneContent = (arg) => {
+    console.log("Rendering custom slot lane content for:", arg);
+
+    return (
+      <div className="flex items-center justify-center h-full w-full">
+        <span className="text-sm font-medium text-gray-700">Booking</span>
+      </div>
+    );
   };
 
   const renderCustomDayHeaderContent = (arg) => {
@@ -116,6 +147,15 @@ export default function AllAppointment() {
           currentView={currentView}
           setCurrentView={setCurrentView}
           applyFilter={true} // Assuming this prop controls some filtering UI
+          slotLabelContent={slotLabelContent} // Custom slot label content
+          renderSlotLaneContent={renderSlotLaneContent} // Custom slot lane content
+          renderTimeCellContent={(arg) => (
+            <div className="flex items-center justify-center h-full w-full">
+              <span className="text-sm font-medium text-gray-700">
+                {arg.timeText}
+              </span>
+            </div>
+          )} // Custom time cell content
         />
       </div>
     </section>

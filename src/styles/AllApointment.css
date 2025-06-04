@@ -1,0 +1,202 @@
+.fc .fc-scrollgrid-sync-table thead tr,
+.fc .fc-col-header-cell {
+  height: auto !important;
+  min-height: auto !important;
+  max-height: none !important;
+  background-color: #ecebfc;
+}
+
+/* Fixed height for calendar content cells */
+.fc .fc-daygrid-day,
+.fc-daygrid-body tr,
+.fc .fc-daygrid-body tr {
+  height: 200px !important;
+  max-height: 200px !important;
+  min-height: 200px !important;
+  box-sizing: border-box !important;
+}
+
+/* Prevent content overflow */
+.fc .fc-daygrid-day-frame {
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+}
+
+/* Event container with scrolling */
+.fc .fc-daygrid-day-events {
+  flex: 1 !important;
+  min-height: 0 !important;
+  /* max-height: calc(100px - 30px) !important; */
+  overflow-y: auto !important;
+  padding: 0 8px !important;
+  margin-bottom: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+}
+
+/* Day number container */
+.fc .fc-daygrid-day-top {
+  flex: 0 0 auto !important;
+  padding: 8px !important;
+  height: 30px !important; /* Fixed height for day number area */
+}
+
+.fc .fc-daygrid-day-events {
+  flex: 1 1 auto !important;
+  margin-bottom: 0 !important;
+  padding: 0 8px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+}
+
+.fc .fc-daygrid-more-link {
+  margin: 4px 8px !important;
+}
+
+/* Ensure events don't overflow */
+.fc-event {
+  margin: 1px 0 !important;
+  padding: 2px 4px !important;
+  font-size: 12px !important;
+  line-height: 1.2 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+/* Adjust day number position */
+.fc-daygrid-day-number {
+  padding: 4px !important;
+  position: relative !important;
+}
+
+.fc .fc-view-harness {
+  border-radius: 12px;
+  overflow: hidden;
+}
+.fc .fc-scrollgrid {
+  border-radius: 12px;
+  overflow: auto !important;
+}
+.fc .fc-theme-standard .fc-scrollgrid {
+  border-radius: 12px;
+  overflow: hidden;
+}
+.fc .fc-scrollgrid-sync-table thead {
+  background-color: #ecebfc;
+}
+.fc .fc-col-header-cell {
+  padding: 6px 0;
+  background-color: #ecebfc;
+  color: #866be7;
+  font-weight: 500;
+  font-size: 14px;
+}
+.fc-scroller {
+  overflow-y: hidden !important;
+}
+.fc .fc-daygrid-day-frame {
+  padding: 0 10px;
+}
+.fc-daygrid-day-number {
+  font-weight: 400;
+  font-size: 14px;
+}
+.fc .fc-daygrid-day-top {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding: 0 !important;
+}
+/* .fc .fc-day-today .active {
+  background-color: #866be7;
+  color: white;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  line-height: 1;
+  box-sizing: border-box;
+  margin-top: 20px;
+} */
+.fc .fc-daygrid-day.fc-day-today {
+  background-color: transparent;
+}
+
+/* custom stye for selected and busy state */
+.custom-selected-date .fc-daygrid-day-frame {
+  background-color: #f6f4ff !important;
+}
+.custom-selected-date .custom-day-number {
+  color: #53389e !important;
+  font-weight: bold;
+}
+.custom-busy-date .fc-daygrid-day-frame {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 7px,
+    rgba(0, 0, 0, 0.04) 7px,
+    rgba(0, 0, 0, 0.04) 14px
+  ) !important;
+}
+.custom-busy-date .custom-day-number {
+  opacity: 0.7;
+}
+
+/* Sale Badge Styling */
+.custom-day-cell-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+}
+.custom-day-number {
+  font-size: 0.875em;
+  padding: 2px;
+  z-index: 1;
+}
+.sale-badge {
+  border: 1px solid #c3bcf6;
+  color: #866be7;
+  padding: 4px 8px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+  z-index: 2;
+}
+
+/* .fc {
+  max-height: 1100px !important;
+} */
+
+@media only screen and (max-width: 600px) {
+  .fc {
+    height: 535px !important;
+  }
+  .custom-day-cell-content {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .sale-badge {
+    border: none;
+    color: #866be7;
+    padding: 0;
+    white-space: wrap;
+  }
+}
+
+/* FullCalendar customization end */

@@ -1,7 +1,10 @@
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import FullCalendar from "@fullcalendar/react";
+import resourceTimeGridPlugin from "@fullcalendar/resource-timegrid";
+import resourceTimelinePlugin from "@fullcalendar/resource-timeline";
 import timeGridPlugin from "@fullcalendar/timegrid";
+
 import dayjs from "dayjs";
 import { useRef, useState } from "react";
 import EventModal from "../selectTimeComponents/EventModal";
@@ -25,8 +28,8 @@ const toYYYYMMDD = (dateInput) => {
  * date selection, and customizable views. It supports both day and time grid views, allowing
  * users to navigate, select dates, and view events. Special dates can be marked as busy or
  * have custom styling. The component also includes a modal for adding new events with a
- * selected time. 
- * 
+ * selected time.
+ *
  * @param {Array} initialEvents - An array of initial events to display on the calendar.
  * @param {Array} specialDatesData - An array of special dates information including busy dates.
  * @param {Array} timeSlots - An array of available time slots for event scheduling.
@@ -226,11 +229,17 @@ export default function ReusableCalendar({
         handleViewChange={handleViewChange}
         applyFilter={applyFilter}
       />
-
       <FullCalendar
+        schedulerLicenseKey="GPL-My-Project-Is-Open-Source"
+        plugins={[
+          dayGridPlugin,
+          timeGridPlugin,
+          interactionPlugin,
+          resourceTimelinePlugin,
+          resourceTimeGridPlugin,
+        ]}
         key={currentView}
         ref={calendarRef}
-        plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
         headerToolbar={false}
         initialView={currentView}
         editable={true}
@@ -263,7 +272,6 @@ export default function ReusableCalendar({
         slotLaneContent={renderSlotLaneContent || null}
         {...props}
       />
-
       <EventModal
         isOpen={isModalOpen}
         onClose={() => {
@@ -275,6 +283,8 @@ export default function ReusableCalendar({
           modalSelectInfo ? new Date(modalSelectInfo.date) : new Date()
         }
         timeSlots={timeSlots}
+        height="auto"
+        aspectRatio={2}
       />
     </>
   );

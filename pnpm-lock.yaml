@@ -26,6 +26,9 @@ importers:
       '@fullcalendar/resource':
         specifier: ^6.1.17
         version: 6.1.17(@fullcalendar/core@6.1.17)
+      '@fullcalendar/resource-timegrid':
+        specifier: ^6.1.17
+        version: 6.1.17(@fullcalendar/core@6.1.17)(@fullcalendar/resource@6.1.17(@fullcalendar/core@6.1.17))
       '@fullcalendar/resource-timeline':
         specifier: ^6.1.17
         version: 6.1.17(@fullcalendar/core@6.1.17)(@fullcalendar/resource@6.1.17(@fullcalendar/core@6.1.17))
@@ -532,6 +535,18 @@ packages:
       '@fullcalendar/core': ~6.1.17
       react: ^16.7.0 || ^17 || ^18 || ^19
       react-dom: ^16.7.0 || ^17 || ^18 || ^19
+
+  '@fullcalendar/resource-daygrid@6.1.17':
+    resolution: {integrity: sha512-BghbufO4lsy/dckmPSxGzaxLH4c9oqykG01khYXRJijbls358CgSe+X9m1Jd5ntRZQU8o3U0Ma0pTZHr7Nx/6A==}
+    peerDependencies:
+      '@fullcalendar/core': ~6.1.17
+      '@fullcalendar/resource': ~6.1.17
+
+  '@fullcalendar/resource-timegrid@6.1.17':
+    resolution: {integrity: sha512-9gsR/2oKTb9zpx7z2/B5rbk2A0dmD/sfYAARSyQTuQD1CI5He8q63jdcYVzWW3CCfJa/5jHEqQaIiCKNlCq6vg==}
+    peerDependencies:
+      '@fullcalendar/core': ~6.1.17
+      '@fullcalendar/resource': ~6.1.17
 
   '@fullcalendar/resource-timeline@6.1.17':
     resolution: {integrity: sha512-QMrtc1mLs4c6DtlBNmWICef8Lr4CmzE47uWS/rcJBd9K2kBzvusTp7AQQ1qn3RX5UnjNHqT8pkKO/wE4yspJQw==}
@@ -2581,6 +2596,21 @@ snapshots:
       '@fullcalendar/core': 6.1.17
       react: 19.1.0
       react-dom: 19.1.0(react@19.1.0)
+
+  '@fullcalendar/resource-daygrid@6.1.17(@fullcalendar/core@6.1.17)(@fullcalendar/resource@6.1.17(@fullcalendar/core@6.1.17))':
+    dependencies:
+      '@fullcalendar/core': 6.1.17
+      '@fullcalendar/daygrid': 6.1.17(@fullcalendar/core@6.1.17)
+      '@fullcalendar/premium-common': 6.1.17(@fullcalendar/core@6.1.17)
+      '@fullcalendar/resource': 6.1.17(@fullcalendar/core@6.1.17)
+
+  '@fullcalendar/resource-timegrid@6.1.17(@fullcalendar/core@6.1.17)(@fullcalendar/resource@6.1.17(@fullcalendar/core@6.1.17))':
+    dependencies:
+      '@fullcalendar/core': 6.1.17
+      '@fullcalendar/premium-common': 6.1.17(@fullcalendar/core@6.1.17)
+      '@fullcalendar/resource': 6.1.17(@fullcalendar/core@6.1.17)
+      '@fullcalendar/resource-daygrid': 6.1.17(@fullcalendar/core@6.1.17)(@fullcalendar/resource@6.1.17(@fullcalendar/core@6.1.17))
+      '@fullcalendar/timegrid': 6.1.17(@fullcalendar/core@6.1.17)
 
   '@fullcalendar/resource-timeline@6.1.17(@fullcalendar/core@6.1.17)(@fullcalendar/resource@6.1.17(@fullcalendar/core@6.1.17))':
     dependencies:

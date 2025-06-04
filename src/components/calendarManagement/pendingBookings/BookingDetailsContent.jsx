@@ -9,17 +9,24 @@ import StaffReassignSelect from "./StaffReassignSelect";
 import { Calendar } from "lucide-react";
 import { CircleAlert } from "lucide-react";
 import { ChevronDown } from "lucide-react";
+import { Clock } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
+import { ChevronRight } from "lucide-react";
+import StyledDatePicker from "./StyledDatePicker";
 
 const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
   console.log("booking", booking);
 
   const formatDate = (date) => {
-    return new Intl.DateTimeFormat("en-US", {
+    const weekday = new Intl.DateTimeFormat("en-US", {
       weekday: "short",
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
     }).format(date);
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = new Intl.DateTimeFormat("en-US", { month: "short" }).format(
+      date
+    );
+    const year = date.getFullYear();
+    return `${weekday}, ${day} ${month} ${year}`;
   };
 
   const handleReassign = (newStaff) => {
@@ -30,7 +37,7 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
   return (
     <div className="w-full flex flex-col lg:flex-row">
       {/* Left Section: Client and Booking Info */}
-      <div className="border-r-[1px] border-t-[1px] border-t-gray-300 border-r-gray-300 p-4">
+      <div className="w-full lg:w-[30%] border-r-[1px] border-t-[1px] border-t-gray-300 border-r-gray-300 p-4">
         <div className="space-y-4 border-b-[1px] border-b-gray-300 pb-3">
           <div className="w-16 h-16 bg-primary01 text-white flex items-center justify-center rounded-full text-xl font-bold">
             {booking.avatar}
@@ -99,36 +106,37 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
       </div>
 
       {/* Middle Section: Services INfo */}
-      <div className="flex-1 border-r-[1px] border-t-[1px] border-t-gray-300 border-r-gray-300">
+      <div className="w-full lg:w-[50%] border-r-[1px] border-t-[1px] border-t-gray-300 border-r-gray-300">
         <div className="bg-[#F5F4FE] w-full p-4 flex justify-between items-center">
           <div className="relative">
-            <DatePicker
-              selected={selectedDate}
-              onChange={(date) => setSelectedDate(date)}
+            <StyledDatePicker
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
               dateFormat="EEE, dd MMM yyyy"
               customInput={
-                <div className="flex items-center gap-2 cursor-pointer">
+                <div className="flex items-center gap-1 cursor-pointer">
                   <span className="text-lg font-semibold text-[#6C5DD3]">
                     {formatDate(selectedDate)}
                   </span>
-                  <ChevronDown className="size-5 text-[#6C5DD3]" />
+                  <ChevronDown className="w-5 h-5 text-[#6C5DD3]" />
                 </div>
               }
             />
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-base text-[#242528] font-medium">
+            <div className="bg-[#FFFFFF] px-3 py-2 rounded-lg border-[1px] border-[#262626] text-[#242528] text-sm font-normal flex gap-2 items-center">
               {booking.scheduledTime}
-            </span>
-            <div className="px-3 py-1 bg-[#E0E7FF] text-[#3E70DD] rounded-full text-sm font-medium">
-              Confirmed
+              <Clock size={16} />
+            </div>
+            <div className="px-3 py-2 bg-[#FFFFFF] text-[#FC8B23] rounded-lg text-sm font-medium">
+              {booking.status}
             </div>
           </div>
         </div>
       </div>
 
       {/* Right Section: Summary */}
-      <div className="w-full lg:w-1/3 border-t-[1px] border-t-gray-300 p-4">
+      <div className="w-full lg:w-[30%] border-t-[1px] border-t-gray-300 p-4">
         <h2 className="text-lg font-semibold mb-4">Summary</h2>
         <div className="flex justify-between mb-2">
           <p className="text-gray-600">Travel Fee</p>

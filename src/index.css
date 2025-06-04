@@ -293,3 +293,41 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .custom-select .ant-select-selection-item .ant-select-selection-item-content {
   margin-left: 8px !important; 
 }
+
+
+/* Custom DatePicker Styles */
+.custom-date-picker {
+  .ant-picker-header {
+    display: none;
+  }
+
+  .ant-picker-panel {
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  }
+
+  .ant-picker-cell {
+    color: #6B7280;
+    font-size: 0.875rem;
+    font-weight: 500;
+    
+    &:hover .ant-picker-cell-inner {
+      background-color: #F3F4F6;
+    }
+  }
+
+  .ant-picker-cell-in-view {
+    color: #374151;
+  }
+
+  .ant-picker-content th {
+    color: #6C5DD3;
+    font-weight: 600;
+  }
+
+  .ant-picker-cell-selected .ant-picker-cell-inner {
+    background-color: #6C5DD3 !important;
+    color: white !important;
+  }
+}

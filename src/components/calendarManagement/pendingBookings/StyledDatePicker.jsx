@@ -1,6 +1,7 @@
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import "/src/styles/datePicker.css";
 
 const StyledDatePicker = ({
   selectedDate,
@@ -14,10 +15,6 @@ const StyledDatePicker = ({
       selected={selectedDate}
       onChange={setSelectedDate}
       dateFormat={dateFormat}
-      className="w-full"
-      wrapperClassName="w-full"
-      popperClassName="z-50"
-      calendarClassName="border border-gray-200 rounded-lg shadow-md p-2 font-sans"
       showPopperArrow={false}
       renderCustomHeader={({
         date,
@@ -26,14 +23,14 @@ const StyledDatePicker = ({
         prevMonthButtonDisabled,
         nextMonthButtonDisabled,
       }) => (
-        <div className="flex justify-between items-center px-2 py-2 border-b border-gray-200 mb-2">
+        <div className="flex justify-between items-center p-2">
           <span className="text-base font-semibold text-[#6C5DD3]">
             {new Intl.DateTimeFormat("en-US", {
               month: "long",
               year: "numeric",
             }).format(date)}
           </span>
-          <div>
+          <div className="flex items-center">
             <button
               onClick={decreaseMonth}
               disabled={prevMonthButtonDisabled}

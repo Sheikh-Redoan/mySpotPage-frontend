@@ -1,17 +1,13 @@
-import { Button, Select } from "antd";
+import { Button } from "antd";
 import { CircleUserRound } from "lucide-react";
 import { PhoneCall } from "lucide-react";
 import { Crown } from "lucide-react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router";
 import StaffReassignSelect from "./StaffReassignSelect";
 import { Calendar } from "lucide-react";
 import { CircleAlert } from "lucide-react";
 import { ChevronDown } from "lucide-react";
 import { Clock } from "lucide-react";
-import { ChevronLeft } from "lucide-react";
-import { ChevronRight } from "lucide-react";
 import StyledDatePicker from "./StyledDatePicker";
 
 const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {

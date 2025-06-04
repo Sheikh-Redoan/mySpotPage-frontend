@@ -1,0 +1,79 @@
+@import "react-datepicker/dist/react-datepicker.css";
+
+/* General overrides */
+.react-datepicker {
+  border: 1px solid #F2F3F5 !important;
+  box-shadow: #F2F3F5;
+}
+
+/* Style for the day names (S, M, T, W, T, F, S) */
+.react-datepicker__day-names {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 8px; /* Adjust spacing as needed */
+  padding: 0 4px; /* Align with days */
+}
+
+.react-datepicker__day-name {
+  color: #6C5DD3; /* Purple color for day names */
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 500; /* font-medium */
+  width: 2rem; /* w-8 */
+  text-align: center;
+}
+
+/* Styling for the day cells */
+.react-datepicker__month {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7 columns for days */
+  gap: 4px; /* Space between days */
+}
+
+.react-datepicker__day {
+  width: 2rem; /* w-8 */
+  height: 2rem; /* h-8 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px; /* rounded-full */
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 500; /* font-medium */
+  color: #4a5568; /* text-gray-700 */
+  transition: background-color 0.15s ease-in-out; /* Smooth transition for hover */
+}
+
+.react-datepicker__day--outside-month {
+  color: #cbd5e0; /* text-gray-300 */
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
+  background-color: #6C5DD3 !important; /* bg-[#6C5DD3] */
+  color: white !important; /* text-white */
+  border-radius: 9999px !important; /* Ensure rounded-full for selected */
+}
+
+/* Custom class for overriding other styles, used in your JS */
+.react-datepicker__day--selected-override {
+  background-color: #6C5DD3 !important;
+  color: white !important;
+  border: none !important; /* Ensure no border */
+}
+
+/* Specific styling for day 3 of Jan 2025 (purple border) */
+/* This will be handled by your JS logic adding 'border border-[#6C5DD3] text-[#6C5DD3]' */
+/* Make sure these Tailwind classes are properly processed by your build system if not already */
+/* If you prefer pure CSS, you might need a more specific selector or use a data-attribute */
+.react-datepicker__day.border { /* Example: if Tailwind classes are literally rendered */
+    border: 1px solid #6C5DD3;
+    color: #6C5DD3;
+    background-color: transparent !important; /* Ensure no background */
+}
+
+/* Header styling */
+.react-datepicker__header {
+  background-color: white !important; /* Ensure header background is white */
+  border-bottom: none !important; /* Remove default header border */
+  padding-top: 8px; /* Add some padding */
+  padding-bottom: 8px; /* Add some padding */
+}

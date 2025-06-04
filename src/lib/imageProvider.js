@@ -27,9 +27,13 @@ import flag from "../assets/icons/flag.png";
 import glow from "../assets/icons/glow.png";
 import ServicePink from "../assets/icons/hand-heart.png";
 import imageUploader from "../assets/icons/imageUploader.png";
+import incognito from "../assets/icons/incognito.png";
+import incognitoActive from "../assets/icons/incognitoActive.png";
 import location from "../assets/icons/location.png";
 import Client from "../assets/icons/man.png";
 import mastard from "../assets/icons/mastard.png";
+import money from "../assets/icons/money.png";
+import moneyActive from "../assets/icons/moneyActive.png";
 import multipleCoPeo from "../assets/icons/multipleCoPeo.png";
 import multiplePeople from "../assets/icons/multiplePeople.png";
 import NoNotificationIcon from "../assets/icons/no_notification.png";
@@ -63,6 +67,10 @@ import visa from "../assets/icons/visa.png";
 import TextLogo from "../assets/images/my_spot_page_text_favicon.png";
 
 export const imageProvider = {
+  incognito,
+  incognitoActive,
+  money,
+  moneyActive,
   note,
   noteActive,
   ChartLinePink,

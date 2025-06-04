@@ -178,24 +178,17 @@ export const dataManagementTabs = [
 export const staffSettingsTabs = [
   {
     id: 0,
-    name: "Basic Information",
-    imagePink: imageProvider.buildingCol,
-    imageWhite: imageProvider.building,
-    link: "basic-information",
+    name: "Manager",
+    imagePink: imageProvider.incognitoActive,
+    imageWhite: imageProvider.incognito,
+    link: "manager-permissions",
   },
   {
     id: 1,
-    name: "Location",
-    imagePink: imageProvider.location,
-    imageWhite: imageProvider.location,
-    link: "location",
-  },
-  {
-    id: 1,
-    name: "Subscription",
-    imagePink: imageProvider.securityPink,
-    imageWhite: imageProvider.securityBlack,
-    link: "subscription",
+    name: "Receptionist",
+    imagePink: imageProvider.moneyActive,
+    imageWhite: imageProvider.money,
+    link: "receptionist-permissions",
   },
 ];
 

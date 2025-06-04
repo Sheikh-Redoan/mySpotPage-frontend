@@ -20,15 +20,16 @@ const AddNewService = ({ setAddNewService }) => {
   const [image, setImage] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [croppedImage, setCroppedImage] = useState(null);
-  const [workImage, setWorkImage] = useState(null);
-  const [workCroppedImage, setWorkCroppedImage] = useState(null);
+  const [workImages, setWorkImages] = useState([]); // for raw images
+  const [workCroppedImages, setWorkCroppedImages] = useState([]);
+  const [currentCropIndex, setCurrentCropIndex] = useState(null);
   const fileInputRef = useRef();
   const [hoursCount, setHoursCount] = useState(0);
-  const [minuteCount,setMinuteCount] = useState(0);
+  const [minuteCount, setMinuteCount] = useState(0);
   const [priceModalList, setPriceModalList] = useState([
-      { id: 1, name: "", hour: 0, minute: 0, priceType: "", amount: "" },
-    ]);
-    
+    { id: 1, name: "", hour: 0, minute: 0, priceType: "", amount: "" },
+  ]);
+
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
@@ -46,28 +47,40 @@ const AddNewService = ({ setAddNewService }) => {
   };
 
   const handleWorkFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setWorkImage(imageUrl);
-    }
+    const files = Array.from(e.target.files);
+    const newImages = files.slice(0, 10 - workImages.length); // limit to 10 total
+    const newImageUrls = newImages.map((file) => URL.createObjectURL(file));
+
+    setWorkImages([...workImages, ...newImageUrls]);
+    setWorkCroppedImages([...workCroppedImages, ...newImageUrls]); // initially same, replace when cropped
   };
+
+
+
 
   const handleCropFinish = (croppedImgDataUrl) => {
     setCroppedImage(croppedImgDataUrl);
   };
-  const handleWorkCropFinish = (croppedImgDataUrl) => {
-    setWorkCroppedImage(croppedImgDataUrl);
+
+  const handleWorkCropFinish = (croppedImgDataUrl, index) => {
+    const updated = [...workCroppedImages];
+    updated[index] = croppedImgDataUrl;
+    setWorkCroppedImages(updated);
   };
 
   const handleRemoveImage = () => {
     setImage(null);
     setCroppedImage(null);
   };
-  const handleWorkRemoveImage = () => {
-    setWorkImage(null);
-    setWorkCroppedImage(null);
+
+  const handleWorkRemoveImage = (index) => {
+    const updatedImages = workImages.filter((_, i) => i !== index);
+    const updatedCropped = workCroppedImages.filter((_, i) => i !== index);
+    setWorkImages(updatedImages);
+    setWorkCroppedImages(updatedCropped);
   };
+
+
 
   const handleCollapseChange = async (key) => {
     if (!key.includes("1")) {
@@ -115,27 +128,29 @@ const AddNewService = ({ setAddNewService }) => {
 
           <ServiceBasicDetails activeKey={activeKey} handleCollapseChange={handleCollapseChange} isStepComplete={isStepComplete} handleSubmit={handleSubmit} onSubmit={onSubmit} image={image} thumbnailName={thumbnailName} handleFileChange={handleFileChange} register={register} control={control} croppedImage={croppedImage} handleRemoveImage={handleRemoveImage} setIsModalOpen={setIsModalOpen} />
 
-          <ServicePriceSetting priceModal2={priceModal2} priceModal1={priceModal1} setMinuteCount={setMinuteCount} minuteCount={minuteCount} hoursCount={hoursCount} setHoursCount={setHoursCount} priceCheckboxChange1={priceCheckboxChange1} priceCheckboxChange2={priceCheckboxChange2} priceModalList={priceModalList} setPriceModalList={setPriceModalList}/>
+          <ServicePriceSetting priceModal2={priceModal2} priceModal1={priceModal1} setMinuteCount={setMinuteCount} minuteCount={minuteCount} hoursCount={hoursCount} setHoursCount={setHoursCount} priceCheckboxChange1={priceCheckboxChange1} priceCheckboxChange2={priceCheckboxChange2} priceModalList={priceModalList} setPriceModalList={setPriceModalList} />
 
-          <ServiceImageUpload workImage={workImage} handleWorkRemoveImage={handleWorkRemoveImage} handleWorkFileChange={handleWorkFileChange} handleButtonClick={handleButtonClick} setIsModalOpen={setIsModalOpen} fileInputRef={fileInputRef} workCroppedImage={workCroppedImage}/>
+          <ServiceImageUpload
+            workImages={workImages}
+            workCroppedImages={workCroppedImages}
+            handleWorkRemoveImage={handleWorkRemoveImage}
+            handleWorkFileChange={handleWorkFileChange}
+            handleButtonClick={handleButtonClick}
+            setIsModalOpen={setIsModalOpen}
+            fileInputRef={fileInputRef}
+            setCurrentCropIndex={setCurrentCropIndex}
+          />
 
         </Space>
       </div>
 
-      {/* Modal1 */}
-      <ImageCropModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        image={image}
-        onCropFinish={handleCropFinish}
-      />
 
       {/* Modal */}
       <ImageCropModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        image={workImage}
-        onCropFinish={handleWorkCropFinish}
+        image={workImages[currentCropIndex]}
+        onCropFinish={(croppedDataUrl) => handleWorkCropFinish(croppedDataUrl, currentCropIndex)}
       />
     </div>
   );

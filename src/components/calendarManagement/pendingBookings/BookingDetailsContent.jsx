@@ -7,8 +7,8 @@ import StaffReassignSelect from "./StaffReassignSelect";
 import { Calendar } from "lucide-react";
 import { CircleAlert } from "lucide-react";
 import { ChevronDown } from "lucide-react";
-import { Clock } from "lucide-react";
 import StyledDatePicker from "./StyledDatePicker";
+import TimePicker from "./TimePicker";
 
 const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
   console.log("booking", booking);
@@ -104,6 +104,7 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
       {/* Middle Section: Services INfo */}
       <div className="w-full lg:w-[50%] border-r-[1px] border-t-[1px] border-t-gray-300 border-r-gray-300">
         <div className="bg-[#F5F4FE] w-full p-4 flex justify-between items-center">
+          {/* Date Picker */}
           <div className="relative">
             <StyledDatePicker
               selectedDate={selectedDate}
@@ -120,10 +121,9 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
             />
           </div>
           <div className="flex items-center gap-2">
-            <div className="bg-[#FFFFFF] px-3 py-2 rounded-lg border-[1px] border-[#262626] text-[#242528] text-sm font-normal flex gap-2 items-center">
-              {booking.scheduledTime}
-              <Clock size={16} />
-            </div>
+            {/* Time Picker */}
+            <TimePicker scheduledTime={booking?.scheduledTime} />
+
             <div className="px-3 py-2 bg-[#FFFFFF] text-[#FC8B23] rounded-lg text-sm font-medium">
               {booking.status}
             </div>
@@ -132,48 +132,7 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
       </div>
 
       {/* Right Section: Summary */}
-      <div className="w-full lg:w-[30%] border-t-[1px] border-t-gray-300 p-4">
-        <h2 className="text-lg font-semibold mb-4">Summary</h2>
-        <div className="flex justify-between mb-2">
-          <p className="text-gray-600">Travel Fee</p>
-          <p className="text-gray-600">฿0.00</p>
-        </div>
-        <div className="flex justify-between mb-2">
-          <p className="text-gray-600">Subtotal</p>
-          <p className="text-gray-600">฿{booking.subtotal}</p>
-        </div>
-        <div className="flex justify-between mb-2">
-          <p className="text-gray-600">VAT</p>
-          <p className="text-gray-600">฿{booking.tax}</p>
-        </div>
-        <div className="flex justify-between mb-2">
-          <p className="text-gray-600">Discount ({booking.discount})</p>
-          <p className="text-gray-600">฿-{booking.discountAmount}</p>
-        </div>
-        <div className="flex justify-between mb-2">
-          <p className="text-gray-600">Additional Discount</p>
-          <p className="text-gray-600">฿0.00</p>
-        </div>
-        <div className="flex justify-between font-semibold mt-4 pt-4 border-t border-gray-200">
-          <p>Total</p>
-          <p>฿{booking.totalPrice}</p>
-        </div>
-
-        {/* Status and Save Button */}
-        <div className="mt-4">
-          <select
-            value={booking.status}
-            className="w-full border border-gray-300 rounded-lg p-2 mb-2 text-gray-700"
-          >
-            <option value="Pending">Pending</option>
-            <option value="Confirmed">Confirmed</option>
-            <option value="Completed">Completed</option>
-          </select>
-          <button className="w-full bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800">
-            Save
-          </button>
-        </div>
-      </div>
+      <div>summary</div>
     </div>
   );
 };

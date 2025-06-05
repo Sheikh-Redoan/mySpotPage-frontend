@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import "dayjs/locale/en"; // Or your preferred locale
+import { cn } from "../../lib/utils";
 
 export default function MonthView({
   currentDate,
@@ -17,7 +18,7 @@ export default function MonthView({
       {dayNames.map((name, index) => (
         <div
           key={index}
-          className="p-2 text-center border-b border-r border-gray-200 bg-gray-50 text-xs font-medium text-gray-500 uppercase last:border-r-0">
+          className="p-3 text-center border-b border-gray-200 bg-primary01/10 text-sm font-medium text-primary01 uppercase">
           {name}
         </div>
       ))}
@@ -36,31 +37,29 @@ export default function MonthView({
         return (
           <div
             key={index}
-            className={`p-2 min-h-[120px] border-b border-r border-gray-200
-                              ${
-                                !isCurrentMonth
-                                  ? "bg-gray-50 text-gray-400"
-                                  : "bg-white"
-                              }
-                              ${(index + 1) % 7 === 0 ? "border-r-0" : ""}
-                              `}>
+            className={cn(
+              !isCurrentMonth ? "bg-white text-gray-400" : "bg-white",
+              "p-2 min-h-[120px] border-b border-r border-gray-200",
+              (index + 1) % 7 === 0 ? "border-r-0" : ""
+            )}>
             <div
-              className={`text-right text-sm font-semibold mb-1
-                              ${
-                                isToday
-                                  ? "text-white bg-blue-600 rounded-full w-6 h-6 flex items-center justify-center ml-auto"
-                                  : "text-gray-800"
-                              }`}>
-              {day.format("D")}
+              className={cn(
+                "text-sm mb-1 text-start",
+                !isCurrentMonth ? "text-gray-400" : "text-gray-800"
+              )}>
+              {day.format("D")}{" "}
+              {isToday && (
+                <span className="text-xs font-normal border border-gray-200 px-2 py-1 text-primary01 rounded-full ml-1">
+                  Today
+                </span>
+              )}
             </div>
-            <div className="flex flex-col space-y-1">
+            <div className="flex flex-col space-y-1 mt-2">
               {eventsToShow.map((event) => (
                 <div
                   key={event.id}
-                  className="bg-blue-100 text-blue-800 rounded-md p-1 text-xs font-medium flex items-center space-x-1 shadow-sm hover:shadow-md transition-shadow duration-200 cursor-pointer">
-                  <span className="text-sm">
-                    {event.status === "Completed" ? "✅" : "🔵"}
-                  </span>
+                  className="cursor-pointer text-xs flex items-center gap-2 text-gray-700">
+                  <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
                   <span>
                     {dayjs(event.start).format("HH:mm")} - {event.title}
                   </span>

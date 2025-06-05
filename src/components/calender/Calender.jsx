@@ -4,13 +4,16 @@ import { useState } from "react";
 import { cn } from "../../lib/utils";
 import CalendarToolbar from "../reuseableComponent/CalendarToolbar";
 import DayView from "./DayView";
-import { MOCK_EVENTS, MOCK_RESOURCES } from "./mockdata";
 import MonthView from "./MonthView";
 import WeekView from "./weekView";
 
-export default function Calender() {
+export default function Calender({
+  selectTimeFromProvider = false,
+  events,
+  resources,
+}) {
   // State for the currently displayed date, adjusted based on view
-  const [currentDate, setCurrentDate] = useState(dayjs("2025-01-06")); // Start with the day view date
+  const [currentDate, setCurrentDate] = useState(dayjs("2025-06-06")); // Start with the day view date
   const [selectedView, setSelectedView] = useState("month"); // Default to 'day' view
 
   // Helper to get days for a month grid (including prev/next month's days)
@@ -92,23 +95,27 @@ export default function Calender() {
             currentDate={currentDate}
             dayNames={dayNames}
             getDaysInMonthGrid={getDaysInMonthGrid}
-            events={MOCK_EVENTS}
+            events={events}
+            resources={resources}
+            selectTimeFromProvider={selectTimeFromProvider}
           />
         )}
 
         {selectedView === "week" && (
           <WeekView
             currentDate={currentDate}
-            resources={MOCK_RESOURCES}
-            events={MOCK_EVENTS}
+            resources={resources}
+            events={events}
+            selectTimeFromProvider={selectTimeFromProvider}
           />
         )}
 
         {selectedView === "day" && (
           <DayView
             currentDate={currentDate}
-            events={MOCK_EVENTS}
-            resources={MOCK_RESOURCES}
+            events={events}
+            resources={resources}
+            selectTimeFromProvider={selectTimeFromProvider}
           />
         )}
       </div>

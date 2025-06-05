@@ -521,3 +521,18 @@ export const MOCK_EVENTS = [
     status: "Confirmed",
   },
 ];
+
+export const specialDatesData = [
+  { date: "2025-06-01", isBusy: true },
+  { date: "2025-06-02", isBusy: true },
+  { date: "2025-06-06", sale: "🔥 25% OFF" },
+  { date: "2025-06-08", isBusy: true },
+  { date: "2025-06-09", isBusy: true },
+  { date: "2025-06-14", sale: "🔥 25% OFF" },
+  { date: "2025-06-15", sale: "🔥 10% OFF", isBusy: true },
+  { date: "2025-06-16", isBusy: true },
+  { date: "2025-06-17", isBusy: true },
+  { date: "2025-06-22", isBusy: true },
+  { date: "2025-06-23", isBusy: true },
+  { date: "2025-06-30", sale: "🔥 50% OFF" },
+];

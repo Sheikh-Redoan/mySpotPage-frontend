@@ -3,7 +3,7 @@ import { MdCheckCircleOutline } from "react-icons/md";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { FilterFilled, SearchOutlined } from "../../../assets/icons/icons";
 
-export const getPendingBookingsColumns = (
+export const getPendingBookingsColumnsByClient = (
   handleApproveBooking,
   handleRejectBooking,
   navigate,
@@ -30,18 +30,6 @@ export const getPendingBookingsColumns = (
           {record.scheduledDate}
         </span>
         <span className="text-[#888] text-xs">{text}</span>
-      </div>
-    ),
-  },
-  {
-    title: "Client Information",
-    dataIndex: "clientName",
-    key: "clientInfo",
-    sorter: (a, b) => a.clientName.localeCompare(b.clientName),
-    render: (text, record) => (
-      <div className="flex flex-col">
-        <span className="text-[#262626] text-sm font-medium">{text}</span>
-        <span className="text-[#888] text-xs">{record.clientPhone}</span>
       </div>
     ),
   },
@@ -177,17 +165,7 @@ export const getPendingBookingsColumns = (
     title: "Action",
     key: "action",
     render: (_, record) => (
-      <div className="flex gap-2">
-        <Tooltip placement="top" color="#52c41a" title="Approve">
-          <button
-            type="button"
-            onClick={() => handleApproveBooking(record.id)}
-            className="cursor-pointer text-[#52c41a] hover:text-[#73d13d]"
-          >
-            <MdCheckCircleOutline className="size-5" />
-          </button>
-        </Tooltip>
-
+      <div className="flex gap-3">
         <Tooltip placement="top" color="#f5222d" title="Reject">
           <button
             type="button"
@@ -195,6 +173,16 @@ export const getPendingBookingsColumns = (
             className="cursor-pointer text-[#f5222d] hover:text-[#ff4d4f]"
           >
             <IoCloseCircleOutline className="size-5" />
+          </button>
+        </Tooltip>
+
+        <Tooltip placement="top" color="#52c41a" title="Approve">
+          <button
+            type="button"
+            onClick={() => handleApproveBooking(record.id)}
+            className="cursor-pointer text-[#52c41a] hover:text-[#73d13d]"
+          >
+            <MdCheckCircleOutline className="size-5" />
           </button>
         </Tooltip>
       </div>

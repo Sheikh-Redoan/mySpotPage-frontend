@@ -1,6 +1,9 @@
+import { Avatar } from "antd";
 import dayjs from "dayjs";
 import "dayjs/locale/en"; // Or your preferred locale
 import React from "react";
+import { cn } from "../../lib/utils";
+import Event from "./Event";
 
 export default function WeekView({ currentDate, resources = [], events = [] }) {
   const today = dayjs(); // Get today's date for highlighting
@@ -16,28 +19,29 @@ export default function WeekView({ currentDate, resources = [], events = [] }) {
   };
 
   const weekDays = getWeekDays(currentDate);
+
   return (
     <div className="grid grid-cols-[150px_repeat(7,minmax(0,1fr))] border-gray-200">
       {/* Top-left empty corner */}
-      <div className="p-2 border-b border-r border-gray-200 bg-gray-50"></div>
+      <div className="p-2 border-b border-r border-gray-200 bg-primary01/10"></div>
 
       {/* Day Headers */}
       {weekDays.map((day, index) => (
         <div
           key={index}
-          className={`p-2 text-center border-b ${
-            index < 6 ? "border-r" : ""
-          } border-gray-200 bg-gray-50`}>
-          <div className="text-xs font-medium text-gray-500 uppercase">
+          className={cn(
+            "p-2 text-center border-b border-gray-200 bg-primary01/10 space-y-2"
+          )}>
+          <p className="text-sm font-medium text-primary01 uppercase">
             {day.format("ddd")}
-          </div>
+          </p>
           <div
-            className={`text-lg font-bold ${
-              day.isSame(today, "day")
-                ? "text-white bg-blue-600 rounded-full w-8 h-8 flex items-center justify-center mx-auto"
-                : "text-gray-800"
-            }`}>
-            {day.format("D")}
+            className={cn("text-sm", {
+              "text-white bg-primary01 rounded-full w-8 h-8 flex items-center justify-center mx-auto":
+                day.isSame(today, "day"),
+              "text-gray-800": !day.isSame(today, "day"),
+            })}>
+            {day.format("D").padStart(2, "0")}
           </div>
         </div>
       ))}
@@ -46,12 +50,13 @@ export default function WeekView({ currentDate, resources = [], events = [] }) {
       {resources.map((resource) => (
         <React.Fragment key={resource.id}>
           {/* Resource Name Column */}
-          <div className="p-2 border-r border-b border-gray-200 bg-gray-50 flex items-center space-x-2">
-            <img
+          <div className="p-2 border-r border-b border-gray-200 flex flex-col items-center gap-2 justify-center bg-primary01/10">
+            <Avatar
               src={resource.avatar}
-              alt={resource.name}
-              className="w-8 h-8 rounded-full object-cover"
+              size={55}
+              className="outline-1 outline-offset-2 outline-primary01/30"
             />
+
             <span className="text-sm font-medium text-gray-700">
               {resource.name}
             </span>
@@ -71,25 +76,13 @@ export default function WeekView({ currentDate, resources = [], events = [] }) {
             return (
               <div
                 key={dayIndex}
-                className={`p-2 min-h-[100px] border-b ${
-                  dayIndex < 6 ? "border-r" : ""
-                } border-gray-200 flex flex-col space-y-1`}>
+                className={cn("p-2 min-h-[150px] border-b", {
+                  "border-r": dayIndex < 6,
+                  "border-gray-200": true,
+                  "flex flex-col space-y-1": true,
+                })}>
                 {dailyEvents.map((event) => (
-                  <div
-                    key={event.id}
-                    className={`rounded-md p-1 text-xs font-medium flex items-center space-x-1 shadow-sm hover:shadow-md transition-shadow duration-200 cursor-pointer
-                                       ${
-                                         event.status === "Completed"
-                                           ? "bg-green-100 text-green-800"
-                                           : "bg-blue-100 text-blue-800"
-                                       }`}>
-                    <span className="text-sm">
-                      {event.status === "Completed" ? "✅" : "🔵"}
-                    </span>
-                    <span>
-                      {dayjs(event.start).format("HH:mm")} - {event.title}
-                    </span>
-                  </div>
+                  <Event key={event.id} event={event} />
                 ))}
               </div>
             );

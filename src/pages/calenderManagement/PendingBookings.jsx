@@ -25,7 +25,9 @@ const PendingBookings = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
 
-  const [totalBookings, setTotalBookings] = useState(getPendingBookings().length);
+  const [totalBookings, setTotalBookings] = useState(
+    getPendingBookings().length
+  );
 
   // State for service filter dropdown
   const [selectedServiceFilters, setSelectedServiceFilters] = useState([]);
@@ -92,7 +94,11 @@ const PendingBookings = () => {
 
   // Extract unique services for filter dropdown
   const allUniqueServices = [
-    ...new Set(bookings.flatMap((booking) => booking.serviceDetails.map((detail) => detail.name))),
+    ...new Set(
+      bookings.flatMap((booking) =>
+        booking.serviceDetails.map((detail) => detail.name)
+      )
+    ),
   ];
 
   // Filtered services for the dropdown search
@@ -270,8 +276,22 @@ const PendingBookings = () => {
       dataIndex: "status",
       key: "status",
       render: (text) => (
-        <div className="rounded-full bg-[#FFF4EA] text-center">
-          <span className="text-xs text-[#FC8B23]">{text}</span>
+        <div
+          className={`rounded-full text-center ${
+            text === "Pending"
+              ? "bg-[#FFF4EA] text-[#FC8B23]"
+              : text === "Confirmed"
+              ? "text-[#3E70DD] bg-[#E6F3FF]"
+              : text === "Completed"
+              ? "bg-[#E3FAE6] text-[#21C66E]"
+              : text === "Cancelled"
+              ? "bg-[#FFEFEF] text-[#ED4245]"
+              : text === "No Show"
+              ? "bg-[#E7E7E7] text-[#82868E]"
+              : ""
+          }`}
+        >
+          <span className="text-xs">{text}</span>
         </div>
       ),
     },

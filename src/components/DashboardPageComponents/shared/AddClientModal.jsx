@@ -1,30 +1,71 @@
-import { DatePicker, Modal, Select, Switch } from "antd";
+import { DatePicker, Modal, Select, Switch, Upload } from "antd"; // Import Upload
 import { CalenderIcon, DownArrowIcon, ForwardIcon, ImageIcon, SearchIcon, UpdateIcon } from "../../../assets/icons/icons";
 import { useState } from "react";
+// import ImgCrop from 'antd-img-crop'; // Consider adding ant-design-pro for image cropping if needed
+
+const { Option } = Select; // Destructure Option from Select
 
 const AddClientModal = ({ isModalOpen, setIsModalOpen }) => {
-
   const [step, setStep] = useState(1);
+  const [fileList, setFileList] = useState([]); // State to hold the uploaded image file
 
   const handleCancel = () => {
     setIsModalOpen(false);
+    setStep(1); // Reset step when modal is closed
+    setFileList([]); // Clear uploaded image when modal is closed
   };
 
   const handleGenderChange = (value) => {
-    console.log(`selected ${value}`);
+    console.log(`selected gender: ${value}`);
   }
 
   const handleDateChange = (date, dateString) => {
-    console.log(dateString);
+    console.log("Selected DOB:", dateString);
   };
 
   const handleCityChange = (value) => {
-    console.log("Selected phone number:", value);
+    console.log("Selected city:", value);
   };
 
   const onSwitchChange = checked => {
-    console.log(`switch to ${checked}`);
+    console.log(`Mark as VIP Client: ${checked}`);
   };
+
+  // Handler for image upload
+  const onImageChange = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
+    // You can also add logic here to upload the file to your backend
+    // For now, it just updates the state and logs the file.
+    if (newFileList.length > 0 && newFileList[0].status === 'done') {
+      console.log('Uploaded file:', newFileList[0].originFileObj);
+      // If you have an image URL after upload, you can store it in another state
+    }
+  };
+
+  // Before upload validation (optional)
+  const beforeUpload = (file) => {
+    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+    if (!isJpgOrPng) {
+      // message.error('You can only upload JPG/PNG file!'); // You might want to use Ant Design's message for feedback
+      alert('You can only upload JPG/PNG file!');
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+      // message.error('Image must smaller than 2MB!');
+      alert('Image must smaller than 2MB!');
+    }
+    return isJpgOrPng && isLt2M;
+  };
+
+  // Custom upload request (optional, if you want to handle upload manually)
+  const customRequest = ({ file, onSuccess }) => {
+    setTimeout(() => {
+      onSuccess("ok"); // Simulate successful upload
+      // In a real application, you would send 'file' to your server here
+      // and call onSuccess or onError based on the server response.
+    }, 1000);
+  };
+
 
   return (
     <Modal
@@ -36,14 +77,27 @@ const AddClientModal = ({ isModalOpen, setIsModalOpen }) => {
       bodyStyle={{ height: 600, display: 'flex', flexDirection: 'column' }}
     >
       {
-        step == 1 ?
+        step === 1 ?
           <div className="text-[#3A3B3F] flex flex-col justify-between h-full">
-            <div className="space-y-3 mt-4">
+            <div className="space-y-3 mt-4 add-client-modal">
               <h4>Avatar</h4>
-              <fieldset className="relative size-14 rounded-full bg-[#F6F6F6] flex justify-center items-center">
-                <ImageIcon />
-                <div className="absolute -right-1 bottom-0 size-7 rounded-full border border-white bg-[#F5F4FE] flex items-center justify-center"><UpdateIcon /></div>
-              </fieldset>
+              {/* Replaced fieldset with Ant Design Upload component */}
+              {/* You might want to wrap Upload with ImgCrop for cropping functionality */}
+              {/* <ImgCrop rotationSlider> */}
+              
+                <Upload
+                className="w-[52px] h-[52px]"
+                  listType="picture-circle" // Makes it look like an avatar upload
+                  fileList={fileList}
+                  onChange={onImageChange}
+                  beforeUpload={beforeUpload}
+                  customRequest={customRequest} // Use customRequest for manual upload
+                  maxCount={1} // Allow only one image
+                >
+                  {/* Display ImageIcon if no file is uploaded yet */}
+                  {fileList.length < 1 ? <ImageIcon /> : null}
+                </Upload>
+              {/* </ImgCrop> */}
 
               <div className="grid grid-cols-2 gap-3">
                 <fieldset className="">
@@ -75,11 +129,10 @@ const AddClientModal = ({ isModalOpen, setIsModalOpen }) => {
                   className="border border-[#E0E0E0] rounded-lg w-full !h-10"
                   suffixIcon={<DownArrowIcon />}
                 >
-                  {["fjgvhjg", "jdfgghfg"].map((city) => (
-                    <Option key={city} value={city}>
-                      {city}
-                    </Option>
-                  ))}
+                  {/* Corrected options for gender */}
+                  <Option value="Male">Male</Option>
+                  <Option value="Female">Female</Option>
+                  <Option value="Others">Others</Option>
                 </Select>
               </fieldset>
 
@@ -119,9 +172,10 @@ const AddClientModal = ({ isModalOpen, setIsModalOpen }) => {
                     option.children.toLowerCase().includes(input.toLowerCase())
                   }
                 >
-                  {["Jerusalem, Israel", "Tel Aviv, Israel", "Haifa, Israel"].map((phone) => (
-                    <Option key={phone} value={phone}>
-                      {phone}
+                  {/* Corrected options for city */}
+                  {["Jerusalem, Israel", "Tel Aviv, Israel", "Haifa, Israel", "Petah Tikva, Israel", "Beersheba, Israel"].map((city) => (
+                    <Option key={city} value={city}>
+                      {city}
                     </Option>
                   ))}
                 </Select>
@@ -159,6 +213,7 @@ const AddClientModal = ({ isModalOpen, setIsModalOpen }) => {
                 <ForwardIcon />
                 <p className="text-[#262626]">Provider notes</p>
               </div>
+              {/* Changed type to button for both for consistency */}
               <button type="button" className="text-[#242528] font-semibold border border-[#242528] py-2 w-24 rounded-lg cursor-pointer" onClick={() => setStep(1)}>Previous</button>
               <button type="button" className="text-white font-semibold bg-[#242528] py-2 w-24 rounded-lg cursor-pointer">Finish</button>
             </div>

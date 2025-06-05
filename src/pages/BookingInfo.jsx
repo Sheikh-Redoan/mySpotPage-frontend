@@ -2,8 +2,9 @@ import { useState } from "react";
 import { useParams } from "react-router";
 import Breadcrumb from "../components/client/Breadcrumb";
 import { getBreadcrumbs } from "../lib/staticData";
-import PendingBookingByClient from "./PendingBookingByClient";
 import ConfirmedBookingByClient from "../components/seller/client-management/ConfirmedBookingByClient";
+import PendingBookingByClient from "../components/seller/client-management/PendingBookingByClient";
+import PastBookingsByClient from "../components/seller/client-management/PastBookingsByClient";
 
 const BookingInfo = () => {
   const { client } = useParams();
@@ -62,7 +63,7 @@ const BookingInfo = () => {
           ) : activeTabIdx === 1 ? (
             <ConfirmedBookingByClient />
           ) : (
-            <PendingBookingByClient />
+            <PastBookingsByClient />
           )}
         </div>
       </div>

@@ -2,31 +2,32 @@ import React, { useState } from "react";
 import { Table, Select, Pagination, Tooltip, Input, Checkbox } from "antd";
 import { IoArrowDownOutline } from "react-icons/io5";
 import { useNavigate } from "react-router";
-import { getPendingBookings } from "../../../dummy-data/bookingsData";
 import { getPendingBookingsColumnsByClient } from "./PendingBookingsColumnsByClient";
 import CustomEmptyTable from "../../DashboardPageComponents/shared/CustomEmptyTable";
+import { getPendingBookings } from "../../../dummy-data/bookingsData";
 
 const { Option } = Select;
 
-const ConfirmedBookingByClient = () => {
+const PastBookingsByClient = () => {
   const navigate = useNavigate();
 
   const allBookings = getPendingBookings();
-  const confirmedBookings = allBookings && allBookings.filter((booking) => booking.status === "Confirmed");
+  const pendingBookings =
+    allBookings && allBookings.filter((booking) => booking.status === "Completed" || booking.status === "Cancelled" || booking.status === "No Show");
 
-  const [bookings, setBookings] = useState(confirmedBookings || []);
+  const [bookings, setBookings] = useState(pendingBookings || []);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
 
-  const [totalBookings, setTotalBookings] = useState(confirmedBookings.length);
+  const [totalBookings, setTotalBookings] = useState(pendingBookings.length);
 
   // State for service filter dropdown
   const [selectedServiceFilters, setSelectedServiceFilters] = useState([]);
   const [serviceFilterDropdownSearchQuery, setServiceFilterDropdownSearchQuery] = useState("");
 
   const applyFilters = (currentSearchQuery, currentServiceFilters) => {
-    let results = [...confirmedBookings];
+    let results = [...pendingBookings];
 
     // Apply main search query
     if (currentSearchQuery) {
@@ -187,4 +188,4 @@ const ConfirmedBookingByClient = () => {
   );
 };
 
-export default ConfirmedBookingByClient;
+export default PastBookingsByClient;

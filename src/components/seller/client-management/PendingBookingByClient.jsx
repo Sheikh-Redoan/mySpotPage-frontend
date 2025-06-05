@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Table, Select, Pagination, Tooltip, Input, Checkbox } from "antd";
 import { IoArrowDownOutline } from "react-icons/io5";
 import { useNavigate } from "react-router";
-import { getPendingBookingsColumnsByClient } from "../components/seller/client-management/PendingBookingsColumnsByClient";
-import CustomEmptyTable from "../components/DashboardPageComponents/shared/CustomEmptyTable";
-import { getPendingBookings } from "../dummy-data/bookingsData";
+import { getPendingBookingsColumnsByClient } from "./PendingBookingsColumnsByClient";
+import CustomEmptyTable from "../../DashboardPageComponents/shared/CustomEmptyTable";
+import { getPendingBookings } from "../../../dummy-data/bookingsData";
 
 const { Option } = Select;
 

@@ -131,10 +131,6 @@ const WaitlistsOverview = () => {
             ? "bg-highlight01"
             : ""
         }
-        onRow={(record) => ({
-          onClick: () => navigate(`/dashboard/calendar/bookings-details/${record.id}`),
-          className: "cursor-pointer hover:bg-gray-50",
-        })}
       />
 
       {/* Pagination */}

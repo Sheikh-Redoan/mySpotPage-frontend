@@ -163,7 +163,7 @@ export const getWaitlistOverviewColumns = (
           <button
             type="button"
             onClick={() => console.log("Remove From Blacklist", record.id)}
-            className="cursor-pointer text-[#52c41a] hover:text-[#73d13d]"
+            className="cursor-pointer text-red-500 hover:text-red-600 transition-colors duration-200"
           >
             <MdDelete className="size-4" />
           </button>

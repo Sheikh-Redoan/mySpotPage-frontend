@@ -291,7 +291,7 @@ const PendingBookings = () => {
               : ""
           }`}
         >
-          <span className="text-xs text-[#FC8B23]">{text}</span>
+          <span className="text-xs">{text}</span>
         </div>
       ),
     },

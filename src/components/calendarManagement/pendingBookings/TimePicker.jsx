@@ -75,7 +75,7 @@ const TimePicker = ({ scheduledTime }) => {
       trigger="click"
     >
       <Button className="bg-[#FFFFFF] px-3 py-2 rounded-lg border-[1px] border-[#262626] text-[#242528] text-sm font-normal flex gap-2 items-center">
-        {scheduledTime}
+        {selectedTime}
         <Clock size={16} />
       </Button>
     </Popover>

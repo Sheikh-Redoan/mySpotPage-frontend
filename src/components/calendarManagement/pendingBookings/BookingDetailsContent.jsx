@@ -2,7 +2,7 @@ import { Button } from "antd";
 import { CircleUserRound } from "lucide-react";
 import { PhoneCall } from "lucide-react";
 import { Crown } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import StaffReassignSelect from "./StaffReassignSelect";
 import { Calendar } from "lucide-react";
 import { CircleAlert } from "lucide-react";
@@ -10,9 +10,12 @@ import { ChevronDown } from "lucide-react";
 import StyledDatePicker from "./StyledDatePicker";
 import TimePicker from "./TimePicker";
 import { Plus } from "lucide-react";
+import BookingDetailsServices from "./BookingDetailsServices";
 
 const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
   console.log("booking", booking);
+
+  const navigate = useNavigate();
 
   const formatDate = (date) => {
     const weekday = new Intl.DateTimeFormat("en-US", {
@@ -34,7 +37,7 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
   return (
     <div className="w-full flex flex-col lg:flex-row">
       {/* Left Section: Client and Booking Info */}
-      <div className="w-full lg:w-[30%] border-r-[1px] border-t-[1px] border-t-gray-300 border-r-gray-300 p-4">
+      <div className="w-full h-full lg:w-[30%] border-r-[1px] border-t-[1px] border-t-gray-300 border-r-gray-300 p-4">
         <div className="space-y-4 border-b-[1px] border-b-gray-300 pb-3">
           <div className="w-16 h-16 bg-primary01 text-white flex items-center justify-center rounded-full text-xl font-bold">
             {booking.avatar}
@@ -145,20 +148,31 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
           </div>
         </div>
 
+        {/* Services Section */}
         <div className="px-4 py-6 w-full">
           <div className="flex justify-between">
             <h3 className="text-lg font-semibold text-[#242528]">Services</h3>
 
-            <Button className="flex items-center gap-2 bg-[#FFFFFF] px-2 py-3 border-[1px] border-[#744CDB] rounded-lg">
+            <Button
+              onClick={() => navigate("/dashboard/service-menu")}
+              className="flex items-center gap-2 bg-[#FFFFFF] px-2 py-3 border-[1px] border-[#744CDB] rounded-lg"
+            >
               <Plus size={18} color="#744CDB" />
-              <span className="text-[#744CDB] text-sm font-normal">Add service</span>
+              <span className="text-[#744CDB] text-sm font-normal">
+                Add service
+              </span>
             </Button>
           </div>
+
+          {/* Serivices List */}
+          <BookingDetailsServices services={booking.serviceDetails} />
         </div>
       </div>
 
       {/* Right Section: Summary */}
-      <div>summary</div>
+      <div className="w-full h-full lg:w-[30%] border-t-[1px] border-t-gray-300 p-4">
+        summary
+      </div>
     </div>
   );
 };

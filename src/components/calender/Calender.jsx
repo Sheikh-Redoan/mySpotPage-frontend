@@ -12,8 +12,6 @@ export default function Calender() {
   const [currentDate, setCurrentDate] = useState(dayjs("2025-01-06")); // Start with the day view date
   const [selectedView, setSelectedView] = useState("month"); // Default to 'day' view
 
-  const today = dayjs(); // Get today's date for highlighting
-
   // Helper to get days for a month grid (including prev/next month's days)
   const getDaysInMonthGrid = (date) => {
     const startOfMonth = date.startOf("month");
@@ -28,25 +26,6 @@ export default function Calender() {
       current = current.add(1, "day");
     }
     return days;
-  };
-
-  // Helper to get days for a week
-  const getWeekDays = (date) => {
-    const startOfWeek = date.startOf("week");
-    const days = [];
-    for (let i = 0; i < 7; i++) {
-      days.push(startOfWeek.add(i, "day"));
-    }
-    return days;
-  };
-
-  // Helper to get time slots for a day
-  const getTimeSlots = (date, startHour = 8, endHour = 17) => {
-    const slots = [];
-    for (let i = startHour; i <= endHour; i++) {
-      slots.push(date.hour(i).minute(0).second(0));
-    }
-    return slots;
   };
 
   // Navigation handlers
@@ -74,8 +53,6 @@ export default function Calender() {
     setCurrentDate(dayjs()); // Set to current day, view will adjust
   };
 
-  // Max events to show per cell before "X others" in month view
-  const MAX_EVENTS_PER_MONTH_CELL = 2;
   const dayNames = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
   // Data picker change handler

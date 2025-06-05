@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import "dayjs/locale/en"; // Or your preferred locale
 import { cn } from "../../lib/utils";
+import Event from "./Event";
 
 export default function MonthView({
   currentDate,
@@ -56,14 +57,7 @@ export default function MonthView({
             </div>
             <div className="flex flex-col space-y-1 mt-2">
               {eventsToShow.map((event) => (
-                <div
-                  key={event.id}
-                  className="cursor-pointer text-xs flex items-center gap-2 text-gray-700">
-                  <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
-                  <span>
-                    {dayjs(event.start).format("HH:mm")} - {event.title}
-                  </span>
-                </div>
+                <Event key={event.id} event={event} />
               ))}
               {hiddenEventsCount > 0 && (
                 <div className="text-xs text-gray-600 mt-1 cursor-pointer hover:underline">

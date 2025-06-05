@@ -11,6 +11,7 @@ import StyledDatePicker from "./StyledDatePicker";
 import TimePicker from "./TimePicker";
 import { Plus } from "lucide-react";
 import BookingDetailsServices from "./BookingDetailsServices";
+import BookingSummary from "./BookingSummary";
 
 const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
   console.log("booking", booking);
@@ -171,7 +172,7 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
 
       {/* Right Section: Summary */}
       <div className="w-full h-full lg:w-[30%] border-t-[1px] border-t-gray-300 p-4">
-        summary
+        <BookingSummary status={booking?.status} />
       </div>
     </div>
   );

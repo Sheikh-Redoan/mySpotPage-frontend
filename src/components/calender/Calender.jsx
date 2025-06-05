@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import "dayjs/locale/en"; // Or your preferred locale
 import { useState } from "react";
+import { cn } from "../../lib/utils";
 import CalendarToolbar from "../reuseableComponent/CalendarToolbar";
 import DayView from "./DayView";
 import { MOCK_EVENTS, MOCK_RESOURCES } from "./mockdata";
@@ -81,7 +82,10 @@ export default function Calender() {
         currentView={selectedView}
         handleViewChange={setSelectedView}
       />
-      <div className="rounded-xl overflow-hidden border border-gray-200">
+      <div
+        className={cn("rounded-xl overflow-hidden border border-gray-200", {
+          "border-l-0 border-t-0": selectedView === "day",
+        })}>
         {/* Render the appropriate calendar content based on the selected view */}
         {selectedView === "month" && (
           <MonthView

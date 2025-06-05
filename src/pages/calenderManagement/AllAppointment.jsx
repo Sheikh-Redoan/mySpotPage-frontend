@@ -1,5 +1,5 @@
-import WeekView from "../../components/calender/WeekView";
+import Calender from "../../components/calender/Calender";
 
 export default function AllAppointment() {
-  return <WeekView />;
+  return <Calender />;
 }

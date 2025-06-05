@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import { Collapse } from "antd";
 const { Panel } = Collapse;
 import { Upload, X } from "lucide-react";
@@ -8,7 +8,7 @@ const ServiceImageUpload = ({
   workImages,
   handleWorkFileChange,
   handleButtonClick,
-  setIsModalOpen,
+  setIsModalOpen, // now expects a function that receives index (number)
   fileInputRef,
   workCroppedImages,
   setCurrentCropIndex,
@@ -63,13 +63,16 @@ const ServiceImageUpload = ({
             {workImages.length > 0 && (
               <div className="flex flex-wrap gap-3 mt-4">
                 {workImages.map((img, index) => (
-                  <div key={index} className="relative w-[100px] h-[100px] rounded-lg overflow-hidden border border-gray-200">
+                  <div
+                    key={index}
+                    className="relative w-[100px] h-[100px] rounded-lg overflow-hidden border border-gray-200"
+                  >
                     <img
                       src={workCroppedImages?.[index] || img}
                       alt={`Uploaded ${index}`}
                       onClick={() => {
                         setCurrentCropIndex(index);
-                        setIsModalOpen(true);
+                        setIsModalOpen(index);
                       }}
                       className="w-full h-full object-cover cursor-pointer"
                     />

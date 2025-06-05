@@ -10,6 +10,7 @@ export const clientData = [
     isVerified: false,
     city: "Jerusalem, Israel",
     type: "Standard",
+    isBlacklisted: false, // Added property
   },
   {
     id: "CLT-1002",
@@ -22,6 +23,7 @@ export const clientData = [
     isVerified: true,
     city: "Tel Aviv, Israel",
     type: "VIP",
+    isBlacklisted: false, // Added property
   },
   {
     id: "CLT-1003",
@@ -34,6 +36,7 @@ export const clientData = [
     isVerified: false,
     city: "Haifa, Israel",
     type: "Standard",
+    isBlacklisted: true, // Example: This client is blacklisted
   },
   {
     id: "CLT-1004",
@@ -46,6 +49,7 @@ export const clientData = [
     isVerified: true,
     city: "Jerusalem, Israel",
     type: "VIP",
+    isBlacklisted: false,
   },
   {
     id: "CLT-1005",
@@ -58,6 +62,7 @@ export const clientData = [
     isVerified: true,
     city: "Jerusalem, Israel",
     type: "VIP",
+    isBlacklisted: false,
   },
   {
     id: "CLT-1006",
@@ -70,6 +75,7 @@ export const clientData = [
     isVerified: false,
     city: "Petah Tikva, Israel",
     type: "Standard",
+    isBlacklisted: true, // Example: This client is blacklisted
   },
   {
     id: "CLT-1007",
@@ -82,6 +88,7 @@ export const clientData = [
     isVerified: true,
     city: "Jerusalem, Israel",
     type: "VIP",
+    isBlacklisted: false,
   },
   {
     id: "CLT-1008",
@@ -94,6 +101,7 @@ export const clientData = [
     isVerified: false,
     city: "Beersheba, Israel",
     type: "Standard",
+    isBlacklisted: false,
   },
   // Adding more data
   {
@@ -107,6 +115,7 @@ export const clientData = [
     isVerified: true,
     city: "Jerusalem, Israel",
     type: "VIP",
+    isBlacklisted: false,
   },
   {
     id: "CLT-1010",
@@ -119,6 +128,7 @@ export const clientData = [
     isVerified: false,
     city: "Tel Aviv, Israel",
     type: "Standard",
+    isBlacklisted: false,
   },
   {
     id: "CLT-1011",
@@ -131,6 +141,7 @@ export const clientData = [
     isVerified: true,
     city: "Haifa, Israel",
     type: "Standard",
+    isBlacklisted: false,
   },
   {
     id: "CLT-1012",
@@ -143,6 +154,7 @@ export const clientData = [
     isVerified: true,
     city: "Beersheba, Israel",
     type: "VIP",
+    isBlacklisted: false,
   },
   {
     id: "CLT-1013",
@@ -155,6 +167,7 @@ export const clientData = [
     isVerified: false,
     city: "Jerusalem, Israel",
     type: "Standard",
+    isBlacklisted: true, // Example: This client is blacklisted
   },
   {
     id: "CLT-1014",
@@ -167,6 +180,7 @@ export const clientData = [
     isVerified: true,
     city: "Tel Aviv, Israel",
     type: "VIP",
+    isBlacklisted: false,
   },
   {
     id: "CLT-1015",
@@ -179,6 +193,7 @@ export const clientData = [
     isVerified: true,
     city: "Haifa, Israel",
     type: "Standard",
+    isBlacklisted: false,
   },
   {
     id: "CLT-1016",
@@ -191,6 +206,7 @@ export const clientData = [
     isVerified: false,
     city: "Petah Tikva, Israel",
     type: "Standard",
+    isBlacklisted: false,
   },
   {
     id: "CLT-1017",
@@ -203,6 +219,7 @@ export const clientData = [
     isVerified: true,
     city: "Jerusalem, Israel",
     type: "VIP",
+    isBlacklisted: false,
   },
   {
     id: "CLT-1018",
@@ -215,6 +232,7 @@ export const clientData = [
     isVerified: false,
     city: "Beersheba, Israel",
     type: "Standard",
+    isBlacklisted: true, // Example: This client is blacklisted
   },
   {
     id: "CLT-1019",
@@ -227,6 +245,7 @@ export const clientData = [
     isVerified: true,
     city: "Tel Aviv, Israel",
     type: "VIP",
+    isBlacklisted: false,
   },
   {
     id: "CLT-1020",
@@ -239,6 +258,7 @@ export const clientData = [
     isVerified: true,
     city: "Haifa, Israel",
     type: "Standard",
+    isBlacklisted: false,
   },
 ];
 
@@ -269,3 +289,12 @@ export const filterClientsByGenders = (genders) => {
   return clientData.filter((client) => genders.includes(client.gender));
 };
 
+// New function to update a client's blacklist status
+export const updateClientBlacklistStatus = (clientId, status) => {
+  const clientIndex = clientData.findIndex((client) => client.id === clientId);
+  if (clientIndex > -1) {
+    clientData[clientIndex].isBlacklisted = status;
+    return true; // Indicate success
+  }
+  return false; // Indicate client not found
+};

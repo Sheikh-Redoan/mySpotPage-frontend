@@ -89,7 +89,7 @@ const ServiceBeforeAfterImageUpload = ({
                                     {index === imagePairs.length - 1 && imagePairs.length < 5 && (
                                         <div
                                             onClick={onAddPair}
-                                            className="bg-primary01 h-10 w-10 p-2 rounded-full text-white cursor-pointer"
+                                            className="bg-primary01 absolute -right-10 top-[34%] h-10 w-10 p-2 rounded-full text-white cursor-pointer"
                                         >
                                             <Plus />
                                         </div>

@@ -3,7 +3,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import React from "react";
 
 const BookingDetailsServices = ({ services }) => {
-  console.log("services", services);
+  // console.log("services", services);
 
   return (
     <div>

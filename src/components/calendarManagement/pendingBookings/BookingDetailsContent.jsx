@@ -172,7 +172,7 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
 
       {/* Right Section: Summary */}
       <div className="w-full h-full lg:w-[30%] border-t-[1px] border-t-gray-300 p-4">
-        <BookingSummary />
+        <BookingSummary status={booking?.status} />
       </div>
     </div>
   );

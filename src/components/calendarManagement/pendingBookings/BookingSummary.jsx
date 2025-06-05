@@ -1,7 +1,50 @@
+import { Select } from "antd";
 import { Button } from "antd";
+import { CircleSlash } from "lucide-react";
+import { XCircle } from "lucide-react";
+import { CheckCircle } from "lucide-react";
+import { useState } from "react";
 import { TbArrowBadgeDown } from "react-icons/tb";
 
-const BookingSummary = () => {
+const BookingSummary = ({ status }) => {
+  console.log("status:", status);
+
+  const statusDisplayText = {
+    completed: "Completed",
+    cancelled: "Cancelled",
+    "no-show": "No Show",
+    Status: "Status",
+  };
+
+  const [selectedStatus, setSelectedStatus] = useState({
+    value: "Status",
+    label: "Status",
+  });
+
+  const [isChanged, setIsChanged] = useState(false);
+
+  const handleChange = (value) => {
+    if (value.value !== selectedStatus.value) {
+      setIsChanged(true);
+    }
+
+    setSelectedStatus({
+      value: value.value,
+      label: statusDisplayText[value.value],
+    });
+
+    console.log(
+      `selected value: ${value.value}, display label: ${
+        statusDisplayText[value.value]
+      }`
+    );
+  };
+
+  const handleSave = () => {
+    console.log("Saving changes:", selectedStatus.value);
+    setIsChanged(false);
+  };
+
   return (
     <div className="">
       <h2 className="text-lg font-semibold text-primary01 mb-5">Summary</h2>
@@ -34,7 +77,9 @@ const BookingSummary = () => {
           </div>
           <div className="text-right">
             <span className="text-[#262626] font-normal text-sm">₪270.00</span>
-            <p className="text-[#888888] font-normal text-xs">(Includes ₪48.60 VAT)</p>
+            <p className="text-[#888888] font-normal text-xs">
+              (Includes ₪48.60 VAT)
+            </p>
           </div>
         </div>
 
@@ -43,7 +88,7 @@ const BookingSummary = () => {
           <span className="text-[#888888] font-normal text-sm">Discount</span>
           <div className="flex items-center space-x-2">
             <span className="bg-primary01/20 text-primary01 text-xs font-medium px-2 py-1 rounded-full flex items-center border border-primary01/20">
-             <TbArrowBadgeDown size={16} />
+              <TbArrowBadgeDown size={16} />
               20% OFF
             </span>
             <span className="text-red-500 font-xs font-medium">-₪54.00</span>
@@ -52,7 +97,9 @@ const BookingSummary = () => {
 
         {/* Additional Discount */}
         <div className="flex justify-between items-center">
-          <span className="text-[#888888] font-normal text-sm">Additional Discount</span>
+          <span className="text-[#888888] font-normal text-sm">
+            Additional Discount
+          </span>
           <div className="w-[100px] flex items-center justify-between border border-gray-300 rounded-md px-3 py-2">
             <span className="text-[#262626] font-normal text-sm">0</span>
             <span className="text-gray-500 ml-1 text-sm">₪</span>
@@ -66,12 +113,63 @@ const BookingSummary = () => {
         <span className="text-pimarry01 font-semibold text-lg">₪216.00</span>
       </div>
 
-      {/* Confirm Button */}
-      <Button color="default" variant="solid" className="w-full px-4 py-2 text-md font-semibold rounded-lg mt-2">
-        Confirm
-      </Button>
+      {status === "Pending" && (
+        <Button
+          color="default"
+          variant="solid"
+          className="w-full px-4 py-2 text-md font-semibold rounded-lg mt-2"
+        >
+          Confirm
+        </Button>
+      )}
+
+      {status === "Confirmed" || status === "No Show" && (
+        <div className="flex items-center mt-2 gap-2 w-full">
+          <Select
+            style={{ width: "50%", fontSize: "14px" }}
+            onChange={handleChange}
+            value={selectedStatus}
+            labelInValue
+          >
+            <Select.Option value="completed">
+              <div className="flex items-center gap-1">
+                <CheckCircle className="h-5 w-5 text-green-500 mr-3" />
+                <span>Completed</span>
+              </div>
+            </Select.Option>
+            <Select.Option value="cancelled">
+              <div className="flex items-center gap-1">
+                <XCircle className="h-5 w-5 text-red-500 mr-3" />
+                <span>Cancelled</span>
+              </div>
+            </Select.Option>
+            <Select.Option value="no-show">
+              <div className="flex items-center gap-1">
+                <CircleSlash className="h-5 w-5 text-gray-500 mr-3" />
+                <span>No Show</span>
+              </div>
+            </Select.Option>
+          </Select>
+          <Button
+            color="default"
+            variant="solid"
+            className="w-1/2 text-sm"
+            disabled={!isChanged}
+            onClick={handleSave}
+          >
+            Saved
+          </Button>
+        </div>
+      )}
+
+      {(status === "Cancelled" ||
+        status === "Completed") && (
+        <Button color="default" variant="filled" className="w-full text-sm mt-2">
+          Saved
+        </Button>
+      )}
     </div>
   );
 };
 
-export default BookingSummary; 
+export default BookingSummary;

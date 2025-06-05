@@ -8,7 +8,7 @@ import ServiceImageUpload from "./ServiceImageUpload";
 import ServiceBasicDetails from "./ServiceBasicDetails";
 import ServiceBeforeAfterImageUpload from "./ServiceBeforeAfterImageUpload";
 
-const AddNewService = ({ setAddNewService }) => {
+const AddNewService = ({ setAddNewService, beforeAfter }) => {
   const [useGalleryView, setUseGalleryView] = useState(false);
   const [activeKey, setActiveKey] = useState(["1"]);
   const [isStepComplete, setIsStepComplete] = useState(false);
@@ -142,8 +142,8 @@ const AddNewService = ({ setAddNewService }) => {
   };
 
   const openCropModal = (index, type) => {
-    // Example: Open a modal and store index + type in state
-    console.log("Crop requested for:", { index, type });
+    setCroppingTarget({ index, type });
+    setIsModalOpen(true);
   };
 
   return (
@@ -194,37 +194,28 @@ const AddNewService = ({ setAddNewService }) => {
             setPriceModalList={setPriceModalList}
           />
 
-          {useGalleryView ? (
-            <ServiceBeforeAfterImageUpload
-              imagePairs={imagePairs}
-              onAddPair={onAddPair}
-              onChangeImage={onImageChange}
-              onRemoveImage={onRemoveImage}
-              onCropImage={openCropModal}
-            />
-          ) : (
-            <ServiceImageUpload
-              workImages={workImages}
-              workCroppedImages={workCroppedImages}
-              handleWorkRemoveImage={handleWorkRemoveImage}
-              handleWorkFileChange={handleWorkFileChange}
-              handleButtonClick={handleButtonClick}
-              setIsModalOpen={(index) => {
-                setCroppingTarget("workImage");
-                setCurrentCropIndex(index);
-                setIsModalOpen(true);
-              }}
-              fileInputRef={fileInputRef}
-              setCurrentCropIndex={setCurrentCropIndex}
-            />
-          )}
+          {beforeAfter === "Before & After" && <ServiceBeforeAfterImageUpload
+            imagePairs={imagePairs}
+            onAddPair={onAddPair}
+            onChangeImage={onImageChange}
+            onRemoveImage={onRemoveImage}
+            onCropImage={(index, position) => setCroppingTarget({ type: "beforeAfter", index, position })}
+          />}
 
-          <button
-            onClick={() => setUseGalleryView(!useGalleryView)}
-            className="text-[#866BE7] text-sm underline mt-2"
-          >
-            Switch to {useGalleryView ? "List View" : "Gallery View"}
-          </button>
+          {beforeAfter === "Only Outcome" && <ServiceImageUpload
+            workImages={workImages}
+            workCroppedImages={workCroppedImages}
+            handleWorkRemoveImage={handleWorkRemoveImage}
+            handleWorkFileChange={handleWorkFileChange}
+            handleButtonClick={handleButtonClick}
+            setIsModalOpen={(index) => {
+              setCroppingTarget("workImage");
+              setCurrentCropIndex(index);
+              setIsModalOpen(true);
+            }}
+            fileInputRef={fileInputRef}
+            setCurrentCropIndex={setCurrentCropIndex}
+          />}
         </Space>
       </div>
 

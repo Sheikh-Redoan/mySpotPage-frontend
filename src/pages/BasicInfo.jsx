@@ -1,4 +1,4 @@
-import { DatePicker, Modal, Select, Switch } from "antd";
+import { DatePicker, Modal, Select, Switch, Upload } from "antd";
 import { useState } from "react";
 import { useParams } from "react-router";
 import {
@@ -14,9 +14,10 @@ import {
 import Breadcrumb from "../components/client/Breadcrumb";
 import { getBreadcrumbs } from "../lib/staticData";
 
+const { Option } = Select;
 const BasicInfo = () => {
   const { client } = useParams();
-
+  const [fileList, setFileList] = useState([]); // Add this state for file uploads
   const [isBlackListed, setIsBlackListed] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -40,6 +41,41 @@ const BasicInfo = () => {
     console.log(`switch to ${checked}`);
   };
 
+  // Handler for image upload
+  const onImageChange = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
+    // You can also add logic here to upload the file to your backend
+    // For now, it just updates the state and logs the file.
+    if (newFileList.length > 0 && newFileList[0].status === "done") {
+      console.log("Uploaded file:", newFileList[0].originFileObj);
+      // If you have an image URL after upload, you can store it in another state
+    }
+  };
+
+  // Before upload validation (optional)
+  const beforeUpload = (file) => {
+    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+    if (!isJpgOrPng) {
+      // message.error('You can only upload JPG/PNG file!'); // You might want to use Ant Design's message for feedback
+      alert("You can only upload JPG/PNG file!");
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+      // message.error('Image must smaller than 2MB!');
+      alert("Image must smaller than 2MB!");
+    }
+    return isJpgOrPng && isLt2M;
+  };
+
+  // Custom upload request (optional, if you want to handle upload manually)
+  const customRequest = ({ file, onSuccess }) => {
+    setTimeout(() => {
+      onSuccess("ok"); // Simulate successful upload
+      // In a real application, you would send 'file' to your server here
+      // and call onSuccess or onError based on the server response.
+    }, 1000);
+  };
+
   return (
     <div>
       <Breadcrumb
@@ -59,14 +95,32 @@ const BasicInfo = () => {
         ])}
       />
       <div className="bg-white p-6 max-w-[540px] rounded-xl mx-auto border border-[#E7E7E7]">
-        <div className="text-[#3A3B3F] flex flex-col justify-between h-full space-y-5 text-sm">
-          <div className="">
-            <fieldset className="relative size-20 rounded-full bg-[#F6F6F6] flex justify-center items-center mx-auto">
-              <ImageIcon />
-              <div className="absolute -right-1 bottom-0 size-7 rounded-full border border-white bg-[#F5F4FE] flex items-center justify-center">
-                <UpdateIcon />
-              </div>
-            </fieldset>
+        <div className="text-[#3A3B3F] flex flex-col justify-center h-full  space-y-5 text-sm basic-info">
+          {/* Modified Upload component with styling */}
+          <div className="flex justify-center relative mx-auto w-[100px] h-[100px]">
+            <Upload
+              className="avatar-upload"
+              listType="picture-circle"
+              fileList={fileList}
+              onChange={onImageChange}
+              beforeUpload={beforeUpload}
+              customRequest={customRequest}
+              maxCount={1}
+              showUploadList={{
+                showPreviewIcon: false,
+                showRemoveIcon: false,
+                showDownloadIcon: false,
+              }}
+            >
+              {fileList.length === 0 ? (
+                <div className="relative size-20 rounded-full bg-[#F6F6F6] flex justify-center items-center">
+                  <ImageIcon />
+                  <div className="absolute -right-1 bottom-0 size-7 rounded-full border border-white bg-[#F5F4FE] flex items-center justify-center">
+                    <UpdateIcon />
+                  </div>
+                </div>
+              ) : null}
+            </Upload>
           </div>
 
           {isBlackListed && (
@@ -112,7 +166,8 @@ const BasicInfo = () => {
               onChange={handleGenderChange}
               placeholder="Select Gender"
               className="border border-[#E0E0E0] rounded-lg w-full !h-10"
-              suffixIcon={<DownArrowIcon />}>
+              suffixIcon={<DownArrowIcon />}
+            >
               {["fjgvhjg", "jdfgghfg"].map((city) => (
                 <Option key={city} value={city}>
                   {city}
@@ -143,7 +198,8 @@ const BasicInfo = () => {
               {isBlackListed && (
                 <div
                   className="flex items-center gap-1"
-                  onClick={() => setIsBlackListed(false)}>
+                  onClick={() => setIsBlackListed(false)}
+                >
                   <p className="text-[#ED4245] font-medium">Unverified</p>
                   <InfoCircleOutlined className="size-5" />
                 </div>
@@ -171,7 +227,8 @@ const BasicInfo = () => {
               suffixIcon={<SearchIcon />}
               filterOption={(input, option) =>
                 option.children.toLowerCase().includes(input.toLowerCase())
-              }>
+              }
+            >
               {["Jerusalem, Israel", "Tel Aviv, Israel", "Haifa, Israel"].map(
                 (phone) => (
                   <Option key={phone} value={phone}>
@@ -192,7 +249,8 @@ const BasicInfo = () => {
             {!isBlackListed && (
               <div
                 className="flex items-center gap-1 cursor-pointer"
-                onClick={() => setIsModalOpen(true)}>
+                onClick={() => setIsModalOpen(true)}
+              >
                 <InfoCircleOutlined className="size-5" />
                 <p className="text-[#ED4245] font-semibold">Add to blacklist</p>
               </div>
@@ -206,7 +264,8 @@ const BasicInfo = () => {
         open={isModalOpen}
         onCancel={() => setIsModalOpen(false)}
         footer={null}
-        width={420}>
+        width={420}
+      >
         <div className="mt-8">
           <div className="size-11 bg-[#FBD9DA] rounded-full flex items-center justify-center mx-auto mb-3">
             <ErrorIcon2 className="size-5" />
@@ -224,7 +283,8 @@ const BasicInfo = () => {
             <button
               type="button"
               className="flex-1 cursor-pointer border border-[#242528] py-2 px-3 text-[#242528] rounded-lg"
-              onClick={() => setIsModalOpen(false)}>
+              onClick={() => setIsModalOpen(false)}
+            >
               Cancel
             </button>
             <button
@@ -233,7 +293,8 @@ const BasicInfo = () => {
               onClick={() => {
                 setIsBlackListed(true);
                 setIsModalOpen(false);
-              }}>
+              }}
+            >
               Yes, confirm
             </button>
           </div>

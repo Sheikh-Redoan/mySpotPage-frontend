@@ -293,3 +293,28 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .custom-select .ant-select-selection-item .ant-select-selection-item-content {
   margin-left: 8px !important; 
 }
+
+.add-client-modal .ant-upload ,.add-client-modal .ant-upload-select,.add-client-modal .ant-upload-hidden,.add-client-modal .ant-upload-animate-inline-leave,.add-client-modal .ant-upload-animate-inline-leave-active,.add-client-modal .ant-upload-animate-inline,.add-client-modal .ant-upload-list-item-container{
+  width: 52px !important;
+  height: 52px !important;
+  border-radius: 50% !important;
+}
+
+
+
+
+
+
+.basic-info .avatar-upload .ant-upload-list-item-container {
+  width: 80px !important;
+  height: 80px !important;
+  margin: 0 !important;
+}
+
+.basic-info .avatar-upload .ant-upload-list-item {
+  width: 80px !important;
+  height: 80px !important;
+  border-radius: 50% !important;
+  padding: 0 !important;
+  border: none !important;
+}

@@ -67,18 +67,6 @@ const WaitlistsOverview = () => {
     setCurrentPage(1);
   };
 
-  const handleApproveBooking = (id) => {
-    console.log(`Booking ${id} approved`);
-    setBookings(bookings.filter((booking) => booking.id !== id));
-    setTotalBookings(totalBookings - 1);
-  };
-
-  const handleRejectBooking = (id) => {
-    console.log(`Booking ${id} rejected`);
-    setBookings(bookings.filter((booking) => booking.id !== id));
-    setTotalBookings(totalBookings - 1);
-  };
-
   // Extract unique services for filter dropdown
   const allUniqueServices = [
     ...new Set(
@@ -112,9 +100,6 @@ const WaitlistsOverview = () => {
   };
 
   const columns = getWaitlistOverviewColumns(
-    handleApproveBooking,
-    handleRejectBooking,
-    navigate,
     selectedServiceFilters,
     handleServiceFilterChange,
     serviceFilterDropdownSearchQuery,

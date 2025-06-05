@@ -1,12 +1,9 @@
 import { Tooltip, Input, Checkbox } from "antd";
-import { MdCheckCircleOutline } from "react-icons/md";
-import { IoCloseCircleOutline } from "react-icons/io5";
+import { MdDelete } from "react-icons/md";
+import { FaBan } from "react-icons/fa";
 import { FilterFilled, SearchOutlined } from "../../../assets/icons/icons";
 
 export const getWaitlistOverviewColumns = (
-  handleApproveBooking,
-  handleRejectBooking,
-  navigate,
   selectedServiceFilters,
   handleServiceFilterChange,
   serviceFilterDropdownSearchQuery,
@@ -16,25 +13,31 @@ export const getWaitlistOverviewColumns = (
   handleApplyServiceFilter
 ) => [
   {
-    title: "Scheduled Time",
-    dataIndex: "scheduledTime",
-    key: "scheduledTime",
-    sorter: (a, b) => {
-      const dateA = new Date(`${a.scheduledDate} ${a.scheduledTime}`);
-      const dateB = new Date(`${b.scheduledDate} ${b.scheduledTime}`);
-      return dateA - dateB;
-    },
-    render: (text, record) => (
+    title: "Order",
+    dataIndex: "order",
+    key: "order",
+    render: (text, record, index) => (
       <div className="flex flex-col">
         <span className="text-[#262626] text-sm font-medium">
-          {record.scheduledDate}
+          {String(index + 1).padStart(2, "0")}
         </span>
-        <span className="text-[#888] text-xs">{text}</span>
       </div>
     ),
   },
   {
-    title: "Client Information",
+    title: "Waitlist Entry Time",
+    dataIndex: "clientName",
+    key: "clientInfo",
+    sorter: (a, b) => a.clientName.localeCompare(b.clientName),
+    render: (text, record) => (
+      <div className="flex gap-1">
+        <span className="text-[#888] text-xs">{record.scheduledDate}</span>
+        <span className="text-[#888] text-xs">{record.scheduledTime}</span>
+      </div>
+    ),
+  },
+  {
+    title: "Client Name",
     dataIndex: "clientName",
     key: "clientInfo",
     sorter: (a, b) => a.clientName.localeCompare(b.clientName),
@@ -75,17 +78,19 @@ export const getWaitlistOverviewColumns = (
           />
         </div>
         <div className="max-h-[280px] overflow-y-auto space-y-2 mb-4">
-          {filteredDropdownServices.map((service) => (
-            <div key={service} className="flex items-center">
-              <Checkbox
-                checked={selectedServiceFilters.includes(service)}
-                onChange={() => handleServiceFilterChange(service)}
-                className="rounded border-[#E5E7EB] checked:bg-[#111827] checked:border-[#111827] checked:hover:bg-[#111827] hover:border-[#111827]"
-              >
-                <span className="text-sm text-[#111827]">{service}</span>
-              </Checkbox>
-            </div>
-          ))}
+          {Array.isArray(
+            filteredDropdownServices.map((service) => (
+              <div key={service} className="flex items-center">
+                <Checkbox
+                  checked={selectedServiceFilters.includes(service)}
+                  onChange={() => handleServiceFilterChange(service)}
+                  className="rounded border-[#E5E7EB] checked:bg-[#111827] checked:border-[#111827] checked:hover:bg-[#111827] hover:border-[#111827]"
+                >
+                  <span className="text-sm text-[#111827]">{service}</span>
+                </Checkbox>
+              </div>
+            ))
+          )}
         </div>
         <div className="flex gap-3">
           <button
@@ -150,51 +155,27 @@ export const getWaitlistOverviewColumns = (
     render: (text) => <span className="text-[#262626] text-sm">₪{text}</span>,
   },
   {
-    title: "Status",
-    dataIndex: "status",
-    key: "status",
-    render: (text) => (
-      <div
-        className={`rounded-full text-center ${
-          text === "Pending"
-            ? "bg-[#FFF4EA] text-[#FC8B23]"
-            : text === "Confirmed"
-            ? "text-[#3E70DD] bg-[#E6F3FF]"
-            : text === "Completed"
-            ? "bg-[#E3FAE6] text-[#21C66E]"
-            : text === "Cancelled"
-            ? "bg-[#FFEFEF] text-[#ED4245]"
-            : text === "No Show"
-            ? "bg-[#E7E7E7] text-[#82868E]"
-            : ""
-        }`}
-      >
-        <span className="text-xs">{text}</span>
-      </div>
-    ),
-  },
-  {
     title: "Action",
     key: "action",
     render: (_, record) => (
       <div className="flex gap-2">
-        <Tooltip placement="top" color="#52c41a" title="Approve">
+        <Tooltip placement="top" color="#52c41a" title="Remove from blacklist">
           <button
             type="button"
-            onClick={() => handleApproveBooking(record.id)}
+            onClick={() => console.log("Remove From Blacklist", record.id)}
             className="cursor-pointer text-[#52c41a] hover:text-[#73d13d]"
           >
-            <MdCheckCircleOutline className="size-5" />
+            <MdDelete className="size-4" />
           </button>
         </Tooltip>
 
-        <Tooltip placement="top" color="#f5222d" title="Reject">
+        <Tooltip placement="top" color="#f5222d" title="Add to blacklist">
           <button
             type="button"
-            onClick={() => handleRejectBooking(record.id)}
+            onClick={() => console.log("Add To Blacklist", record.id)}
             className="cursor-pointer text-[#f5222d] hover:text-[#ff4d4f]"
           >
-            <IoCloseCircleOutline className="size-5" />
+            <FaBan className="size-4" />
           </button>
         </Tooltip>
       </div>

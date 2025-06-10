@@ -61,30 +61,32 @@ const ServiceImageUpload = ({
             )}
 
             {workImages.length > 0 && (
-              <div className="flex flex-wrap gap-3 mt-4">
-                {workImages.map((img, index) => (
-                  <div
-                    key={index}
-                    className="relative w-[100px] h-[100px] rounded-lg overflow-hidden border border-gray-200"
-                  >
-                    <img
-                      src={workCroppedImages?.[index] || img}
-                      alt={`Uploaded ${index}`}
-                      onClick={() => {
-                        setCurrentCropIndex(index);
-                        setIsModalOpen(index);
-                      }}
-                      className="w-full h-full object-cover cursor-pointer"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => handleWorkRemoveImage(index)}
-                      className="absolute top-1 right-1 bg-white border border-gray-300 rounded-full p-1 group hover:bg-[#866BE7] hover:border-[#866BE7]"
+              <div className="mt-4 pb-8 overflow-x-auto">
+                <div className="flex gap-3 min-w-max sm:min-w-full">
+                  {workImages.map((img, index) => (
+                    <div
+                      key={index}
+                      className="relative w-[150px] h-[150px] rounded-lg overflow-hidden border border-gray-200 shrink-0"
                     >
-                      <X className="w-4 h-4 text-[#866BE7] group-hover:text-white" />
-                    </button>
-                  </div>
-                ))}
+                      <img
+                        src={workCroppedImages?.[index] || img}
+                        alt={`Uploaded ${index}`}
+                        onClick={() => {
+                          setCurrentCropIndex(index);
+                          setIsModalOpen(index);
+                        }}
+                        className="w-full h-full object-cover cursor-pointer"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => handleWorkRemoveImage(index)}
+                        className="absolute top-1 right-1 bg-white border border-gray-300 rounded-full p-1 group hover:bg-[#866BE7] hover:border-[#866BE7]"
+                      >
+                        <X className="w-4 h-4 text-[#866BE7] group-hover:text-white" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
           </div>

@@ -104,9 +104,9 @@ const ServiceBasicDetails = ({
                 )}
               </div>
 
-              <div className="flex items-center gap-8 w-full">
+              <div className="flex flex-col md:flex-row md:items-center md:gap-8 w-full">
                 {/* Service Name */}
-                <div className="mb-6 w-[440px]">
+                <div className="mb-6 md:w-[440px]">
                   <label className="block mb-2 text-base text-[#3A3B3F]">
                     Service Name <span className="text-orange-600">*</span>
                   </label>
@@ -139,7 +139,7 @@ const ServiceBasicDetails = ({
                 defaultValue="For All"
                 rules={{ required: true }}
                 render={({ field }) => (
-                  <div className="relative w-[440px]">
+                  <div className="relative md:w-[440px]">
                     <label className="block mb-2 text-[#888888]">
                       Available for <span className="text-orange-600">*</span>
                     </label>

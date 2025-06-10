@@ -53,11 +53,11 @@ function ServicePage() {
   );
 
   return (
-    <div className="w-full p-5 relative">
+    <div className="w-full p-0 md:p-5 relative">
       {!addNewService ? (
         <>
-          <div className="flex justify-between items-center">
-            <div className="relative w-[280px]">
+          <div className="flex flex-col md:flex-row gap-6 justify-between items-center">
+            <div className="relative w-full md:w-[280px]">
               <Input
                 placeholder="Search"
                 prefix={<SearchOutlined />}

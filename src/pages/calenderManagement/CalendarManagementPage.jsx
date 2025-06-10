@@ -5,8 +5,7 @@ import AllAppoimtment from "./AllAppointment";
 import BlacklistsOverview from "./BlacklistsOverview";
 import PendingBookings from "./PendingBookings";
 import WaitlistsOverview from "./WaitlistsOverview";
-import { Modal } from "antd";
-import SettingsBookingsRules from "../../components/calendarManagement/SettingsBookingsRules";
+import SettingsBookingsRulesModal from "../../components/calendarManagement/SettingsBookingsRulesModal";
 
 const items = [
   {
@@ -152,17 +151,11 @@ function CalendarManagementPage() {
 
       {renderContent()}
 
-      {/* Settings Modal */}
-      <Modal
-        open={settingsModalOpen}
-        onCancel={() => setSettingsModalOpen(false)}
-        footer={null}
-        closable={true}
-        className="!rounded-2xl !max-w-xl z-50"
-        centered
-      >
-        <SettingsBookingsRules/>
-      </Modal>
+      {/* Settings Bookings Rules Modal */}
+      <SettingsBookingsRulesModal
+        settingsModalOpen={settingsModalOpen}
+        setSettingsModalOpen={setSettingsModalOpen}
+      />
     </div>
   );
 }

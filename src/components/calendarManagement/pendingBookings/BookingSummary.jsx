@@ -123,7 +123,7 @@ const BookingSummary = ({ status }) => {
         </Button>
       )}
 
-      {status === "Confirmed" || status === "No Show" && (
+      {(status === "Confirmed" || status === "No Show") && (
         <div className="flex items-center mt-2 gap-2 w-full">
           <Select
             style={{ width: "50%", fontSize: "14px" }}
@@ -162,9 +162,12 @@ const BookingSummary = ({ status }) => {
         </div>
       )}
 
-      {(status === "Cancelled" ||
-        status === "Completed") && (
-        <Button color="default" variant="filled" className="w-full text-sm mt-2">
+      {(status === "Cancelled" || status === "Completed") && (
+        <Button
+          color="default"
+          variant="filled"
+          className="w-full text-sm mt-2"
+        >
           Saved
         </Button>
       )}

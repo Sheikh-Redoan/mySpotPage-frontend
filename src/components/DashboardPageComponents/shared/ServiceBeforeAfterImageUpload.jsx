@@ -37,7 +37,7 @@ const ServiceBeforeAfterImageUpload = ({
                         <h2 className="mb-3 text-[#666]">
                             You can upload up to 10 images to showcase your best work.
                         </h2>
-                        <div className="flex gap-1">
+                        <div className="flex gap-5 overflow-x-auto">
                             {imagePairs.map((pair, index) => (
                                 <div key={index} className="mb-6 relative flex gap-3 items-center mt-3 w-80">
                                     {["before", "after"].map((type) => (
@@ -89,7 +89,7 @@ const ServiceBeforeAfterImageUpload = ({
                                     {index === imagePairs.length - 1 && imagePairs.length < 5 && (
                                         <div
                                             onClick={onAddPair}
-                                            className="bg-primary01 absolute -right-10 top-[34%] h-10 w-10 p-2 rounded-full text-white cursor-pointer"
+                                            className="bg-primary01 absolute -right-12 top-[34%] h-10 w-10 p-2 rounded-full text-white cursor-pointer"
                                         >
                                             <Plus />
                                         </div>

@@ -119,21 +119,23 @@ const ServicePriceSetting = ({
                                 <p>This service comes as a standard offering with no additional options</p>
                             </label>
                             {priceModal2 && (
-                                <div className="ml-4 md:ml-12 flex gap-x-6 gap-y-3">
-                                    <div className="space-y-1.5">
-                                        <h4>Hour(s) <span className="text-orange-600">*</span></h4>
-                                        <div className="flex justify-between items-center border border-[#E5E7E8] p-2 rounded-lg w-[210px]">
-                                            <Plus onClick={() => setHoursCount((prev) => prev + 1)} className="text-[#ACAFB4] cursor-pointer" />
-                                            <p className="text-[#424348]">{hoursCount}</p>
-                                            <Minus onClick={() => setHoursCount((prev) => (prev > 0 ? prev - 1 : 0))} className="text-[#ACAFB4] cursor-pointer" />
+                                <div className="ml-4 md:ml-12 flex flex-col md:flex-row gap-x-6 gap-y-3 overflow-x-auto pb-3">
+                                    <div className="flex gap-6">
+                                        <div className="space-y-1.5 w-1/2">
+                                            <h4>Hour(s) <span className="text-orange-600">*</span></h4>
+                                            <div className="flex justify-between items-center border border-[#E5E7E8] p-2 rounded-lg md:w-[210px]">
+                                                <Plus onClick={() => setHoursCount((prev) => prev + 1)} className="text-[#ACAFB4] cursor-pointer" />
+                                                <p className="text-[#424348]">{hoursCount}</p>
+                                                <Minus onClick={() => setHoursCount((prev) => (prev > 0 ? prev - 1 : 0))} className="text-[#ACAFB4] cursor-pointer" />
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="space-y-1.5">
-                                        <h4>Minute(s) <span className="text-orange-600">*</span></h4>
-                                        <div className="flex justify-between items-center border border-[#E5E7E8] p-2 rounded-lg w-[210px]">
-                                            <Plus onClick={() => setMinuteCount((prev) => (prev >= 0 && prev < 0.75 ? prev + 0.25 : 0.75))} className="text-[#ACAFB4]" />
-                                            <p className="text-[#424348]">{minuteCount}</p>
-                                            <Minus onClick={() => setMinuteCount((prev) => (prev > 0 && prev <= 0.75 ? prev - 0.25 : 0))} className="text-[#ACAFB4]" />
+                                        <div className="space-y-1.5 w-1/2">
+                                            <h4>Minute(s) <span className="text-orange-600">*</span></h4>
+                                            <div className="flex justify-between items-center border border-[#E5E7E8] p-2 rounded-lg md:w-[210px]">
+                                                <Plus onClick={() => setMinuteCount((prev) => (prev >= 0 && prev < 0.75 ? prev + 0.25 : 0.75))} className="text-[#ACAFB4]" />
+                                                <p className="text-[#424348]">{minuteCount}</p>
+                                                <Minus onClick={() => setMinuteCount((prev) => (prev > 0 && prev <= 0.75 ? prev - 0.25 : 0))} className="text-[#ACAFB4]" />
+                                            </div>
                                         </div>
                                     </div>
                                     <div className="space-y-1.5">
@@ -141,9 +143,9 @@ const ServicePriceSetting = ({
                                         <Select
                                             id="price"
                                             placeholder="Select"
-                                            className="w-[210px] !h-10"
+                                            className="w-full md:w-[210px] !h-10"
                                             suffixIcon={<DownArrowIcon />}
-                                            value={selectedPriceType}
+                                            value={selectedPriceType ? selectedPriceType : "Select"}
                                             onChange={(value) => setSelectedPriceType(value)}
                                         >
                                             {["Fixed Price", "Initial Price Base"].map((type) => (
@@ -151,11 +153,11 @@ const ServicePriceSetting = ({
                                             ))}
                                         </Select>
                                     </div>
-                                    <div className="space-y-1.5 relative">
+                                    <div className="space-y-1.5">
                                         <label className="block">Amount <span className="text-orange-600">*</span></label>
                                         <div className="relative">
                                             <input
-                                                className="border border-[#E5E7E8] p-2 rounded-lg w-[210px]"
+                                                className="border border-[#E5E7E8] p-2 rounded-lg w-full md:w-[210px]"
                                                 type="text"
                                                 placeholder="Price"
                                                 value={amount}
@@ -177,52 +179,70 @@ const ServicePriceSetting = ({
                             {priceModal1 && (
                                 <div className="ml-4 md:ml-12">
                                     {priceModalList.map((option, index) => (
-                                        <div key={option.id} className="flex items-center gap-x-6 gap-y-3 mb-6">
-                                            <div className={`flex justify-center items-center mt-6 rounded-full h-[40px] w-[40px] ${priceModalList.length === 1 ? "bg-[#F6F6F6] cursor-not-allowed" : "bg-[#F6F6F6] hover:scale-105 transform transition-all duration-300 ease-in-out cursor-pointer"}`} onClick={() => { if (priceModalList.length > 1) removeOption(index); }}>
+                                        <div key={option.id} className="flex flex-col md:flex-row items-center gap-x-6 gap-y-3 border-2 border-border border-dashed md:border-none md:overflow-x-auto md:pb-5 p-4 md:p-0 rounded-lg mb-7 md:mb-0 relative">
+                                            {/* <div className={`flex justify-center items-center mt-6 rounded-full h-[40px] w-[40px] ${priceModalList.length === 1 ? "bg-[#F6F6F6] cursor-not-allowed" : "bg-[#F6F6F6] hover:scale-105 transform transition-all duration-300 ease-in-out cursor-pointer"}`} onClick={() => { if (priceModalList.length > 1) removeOption(index); }}>
                                                 <Trash2 className={`h-5 w-10 ${priceModalList.length > 1 && "text-red-500"}`} />
+                                            </div> */}
+                                            <div>
+                                                <Trash2
+                                                    className={`absolute md:static mt-0 md:mt-7 -top-4 -right-4 size-10 p-2 bg-[#F6F6F6] rounded-full ${priceModalList.length === 1 ? "cursor-not-allowed text-gray-500" : "text-red-500"}`}
+                                                    onClick={() => {
+                                                        if (priceModalList.length > 1) removeOption(index);
+                                                    }}
+                                                />
                                             </div>
-                                            <div className="space-y-1.5 flex flex-col">
+                                            <div className="space-y-1.5 flex flex-col w-full md:w-fit">
                                                 <label>Name <span className="text-orange-600">*</span></label>
-                                                <input className="border border-[#E5E7E8] p-2 rounded-lg w-[280px]" value={option.name} onChange={(e) => handleChange(index, "name", e.target.value)} placeholder="Name" />
+                                                <input className="border border-[#E5E7E8] p-2 rounded-lg  md:w-[280px]" value={option.name} onChange={(e) => handleChange(index, "name", e.target.value)} placeholder="Name" />
                                             </div>
-                                            <div className="space-y-1.5">
-                                                <h4>Hour(s) <span className="text-orange-600">*</span></h4>
-                                                <div className="flex justify-between items-center border border-[#E5E7E8] p-2 rounded-lg w-[210px]">
-                                                    <Plus className="text-[#ACAFB4] cursor-pointer" onClick={() => incrementHour(index)} />
-                                                    <p className="text-[#424348]">{option.hour}</p>
-                                                    <Minus className="text-[#ACAFB4] cursor-pointer" onClick={() => decrementHour(index)} />
+                                            <div className="flex gap-6 w-full md:w-fit">
+                                                <div className="space-y-1.5 w-1/2">
+                                                    <h4>Hour(s) <span className="text-orange-600">*</span></h4>
+                                                    <div className="flex justify-between items-center border border-[#E5E7E8] p-2 rounded-lg md:w-[210px]">
+                                                        <Plus className="text-[#ACAFB4] cursor-pointer" onClick={() => incrementHour(index)} />
+                                                        <p className="text-[#424348]">{option.hour}</p>
+                                                        <Minus className="text-[#ACAFB4] cursor-pointer" onClick={() => decrementHour(index)} />
+                                                    </div>
+                                                </div>
+                                                <div className="space-y-1.5 w-1/2">
+                                                    <h4>Minute(s) <span className="text-orange-600">*</span></h4>
+                                                    <div className="flex justify-between items-center border border-[#E5E7E8] p-2 rounded-lg md:w-[210px]">
+                                                        <Plus className="text-[#ACAFB4] cursor-pointer" onClick={() => incrementMinute(index)} />
+                                                        <p className="text-[#424348]">{option.minute}</p>
+                                                        <Minus className="text-[#ACAFB4] cursor-pointer" onClick={() => decrementMinute(index)} />
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div className="space-y-1.5">
-                                                <h4>Minute(s) <span className="text-orange-600">*</span></h4>
-                                                <div className="flex justify-between items-center border border-[#E5E7E8] p-2 rounded-lg w-[210px]">
-                                                    <Plus className="text-[#ACAFB4] cursor-pointer" onClick={() => incrementMinute(index)} />
-                                                    <p className="text-[#424348]">{option.minute}</p>
-                                                    <Minus className="text-[#ACAFB4] cursor-pointer" onClick={() => decrementMinute(index)} />
-                                                </div>
-                                            </div>
-                                            <div className="space-y-1.5">
+                                            <div className="space-y-1.5 w-full md:w-fit">
                                                 <h4>Price Type <span className="text-orange-600">*</span></h4>
-                                                <Select id={`priceType-${option.id}`} value={option.priceType} onChange={(value) => handleChange(index, "priceType", value)} placeholder="Select" className="w-[210px] !h-10" suffixIcon={<DownArrowIcon />}>
+                                                <Select
+                                                    id={`priceType-${option.id}`}
+                                                    value={option.priceType ? option.priceType : "Select"}
+                                                    onChange={(value) => handleChange(index, "priceType", value)}
+                                                    placeholder="Select" className="w-full md:w-[210px] !h-10"
+                                                    suffixIcon={<DownArrowIcon />}
+                                                >
                                                     {["Fixed Price", "Initial Price Base"].map((type) => (
                                                         <Option key={type} value={type}>{type}</Option>
                                                     ))}
                                                 </Select>
                                             </div>
-                                            <div className="space-y-1.5 relative">
+                                            <div className="space-y-1.5 relative w-full md:w-fit">
                                                 <label>Amount <span className="text-orange-600">*</span></label>
                                                 <div className="relative">
-                                                    <input className="border border-[#E5E7E8] p-2 rounded-lg w-[210px]" type="text" value={option.amount} onChange={(e) => handleChange(index, "amount", e.target.value)} placeholder="Price" />
-                                                    <div className="pointer absolute inset-y-0 top-0 right-3 flex items-center text-[#888888]">
+                                                    <input className="border border-[#E5E7E8] p-2 rounded-lg w-full md:w-[240px]" type="text" value={option.amount} onChange={(e) => handleChange(index, "amount", e.target.value)} placeholder="Price" />
+                                                    <div className="pointer absolute inset-y-0 top-0 right-4 flex items-center text-[#888888]">
                                                         <img src={imageProvider.dollor} alt="" />
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     ))}
-                                    <div className="flex items-center gap-2 p-2 text-[#744CDB] rounded-lg mt-2 cursor-pointer" onClick={addOption}>
-                                        <Plus size={20} className="text-[#744CDB]" />
-                                        <p className="text-[15px] font-semibold">Add More Option</p>
+                                    <div className="flex items-center gap-2 p-2 text-[#744CDB] rounded-lg mt-2 cursor-pointer" >
+                                        <button className="flex items-center" onClick={addOption}>
+                                            <Plus size={20} className="text-[#744CDB]" />
+                                            <p className="text-[15px] font-semibold">Add More Option</p>
+                                        </button>
                                     </div>
                                 </div>
                             )}

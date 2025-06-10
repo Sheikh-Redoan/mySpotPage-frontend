@@ -29,7 +29,7 @@ const columns = [
     key: "time",
     width: 140,
     render: (_) => (
-      <div className="space-y-2">
+      <div className="space-y-2 w-[150px]">
         <p className="text-[#3D3D3D] font-medium mb-1">Classic Ombre</p>
         <p className="w-[110px] rounded-2xl py-1 px-2   text-primary01 border border-primary01">
           Female Only
@@ -173,7 +173,7 @@ const ServiceTable = () => {
   );
   return (
     <>
-      <div className="overflow-x-auto my-6 rounded-lg">
+      <div className="overflow-x-auto my-6 rounded-lg border border-border">
         <Table
           columns={columns}
           dataSource={paginatedData}
@@ -182,8 +182,8 @@ const ServiceTable = () => {
           className="custom-ant-table"
         />
       </div>
-      <div className="flex justify-between items-center mt-4">
-        <div className="space-x-1">
+      <div className="flex justify-center md:justify-between items-center mt-4">
+        <div className="space-x-1 hidden md:block">
           <span className="text-sm text-gray-600">Show </span>
           <Select
             value={pageSize}

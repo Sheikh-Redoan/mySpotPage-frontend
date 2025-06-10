@@ -1,0 +1,81 @@
+@import "react-datepicker/dist/react-datepicker.css";
+
+/* General overrides */
+.react-datepicker {
+  border: 1px solid #F2F3F5 !important;
+  border-radius: 10px ;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for the day names (S, M, T, W, T, F, S) */
+.react-datepicker__day-names {
+  display: flex;
+  justify-content: center;
+  padding: 4px; 
+  border-bottom: 1px solid #F2F3F5;
+}
+
+.react-datepicker__day-name {
+  color: A3A9B3; 
+  font-size: 12px; 
+  font-weight: 400; 
+  width: 2rem;
+  text-align: center;
+}
+
+/* Styling for the day cells */
+.react-datepicker__month {
+  margin: 0.4rem;
+}
+
+.react-datepicker__week {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 0.2rem;
+}
+
+.react-datepicker__day {
+  width: 2rem;     
+  height: 2rem;                             
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px; 
+  font-size: 12px; 
+  font-weight: 400; 
+  color: #3D3D3D; 
+  transition: background-color 0.15s ease-in-out;
+  margin: 0;
+}
+
+.react-datepicker__day--outside-month {
+  color: #cbd5e0;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--keyboard-selected {
+  background-color: #744CDB !important; 
+  color: white !important; 
+  border-radius: 9999px !important; 
+}
+
+/* Custom class for overriding other styles, used in your JS */
+.react-datepicker__day--selected-override {
+  background-color: #6C5DD3 !important;
+  color: white !important;
+  border: none !important;
+}
+
+.react-datepicker__day.border { 
+    border: 1px solid #866BE7 !important;
+    color: #6C5DD3;
+    background-color: transparent !important; 
+}
+
+/* Header styling */
+.react-datepicker__header {
+  background-color: white !important; 
+  border-bottom: none !important; 
+  padding-top: 8px; 
+  padding-bottom: 8px; 
+}

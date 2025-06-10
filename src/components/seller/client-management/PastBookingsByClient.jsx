@@ -2,18 +2,18 @@ import React, { useState } from "react";
 import { Table, Select, Pagination, Tooltip, Input, Checkbox } from "antd";
 import { IoArrowDownOutline } from "react-icons/io5";
 import { useNavigate } from "react-router";
-import { getWaitlistOverviewColumns } from "../../components/calendarManagement/waitlistsOverview/WaitlistOverviewColumns";
-import { getPendingBookings } from "../../dummy-data/bookingsData";
-import CustomEmptyTable from "../../components/DashboardPageComponents/shared/CustomEmptyTable";
+import { getPendingBookingsColumnsByClient } from "./PendingBookingsColumnsByClient";
+import CustomEmptyTable from "../../DashboardPageComponents/shared/CustomEmptyTable";
+import { getPendingBookings } from "../../../dummy-data/bookingsData";
 
 const { Option } = Select;
 
-const WaitlistsOverview = () => {
+const PastBookingsByClient = () => {
   const navigate = useNavigate();
 
   const allBookings = getPendingBookings();
   const pendingBookings =
-    allBookings && allBookings.filter((booking) => booking.status === "Pending");
+    allBookings && allBookings.filter((booking) => booking.status === "Completed" || booking.status === "Cancelled" || booking.status === "No Show");
 
   const [bookings, setBookings] = useState(pendingBookings || []);
   const [searchQuery, setSearchQuery] = useState("");
@@ -67,6 +67,18 @@ const WaitlistsOverview = () => {
     setCurrentPage(1);
   };
 
+  const handleApproveBooking = (id) => {
+    console.log(`Booking ${id} approved`);
+    setBookings(bookings.filter((booking) => booking.id !== id));
+    setTotalBookings(totalBookings - 1);
+  };
+
+  const handleRejectBooking = (id) => {
+    console.log(`Booking ${id} rejected`);
+    setBookings(bookings.filter((booking) => booking.id !== id));
+    setTotalBookings(totalBookings - 1);
+  };
+
   // Extract unique services for filter dropdown
   const allUniqueServices = [
     ...new Set(
@@ -99,7 +111,10 @@ const WaitlistsOverview = () => {
     clearFilters();
   };
 
-  const columns = getWaitlistOverviewColumns(
+  const columns = getPendingBookingsColumnsByClient(
+    handleApproveBooking,
+    handleRejectBooking,
+    navigate,
     selectedServiceFilters,
     handleServiceFilterChange,
     serviceFilterDropdownSearchQuery,
@@ -113,6 +128,8 @@ const WaitlistsOverview = () => {
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
   const paginatedBookings = bookings.slice(startIndex, endIndex);
+
+  if(!bookings.length) return <CustomEmptyTable />
 
   return (
     <div className="w-full py-2">
@@ -131,6 +148,10 @@ const WaitlistsOverview = () => {
             ? "bg-highlight01"
             : ""
         }
+        onRow={(record) => ({
+          onClick: () => navigate(`/dashboard/calendar/bookings-details/${record.id}`),
+          className: "cursor-pointer hover:bg-gray-50",
+        })}
       />
 
       {/* Pagination */}
@@ -167,4 +188,4 @@ const WaitlistsOverview = () => {
   );
 };
 
-export default WaitlistsOverview;
+export default PastBookingsByClient;

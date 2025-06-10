@@ -45,7 +45,7 @@ function TopNavbar({ activeTab, onMenuClick }) {
   return (
     <div className="flex justify-between border-b border-black/5 items-center px-6 py-0 bg-white z-[6]">
       {/* Position TopNavbar based on screen size */}
-      <div className="fixed top-0 left-0 right-0 h-fit md:relative md:w-full flex justify-between items-center px-6 py-3 z-[9999999] bg-white">
+      <div className="fixed top-0 left-0 right-0 h-fit md:relative md:w-full flex justify-between items-center px-6 py-3 bg-white">
         <div className="flex items-center gap-4">
           {/* Hamburger icon for mobile, hidden on desktop */}
           <button

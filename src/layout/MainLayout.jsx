@@ -180,7 +180,7 @@ function MainLayout({ activeTab }) {
           activeTab={activeTab}
           onMenuClick={handleToggleMobileSidebar}
         />
-        <div className="pt-20 px-4 pb-4">
+        <div className="pt-20 md:pt-0 px-4 pb-4">
           <Outlet />
         </div>
       </main>

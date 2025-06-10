@@ -55,7 +55,7 @@ const SearchBarAndFilter = ({
 
       {/* Filter Modal Overlay */}
       {showFilterModal && (
-        <div className="absolute text-left bottom-[-227px] left-[630px]">
+        <div className="absolute text-left bottom-[-227px] left-[630px] max-[475px]:bottom-[100% ] max-[475px]:left-[50%] max-[475px]:-translate-x-1/2 max-[475px]:-translate-y-1/2 max-[475px]:z-50">
           <FilterModal
             onClose={() => setShowFilterModal(false)}
             allStaffData={allStaffData}

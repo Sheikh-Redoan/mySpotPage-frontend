@@ -1,9 +1,5 @@
-// src/pages/onboarding/StaffInformationPage.jsx
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router";
-import { IoCameraOutline } from "react-icons/io5";
-import { GoChevronRight } from "react-icons/go";
-import { SlCalender } from "react-icons/sl";
+import { BrowserRouter, Routes, Route, useLocation, useNavigate } from "react-router"; // Corrected import
 
 const StaffInformationPage = () => {
   const location = useLocation();
@@ -27,20 +23,27 @@ const StaffInformationPage = () => {
   const [isHoveringImage, setIsHoveringImage] = useState(false);
 
   useEffect(() => {
-    if (!initialPhoneNumber || !roles || !jobTitle) {
-      setError("Missing initial staff data. Please restart the onboarding process.");
-    }
+    // Revoke object URL on component unmount to prevent memory leaks
     return () => {
       if (profileImagePreview) {
         URL.revokeObjectURL(profileImagePreview);
       }
     };
-  }, [initialPhoneNumber, roles, jobTitle, profileImagePreview]);
+  }, [profileImagePreview]);
 
+  // Effect to check for missing initial data
+  useEffect(() => {
+    if (!initialPhoneNumber || !roles || !jobTitle) {
+      setError("Missing initial staff data. Please restart the onboarding process.");
+    }
+  }, [initialPhoneNumber, roles, jobTitle]);
+
+  // Handle image file selection and preview generation
   const handleImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
       setProfileImage(file);
+      // Revoke previous object URL if it exists
       if (profileImagePreview) {
         URL.revokeObjectURL(profileImagePreview);
       }
@@ -48,10 +51,12 @@ const StaffInformationPage = () => {
     }
   };
 
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError("");
+    setError(""); // Clear previous errors
 
+    // Validate all required fields
     if (!profileImage || !firstName || !lastName || !phoneNumber || !dateOfBirth || !gender) {
       setError("Please fill in all required fields.");
       return;
@@ -76,6 +81,7 @@ const StaffInformationPage = () => {
     navigate("/onboard/services-settings", { state: staffBasicInfo });
   };
 
+  // Render error message if there's a critical error
   if (error) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4 font-['Golos_Text']">
@@ -94,21 +100,26 @@ const StaffInformationPage = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4 font-['Golos_Text']">
-      <div className="w-[722px] flex flex-col justify-start items-start gap-4">
-        {/* Breadcrumbs */}
-        <div className="self-stretch inline-flex justify-start items-center gap-2">
-          <span className="text-gray-950 text-sm font-normal leading-tight">Basic information</span>
-          <GoChevronRight className="w-4 h-4 text-gray-400" />
-          <span className="text-gray-400 text-sm font-normal leading-tight">Services settings</span>
-          <GoChevronRight className="w-4 h-4 text-gray-400" />
-          <span className="text-gray-400 text-sm font-normal leading-tight">Working shift settings</span>
-          <GoChevronRight className="w-4 h-4 text-gray-400" />
-          <span className="text-gray-400 text-sm font-normal leading-tight">Security</span>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4 font-['Golos_Text'] max-[475px]:p-0 max-[475px]:bg-white max-[475px]:py-4">
+      {/* Main container adjusted for responsiveness */}
+      <div className="w-full max-w-[722px] flex flex-col justify-start items-start gap-4">
+        {/* Breadcrumbs - adjusted to wrap on small screens */}
+        <div className="self-stretch inline-flex flex-wrap justify-start items-center gap-2 px-4 sm:px-0 max-[475px]:gap-1">
+          <span className="text-gray-950 text-sm font-normal leading-tight max-[475px]:text-xs">Basic information</span>
+          {/* Replaced GoChevronRight with inline SVG */}
+          <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
+          <span className="text-gray-400 text-sm font-normal leading-tight max-[475px]:text-xs">Services settings</span>
+          {/* Replaced GoChevronRight with inline SVG */}
+          <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
+          <span className="text-gray-400 text-sm font-normal leading-tight max-[475px]:text-xs">Working shift settings</span>
+          {/* Replaced GoChevronRight with inline SVG */}
+          <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
+          <span className="text-gray-400 text-sm font-normal leading-tight max-[475px]:text-xs">Security</span>
         </div>
 
         {/* Main Form Container */}
-        <div className="self-stretch p-6 bg-white rounded-xl border border-gray-200 flex flex-col justify-start items-center gap-8">
+        {/* Added responsive padding px-4 for smaller screens */}
+        <div className="self-stretch p-6 sm:p-8 bg-white rounded-xl border border-gray-200 flex flex-col justify-start items-center gap-8">
           <form onSubmit={handleSubmit} className="self-stretch flex flex-col justify-start items-start gap-6 overflow-hidden">
             {/* Profile Image Upload */}
             <div className="flex flex-col justify-center items-start gap-3">
@@ -138,7 +149,8 @@ const StaffInformationPage = () => {
                   />
                 ) : (
                   <div className="w-full h-full bg-gray-50 flex items-center justify-center">
-                    <IoCameraOutline className="w-6 h-6 text-gray-400" />
+                    {/* Replaced IoCameraOutline with inline SVG */}
+                    <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22c.243.364.63.546 1.026.546H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                   </div>
                 )}
                 {/* Hover Overlay */}
@@ -152,7 +164,7 @@ const StaffInformationPage = () => {
               </div>
             </div>
 
-            {/* First Name & Last Name */}
+            {/* First Name & Last Name - adjusted to stack on small screens */}
             <div className="self-stretch grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* First Name */}
               <div className="flex flex-col justify-start items-start gap-1">
@@ -188,7 +200,7 @@ const StaffInformationPage = () => {
               </div>
             </div>
 
-            {/* Phone Number & Date of Birth */}
+            {/* Phone Number & Date of Birth - adjusted to stack on small screens */}
             <div className="self-stretch grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Phone Number */}
               <div className="flex flex-col justify-start items-start gap-1">
@@ -223,7 +235,8 @@ const StaffInformationPage = () => {
                     required
                   />
                   <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                    <SlCalender className="w-5 h-5 text-zinc-400" />
+                    {/* Replaced SlCalender with inline SVG */}
+                    <svg className="w-5 h-5 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                   </div>
                 </div>
               </div>
@@ -235,7 +248,7 @@ const StaffInformationPage = () => {
                 <span className="text-neutral-700 text-sm font-normal leading-tight">Gender</span>
                 <span className="text-red-500 text-sm font-normal leading-tight">*</span>
               </label>
-              <div className="inline-flex justify-start items-center gap-4">
+              <div className="inline-flex flex-wrap justify-start items-center gap-4">
                 {["Male", "Female", "Other"].map((g) => (
                   <label key={g} className="flex justify-start items-center gap-1 cursor-pointer">
                     <input
@@ -263,12 +276,12 @@ const StaffInformationPage = () => {
           </form>
         </div>
 
-        {/* Continue Button */}
-        <div className="self-stretch flex justify-end items-center gap-2 mt-4">
+        {/* Continue Button - adjusted for responsiveness */}
+        <div className="self-stretch flex justify-center sm:justify-end items-center gap-2 mt-4 px-4 sm:px-0">
           <button
             type="submit"
             onClick={handleSubmit}
-            className="h-10 px-3 py-2 bg-neutral-800 rounded-lg flex justify-center items-center gap-2 hover:bg-gray-700 transition-colors duration-200 text-white text-sm font-semibold font-['Golos_Text'] leading-tight"
+            className="w-full sm:w-auto h-10 px-3 py-2 bg-neutral-800 rounded-lg flex justify-center items-center gap-2 hover:bg-gray-700 transition-colors duration-200 text-white text-sm font-semibold font-['Golos_Text'] leading-tight"
           >
             Continue
           </button>
@@ -278,4 +291,4 @@ const StaffInformationPage = () => {
   );
 };
 
-export default StaffInformationPage;
+export default StaffInformationPage; 

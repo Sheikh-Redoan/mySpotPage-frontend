@@ -1,4 +1,4 @@
-import { Button, Tabs } from "antd";
+import { Tabs } from "antd";
 import { useEffect, useState } from "react";
 import { Link, Outlet, useLocation, useNavigate } from "react-router";
 import AllAppoimtment from "./AllAppointment";
@@ -6,7 +6,7 @@ import BlacklistsOverview from "./BlacklistsOverview";
 import PendingBookings from "./PendingBookings";
 import WaitlistsOverview from "./WaitlistsOverview";
 import { Modal } from "antd";
-import { set } from "date-fns";
+import SettingsBookingsRules from "../../components/calendarManagement/SettingsBookingsRules";
 
 const items = [
   {
@@ -161,16 +161,7 @@ function CalendarManagementPage() {
         className="!rounded-2xl !max-w-xl z-50"
         centered
       >
-        <div>
-          <h3 className="text-[#242528] text-[18px] font-semibold">Settings</h3>
-          <div className="h-[1px] bg-[#E5E7E8] my-4" />
-
-          <div>
-            <h6 className="text-primary01 text-[14px] font-semibold">
-              Advance Booking Limits
-            </h6>
-          </div>
-        </div>
+        <SettingsBookingsRules/>
       </Modal>
     </div>
   );

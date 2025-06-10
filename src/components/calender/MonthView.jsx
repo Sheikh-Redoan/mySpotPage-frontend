@@ -67,6 +67,7 @@ export default function MonthView({
             isToday={isToday}
             isCurrentMonth={isCurrentMonth}
             hiddenEventsCount={hiddenEventsCount}
+            eventsToShow={eventsToShow}
             onTimeSelect={(selectedTime) => {
               console.log("Selected:", selectedTime);
               // Handle the selection

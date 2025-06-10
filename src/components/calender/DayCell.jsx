@@ -7,13 +7,14 @@ import Event from "./Event";
 export default function DayCell({
   day,
   service,
-  selectTimeFromProvider,
+  selectTimeFromProvider = false,
   timeSlots,
   isToday = false,
   isCurrentMonth = true,
   hiddenEventsCount,
   index = 0,
   onTimeSelect,
+  eventsToShow,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedTimes, setSelectedTimes] = useState([]);
@@ -59,15 +60,17 @@ export default function DayCell({
     setIsOpen(false);
   };
 
+  const Element = selectTimeFromProvider ? "button" : "div"; // Use button if selectTimeFromProvider is true, otherwise use div
+
   return (
     <>
-      <button
+      <Element
         disabled={service?.isBusy || isPastDay() || allTimeSlotsUnavailable}
-        onClick={() => setIsOpen(true)}
+        onClick={selectTimeFromProvider ? () => setIsOpen(true) : undefined}
         className={cn(
           "p-2 min-h-[120px] border-b border-r border-gray-200 bg-white",
-          "cursor-pointer disabled:cursor-not-allowed",
-          "flex flex-col justify-start transition-colors duration-200",
+          "cursor-pointer flex flex-col justify-start transition-colors duration-200",
+
           {
             "text-gray-400": !isCurrentMonth || isPastDay(),
             "border-r-0": (index + 1) % 7 === 0,
@@ -75,6 +78,9 @@ export default function DayCell({
             "bg-[#F5F4FE] border border-[#866BE7]": selectedTimes.some((time) =>
               dayjs(time.fullDateTime).isSame(day, "day")
             ),
+            "disabled:cursor-not-allowed":
+              selectTimeFromProvider &&
+              (service?.isBusy || isPastDay() || allTimeSlotsUnavailable),
           }
         )}>
         <div
@@ -107,7 +113,7 @@ export default function DayCell({
           {!selectTimeFromProvider &&
             eventsToShow.map((event) => <Event key={event.id} event={event} />)}
         </div>
-      </button>
+      </Element>
       <EventModal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}

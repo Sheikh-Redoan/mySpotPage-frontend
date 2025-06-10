@@ -9,7 +9,7 @@ import React from "react";
 import { Button, Popover, Space, Radio } from "antd";
 
 function ServicePage() {
-  const [beforeAfter, setBeforeAfter] = useState("");
+  const [beforeAfter, setBeforeAfter] = useState("Only Outcome");
   const [addNewService, setAddNewService] = useState(false);
   const [selectedOption, setSelectedOption] = useState(2);
   const [popoverVisible, setPopoverVisible] = useState(false);
@@ -43,7 +43,6 @@ function ServicePage() {
               selectedOption === 1 ? "Before & After" : "Only Outcome";
             setBeforeAfter(selectedLabel);
             setPopoverVisible(false); // Close on Save
-            setAddNewService(true);  // Go to Add New Service screen
           }}
           className="!bg-gray-900 !text-white !px-7 !py-5 !w-full !text-sm !font-semibold !border-none"
         >

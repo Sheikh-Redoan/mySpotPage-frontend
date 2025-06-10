@@ -1,4 +1,4 @@
-import { AutoComplete, Input, Radio } from "antd";
+import { AutoComplete, Input, Radio, Form, Button } from "antd";
 import { useNavigate } from "react-router";
 import ProviderCheckoutCard from "../../../components/addBookingByProvider/ProviderCheckoutCard";
 import Breadcrumb from "../../../components/client/Breadcrumb";
@@ -19,10 +19,17 @@ const businessStaticData = {
 };
 
 const ClientInfoFormPage = () => {
-  const navigation = useNavigate();
+  const navigate = useNavigate();
+  const [form] = Form.useForm();
 
-  const handleBookNow = () => {
-    navigation("/add-booking-by-provider/select-services");
+  const handleBookNow = async () => {
+    try {
+      const values = await form.validateFields();
+      console.log("Client Info Form Values:", values);
+      navigate("/dashboard/add-booking-by-provider/select-services");
+    } catch (errorInfo) {
+      console.log("Client Info Form Validation Failed:", errorInfo);
+    }
   };
 
   return (
@@ -57,57 +64,104 @@ const ClientInfoFormPage = () => {
             Client Information
           </h3>
 
-          <div>
-            <div className="flex flex-col sm:flex-row items-center gap-2">
-              <div className="w-full sm:w-1/2 flex flex-col gap-1">
-                <label htmlFor="name" className="text-gray-700 text-sm">
-                  Name <sup className="text-red-600">*</sup>
-                </label>
-                <AutoComplete
-                  style={{ width: "100%" }}
-                  options={options}
-                  placeholder="Your Name"
-                  filterOption={(inputValue, option) =>
-                    option.value
-                      .toUpperCase()
-                      .indexOf(inputValue.toUpperCase()) !== -1
+          <Form
+            form={form} 
+            layout="vertical" 
+            initialValues={{ sex: "male" }} 
+            requiredMark={false}
+          >
+            <div>
+              <div className="flex flex-col sm:flex-row items-center gap-2">
+                <div className="w-full sm:w-1/2 flex flex-col gap-1">
+                  <Form.Item
+                    label={
+                      <span>
+                        Name <sup className="text-red-600">*</sup>
+                      </span>
+                    }
+                    name="clientName" 
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input the client's name!",
+                      },
+                      {
+                        min: 2,
+                        message: "Name must be at least 2 characters long!",
+                      },
+                    ]}
+                  >
+                    <AutoComplete
+                      options={options}
+                      placeholder="Your Name"
+                      filterOption={(inputValue, option) =>
+                        option.value
+                          .toUpperCase()
+                          .indexOf(inputValue.toUpperCase()) !== -1
+                      }
+                      size="large"
+                    />
+                  </Form.Item>
+                </div>
+                <div className="w-full sm:w-1/2 flex flex-col gap-1">
+                  <Form.Item
+                    label={
+                      <span>
+                        Phone Number <sup className="text-red-600">*</sup>
+                      </span>
+                    }
+                    name="phoneNumber" 
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input the phone number!",
+                      },
+                      {
+                        pattern: /^[0-9]{10,15}$/, 
+                        message: "Please enter a valid phone number!",
+                      },
+                    ]}
+                  >
+                    <Input
+                      placeholder="Your Phone Number"
+                      size="large"
+                      type="tel" 
+                    />
+                  </Form.Item>
+                </div>
+              </div>
+              <div className="mt-2 flex flex-col gap-1">
+                <Form.Item
+                  label={
+                    <span>
+                      Sex <sup className="text-red-600">*</sup>
+                    </span>
                   }
-                  size="large"
-                />
-              </div>
-              <div className="w-full sm:w-1/2 flex flex-col gap-1">
-                <label htmlFor="phone" className="text-gray-700 text-sm">
-                  Phone Number <sup className="text-red-600">*</sup>
-                </label>
-                <Input
-                  name="phone"
-                  placeholder="Your Phone Number"
-                  size="large"
-                />
+                  name="sex" 
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please select a gender!",
+                    },
+                  ]}
+                >
+                  <Radio.Group
+                    options={[
+                      { value: "male", label: "Male" },
+                      { value: "female", label: "Female" },
+                      { value: "other", label: "Other" },
+                    ]}
+                  />
+                </Form.Item>
               </div>
             </div>
-            <div className="mt-2 flex flex-col gap-1">
-              <label htmlFor="sex">
-                Sex <sup className="text-red-600">*</sup>
-              </label>
-              <Radio.Group
-                name="sex"
-                defaultValue={1}
-                options={[
-                  { value: "male", label: "Male" },
-                  { value: "female", label: "Female" },
-                  { value: "other", label: "Other" },
-                ]}
-              />
-            </div>
-          </div>
+          </Form>
         </div>
 
         <div className="w-full md:w-auto mt-4 md:mt-0">
           <ProviderCheckoutCard
             businessData={businessStaticData}
             handleBookNow={handleBookNow}
-            to="/dashboard/add-booking-by-provider/select-services"
           />
         </div>
       </div>

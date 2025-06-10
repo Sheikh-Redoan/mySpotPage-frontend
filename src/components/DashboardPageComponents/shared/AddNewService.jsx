@@ -160,7 +160,7 @@ const AddNewService = ({ setAddNewService, beforeAfter }) => {
           Publish
         </button>
       </div>
-      <div>
+      <div className="mb-20 md:mb-0">
         <Space direction="vertical" className="w-full my-4 space-y-6">
           <ServiceBasicDetails
             activeKey={activeKey}

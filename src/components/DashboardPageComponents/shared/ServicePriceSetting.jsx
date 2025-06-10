@@ -238,9 +238,11 @@ const ServicePriceSetting = ({
                                             </div>
                                         </div>
                                     ))}
-                                    <div className="flex items-center gap-2 p-2 text-[#744CDB] rounded-lg mt-2 cursor-pointer" onClick={addOption}>
-                                        <Plus size={20} className="text-[#744CDB]" />
-                                        <p className="text-[15px] font-semibold">Add More Option</p>
+                                    <div className="flex items-center gap-2 p-2 text-[#744CDB] rounded-lg mt-2 cursor-pointer" >
+                                        <button className="flex items-center" onClick={addOption}>
+                                            <Plus size={20} className="text-[#744CDB]" />
+                                            <p className="text-[15px] font-semibold">Add More Option</p>
+                                        </button>
                                     </div>
                                 </div>
                             )}

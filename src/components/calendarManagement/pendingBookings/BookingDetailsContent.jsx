@@ -1,21 +1,33 @@
-import { Select } from "antd";
+import { Button } from "antd";
 import { CircleUserRound } from "lucide-react";
 import { PhoneCall } from "lucide-react";
 import { Crown } from "lucide-react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import StaffReassignSelect from "./StaffReassignSelect";
+import { Calendar } from "lucide-react";
+import { CircleAlert } from "lucide-react";
+import { ChevronDown } from "lucide-react";
+import StyledDatePicker from "./StyledDatePicker";
+import TimePicker from "./TimePicker";
+import { Plus } from "lucide-react";
+import BookingDetailsServices from "./BookingDetailsServices";
+import BookingSummary from "./BookingSummary";
 
 const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
   console.log("booking", booking);
+
+  const navigate = useNavigate();
+
   const formatDate = (date) => {
-    return new Intl.DateTimeFormat("en-US", {
+    const weekday = new Intl.DateTimeFormat("en-US", {
       weekday: "short",
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
     }).format(date);
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = new Intl.DateTimeFormat("en-US", { month: "short" }).format(
+      date
+    );
+    const year = date.getFullYear();
+    return `${weekday}, ${day} ${month} ${year}`;
   };
 
   const handleReassign = (newStaff) => {
@@ -26,7 +38,7 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
   return (
     <div className="w-full flex flex-col lg:flex-row">
       {/* Left Section: Client and Booking Info */}
-      <div className="flex-1 border-r-[1px] border-t-[1px] border-t-gray-300 border-r-gray-300 p-4">
+      <div className="w-full h-full lg:w-[30%] border-r-[1px] border-t-[1px] border-t-gray-300 border-r-gray-300 p-4">
         <div className="space-y-4 border-b-[1px] border-b-gray-300 pb-3">
           <div className="w-16 h-16 bg-primary01 text-white flex items-center justify-center rounded-full text-xl font-bold">
             {booking.avatar}
@@ -44,107 +56,123 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
           </div>
         </div>
 
-        <div className="py-3 flex itcems-center gap-2">
-          <div className="flex items-center gap-2">
+        <div className="py-4 space-y-3 border-b-[2px] border-dashed border-b-gray-300">
+          <div className="flex items-center gap-3">
             <PhoneCall className="size-5 text-gray-600" />
             <p className="text-[#242528] text-[14px] font-normal">
               {booking.clientPhone}
             </p>
           </div>
 
-          <div className="flex items-center gap-2">
-            <CircleUserRound className="size-5 text-gray-600" />
-            <p className="text-[#242528] text-[14px] font-normal">Staff - </p>
-          </div>
-          <StaffReassignSelect booking={booking} onReassign={handleReassign} />
-        </div>
-
-        {/* Date and Time */}
-        <div className="flex items-center mb-4">
-          <div className="flex-1">
-            <p className="text-gray-600">{formatDate(selectedDate)}</p>
-            <p className="text-gray-600">{booking.scheduledTime}</p>
-          </div>
-          <DatePicker
-            selected={selectedDate}
-            onChange={(date) => setSelectedDate(date)}
-            className="border border-gray-300 rounded-lg p-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
-            dateFormat="dd/MM/yyyy"
-          />
-        </div>
-
-        {/* Services */}
-        <div className="mb-4">
-          <h2 className="text-lg font-semibold mb-2">Services</h2>
-          {booking.serviceDetails.map((service, index) => (
-            <div key={index} className="flex justify-between py-1">
-              <p className="text-gray-600">{service.name}</p>
-              <p className="text-gray-600">฿{service.price}</p>
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3">
+              <CircleUserRound className="size-5 text-gray-600" />
+              <p className="text-[#242528] text-[14px] font-normal">Staff - </p>
             </div>
-          ))}
-        </div>
+            <StaffReassignSelect
+              booking={booking}
+              onReassign={handleReassign}
+            />
+          </div>
 
-        {/* Special Notes */}
-        <div className="mb-4">
-          <h2 className="text-lg font-semibold mb-2">Special Notes</h2>
-          <p className="text-gray-600">
-            {booking.notes || "No notes available"}
+          <div className="flex items-center gap-3">
+            <Calendar className="size-5 text-gray-600" />
+            <p className="text-[#242528] text-sm">{booking.scheduledDate},</p>
+            <p className="text-[#242528] text-sm">{booking.scheduledTime}</p>
+          </div>
+
+          <p className="text-[#424348] text-sm font-noramal p-2">
+            Hair is thick and slightly wavy, prefers a shoulder-length layered
+            cut with light texture.
           </p>
         </div>
 
-        {/* Buttons */}
-        <div className="flex gap-2">
-          <button className="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300">
-            Service Out
-          </button>
-          <button className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">
-            Add to Blacklist
-          </button>
+        <div className="py-4">
+          <p className="text-[#3A3B3F] text-[14px] font-normal">
+            Specific notes
+          </p>
+          <div className="border-[1px] border-[#E5E7E8] py-2 px-3 h-44 rounded-lg shadow-sm">
+            <p className="text-[#424348] text-sm font-normal p-2">
+              Shop recommend booking a trim every 6-8 weeks
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <Button color="danger" variant="text" className="flex items-center">
+            <CircleAlert className="size-5" />
+            Add to blacklist
+          </Button>
+        </div>
+      </div>
+
+      {/* Middle Section: Services INfo */}
+      <div className="w-full lg:w-[50%] border-r-[1px] border-t-[1px] border-t-gray-300 border-r-gray-300">
+        <div className="bg-[#F5F4FE] w-full p-4 flex justify-between items-center">
+          {/* Date Picker */}
+          <div className="relative">
+            <StyledDatePicker
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
+              dateFormat="EEE, dd MMM yyyy"
+              customInput={
+                <div className="flex items-center gap-1 cursor-pointer">
+                  <span className="text-lg font-semibold text-[#6C5DD3]">
+                    {formatDate(selectedDate)}
+                  </span>
+                  <ChevronDown className="w-5 h-5 text-[#6C5DD3]" />
+                </div>
+              }
+            />
+          </div>
+          <div className="flex items-center gap-2">
+            {/* Time Picker */}
+            <TimePicker scheduledTime={booking?.scheduledTime} />
+
+            <div
+              className={`px-3 py-2 bg-[#FFFFFF] rounded-lg text-sm font-medium ${
+                booking.status === "Pending"
+                  ? "text-[#FC8B23]"
+                  : booking.status === "Confirmed"
+                  ? "text-[#3E70DD]"
+                  : booking.status === "Completed"
+                  ? "text-[#21C66E]"
+                  : booking.status === "Cancelled"
+                  ? "text-[#ED4245]"
+                  : booking.status === "No Show"
+                  ? "text-[#82868E]"
+                  : ""
+              }`}
+            >
+              {booking.status}
+            </div>
+          </div>
+        </div>
+
+        {/* Services Section */}
+        <div className="px-4 py-6 w-full">
+          <div className="flex justify-between">
+            <h3 className="text-lg font-semibold text-[#242528]">Services</h3>
+
+            <Button
+              onClick={() => navigate("/dashboard/service-menu")}
+              className="flex items-center gap-2 bg-[#FFFFFF] px-2 py-3 border-[1px] border-[#744CDB] rounded-lg"
+            >
+              <Plus size={18} color="#744CDB" />
+              <span className="text-[#744CDB] text-sm font-normal">
+                Add service
+              </span>
+            </Button>
+          </div>
+
+          {/* Serivices List */}
+          <BookingDetailsServices services={booking.serviceDetails} />
         </div>
       </div>
 
       {/* Right Section: Summary */}
-      <div className="w-full lg:w-1/3 border-t-[1px] border-t-gray-300 p-4">
-        <h2 className="text-lg font-semibold mb-4">Summary</h2>
-        <div className="flex justify-between mb-2">
-          <p className="text-gray-600">Travel Fee</p>
-          <p className="text-gray-600">฿0.00</p>
-        </div>
-        <div className="flex justify-between mb-2">
-          <p className="text-gray-600">Subtotal</p>
-          <p className="text-gray-600">฿{booking.subtotal}</p>
-        </div>
-        <div className="flex justify-between mb-2">
-          <p className="text-gray-600">VAT</p>
-          <p className="text-gray-600">฿{booking.tax}</p>
-        </div>
-        <div className="flex justify-between mb-2">
-          <p className="text-gray-600">Discount ({booking.discount})</p>
-          <p className="text-gray-600">฿-{booking.discountAmount}</p>
-        </div>
-        <div className="flex justify-between mb-2">
-          <p className="text-gray-600">Additional Discount</p>
-          <p className="text-gray-600">฿0.00</p>
-        </div>
-        <div className="flex justify-between font-semibold mt-4 pt-4 border-t border-gray-200">
-          <p>Total</p>
-          <p>฿{booking.totalPrice}</p>
-        </div>
-
-        {/* Status and Save Button */}
-        <div className="mt-4">
-          <select
-            value={booking.status}
-            className="w-full border border-gray-300 rounded-lg p-2 mb-2 text-gray-700"
-          >
-            <option value="Pending">Pending</option>
-            <option value="Confirmed">Confirmed</option>
-            <option value="Completed">Completed</option>
-          </select>
-          <button className="w-full bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800">
-            Save
-          </button>
-        </div>
+      <div className="w-full h-full lg:w-[30%] border-t-[1px] border-t-gray-300 p-4">
+        <BookingSummary status={booking?.status} />
       </div>
     </div>
   );

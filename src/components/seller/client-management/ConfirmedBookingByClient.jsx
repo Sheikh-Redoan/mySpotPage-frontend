@@ -2,32 +2,31 @@ import React, { useState } from "react";
 import { Table, Select, Pagination, Tooltip, Input, Checkbox } from "antd";
 import { IoArrowDownOutline } from "react-icons/io5";
 import { useNavigate } from "react-router";
-import { getWaitlistOverviewColumns } from "../../components/calendarManagement/waitlistsOverview/WaitlistOverviewColumns";
-import { getPendingBookings } from "../../dummy-data/bookingsData";
-import CustomEmptyTable from "../../components/DashboardPageComponents/shared/CustomEmptyTable";
+import { getPendingBookings } from "../../../dummy-data/bookingsData";
+import { getPendingBookingsColumnsByClient } from "./PendingBookingsColumnsByClient";
+import CustomEmptyTable from "../../DashboardPageComponents/shared/CustomEmptyTable";
 
 const { Option } = Select;
 
-const WaitlistsOverview = () => {
+const ConfirmedBookingByClient = () => {
   const navigate = useNavigate();
 
   const allBookings = getPendingBookings();
-  const pendingBookings =
-    allBookings && allBookings.filter((booking) => booking.status === "Pending");
+  const confirmedBookings = allBookings && allBookings.filter((booking) => booking.status === "Confirmed");
 
-  const [bookings, setBookings] = useState(pendingBookings || []);
+  const [bookings, setBookings] = useState(confirmedBookings || []);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
 
-  const [totalBookings, setTotalBookings] = useState(pendingBookings.length);
+  const [totalBookings, setTotalBookings] = useState(confirmedBookings.length);
 
   // State for service filter dropdown
   const [selectedServiceFilters, setSelectedServiceFilters] = useState([]);
   const [serviceFilterDropdownSearchQuery, setServiceFilterDropdownSearchQuery] = useState("");
 
   const applyFilters = (currentSearchQuery, currentServiceFilters) => {
-    let results = [...pendingBookings];
+    let results = [...confirmedBookings];
 
     // Apply main search query
     if (currentSearchQuery) {
@@ -67,6 +66,18 @@ const WaitlistsOverview = () => {
     setCurrentPage(1);
   };
 
+  const handleApproveBooking = (id) => {
+    console.log(`Booking ${id} approved`);
+    setBookings(bookings.filter((booking) => booking.id !== id));
+    setTotalBookings(totalBookings - 1);
+  };
+
+  const handleRejectBooking = (id) => {
+    console.log(`Booking ${id} rejected`);
+    setBookings(bookings.filter((booking) => booking.id !== id));
+    setTotalBookings(totalBookings - 1);
+  };
+
   // Extract unique services for filter dropdown
   const allUniqueServices = [
     ...new Set(
@@ -99,7 +110,10 @@ const WaitlistsOverview = () => {
     clearFilters();
   };
 
-  const columns = getWaitlistOverviewColumns(
+  const columns = getPendingBookingsColumnsByClient(
+    handleApproveBooking,
+    handleRejectBooking,
+    navigate,
     selectedServiceFilters,
     handleServiceFilterChange,
     serviceFilterDropdownSearchQuery,
@@ -113,6 +127,8 @@ const WaitlistsOverview = () => {
   const startIndex = (currentPage - 1) * pageSize;
   const endIndex = startIndex + pageSize;
   const paginatedBookings = bookings.slice(startIndex, endIndex);
+
+  if(!bookings.length) return <CustomEmptyTable />
 
   return (
     <div className="w-full py-2">
@@ -131,6 +147,10 @@ const WaitlistsOverview = () => {
             ? "bg-highlight01"
             : ""
         }
+        onRow={(record) => ({
+          onClick: () => navigate(`/dashboard/calendar/bookings-details/${record.id}`),
+          className: "cursor-pointer hover:bg-gray-50",
+        })}
       />
 
       {/* Pagination */}
@@ -167,4 +187,4 @@ const WaitlistsOverview = () => {
   );
 };
 
-export default WaitlistsOverview;
+export default ConfirmedBookingByClient;

@@ -2,14 +2,16 @@ import { useState } from "react";
 import { useParams } from "react-router";
 import Breadcrumb from "../components/client/Breadcrumb";
 import { getBreadcrumbs } from "../lib/staticData";
-import PendingBooking from "./PendingBooking";
+import ConfirmedBookingByClient from "../components/seller/client-management/ConfirmedBookingByClient";
+import PendingBookingByClient from "../components/seller/client-management/PendingBookingByClient";
+import PastBookingsByClient from "../components/seller/client-management/PastBookingsByClient";
 
 const BookingInfo = () => {
   const { client } = useParams();
   const [activeTabIdx, setActiveTabIdx] = useState(0);
 
   const tabs = [
-    { label: "Pending Bookings", number: 0 },
+    { label: "Pending Bookings", number: 12 },
     { label: "Confirmed Bookings", number: 12 },
     { label: "Past Bookings", number: 20 },
   ];
@@ -57,11 +59,11 @@ const BookingInfo = () => {
         </div>
         <div className="mt-6">
           {activeTabIdx === 0 ? (
-            <PendingBooking />
+            <PendingBookingByClient />
           ) : activeTabIdx === 1 ? (
-            <PendingBooking />
+            <ConfirmedBookingByClient />
           ) : (
-            <PendingBooking />
+            <PastBookingsByClient />
           )}
         </div>
       </div>

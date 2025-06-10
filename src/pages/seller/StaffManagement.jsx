@@ -201,7 +201,7 @@ const StaffManagement = () => {
 
   return (
     <div className="min-h-screen  p-5 font-['Golos_Text']">
-      <div className="self-stretch bg-white p-5 rounded-lg flex flex-col justify-start items-start gap-4">
+      <div className="self-stretch bg-white p-5 rounded-lg flex flex-col justify-start items-start gap-4 max-[475px]:text-[12px] max-[475px]:p-1">
         <Header activeTab={activeTab} onTabChange={handleTabChange} />
         <SearchBarAndFilter
           searchTerm={searchTerm}
@@ -212,8 +212,8 @@ const StaffManagement = () => {
           onAddStaff={handleAddStaff} // Pass the new handler
         />
 
-        <div className="self-stretch flex-1 flex justify-start items-start gap-8">
-          <div className="flex-1 self-stretch flex justify-start items-start gap-3 flex-wrap content-start overflow-auto pr-2">
+        <div className="self-stretch flex-1 flex justify-start items-start gap-8 ">
+          <div className="flex-1 self-stretch flex justify-start items-start gap-3 flex-wrap content-start pr-2">
             {filteredStaff.length > 0 ? (
               filteredStaff.map((staff) => (
                 <StaffCard
@@ -233,7 +233,7 @@ const StaffManagement = () => {
             )}
           </div>
 
-          <div className="w-80 h-full sticky top-5">
+          <div className="w-80 h-full sticky top-5 max-[475px]:hidden">
             <QuickViewPanel selectedStaff={selectedStaff} />
           </div>
         </div>

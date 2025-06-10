@@ -1,4 +1,4 @@
-import { Input } from "antd";
+import { Input, Button, Popover, Space, Radio } from "antd";
 import { SearchOutlined } from "../assets/icons/icons";
 import { PlusIcon } from "lucide-react";
 import { PhotoIcon } from "../assets/icons/icons2";
@@ -6,20 +6,21 @@ import ServiceTable from "../components/DashboardPageComponents/shared/ServiceTa
 import AddNewService from "../components/DashboardPageComponents/shared/AddNewService";
 import { useState } from "react";
 import React from "react";
-import { Button, Popover, Space, Radio } from "antd";
+import ConfirmFormatChangeModal from "../components/modal/ConfirmFormatChangeModal ";
 
 function ServicePage() {
   const [beforeAfter, setBeforeAfter] = useState("Only Outcome");
   const [addNewService, setAddNewService] = useState(false);
   const [selectedOption, setSelectedOption] = useState(2);
   const [popoverVisible, setPopoverVisible] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const handleSearch = (value) => {
     console.log(value);
   };
 
-  const content = (
-    <div className="-right-[80px] top-24 bg-white rounded-lg">
+  const popoverContent = (
+    <div className="w-[200px]">
       <Radio.Group
         name="radiogroup"
         value={selectedOption}
@@ -30,10 +31,10 @@ function ServicePage() {
         <Radio value={2}>Only Outcome</Radio>
       </Radio.Group>
 
-      <div className="!flex gap-4 mt-4 w-full">
+      <div className="flex gap-4 mt-4 w-full">
         <Button
-          onClick={() => setPopoverVisible(false)} // Close on Cancel
-          className="!border !border-gray-900 !text-black !px-5 !py-5 !w-full !text-sm !font-semibold"
+          onClick={() => setPopoverVisible(false)}
+          className="!border !border-gray-900 !text-black !px-5 !py-1 !w-full !text-sm !font-semibold"
         >
           Cancel
         </Button>
@@ -42,9 +43,9 @@ function ServicePage() {
             const selectedLabel =
               selectedOption === 1 ? "Before & After" : "Only Outcome";
             setBeforeAfter(selectedLabel);
-            setPopoverVisible(false); // Close on Save
+            setPopoverVisible(false);
           }}
-          className="!bg-gray-900 !text-white !px-7 !py-5 !w-full !text-sm !font-semibold !border-none"
+          className="!bg-gray-900 !text-white !px-5 !py-1 !w-full !text-sm !font-semibold !border-none"
         >
           Save
         </Button>
@@ -65,6 +66,7 @@ function ServicePage() {
                 className="custom-client-input"
               />
             </div>
+
             <div className="flex items-center gap-5">
               <button
                 type="button"
@@ -77,21 +79,28 @@ function ServicePage() {
 
               <Space wrap>
                 <Popover
-                  content={content}
+                  content={popoverContent}
                   title="Service photo format"
-                  trigger="click"
                   placement="topRight"
                   arrow={false}
                   open={popoverVisible}
-                  onOpenChange={(visible) => setPopoverVisible(visible)}
+                  onOpenChange={(visible) => {
+                    // allow closing from outside click
+                    if (!modalOpen && !visible) {
+                      setPopoverVisible(false);
+                    }
+                  }}
                 >
-                  <button
-                    type="button"
-                    className="inline-flex items-center px-3 py-2 gap-2 border border-[#242528] rounded-lg"
-                  >
-                    <PhotoIcon />
-                    <p className="font-semibold text-[15px]">Photo Style</p>
-                  </button>
+                  <div>
+                    <button
+                      type="button"
+                      onClick={() => setModalOpen(true)} // open modal only
+                      className="inline-flex items-center px-3 py-2 gap-2 border border-[#242528] rounded-lg"
+                    >
+                      <PhotoIcon />
+                      <p className="font-semibold text-[15px]">Photo Style</p>
+                    </button>
+                  </div>
                 </Popover>
               </Space>
             </div>
@@ -100,8 +109,20 @@ function ServicePage() {
           <ServiceTable />
         </>
       ) : (
-        <AddNewService setAddNewService={setAddNewService} beforeAfter={beforeAfter} />
+        <AddNewService
+          setAddNewService={setAddNewService}
+          beforeAfter={beforeAfter}
+        />
       )}
+
+      <ConfirmFormatChangeModal
+        open={modalOpen}
+        onCancel={() => setModalOpen(false)}
+        onProceed={() => {
+          setModalOpen(false);       // close modal
+          setPopoverVisible(true);   // open popover
+        }}
+      />
     </div>
   );
 }

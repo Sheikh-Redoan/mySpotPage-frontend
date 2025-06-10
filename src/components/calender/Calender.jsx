@@ -13,7 +13,7 @@ export default function Calender({
   resources,
 }) {
   // State for the currently displayed date, adjusted based on view
-  const [currentDate, setCurrentDate] = useState(dayjs("2025-06-06")); // Start with the day view date
+  const [currentDate, setCurrentDate] = useState(dayjs(Date.now())); // Start with the day view date
   const [selectedView, setSelectedView] = useState("month"); // Default to 'day' view
 
   // Helper to get days for a month grid (including prev/next month's days)

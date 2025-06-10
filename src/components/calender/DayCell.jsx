@@ -103,6 +103,7 @@ export default function DayCell({
 
           {(selectTimeFromProvider && service?.isBusy) ||
             (service?.sale && <div className="">{service.sale}</div>)}
+
           {!selectTimeFromProvider && hiddenEventsCount > 0 && (
             <div className="text-xs text-gray-600 mt-1 cursor-pointer hover:underline">
               {hiddenEventsCount} others

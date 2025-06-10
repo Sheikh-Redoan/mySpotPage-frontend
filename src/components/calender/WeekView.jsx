@@ -5,7 +5,12 @@ import React from "react";
 import { cn } from "../../lib/utils";
 import Event from "./Event";
 
-export default function WeekView({ currentDate, resources = [], events = [] }) {
+export default function WeekView({
+  currentDate,
+  resources = [],
+  events = [],
+  selectTimeFromProvider,
+}) {
   const today = dayjs(); // Get today's date for highlighting
 
   // Helper to get days for a week
@@ -17,6 +22,16 @@ export default function WeekView({ currentDate, resources = [], events = [] }) {
     }
     return days;
   };
+
+  const getTimeSlots = (date, startHour = 8, endHour = 17) => {
+    const slots = [];
+    for (let i = startHour; i <= endHour; i++) {
+      slots.push(date.hour(i).minute(0).second(0));
+    }
+    return slots;
+  };
+
+  const timeSlots = getTimeSlots(currentDate);
 
   const weekDays = getWeekDays(currentDate);
 
@@ -47,48 +62,93 @@ export default function WeekView({ currentDate, resources = [], events = [] }) {
       ))}
 
       {/* Resource Rows and Event Cells */}
-      {resources.map((resource) => (
-        <React.Fragment key={resource.id}>
-          {/* Resource Name Column */}
-          <div className="p-2 border-r border-b border-gray-200 flex flex-col items-center gap-2 justify-center bg-primary01/10">
-            <Avatar
-              src={resource.avatar}
-              size={55}
-              className="outline-1 outline-offset-2 outline-primary01/30"
-            />
+      {!selectTimeFromProvider &&
+        resources.map((resource) => (
+          <React.Fragment key={resource.id}>
+            {/* Resource Name Column */}
+            {
+              <div className="p-2 border-r border-b border-gray-200 flex flex-col items-center gap-2 justify-center bg-primary01/10">
+                <Avatar
+                  src={resource.avatar}
+                  size={55}
+                  className="outline-1 outline-offset-2 outline-primary01/30"
+                />
 
-            <span className="text-sm font-medium text-gray-700">
-              {resource.name}
-            </span>
-          </div>
-
-          {/* Event Cells for each day */}
-          {weekDays.map((day, dayIndex) => {
-            // Filter events for the current resource and day
-            const dailyEvents = events
-              .filter(
-                (event) =>
-                  event.resourceId === resource.id &&
-                  dayjs(event.start).isSame(day, "day")
-              )
-              .sort((a, b) => dayjs(a.start).diff(dayjs(b.start))); // Sort by time
-
-            return (
-              <div
-                key={dayIndex}
-                className={cn("p-2 min-h-[150px] border-b", {
-                  "border-r": dayIndex < 6,
-                  "border-gray-200": true,
-                  "flex flex-col space-y-1": true,
-                })}>
-                {dailyEvents.map((event) => (
-                  <Event key={event.id} event={event} />
-                ))}
+                <span className="text-sm font-medium text-gray-700">
+                  {resource.name}
+                </span>
               </div>
-            );
-          })}
-        </React.Fragment>
-      ))}
+            }
+
+            {/* Event Cells for each day */}
+            {weekDays.map((day, dayIndex) => {
+              // Filter events for the current resource and day
+              const dailyEvents = events
+                .filter(
+                  (event) =>
+                    event.resourceId === resource.id &&
+                    dayjs(event.start).isSame(day, "day")
+                )
+                .sort((a, b) => dayjs(a.start).diff(dayjs(b.start))); // Sort by time
+
+              return (
+                <div
+                  key={dayIndex}
+                  className={cn("p-2 min-h-[150px] border-b", {
+                    "border-r": dayIndex < 6,
+                    "border-gray-200": true,
+                    "flex flex-col space-y-1": true,
+                  })}>
+                  {dailyEvents.map((event) => (
+                    <Event key={event.id} event={event} />
+                  ))}
+                </div>
+              );
+            })}
+          </React.Fragment>
+        ))}
+
+      {selectTimeFromProvider &&
+        timeSlots.map((slot) => (
+          <React.Fragment key={slot.format("HH:mm")}>
+            {/* Resource Name Column */}
+            {
+              <div className="p-2 border-r border-b border-gray-200 flex flex-col items-center gap-2 justify-start bg-primary01/10">
+                <span className="text-sm font-medium text-gray-700">
+                  {slot.format("h:mm A")}
+                </span>
+              </div>
+            }
+
+            {/* Event Cells for each day */}
+            {weekDays.map((day, dayIndex) => {
+              // Filter events for the current resource and day
+              const dailyEvents = events
+                .filter(
+                  (event) =>
+                    dayjs(event.start).format("HH:mm") ===
+                      slot.format("HH:mm") &&
+                    dayjs(event.start).isSame(day, "day")
+                )
+                .sort((a, b) => dayjs(a.start).diff(dayjs(b.start))); // Sort by time
+
+              return (
+                <div
+                  key={dayIndex}
+                  className={cn("p-2 min-h-[150px] border-b", {
+                    "border-r": dayIndex < 6,
+                    "border-gray-200": true,
+                    "flex flex-col space-y-1": true,
+                    "bg-purple-600": slot.isSame(day, "day"),
+                  })}>
+                  {dailyEvents.map((event) => (
+                    <Event key={event.id} event={event} />
+                  ))}
+                </div>
+              );
+            })}
+          </React.Fragment>
+        ))}
     </div>
   );
 }

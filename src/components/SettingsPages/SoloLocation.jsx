@@ -1,4 +1,4 @@
-import { Checkbox, ConfigProvider, Switch, TimePicker } from "antd";
+import { Button, Checkbox, ConfigProvider, Switch, TimePicker } from "antd";
 import {
   ArrowLeft,
   ArrowUpRight,
@@ -137,12 +137,12 @@ const SoloLocation = () => {
             </p>
           </div>
 
-          <div
+          <Button
             onClick={() => setFixedModalOpen(true)}
-            className="flex items-center gap-2 border border-[#744CDB] rounded-lg px-4 py-2 text-[#744CDB] text-sm sm:text-base font-semibold hover:underline mt-3 xl:mt-0 whitespace-nowrap w-fit hover:scale-95 transform transition-all duration-300 ease-in-out"
+            className="!text-primary01 !border-primary01"
           >
             <Plus size={20} /> Add Location
-          </div>
+          </Button>
         </div>
         <hr className="my-6 text-[#F6F6F6]" />
 
@@ -264,7 +264,6 @@ const SoloLocation = () => {
       </div>
 
       {/* Fixed Modal */}
-
       {fixedModalOpen && (
         <FixedModal
           isOpen={fixedModalOpen}
@@ -272,12 +271,12 @@ const SoloLocation = () => {
           onSave={() => setFixedModalOpen(false)}
         />
       )}
+
       {/* Mobile Modal */}
       {mobileModalOpen && (
         <div className="fixed inset-0 z-50 bg-[#111113cc] flex items-center justify-center">
           <div className="bg-white rounded-lg shadow-lg w-[90%] max-w-3xl h-[750px] flex flex-col">
             {/* Header */}
-
             <h3 className="text-xl font-semibold text-[#242528] py-6 px-6">
               Mobile service setup
             </h3>

@@ -576,7 +576,7 @@ export const specialDatesData = [
   },
   {
     date: "2025-06-14",
-    sale: "🔥 25% OFF",
+
     timeSlots: [
       { time: "09:00", isBusy: false, sale: "🔥 25% OFF" },
       { time: "10:00", isBusy: false, sale: "🔥 25% OFF" },
@@ -586,7 +586,7 @@ export const specialDatesData = [
   },
   {
     date: "2025-06-15",
-    sale: "🔥 10% OFF",
+
     isBusy: true,
     timeSlots: [
       { time: "09:00", isBusy: true, sale: "🔥 10% OFF" },

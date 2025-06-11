@@ -35,7 +35,7 @@ const BookingInfo = () => {
         ])}
       />
       <div className="mt-6">
-        <div className="flex">
+        <div className="flex overflow-x-auto whitespace-nowrap pb-2">
           {tabs.map((tab, idx) => (
             <button
               key={idx}
@@ -43,7 +43,7 @@ const BookingInfo = () => {
                 activeTabIdx === idx
                   ? "bg-primary01 text-white"
                   : "bg-transparent text-[#262626]"
-              } rounded-full font-semibold py-2 px-4 inline-flex gap-2 cursor-pointer`}
+              } rounded-full font-semibold py-2 px-4 inline-flex gap-2 cursor-pointer `}
               onClick={() => setActiveTabIdx(idx)}>
               {tab.label}{" "}
               <span

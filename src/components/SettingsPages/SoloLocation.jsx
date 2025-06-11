@@ -1,4 +1,4 @@
-import { Checkbox, ConfigProvider, Switch, TimePicker } from "antd";
+import { Button, Checkbox, ConfigProvider, Switch, TimePicker } from "antd";
 import {
   ArrowLeft,
   ArrowUpRight,
@@ -9,11 +9,7 @@ import {
   X,
 } from "lucide-react";
 import { useState } from "react";
-import {
-  AlertIcon,
-  EditIcon,
-  NotificationIcon,
-} from "../../assets/icons/icons2";
+import { AlertIcon, EditIcon } from "../../assets/icons/icons2";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { imageProvider } from "../../lib/imageProvider";
@@ -21,7 +17,9 @@ import { imageProvider } from "../../lib/imageProvider";
 import { AnimatePresence, motion } from "framer-motion";
 import { collapseVariants } from "../../animations/variants";
 import LocationDropdown from "../ui/LocationDropdown";
-import FixedModal from "../modal/FixedModal";
+import FixedLocationModal from "../modal/FixedLocationModal";
+import DeleteLocationModal from "../modal/DeleteLocationModal";
+
 dayjs.extend(customParseFormat);
 const format = "hh:mm A";
 const onChange = (e) => {
@@ -77,14 +75,14 @@ const SoloLocation = () => {
   const [paymentOpen, setPaymentOpen] = useState(true);
   const [serviceModalOpen, setServiceModalOpen] = useState(true);
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
-  const [fixedModalOpen, setFixedModalOpen] = useState(false);
+  const [fixedLocationModalOpen, setFixedLocationModalOpen] = useState(false);
   const [mobileModalOpen, setMobileModalOpen] = useState(false);
   const [cityDropdown, setCityDropdown] = useState(false);
   const [regionalDropdown, setRegionalDropdown] = useState(false);
   const [regionalModal, setRegionalModal] = useState(false);
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [selectedCities, setSelectedCities] = useState({});
-  const [deleteLocationModal, setDeleteLocationModal] = useState(false);
+  const [deleteLocationModalOpen, setDeleteLocationModalOpen] = useState(false);
 
   const handleCityChange = (city) => {
     setSelectedCities((prev) => {
@@ -123,6 +121,7 @@ const SoloLocation = () => {
   const handleChange = (value) => {
     console.log("Selected:", value);
   };
+
   return (
     <div className="min-h-full">
       <div className="p-6 rounded-md mt-4 bg-[#FFFFFF]">
@@ -137,12 +136,12 @@ const SoloLocation = () => {
             </p>
           </div>
 
-          <div
-            onClick={() => setFixedModalOpen(true)}
-            className="flex items-center gap-2 border border-[#744CDB] rounded-lg px-4 py-2 text-[#744CDB] text-sm sm:text-base font-semibold hover:underline mt-3 xl:mt-0 whitespace-nowrap w-fit hover:scale-95 transform transition-all duration-300 ease-in-out"
+          <Button
+            onClick={() => setFixedLocationModalOpen(true)}
+            className="!text-primary01 !border-primary01"
           >
             <Plus size={20} /> Add Location
-          </div>
+          </Button>
         </div>
         <hr className="my-6 text-[#F6F6F6]" />
 
@@ -163,14 +162,23 @@ const SoloLocation = () => {
               </p>
             </div>
           </div>
+
+          {/* Action buttons */}
           <div className="hidden sm:flex items-center gap-6">
-            <img src={imageProvider.edit} alt="Edit Icon" />
-            <img
-              onClick={() => setDeleteLocationModal(true)}
-              src={imageProvider.deleteIcon}
-              alt="Delete Icon"
-            />
+            <button
+              onClick={() => setFixedLocationModalOpen(true)}
+              className="cursor-pointer"
+            >
+              <img src={imageProvider.edit} alt="Edit Icon" />
+            </button>
+            <button
+              onClick={() => setDeleteLocationModalOpen(true)}
+              className="cursor-pointer"
+            >
+              <img src={imageProvider.deleteIcon} alt="Delete Icon" />
+            </button>
           </div>
+
           {/* Show on small screens */}
           <div className="block md:hidden relative">
             <button
@@ -181,11 +189,13 @@ const SoloLocation = () => {
             </button>
             {showMenu1 && (
               <div className="absolute  bg-gray-200 rounded z-10 w-10 h-14 p-2 pl-3 mr-3 shadow-md">
-                <img
-                  className="pb-2"
-                  src={imageProvider.edit}
-                  alt="Edit Icon"
-                />
+                <button onClick={() => setFixedLocationModalOpen(true)} >
+                  <img
+                    className="pb-2"
+                    src={imageProvider.edit}
+                    alt="Edit Icon"
+                  />
+                </button>
                 <img src={imageProvider.deleteIcon} alt="Delete Icon" />
               </div>
             )}
@@ -206,14 +216,23 @@ const SoloLocation = () => {
               </p>
             </div>
           </div>
+
+          {/* Action buttons */}
           <div className="hidden sm:flex items-center gap-6">
-            <img src={imageProvider.edit} alt="Edit Icon" />
-            <img
-              onClick={() => setDeleteLocationModal(true)}
-              src={imageProvider.deleteIcon}
-              alt="Delete Icon"
-            />
+            <button
+              className="cursor-pointer"
+              onClick={() => setFixedLocationModalOpen(true)}
+            >
+              <img src={imageProvider.edit} alt="Edit Icon" />
+            </button>
+            <button
+              className="cursor-pointer"
+              onClick={() => setDeleteLocationModalOpen(true)}
+            >
+              <img src={imageProvider.deleteIcon} alt="Delete Icon" />
+            </button>
           </div>
+
           {/* Show on small screens */}
           <div className="block md:hidden relative">
             <button
@@ -264,20 +283,19 @@ const SoloLocation = () => {
       </div>
 
       {/* Fixed Modal */}
-
-      {fixedModalOpen && (
-        <FixedModal
-          isOpen={fixedModalOpen}
-          onClose={() => setFixedModalOpen(false)}
-          onSave={() => setFixedModalOpen(false)}
+      {fixedLocationModalOpen && (
+        <FixedLocationModal
+          isOpen={fixedLocationModalOpen}
+          onClose={() => setFixedLocationModalOpen(false)}
+          onSave={() => setFixedLocationModalOpen(false)}
         />
       )}
+
       {/* Mobile Modal */}
       {mobileModalOpen && (
         <div className="fixed inset-0 z-50 bg-[#111113cc] flex items-center justify-center">
           <div className="bg-white rounded-lg shadow-lg w-[90%] max-w-3xl h-[750px] flex flex-col">
             {/* Header */}
-
             <h3 className="text-xl font-semibold text-[#242528] py-6 px-6">
               Mobile service setup
             </h3>
@@ -813,43 +831,13 @@ const SoloLocation = () => {
       )}
 
       {/* delete location modal */}
-      {deleteLocationModal && (
-        <div className="fixed inset-0 bg-[#111113cc] flex items-center justify-center z-50">
-          <div className="bg-white text-black rounded-md max-w-[90%] w-[430px] h-[328px]">
-            <h2 className="p-6 text-[#242528] font-semibold">Notifications</h2>
-            <hr className="text-[#E5E7E8] pb -3" />
-
-            <div className="flex justify-center items-center text-center p-6">
-              <div>
-                <div className="flex justify-center items-center my-2 rounded-full h-[40px] w-[40px] bg-[#FBD9DA] mx-auto">
-                  <NotificationIcon className="h-5 w-5" />
-                </div>
-
-                <h2 className="text-[#262626] font-semibold my-1">
-                  Location Deleted Permanently
-                </h2>
-                <p className="text-[#797979] my-1 text-sm pb-4">
-                  This location and all associated data will be permanently
-                  removed. This action cannot be undone.
-                </p>
-                <div className="flex justify-between items-center mt-6 pb-2">
-                  <button
-                    onClick={() => setDeleteLocationModal(false)}
-                    className="w-[180px] h-[40px] border border-[#242528] rounded-lg hover:scale-95 transform transition-all duration-300 ease-in-out"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={() => setDeleteLocationModal(false)}
-                    className="w-[180px] h-[40px] bg-[#ED4245] text-white rounded-lg hover:scale-95 transform transition-all duration-300 ease-in-out"
-                  >
-                    Remove
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      {deleteLocationModalOpen && (
+        <DeleteLocationModal
+          isOpen={deleteLocationModalOpen}
+          onClose={() => setDeleteLocationModalOpen(false)}
+          setDeleteLocationModalOpen={setDeleteLocationModalOpen}
+          onDeleteConfirm={() => setDeleteLocationModalOpen(false)}
+        />
       )}
     </div>
   );

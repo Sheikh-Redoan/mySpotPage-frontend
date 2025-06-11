@@ -77,13 +77,13 @@ const handleFileChange = (e) => {
     <div className="min-h-full">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="p-[26px] border-[1.5px] border-[#E7E7E7] bg-[#FFFFFF] rounded-md mt-4"
+        className="p-3 md:p-[26px] border-[1.5px] border-[#E7E7E7] bg-[#FFFFFF] rounded-xl mt-4"
       >
-        <div className="flex justify-between items-center my-4">
-          <h2 className="text-[#262626] text-xl font-semibold">
+        <div className="flex justify-between items-center">
+          <h2 className="text-[#262626] text-base md:text-xl font-semibold">
             Business Information
           </h2>
-          <button className="py-2 px-4 border font-medium rounded-lg bg-[#242528] hover:bg-[#3a3b40] text-[#FFFFFF] hover:scale-95 transform transition-all duration-300 ease-in-out">
+          <button className="py-2 px-4 text-sm border font-medium rounded-lg bg-[#242528] hover:bg-[#3a3b40] text-[#FFFFFF] hover:scale-95 transform transition-all duration-300 ease-in-out">
             Save
           </button>
         </div>

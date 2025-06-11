@@ -11,14 +11,14 @@ export const settingsNavItems = [
   {
     link: "/dashboard/settings/location",
     name: "Location",
-    imagePink: imageProvider.LocationPink,
-    imageWhite: imageProvider.LocationBlack,
+    imagePink: imageProvider.locationPink,
+    imageWhite: imageProvider.location,
   },
   {
     link: "/dashboard/settings/subscription",
     name: "Subscription",
-    imagePink: imageProvider.SubscriptionPink,
-    imageWhite: imageProvider.SubscriptionBlack,
+    imagePink: imageProvider.subscriptionPink,
+    imageWhite: imageProvider.subscriptionBlack,
   },
 ];
 

@@ -189,11 +189,13 @@ const SoloLocation = () => {
             </button>
             {showMenu1 && (
               <div className="absolute  bg-gray-200 rounded z-10 w-10 h-14 p-2 pl-3 mr-3 shadow-md">
-                <img
+                <button onClick={() => setFixedLocationModalOpen(true)} >
+                  <img
                   className="pb-2"
                   src={imageProvider.edit}
                   alt="Edit Icon"
                 />
+                </button>
                 <img src={imageProvider.deleteIcon} alt="Delete Icon" />
               </div>
             )}

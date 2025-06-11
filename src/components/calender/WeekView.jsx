@@ -177,11 +177,12 @@ export default function WeekView({
                   day={day}
                   service={service}
                   selectTimeFromProvider={selectTimeFromProvider}
+                  maxEventsPerMonthCell={maxEventsPerMonthCell}
                   timeSlots={[slot]} // Pass only the current time slot
                   isToday={isToday}
                   isCurrentMonth={isCurrentMonth}
                   hiddenEventsCount={hiddenEventsCount}
-                  eventsToShow={eventsToShow}
+                  events={eventsToShow}
                   onTimeSelect={(selectedTime) => {
                     console.log("Selected:", selectedTime);
                     // Handle the selection

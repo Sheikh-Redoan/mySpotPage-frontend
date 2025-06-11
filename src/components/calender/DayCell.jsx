@@ -8,13 +8,12 @@ export default function DayCell({
   day,
   service,
   selectTimeFromProvider = false,
+  maxEventsPerMonthCell = 3,
   timeSlots,
   isToday = false,
   isCurrentMonth = true,
-  hiddenEventsCount,
   index = 0,
   onTimeSelect,
-  eventsToShow,
   weekView = false,
   dayView = false,
   events = [],
@@ -105,8 +104,11 @@ export default function DayCell({
     return (
       <div
         className={cn(
-          "text-sm mb-1 text-start flex flex-col items-start justify-start gap-2",
-          !isCurrentMonth ? "text-gray-400" : "text-gray-800"
+          "text-sm mb-1 text-start flex items-start justify-start gap-2",
+          !isCurrentMonth ? "text-gray-400" : "text-gray-800",
+          {
+            "flex-col": !selectTimeFromProvider,
+          }
         )}>
         <span
           className={cn({
@@ -114,7 +116,7 @@ export default function DayCell({
               selectTimeFromProvider && isToday,
           })}>
           {day.format("D")}{" "}
-          {selectTimeFromProvider && isToday && (
+          {!selectTimeFromProvider && isToday && (
             <span className="text-xs text-primary01 border border-primary01 px-3 py-1 rounded-full font-medium ml-2">
               Today
             </span>
@@ -126,14 +128,14 @@ export default function DayCell({
           </span>
         )}
 
-        {events.length > 0 && (
+        {!selectTimeFromProvider && events.length > 0 && (
           <div className="flex flex-col items-start">
-            {events.slice(0, 3).map((event) => (
+            {events.slice(0, maxEventsPerMonthCell).map((event) => (
               <Event key={event.id} event={event} />
             ))}
-            {events.length > 3 && (
+            {events.length > maxEventsPerMonthCell && (
               <span className="text-xs text-gray-500">
-                +{events.length - 3} more
+                +{events.length - maxEventsPerMonthCell} more
               </span>
             )}
           </div>
@@ -142,11 +144,11 @@ export default function DayCell({
     );
   };
 
-  const element = selectTimeFromProvider ? "div" : "button";
+  const Element = !selectTimeFromProvider ? "div" : "button";
 
   return (
     <>
-      <element
+      <Element
         disabled={currentTimeSlot?.isBusy || isPastDay()}
         onClick={selectTimeFromProvider ? () => setIsOpen(true) : null}
         className={cn(
@@ -169,18 +171,14 @@ export default function DayCell({
         <div className={cn("relative z-10 h-full", dayView ? "p-4" : "")}>
           {renderContent()}
         </div>
-      </element>
+      </Element>
 
       <EventModal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
         onSubmit={handleTimeSubmit}
         selectedDate={day}
-        timeSlots={
-          currentTimeSlot?.availableTimeSlots ||
-          service?.timeSlots?.filter((slot) => !slot.isBusy) ||
-          []
-        }
+        timeSlots={currentTimeSlot?.availableTimeSlots || []}
         dayView={dayView}
       />
     </>

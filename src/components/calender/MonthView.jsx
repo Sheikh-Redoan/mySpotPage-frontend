@@ -58,6 +58,7 @@ export default function MonthView({
               dayjs(event.start).isSame(day, "day")
             )}
             selectTimeFromProvider={selectTimeFromProvider}
+            maxEventsPerMonthCell={maxEventsPerMonthCell}
             timeSlots={timeSlots}
             isToday={isToday}
             isCurrentMonth={isCurrentMonth}

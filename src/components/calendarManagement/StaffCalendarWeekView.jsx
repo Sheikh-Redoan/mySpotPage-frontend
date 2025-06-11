@@ -1,21 +1,25 @@
 // src/components/calendarManagement/StaffCalendarWeekView.jsx
-import React from 'react';
-import dayjs from 'dayjs';
-import { MoreVertical } from 'lucide-react';
+import dayjs from "dayjs";
+import { MoreVertical } from "lucide-react";
 
-const StaffCalendarWeekView = ({ 
-  weekDays = [], 
-  displayedStaff = [], 
-  allAppointments = [] 
+const StaffCalendarWeekView = ({
+  weekDays = [],
+  displayedStaff = [],
+  allAppointments = [],
 }) => {
   // Default props to empty arrays to prevent undefined errors
   const getStatusColor = (status) => {
     switch (status) {
-      case 'completed': return 'bg-green-500';
-      case 'booked': return 'bg-blue-500';
-      case 'pending': return 'bg-yellow-500';
-      case 'seller-confirmed': return 'bg-purple-500';
-      default: return 'bg-gray-400';
+      case "completed":
+        return "bg-green-500";
+      case "booked":
+        return "bg-blue-500";
+      case "pending":
+        return "bg-yellow-500";
+      case "seller-confirmed":
+        return "bg-purple-500";
+      default:
+        return "bg-gray-400";
     }
   };
 
@@ -40,17 +44,17 @@ const StaffCalendarWeekView = ({
           <div
             key={day.format("YYYY-MM-DD")}
             className={`flex flex-col items-center justify-center py-2 px-2.5 border-l border-violet-100 ${
-              day.isSame(dayjs(), 'day') ? 'bg-violet-100' : ''
-            }`}
-          >
+              day.isSame(dayjs(), "day") ? "bg-violet-100" : ""
+            }`}>
             <div className="text-violet-500 text-sm font-semibold uppercase">
               {day.format("ddd")}
             </div>
             <div
               className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-normal leading-tight ${
-                day.isSame(dayjs(), 'day') ? 'bg-violet-600 text-white' : 'text-gray-900'
-              }`}
-            >
+                day.isSame(dayjs(), "day")
+                  ? "bg-violet-600 text-white"
+                  : "text-gray-900"
+              }`}>
               {day.format("DD")}
             </div>
           </div>
@@ -61,51 +65,63 @@ const StaffCalendarWeekView = ({
       <div className="min-h-[400px] overflow-auto">
         {displayedStaff.length > 0 ? (
           displayedStaff.map((staff) => (
-            <div key={staff.id} className="grid grid-cols-[120px_repeat(7,1fr)] border-t border-gray-200">
+            <div
+              key={staff.id}
+              className="grid grid-cols-[120px_repeat(7,1fr)] border-t border-gray-200">
               {/* Staff Info Column */}
               <div className="col-span-1 bg-violet-50 p-3 border-r border-violet-100 flex flex-col items-center justify-center gap-1">
-                <div className="p-1 rounded-full outline outline-1 outline-violet-300">
-                  <img 
-                    src={staff.image || '/default-avatar.png'} 
-                    alt={staff.name} 
-                    className="w-12 h-12 rounded-full object-cover" 
+                <div className="p-1 rounded-full outline-1 outline-violet-300">
+                  <img
+                    src={staff.image || "/default-avatar.png"}
+                    alt={staff.name}
+                    className="w-12 h-12 rounded-full object-cover"
                     onError={(e) => {
                       e.target.onerror = null;
-                      e.target.src = '/default-avatar.png';
+                      e.target.src = "/default-avatar.png";
                     }}
                   />
                 </div>
                 <div className="text-center text-gray-950 text-sm font-normal leading-tight">
-                  {staff.name?.split(' ').slice(0, 2).join(' ')}
+                  {staff.name?.split(" ").slice(0, 2).join(" ")}
                 </div>
               </div>
 
               {/* Daily Appointment Cells */}
               {weekDays.map((day) => {
                 const dateStr = day.format("YYYY-MM-DD");
-                const dailyAppointments = getDailyAppointments(staff.id, dateStr);
+                const dailyAppointments = getDailyAppointments(
+                  staff.id,
+                  dateStr
+                );
                 const visibleAppointments = dailyAppointments.slice(0, 3);
-                const hiddenAppointmentsCount = Math.max(0, dailyAppointments.length - 3);
+                const hiddenAppointmentsCount = Math.max(
+                  0,
+                  dailyAppointments.length - 3
+                );
 
                 return (
                   <div
                     key={`${staff.id}-${dateStr}`}
-                    className="flex-1 p-1 bg-white border-l border-gray-200 flex flex-col items-start gap-2 overflow-hidden"
-                  >
+                    className="flex-1 p-1 bg-white border-l border-gray-200 flex flex-col items-start gap-2 overflow-hidden">
                     {visibleAppointments.map((app) => (
-                      <div 
-                        key={app.id} 
-                        className="self-stretch h-6 p-1 rounded inline-flex justify-center items-center hover:bg-gray-100 cursor-pointer"
-                      >
+                      <div
+                        key={app.id}
+                        className="self-stretch h-6 p-1 rounded inline-flex justify-center items-center hover:bg-gray-100 cursor-pointer">
                         <div className="flex-1 flex justify-start items-center gap-2">
-                          <div className={`w-1.5 h-1.5 ${getStatusColor(app?.status)} rounded-full`} />
+                          <div
+                            className={`w-1.5 h-1.5 ${getStatusColor(
+                              app?.status
+                            )} rounded-full`}
+                          />
                           <div className="flex-1 flex justify-start items-center gap-1">
                             <div className="w-9 justify-start text-zinc-700 text-xs font-normal leading-none">
-                              {app?.time || ''}
+                              {app?.time || ""}
                             </div>
-                            <div className="text-zinc-700 text-xs font-normal leading-none">-</div>
+                            <div className="text-zinc-700 text-xs font-normal leading-none">
+                              -
+                            </div>
                             <div className="flex-1 justify-start text-zinc-700 text-xs font-normal leading-none truncate">
-                              {app?.client || ''}
+                              {app?.client || ""}
                             </div>
                           </div>
                         </div>

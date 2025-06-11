@@ -262,23 +262,21 @@
 
 /* CSS form Mahim  end*/
 
-
 input[type="time"]::-webkit-inner-spin-button,
 input[type="time"]::-webkit-calendar-picker-indicator {
-    display: none;
-    -webkit-appearance: none;
+  display: none;
+  -webkit-appearance: none;
 }
 
 input[type="date"]::-webkit-inner-spin-button,
 input[type="date"]::-webkit-calendar-picker-indicator {
-    display: none;
-    -webkit-appearance: none;
+  display: none;
+  -webkit-appearance: none;
 }
-
 
 /* Custom Select For Reassign */
 .custom-select .ant-select-selector {
-  border-radius: 9999px !important; 
+  border-radius: 9999px !important;
   /* height: 40px !important;  */
   display: flex !important;
   align-items: center !important;
@@ -291,19 +289,20 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .custom-select .ant-select-selection-item .ant-select-selection-item-content {
-  margin-left: 8px !important; 
+  margin-left: 8px !important;
 }
 
-.add-client-modal .ant-upload ,.add-client-modal .ant-upload-select,.add-client-modal .ant-upload-hidden,.add-client-modal .ant-upload-animate-inline-leave,.add-client-modal .ant-upload-animate-inline-leave-active,.add-client-modal .ant-upload-animate-inline,.add-client-modal .ant-upload-list-item-container{
+.add-client-modal .ant-upload,
+.add-client-modal .ant-upload-select,
+.add-client-modal .ant-upload-hidden,
+.add-client-modal .ant-upload-animate-inline-leave,
+.add-client-modal .ant-upload-animate-inline-leave-active,
+.add-client-modal .ant-upload-animate-inline,
+.add-client-modal .ant-upload-list-item-container {
   width: 52px !important;
   height: 52px !important;
   border-radius: 50% !important;
 }
-
-
-
-
-
 
 .basic-info .avatar-upload .ant-upload-list-item-container {
   width: 80px !important;
@@ -317,4 +316,19 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   border-radius: 50% !important;
   padding: 0 !important;
   border: none !important;
+}
+
+
+/* Calender */
+.vertical-stripes-bg {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 7px,
+    rgba(0, 0, 0, 0.04) 7px,
+    rgba(0, 0, 0, 0.04) 14px
+  ) !important;
+}
+.vertical-stripes-bg {
+  opacity: 0.7;
 }

@@ -1,6 +1,4 @@
-import { DatePicker } from "antd";
-import dayjs from "dayjs";
-import React from "react";
+import { DatePicker, Segmented } from "antd";
 import MultipleSelector from "../shared/MultipleSelector";
 
 export default function CalendarToolbar({
@@ -18,8 +16,7 @@ export default function CalendarToolbar({
         <div className="flex items-center space-x-4">
           <button
             className="cursor-pointer"
-            onClick={() => handleNavButtonClick("prev")}
-          >
+            onClick={() => handleNavButtonClick("prev")}>
             <img src="/src/assets/icons/left_arrow.svg" alt="Left Arrow" />
           </button>
           <DatePicker
@@ -32,14 +29,12 @@ export default function CalendarToolbar({
           />
           <button
             className="cursor-pointer ml-1"
-            onClick={() => handleNavButtonClick("next")}
-          >
+            onClick={() => handleNavButtonClick("next")}>
             <img src="/src/assets/icons/right_arrow.svg" alt="Right Arrow" />
           </button>
           <button
             className="text-[#866be7] cursor-pointer text-[14px] font-semibold"
-            onClick={handleTodayClick}
-          >
+            onClick={handleTodayClick}>
             Today
           </button>
         </div>
@@ -55,32 +50,13 @@ export default function CalendarToolbar({
         )}
       </div>
 
-      <div className="flex border border-gray-200 rounded-lg">
-        <button
-          className={`px-5 py-1 md:py-1.5 cursor-pointer rounded-md text-sm ${
-            currentView === "dayGridMonth" ? "bg-[#866BE7] text-white" : ""
-          }`}
-          onClick={() => handleViewChange("dayGridMonth")}
-        >
-          Month
-        </button>
-        <button
-          className={`px-5 py-1.5 cursor-pointer rounded-md text-sm ${
-            currentView === "timeGridWeek" ? "bg-[#866BE7] text-white" : ""
-          }`}
-          onClick={() => handleViewChange("timeGridWeek")}
-        >
-          Week
-        </button>
-        <button
-          className={`px-5 py-1.5 cursor-pointer rounded-md text-sm ${
-            currentView === "timeGridDay" ? "bg-[#866BE7] text-white" : ""
-          }`}
-          onClick={() => handleViewChange("timeGridDay")}
-        >
-          Day
-        </button>
-      </div>
+      <Segmented
+        options={["month", "week", "day"]}
+        value={currentView}
+        onChange={handleViewChange}
+        size="large"
+        className="border border-gray-300"
+      />
     </div>
   );
 }

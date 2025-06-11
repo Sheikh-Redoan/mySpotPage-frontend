@@ -25,7 +25,7 @@ const MyProfileLayout = ({ tabs = [] }) => {
                       isActive
                         ? "bg-[#ECEBFC] text-[#744CDB]"
                         : "hover:bg-gray-100 text-[#242528]",
-                      "px-3 py-3 rounded-xl flex items-center gap-4 transition duration-300 ease-in-out w-56"
+                      "px-3 py-3 rounded-xl flex items-center gap-2 md:gap-4 transition duration-300 ease-in-out w-48 md:w-56 text-sm md:text-base"
                     )}>
                     {isActive ? (
                       <img src={tab.imagePink} alt="" />

@@ -124,9 +124,9 @@ const BasicInfo = () => {
           </div>
 
           {isBlackListed && (
-            <div className="flex items-center gap-2 bg-[#FFE6E6] py-2 px-3 rounded-lg">
+            <div className="flex md:items-center gap-2 bg-[#FFE6E6] py-2 px-3 rounded-lg">
               <ErrorIcon className="size-6" />
-              <p className="text-[#ED4245]">
+              <p className="text-[#ED4245] text-xs md:text-base">
                 This client is blacklisted and cannot book appointments.
               </p>
             </div>
@@ -168,7 +168,7 @@ const BasicInfo = () => {
               className="border border-[#E0E0E0] rounded-lg w-full !h-10"
               suffixIcon={<DownArrowIcon />}
             >
-              {["fjgvhjg", "jdfgghfg"].map((city) => (
+              {["Male", "Female", "Others"].map((city) => (
                 <Option key={city} value={city}>
                   {city}
                 </Option>
@@ -239,7 +239,7 @@ const BasicInfo = () => {
             </Select>
           </fieldset>
 
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-0">
             <fieldset className="flex items-center gap-2">
               <Switch onChange={onSwitchChange} id="isVip" />
               <label htmlFor="isVip" className="">
@@ -265,8 +265,10 @@ const BasicInfo = () => {
         onCancel={() => setIsModalOpen(false)}
         footer={null}
         width={420}
+        centered
       >
-        <div className="mt-8">
+        <div className="mt-4 font-golos">
+          <hr className="text-border mb-4"/>
           <div className="size-11 bg-[#FBD9DA] rounded-full flex items-center justify-center mx-auto mb-3">
             <ErrorIcon2 className="size-5" />
           </div>
@@ -282,14 +284,14 @@ const BasicInfo = () => {
           <div className="flex gap-3 mt-8">
             <button
               type="button"
-              className="flex-1 cursor-pointer border border-[#242528] py-2 px-3 text-[#242528] rounded-lg"
+              className="flex-1 cursor-pointer border border-[#242528] py-2 px-3 text-[#242528] rounded-lg font-semibold"
               onClick={() => setIsModalOpen(false)}
             >
               Cancel
             </button>
             <button
               type="button"
-              className="flex-1 cursor-pointer bg-[#ED4245] py-2 px-3 text-white rounded-lg"
+              className="flex-1 cursor-pointer bg-[#ED4245] py-2 px-3 text-white rounded-lg font-semibold"
               onClick={() => {
                 setIsBlackListed(true);
                 setIsModalOpen(false);

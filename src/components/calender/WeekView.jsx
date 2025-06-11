@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/en"; // Or your preferred locale
 import React from "react";
 import { cn } from "../../lib/utils";
+import DayCell from "./DayCell";
 import Event from "./Event";
 
 export default function WeekView({
@@ -10,6 +11,7 @@ export default function WeekView({
   resources = [],
   events = [],
   selectTimeFromProvider,
+  maxEventsPerMonthCell = 3,
 }) {
   const today = dayjs(); // Get today's date for highlighting
 
@@ -29,6 +31,14 @@ export default function WeekView({
       slots.push(date.hour(i).minute(0).second(0));
     }
     return slots;
+  };
+
+  const getService = (date) => {
+    if (!resources || (resources.length === 0 && selectTimeFromProvider))
+      return null;
+    return resources.find((resource) =>
+      dayjs(resource.date).isSame(date, "day")
+    );
   };
 
   const timeSlots = getTimeSlots(currentDate);
@@ -83,13 +93,7 @@ export default function WeekView({
             {/* Event Cells for each day */}
             {weekDays.map((day, dayIndex) => {
               // Filter events for the current resource and day
-              const dailyEvents = events
-                .filter(
-                  (event) =>
-                    event.resourceId === resource.id &&
-                    dayjs(event.start).isSame(day, "day")
-                )
-                .sort((a, b) => dayjs(a.start).diff(dayjs(b.start))); // Sort by time
+              const service = getService(day);
 
               return (
                 <div
@@ -121,30 +125,39 @@ export default function WeekView({
             }
 
             {/* Event Cells for each day */}
-            {weekDays.map((day, dayIndex) => {
+            {weekDays.map((day, index) => {
               // Filter events for the current resource and day
+
+              const isToday = day.isSame(today, "day");
+              const isCurrentMonth = day.isSame(currentDate, "month");
               const dailyEvents = events
-                .filter(
-                  (event) =>
-                    dayjs(event.start).format("HH:mm") ===
-                      slot.format("HH:mm") &&
-                    dayjs(event.start).isSame(day, "day")
-                )
+                .filter((event) => dayjs(event.start).isSame(day, "day"))
                 .sort((a, b) => dayjs(a.start).diff(dayjs(b.start))); // Sort by time
 
+              const eventsToShow = dailyEvents.slice(0, maxEventsPerMonthCell);
+              const hiddenEventsCount =
+                dailyEvents.length - eventsToShow.length;
+
+              const service = getService(day);
+
               return (
-                <div
-                  key={dayIndex}
-                  className={cn("p-2 min-h-[150px] border-b", {
-                    "border-r": dayIndex < 6,
-                    "border-gray-200": true,
-                    "flex flex-col space-y-1": true,
-                    "bg-purple-600": slot.isSame(day, "day"),
-                  })}>
-                  {dailyEvents.map((event) => (
-                    <Event key={event.id} event={event} />
-                  ))}
-                </div>
+                <DayCell
+                  key={index}
+                  index={index}
+                  day={day}
+                  service={service}
+                  selectTimeFromProvider={selectTimeFromProvider}
+                  timeSlots={timeSlots}
+                  isToday={isToday}
+                  isCurrentMonth={isCurrentMonth}
+                  hiddenEventsCount={hiddenEventsCount}
+                  eventsToShow={eventsToShow}
+                  onTimeSelect={(selectedTime) => {
+                    console.log("Selected:", selectedTime);
+                    // Handle the selection
+                  }}
+                  weekView
+                />
               );
             })}
           </React.Fragment>

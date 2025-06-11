@@ -15,6 +15,7 @@ export default function DayCell({
   index = 0,
   onTimeSelect,
   eventsToShow,
+  weekView = false,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedTimes, setSelectedTimes] = useState([]);
@@ -88,14 +89,16 @@ export default function DayCell({
             "text-sm mb-1 text-start flex items-center justify-start gap-2",
             !isCurrentMonth ? "text-gray-400" : "text-gray-800"
           )}>
-          <span
-            className={cn({
-              " bg-primary01 w-8 h-8 text-white grid place-items-center rounded-full":
-                selectTimeFromProvider && isToday,
-            })}>
-            {day.format("D")}
-          </span>
-          {!selectTimeFromProvider && isToday && (
+          {!weekView && (
+            <span
+              className={cn({
+                " bg-primary01 w-8 h-8 text-white grid place-items-center rounded-full":
+                  selectTimeFromProvider && isToday,
+              })}>
+              {day.format("D")}
+            </span>
+          )}
+          {!selectTimeFromProvider && !weekView && isToday && (
             <span className="text-xs font-normal border border-gray-200 px-2 py-1 text-primary01 rounded-full ml-1 flex items-center justify-center">
               Today
             </span>

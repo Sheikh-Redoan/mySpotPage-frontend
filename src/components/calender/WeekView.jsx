@@ -93,6 +93,14 @@ export default function WeekView({
             {/* Event Cells for each day */}
             {weekDays.map((day, dayIndex) => {
               // Filter events for the current resource and day
+              const dailyEvents = events
+                .filter(
+                  (event) =>
+                    event.resourceId === resource.id &&
+                    dayjs(event.start).isSame(day, "day")
+                )
+                .sort((a, b) => dayjs(a.start).diff(dayjs(b.start)));
+
               const service = getService(day);
 
               return (

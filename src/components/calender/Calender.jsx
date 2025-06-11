@@ -116,6 +116,10 @@ export default function Calender({
             events={events}
             resources={resources}
             selectTimeFromProvider={selectTimeFromProvider}
+            onTimeSelect={(timeData) => {
+              console.log("Selected time:", timeData);
+              // Handle the time selection
+            }}
           />
         )}
       </div>

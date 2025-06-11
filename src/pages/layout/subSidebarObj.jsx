@@ -1,26 +1,24 @@
-import {
-  BusinessIcon,
-  LocationIcon,
-  SubscriptionIcon,
-} from "../../assets/icons/icons";
 import { imageProvider } from "../../lib/imageProvider";
 
 export const settingsNavItems = [
   {
-    path: "/dashboard/settings",
-    title: "Business Info",
-    icon: BusinessIcon,
+    link: "/dashboard/settings",
+    name: "Business Info",
+    imagePink: imageProvider.PeoplePink,
+    imageWhite: imageProvider.PeopleBlack,
     end: false,
   },
   {
-    path: "/dashboard/settings/location",
-    title: "Location",
-    icon: LocationIcon,
+    link: "/dashboard/settings/location",
+    name: "Location",
+    imagePink: imageProvider.LocationPink,
+    imageWhite: imageProvider.LocationBlack,
   },
   {
-    path: "/dashboard/settings/subscription",
-    title: "Subscription",
-    icon: SubscriptionIcon,
+    link: "/dashboard/settings/subscription",
+    name: "Subscription",
+    imagePink: imageProvider.SubscriptionPink,
+    imageWhite: imageProvider.SubscriptionBlack,
   },
 ];
 

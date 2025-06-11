@@ -12,10 +12,10 @@ const MyProfileLayout = ({ tabs = [] }) => {
   ];
 
   return (
-    <div className="flex min-h-[calc(100vh-80px)] overflow-hidden bg-[#F9FAFC] ">
+    <div className="flex flex-col md:flex-row min-h-[calc(100vh-80px)] overflow-hidden bg-[#F9FAFC] ">
       {/* Sidebar */}
-      <aside className="w-[280px] bg-white  left-[65px] top-[73px] shadow-md py-6 px-5 flex flex-col justify-between">
-        <ul className="space-y-3">
+      <aside className="md:w-[280px] bg-white  left-[65px] top-[73px] shadow-md py-6 px-5 flex flex-col justify-between">
+        <ul className="space-y-3 flex md:flex-col overflow-x-auto">
           {tabs.map((tab) => {
             return (
               <NavLink key={tab.id} to={tab.link} end>
@@ -25,7 +25,7 @@ const MyProfileLayout = ({ tabs = [] }) => {
                       isActive
                         ? "bg-[#ECEBFC] text-[#744CDB]"
                         : "hover:bg-gray-100 text-[#242528]",
-                      "px-3 py-3 my-4 rounded-xl flex items-center gap-4 transition duration-300 ease-in-out"
+                      "px-3 py-3 rounded-xl flex items-center gap-4 transition duration-300 ease-in-out w-56"
                     )}>
                     {isActive ? (
                       <img src={tab.imagePink} alt="" />

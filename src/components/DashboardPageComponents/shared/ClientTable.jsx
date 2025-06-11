@@ -157,7 +157,7 @@ const ClientTable = ({ activeTabKey }) => {
       key: "id",
       sorter: (a, b) => a.id.localeCompare(b.id),
       render: (text, record) => (
-        <div className="">
+        <div className="w-28">
           <p className="text-[#262626] text-sm mb-2">{text}</p>
           {record.type === "VIP" ? (
             <div className="flex items-center gap-1">
@@ -183,7 +183,7 @@ const ClientTable = ({ activeTabKey }) => {
       key: "name",
       sorter: (a, b) => a.name.localeCompare(b.name),
       render: (text, record) => (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 w-40">
           <figure
             className={`size-10 rounded-full flex items-center justify-center text-white bg-primary01 overflow-hidden`}
           >
@@ -208,7 +208,7 @@ const ClientTable = ({ activeTabKey }) => {
         confirm,
         clearFilters,
       }) => (
-        <div style={{ padding: 8 }}>
+        <div className="" style={{ padding: 8}}>
           <Select
             mode="multiple"
             placeholder="Select Gender"
@@ -267,7 +267,7 @@ const ClientTable = ({ activeTabKey }) => {
             <OthersIcon />
           );
         return (
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 w-24">
             <span className="text-gray-400">{genderIcon}</span>
             <span>{text}</span>
           </div>
@@ -285,7 +285,7 @@ const ClientTable = ({ activeTabKey }) => {
       dataIndex: "phone",
       key: "phone",
       render: (text, record) => (
-        <div>
+        <div className="w-36">
           <div className="text-[#262626] text-sm mb-1">{text}</div>
           {!record.isVerified && (
             <Tooltip
@@ -322,7 +322,7 @@ const ClientTable = ({ activeTabKey }) => {
         );
 
         return (
-          <div style={{ padding: 8 }}>
+          <div style={{ padding: 8}}>
             <Input
               ref={cityFilterSearchInputTableColumn}
               placeholder="Search"
@@ -436,7 +436,7 @@ const ClientTable = ({ activeTabKey }) => {
   }, [searchQuery, selectedCity, selectedGenders, activeTabKey]); // Added activeTabKey to dependency array
 
   return (
-    <div className="w-full">
+    <div className="w-full bg-white">
       <div className="flex w-full gap-4 mb-4">
         <div className="relative w-[300px]">
           <Input
@@ -529,7 +529,7 @@ const ClientTable = ({ activeTabKey }) => {
         columns={columns}
         pagination={false}
         rowKey="id"
-        className="w-full"
+        className="w-full overflow-x-auto"
         locale={{ emptyText: <CustomEmptyTable /> }}
         rowClassName={(record) =>
           searchQuery &&
@@ -540,8 +540,8 @@ const ClientTable = ({ activeTabKey }) => {
         }
       />
 
-      <div className="flex justify-between items-center mt-4">
-        <div>
+      <div className="flex justify-center md:justify-between items-center mt-4">
+        <div className="hidden md:block">
           <span className="text-sm text-gray-600">Show </span>
           <Select
             value={pageSize}

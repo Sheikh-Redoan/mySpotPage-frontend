@@ -137,7 +137,7 @@ const ConfirmedBookingByClient = () => {
         columns={columns}
         pagination={false}
         rowKey="id"
-        className="w-full"
+        className="w-full overflow-x-auto border border-border rounded-md"
         locale={{ emptyText: <CustomEmptyTable /> }}
         rowClassName={(record) =>
           searchQuery &&
@@ -154,8 +154,8 @@ const ConfirmedBookingByClient = () => {
       />
 
       {/* Pagination */}
-      <div className="flex justify-between items-center mt-4">
-        <div>
+      <div className="flex justify-center md:justify-between items-center mt-4">
+        <div className="hidden md:block">
           <span className="text-sm text-gray-600">Show </span>
           <Select
             value={pageSize}

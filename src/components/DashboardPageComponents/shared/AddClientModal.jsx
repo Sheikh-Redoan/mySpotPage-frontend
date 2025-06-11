@@ -84,19 +84,19 @@ const AddClientModal = ({ isModalOpen, setIsModalOpen }) => {
               {/* Replaced fieldset with Ant Design Upload component */}
               {/* You might want to wrap Upload with ImgCrop for cropping functionality */}
               {/* <ImgCrop rotationSlider> */}
-              
-                <Upload
+
+              <Upload
                 className="w-[52px] h-[52px]"
-                  listType="picture-circle" // Makes it look like an avatar upload
-                  fileList={fileList}
-                  onChange={onImageChange}
-                  beforeUpload={beforeUpload}
-                  customRequest={customRequest} // Use customRequest for manual upload
-                  maxCount={1} // Allow only one image
-                >
-                  {/* Display ImageIcon if no file is uploaded yet */}
-                  {fileList.length < 1 ? <ImageIcon /> : null}
-                </Upload>
+                listType="picture-circle" // Makes it look like an avatar upload
+                fileList={fileList}
+                onChange={onImageChange}
+                beforeUpload={beforeUpload}
+                customRequest={customRequest} // Use customRequest for manual upload
+                maxCount={1} // Allow only one image
+              >
+                {/* Display ImageIcon if no file is uploaded yet */}
+                {fileList.length < 1 ? <ImageIcon /> : null}
+              </Upload>
               {/* </ImgCrop> */}
 
               <div className="grid grid-cols-2 gap-3">
@@ -187,15 +187,16 @@ const AddClientModal = ({ isModalOpen, setIsModalOpen }) => {
               </fieldset>
             </div>
 
-            <div className="mt-8 flex items-center justify-between">
+            <div className="md:mt-8 flex flex-col md:flex-row gap-3 md:gap-0 items-center justify-between py-5">
               <div className="flex items-center gap-1">
                 <p className="text-[#262626]">Basic information</p>
                 <ForwardIcon />
                 <p className="text-[#888]">Provider notes</p>
               </div>
-              <button type="button" onClick={() => setStep(2)} className="text-white font-semibold bg-black py-2 w-24 rounded-lg cursor-pointer">Next</button>
+              <button type="button" onClick={() => setStep(2)} className="w-full text-white font-semibold bg-black py-2 md:w-24 rounded-lg cursor-pointer">Next</button>
             </div>
-          </div> : <div className="text-[#3A3B3F] flex flex-col justify-between h-full">
+          </div> :
+          <div className="text-[#3A3B3F] flex flex-col justify-between h-full">
             <div className="mt-4">
               <fieldset>
                 <label htmlFor="customNotes" className="block w-fit mb-1">Custom notes</label>
@@ -207,15 +208,17 @@ const AddClientModal = ({ isModalOpen, setIsModalOpen }) => {
               </fieldset>
             </div>
 
-            <div className="mt-8 flex items-center justify-between">
+            <div className="mt-8 flex flex-col md:flex-row items-center justify-between">
               <div className="flex items-center gap-1">
                 <p className="text-[#888]">Basic information</p>
                 <ForwardIcon />
                 <p className="text-[#262626]">Provider notes</p>
               </div>
               {/* Changed type to button for both for consistency */}
-              <button type="button" className="text-[#242528] font-semibold border border-[#242528] py-2 w-24 rounded-lg cursor-pointer" onClick={() => setStep(1)}>Previous</button>
-              <button type="button" className="text-white font-semibold bg-[#242528] py-2 w-24 rounded-lg cursor-pointer">Finish</button>
+              <div className="flex items-center gap-3 w-full md:w-[180px] mt-6 md:mt-0">
+                <button type="button" className="w-1/2 text-[#242528] font-semibold border border-[#242528] py-2 md:w-24 rounded-lg cursor-pointer" onClick={() => setStep(1)}>Previous</button>
+                <button type="button" className="w-1/2 text-white font-semibold bg-[#242528] py-2 md:w-24 rounded-lg cursor-pointer">Finish</button>
+              </div>
             </div>
           </div>
       }

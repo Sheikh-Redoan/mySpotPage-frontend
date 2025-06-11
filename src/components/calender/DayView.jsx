@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import "dayjs/locale/en"; // Or your preferred locale
 import { cn } from "../../lib/utils";
+import DayCell from "./DayCell";
 import Event from "./Event";
 import EventTag from "./EventTag";
 
@@ -9,6 +10,7 @@ export default function DayView({
   events = [],
   resources = [],
   selectTimeFromProvider,
+  onTimeSelect = () => {},
 }) {
   // Helper to get time slots for a day
   const getTimeSlots = (date, startHour = 8, endHour = 17) => {
@@ -148,32 +150,46 @@ export default function DayView({
             })}
 
           {selectTimeFromProvider && (
-            <div
-              className={cn(
-                "p-2 min-h-[80px] border-b border-r border-l border-gray-200",
-                "flex items-center justify-start w-full transition-colors duration-200",
-                {
-                  "vertical-stripes-bg": isBusySlot(
-                    currentDate,
-                    slotTime,
-                    resources
-                  ).isBusy,
-                  "cursor-pointer hover:bg-gray-50": !isBusySlot(
-                    currentDate,
-                    slotTime,
-                    resources
-                  ).isBusy,
-                }
-              )}>
-              <div className="flex flex-col items-center gap-2">
-                {isBusySlot(currentDate, slotTime, resources).sale &&
-                  !isBusySlot(currentDate, slotTime, resources).isBusy && (
-                    <span className="text-xs text-primary01 bg-[#F5F4FE] px-2 py-1 rounded-full font-medium border border-[#C3BCF6]">
-                      {isBusySlot(currentDate, slotTime, resources).sale}
-                    </span>
-                  )}
-              </div>
-            </div>
+            <DayCell
+              day={currentDate}
+              service={resources.find((r) =>
+                dayjs(r.date).isSame(currentDate, "day")
+              )}
+              selectTimeFromProvider={true}
+              timeSlots={timeSlots}
+              isToday={dayjs(currentDate).isSame(dayjs(), "day")}
+              isCurrentMonth={true}
+              onTimeSelect={onTimeSelect}
+              dayView={true}
+              index={rowIndex}
+            />
+
+            // <div
+            //   className={cn(
+            //     "p-2 min-h-[80px] border-b border-r border-l border-gray-200",
+            //     "flex items-center justify-start w-full transition-colors duration-200",
+            //     {
+            //       "vertical-stripes-bg": isBusySlot(
+            //         currentDate,
+            //         slotTime,
+            //         resources
+            //       ).isBusy,
+            //       "cursor-pointer hover:bg-gray-50": !isBusySlot(
+            //         currentDate,
+            //         slotTime,
+            //         resources
+            //       ).isBusy,
+            //     }
+            //   )}>
+            //   <div className="flex flex-col items-center gap-2">
+            //     {isBusySlot(currentDate, slotTime, resources).sale &&
+            //       !isBusySlot(currentDate, slotTime, resources).isBusy && (
+            //         <span className="text-xs text-primary01 bg-[#F5F4FE] px-2 py-1 rounded-full font-medium border border-[#C3BCF6]">
+            //           {isBusySlot(currentDate, slotTime, resources).sale}
+            //         </span>
+            //       )}
+            //   </div>
+            // </div>
           )}
         </div>
       ))}

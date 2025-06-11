@@ -1,8 +1,8 @@
 import dayjs from "dayjs";
+import { Clock } from "lucide-react";
 import { useState } from "react";
 import { cn } from "../../lib/utils";
 import EventModal from "../selectTimeComponents/EventModal";
-import Event from "./Event";
 
 export default function DayCell({
   day,
@@ -16,36 +16,27 @@ export default function DayCell({
   onTimeSelect,
   eventsToShow,
   weekView = false,
+  dayView = false,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedTimes, setSelectedTimes] = useState([]);
 
-  // Add function to check if day is in the past
   const isPastDay = () => {
     const today = dayjs().startOf("day");
     return day.isBefore(today);
   };
 
-  // Filter available time slots to remove past times for today
-  const availableTimeSlots =
-    timeSlots?.map((slot) => {
-      const slotTime = dayjs(
-        `${day.format("YYYY-MM-DD")} ${dayjs(slot).format("HH:mm")}`
-      );
-      const isPastTime = dayjs().isAfter(slotTime);
+  const getCurrentTimeSlot = () => {
+    if (!dayView || !timeSlots || !timeSlots[index]) return null;
+    const currentTime = dayjs(timeSlots[index]).format("HH:mm");
 
-      return {
-        time: dayjs(slot).format("HH:mm"),
-        isAvailable:
-          !service?.isBusy && !(day.isSame(dayjs(), "day") && isPastTime),
-        sale: service?.sale,
-      };
-    }) || [];
+    const dateData = service?.timeSlots?.find(
+      (slot) => slot.time === currentTime
+    );
+    return dateData || { time: currentTime, isBusy: false, sale: null };
+  };
 
-  // Check if all time slots are unavailable
-  const allTimeSlotsUnavailable = availableTimeSlots.every(
-    (slot) => !slot.isAvailable
-  );
+  const currentTimeSlot = getCurrentTimeSlot();
 
   const handleTimeSubmit = (data) => {
     const formattedTime = {
@@ -61,29 +52,29 @@ export default function DayCell({
     setIsOpen(false);
   };
 
-  const Element = selectTimeFromProvider ? "button" : "div"; // Use button if selectTimeFromProvider is true, otherwise use div
+  const renderContent = () => {
+    if (dayView && currentTimeSlot) {
+      return (
+        <div className="flex flex-col h-full w-full">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <Clock className="w-4 h-4 text-gray-500" />
+              <span className="text-sm font-medium">
+                {currentTimeSlot.time}
+              </span>
+            </div>
+            {currentTimeSlot.sale && (
+              <span className="text-xs text-primary01 bg-[#F5F4FE] px-2 py-1 rounded-full font-medium border border-[#C3BCF6]">
+                {currentTimeSlot.sale}
+              </span>
+            )}
+          </div>
+        </div>
+      );
+    }
 
-  return (
-    <>
-      <Element
-        disabled={service?.isBusy || isPastDay() || allTimeSlotsUnavailable}
-        onClick={selectTimeFromProvider ? () => setIsOpen(true) : undefined}
-        className={cn(
-          "p-2 min-h-[120px] border-b border-r border-gray-200 bg-white",
-          "cursor-pointer flex flex-col justify-start transition-colors duration-200",
-
-          {
-            "text-gray-400": !isCurrentMonth || isPastDay(),
-            "border-r-0": (index + 1) % 7 === 0,
-            "vertical-stripes-bg": service?.isBusy,
-            "bg-[#F5F4FE] border border-[#866BE7]": selectedTimes.some((time) =>
-              dayjs(time.fullDateTime).isSame(day, "day")
-            ),
-            "disabled:cursor-not-allowed":
-              selectTimeFromProvider &&
-              (service?.isBusy || isPastDay() || allTimeSlotsUnavailable),
-          }
-        )}>
+    return (
+      <>
         <div
           className={cn(
             "text-sm mb-1 text-start flex items-center justify-start gap-2",
@@ -92,38 +83,52 @@ export default function DayCell({
           {!weekView && (
             <span
               className={cn({
-                " bg-primary01 w-8 h-8 text-white grid place-items-center rounded-full":
+                "bg-primary01 w-8 h-8 text-white grid place-items-center rounded-full":
                   selectTimeFromProvider && isToday,
               })}>
               {day.format("D")}
             </span>
           )}
-          {!selectTimeFromProvider && !weekView && isToday && (
-            <span className="text-xs font-normal border border-gray-200 px-2 py-1 text-primary01 rounded-full ml-1 flex items-center justify-center">
-              Today
+          {service?.sale && (
+            <span className="text-xs text-primary01 bg-[#F5F4FE] px-2 py-1 rounded-full font-medium border border-[#C3BCF6]">
+              {service.sale}
             </span>
           )}
-
-          {(selectTimeFromProvider && service?.isBusy) ||
-            (service?.sale && <div className="">{service.sale}</div>)}
-
-          {!selectTimeFromProvider && hiddenEventsCount > 0 && (
-            <div className="text-xs text-gray-600 mt-1 cursor-pointer hover:underline">
-              {hiddenEventsCount} others
-            </div>
-          )}
         </div>
-        <div className="flex flex-col space-y-1 mt-2">
-          {!selectTimeFromProvider &&
-            eventsToShow.map((event) => <Event key={event.id} event={event} />)}
-        </div>
-      </Element>
+      </>
+    );
+  };
+
+  return (
+    <>
+      <button
+        disabled={currentTimeSlot?.isBusy || isPastDay()}
+        onClick={() => setIsOpen(true)}
+        className={cn(
+          "p-2 border-b border-r border-gray-200",
+          "cursor-pointer transition-colors duration-200",
+          {
+            "min-h-[120px]": !dayView,
+            "min-h-[80px]": dayView,
+            "vertical-stripes-bg": currentTimeSlot?.isBusy,
+            "bg-[#F5F4FE] border border-[#866BE7]": selectedTimes.some((time) =>
+              dayjs(time.fullDateTime).isSame(day, "day")
+            ),
+            "disabled:cursor-not-allowed":
+              currentTimeSlot?.isBusy || isPastDay(),
+            "hover:bg-gray-50": !currentTimeSlot?.isBusy && !isPastDay(),
+          }
+        )}>
+        {renderContent()}
+      </button>
+
       <EventModal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
         onSubmit={handleTimeSubmit}
         selectedDate={day}
-        timeSlots={availableTimeSlots}
+        timeSlots={service?.timeSlots}
+        dayView={dayView}
       />
     </>
   );

@@ -2,10 +2,9 @@ import { Tooltip, Input, Checkbox } from "antd";
 import { MdCheckCircleOutline } from "react-icons/md";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { FilterFilled, SearchOutlined } from "../../../assets/icons/icons";
+import { ArrowUpRight } from "lucide-react";
 
-export const getPendingBookingsColumnsByClient = (
-  handleApproveBooking,
-  handleRejectBooking,
+export const getConfirmedBookingsColumnsByClient = (
   navigate,
   selectedServiceFilters,
   handleServiceFilterChange,
@@ -166,23 +165,13 @@ export const getPendingBookingsColumnsByClient = (
     key: "action",
     render: (_, record) => (
       <div className="flex gap-3">
-        <Tooltip placement="top" color="#f5222d" title="Reject">
+        <Tooltip placement="top" color="" title="Booking Detail">
           <button
             type="button"
-            onClick={() => handleRejectBooking(record.id)}
-            className="cursor-pointer text-[#f5222d] hover:text-[#ff4d4f]"
+            onClick={() => navigate(`/dashboard/calendar/bookings-details/${record.id}`)}
+            className="cursor-pointer"
           >
-            <IoCloseCircleOutline className="size-5" />
-          </button>
-        </Tooltip>
-
-        <Tooltip placement="top" color="#52c41a" title="Approve">
-          <button
-            type="button"
-            onClick={() => handleApproveBooking(record.id)}
-            className="cursor-pointer text-[#52c41a] hover:text-[#73d13d]"
-          >
-            <MdCheckCircleOutline className="size-5" />
+            <ArrowUpRight size={20} />
           </button>
         </Tooltip>
       </div>

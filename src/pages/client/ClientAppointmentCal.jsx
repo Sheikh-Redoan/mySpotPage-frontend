@@ -8,9 +8,9 @@ import ReusableCalendar, {
   createEventId,
 } from "../../components/reuseableComponent/ReuseableCalendar";
 import Container from "./Container";
-import { toYYYYMMDD } from "../../utils/toYYYYMMDD";
 import Calender from "../../components/calender/Calender";
 import { MOCK_EVENTS, MOCK_RESOURCES } from "../../components/calender/mockdata";
+import { toYYYYMMDD } from "../../utils/dateFormatter";
 
 let eventGuid = 0;
 let todayStr = dayjs().format("YYYY-MM-DD");

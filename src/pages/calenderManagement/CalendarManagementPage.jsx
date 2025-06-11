@@ -98,15 +98,15 @@ function CalendarManagementPage() {
 
   return (
     <div className="w-full p-5">
-      <div className="flex items-center justify-between ">
+      <div className="flex items-center justify-between">
         <Tabs
           defaultActiveKey="1"
           items={items}
           onChange={onChange}
-          className="custom-client-tabs"
+          className="custom-client-tabs overflow-x-auto"
         />
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 max-md:hidden">
           <Link
             to="/dashboard/add-booking-by-provider"
             type="button"

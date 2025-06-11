@@ -12,6 +12,8 @@ import TimePicker from "./TimePicker";
 import { Plus } from "lucide-react";
 import BookingDetailsServices from "./BookingDetailsServices";
 import BookingSummary from "./BookingSummary";
+import { Avatar } from "antd";
+import { formatToDDMonYYYY } from "../../../utils/dateFormatter";
 
 const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
   console.log("booking", booking);
@@ -36,14 +38,26 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
   };
 
   return (
-    <div className="w-full flex flex-col lg:flex-row">
+    <div className="w-full flex flex-col md:flex-row">
       {/* Left Section: Client and Booking Info */}
-      <div className="w-full h-full lg:w-[30%] border-r-[1px] border-t-[1px] border-t-gray-300 border-r-gray-300 p-4">
-        <div className="space-y-4 border-b-[1px] border-b-gray-300 pb-3">
-          <div className="w-16 h-16 bg-primary01 text-white flex items-center justify-center rounded-full text-xl font-bold">
-            {booking.avatar}
+      <div className="w-full h-full md:w-[30%] md:border-r-[1px] md:border-t-[1px] md:border-t-gray-300 md:border-r-gray-300 md:p-4">
+        <div className="flex flex-row lg:flex-col gap-2 md:gap-4 items-start md:border-b-[1px] md:border-b-gray-300 pb-3">
+          <div className="w-[64px] h-[64px]">
+            <Avatar
+              size={64}
+              style={{
+                backgroundColor: "#744CDB",
+                color: "white",
+                fontSize: "20px",
+                fontWeight: "bold",
+              }}
+              shape="circle"
+            >
+              {booking.avatar}
+            </Avatar>
           </div>
-          <div className="flex items-center gap-2">
+
+          <div className="flex items-center gap-2 max-md:hidden">
             <Link
               to={"#"}
               className="text-[#3E70DD] underline decoration-1 decoration-Boulder-400 text-[20px] font-medium"
@@ -54,9 +68,61 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
               <Crown className="text-white size-3" />
             </div>
           </div>
+
+          {/* Mobile and Tablet View */}
+          <div className="md:hidden">
+            <div className="flex items-center gap-2">
+              <Link
+                to={"#"}
+                className="text-[#3E70DD] underline decoration-1 decoration-Boulder-400 text-[20px] font-medium"
+              >
+                {booking.clientName}
+              </Link>
+              <div className="w-5 h-5 rounded-full bg-[#FFB743] flex items-center justify-center">
+                <Crown className="text-white size-3" />
+              </div>
+            </div>
+
+            <div className="py-4 space-y-3 border-b-[2px] border-dashed border-b-gray-300 md:hidden">
+              <div className="flex items-center gap-3">
+                <PhoneCall className="size-5 text-gray-600" />
+                <p className="text-[#242528] text-[14px] font-normal">
+                  {booking.clientPhone}
+                </p>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3">
+                  <CircleUserRound className="size-5 text-gray-600" />
+                  <p className="text-[#242528] text-[14px] font-normal">
+                    Staff -{" "}
+                  </p>
+                </div>
+                <StaffReassignSelect
+                  booking={booking}
+                  onReassign={handleReassign}
+                />
+              </div>
+
+              <div className="flex items-center gap-3">
+                <Calendar className="size-5 text-gray-600" />
+                <p className="text-[#242528] text-sm">
+                  {formatToDDMonYYYY(booking.scheduledDate)},
+                </p>
+                <p className="text-[#242528] text-sm ml-[-2px]">
+                  {booking.scheduledTime}
+                </p>
+              </div>
+
+              <p className="text-[#424348] text-sm font-noramal p-2">
+                Hair is thick and slightly wavy, prefers a shoulder-length
+                layered cut with light texture.
+              </p>
+            </div>
+          </div>
         </div>
 
-        <div className="py-4 space-y-3 border-b-[2px] border-dashed border-b-gray-300">
+        <div className="py-4 space-y-3 border-b-[2px] border-dashed border-b-gray-300 max-md:hidden">
           <div className="flex items-center gap-3">
             <PhoneCall className="size-5 text-gray-600" />
             <p className="text-[#242528] text-[14px] font-normal">
@@ -107,8 +173,8 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
       </div>
 
       {/* Middle Section: Services INfo */}
-      <div className="w-full lg:w-[50%] border-r-[1px] border-t-[1px] border-t-gray-300 border-r-gray-300">
-        <div className="bg-[#F5F4FE] w-full p-4 flex justify-between items-center">
+      <div className="w-full lg:w-[50%] lg:border-r-[1px] lg:border-t-[1px] lg:border-t-gray-300 lg:border-r-gray-300">
+        <div className="bg-[#F5F4FE] w-full md:p-4 flex justify-between items-center">
           {/* Date Picker */}
           <div className="relative">
             <StyledDatePicker
@@ -150,7 +216,7 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
         </div>
 
         {/* Services Section */}
-        <div className="px-4 py-6 w-full">
+        <div className="lg:px-4 lg:py-6 w-full">
           <div className="flex justify-between">
             <h3 className="text-lg font-semibold text-[#242528]">Services</h3>
 
@@ -171,7 +237,7 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
       </div>
 
       {/* Right Section: Summary */}
-      <div className="w-full h-full lg:w-[30%] border-t-[1px] border-t-gray-300 p-4">
+      <div className="w-full h-full lg:w-[30%] lg:border-t-[1px] lg:border-t-gray-300 p-4">
         <BookingSummary status={booking?.status} />
       </div>
     </div>

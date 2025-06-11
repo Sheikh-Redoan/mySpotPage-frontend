@@ -8,7 +8,7 @@ dayjs.extend(customParseFormat);
 
 const format = "hh:mm A";
 
-const FixedModal = ({ isOpen, onClose, onSave }) => {
+const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
   const onChange = (e) => {
     console.log("checked =", e.target.checked);
   };
@@ -80,10 +80,11 @@ const FixedModal = ({ isOpen, onClose, onSave }) => {
             <SearchIcon />
           </div>
         </div>
-        {/* Toggle */}
+
+        {/* Toggle Show Full Address */}
         <div className="flex items-center gap-3 mb-4">
           <div>
-            <Switch defaultChecked onChange={onChange} />
+            <Switch defaultChecked onChange={(checked) => console.log(checked)} />
           </div>
           <p className="text-[#262626]">Show full address only after booking</p>
         </div>
@@ -331,4 +332,4 @@ const FixedModal = ({ isOpen, onClose, onSave }) => {
   );
 };
 
-export default FixedModal;
+export default FixedLocationModal;

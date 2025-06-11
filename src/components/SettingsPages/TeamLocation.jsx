@@ -1,7 +1,7 @@
 import { Plus } from "lucide-react";
 import { useState } from "react";
 
-import FixedModal from "../modal/FixedModal";
+import FixedModal from "../modal/FixedLocationModal";
 
 const TeamLocation = () => {
   const [fixedModalOpen, setFixedModalOpen] = useState(false);

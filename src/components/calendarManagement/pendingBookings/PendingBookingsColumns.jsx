@@ -181,7 +181,10 @@ export const getPendingBookingsColumns = (
         <Tooltip placement="top" color="#52c41a" title="Approve">
           <button
             type="button"
-            onClick={() => handleApproveBooking(record.id)}
+            onClick={(event) => {
+              event.stopPropagation();
+              handleApproveBooking(record.id);
+            }}
             className="cursor-pointer text-[#52c41a] hover:text-[#73d13d]"
           >
             <MdCheckCircleOutline className="size-5" />
@@ -191,7 +194,10 @@ export const getPendingBookingsColumns = (
         <Tooltip placement="top" color="#f5222d" title="Reject">
           <button
             type="button"
-            onClick={() => handleRejectBooking(record.id)}
+            onClick={(event) => {
+              event.stopPropagation();
+              handleRejectBooking(record.id);
+            }}
             className="cursor-pointer text-[#f5222d] hover:text-[#ff4d4f]"
           >
             <IoCloseCircleOutline className="size-5" />

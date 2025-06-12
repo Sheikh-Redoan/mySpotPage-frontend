@@ -1,3 +1,4 @@
+import { Popover } from "antd";
 import { ListFilter } from "lucide-react";
 import { useState } from "react";
 import UserCard from "../../components/admin/UserCard";
@@ -29,7 +30,7 @@ export default function UserManagement() {
           <Popover
             title="Filter"
             trigger={["click"]}
-            placement="bottomRight"
+            placement="bottomLeft"
             open={isUserOpen}
             onOpenChange={handlePopup}
             arrow={false}

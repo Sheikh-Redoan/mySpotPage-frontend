@@ -261,7 +261,7 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
         </div>
 
         {/* Services Section */}
-        <div className="lg:px-4 lg:py-6 w-full">
+        <div className="px-4 py-6 w-full">
           <div className="flex justify-between">
             <h3 className="text-lg font-semibold text-[#242528]">Services</h3>
 

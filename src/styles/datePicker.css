@@ -7,6 +7,22 @@
   box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.1);
 }
 
+@media screen and (max-width: 768px) {
+  .react-datepicker {
+    width: 100% !important;
+    border: none !important;
+    border-radius: 0% !important;
+    box-shadow: none !important;
+  }
+  .react-datepicker__month-container {
+    width: 100% !important;
+  }
+  .react-datepicker__day-names {
+    width: 100% !important;
+    justify-content: space-around !important;
+  }
+}
+
 /* Style for the day names (S, M, T, W, T, F, S) */
 .react-datepicker__day-names {
   display: flex;

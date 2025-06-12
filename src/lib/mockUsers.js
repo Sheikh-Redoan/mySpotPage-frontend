@@ -15,9 +15,3 @@ export const users = [
     role: "seller",
   },
 ];
-
-// {
-//   name: "User",
-//   role: "client",
-//   photoURL: null,
-// }

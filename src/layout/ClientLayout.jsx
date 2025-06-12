@@ -6,10 +6,10 @@ import { selectUser } from "../redux/features/userSlice";
 export default function ClientLayout() {
   const user = useSelector(selectUser);
 
-  if (user.role === "seller") {
+  if (user?.role === "seller") {
     return <Navigate to="/dashboard" />;
   }
-  if (user.role === "admin") {
+  if (user?.role === "admin") {
     return <Navigate to="/admin" />;
   }
 

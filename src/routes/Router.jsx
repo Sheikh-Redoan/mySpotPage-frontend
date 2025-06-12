@@ -164,6 +164,7 @@ export const routes = createBrowserRouter([
     element: <Authentication />,
     hydrateFallbackElement: <div>Loading...</div>,
     children: [
+      { index: true, element: <Navigate to="signin" replace /> }, // Redirect to signin by default
       { path: "signin", element: <Signin /> },
       { path: "forgot-password", element: <ForgotPassword /> },
       { path: "verify-number", element: <VerifyNumber /> },

@@ -7,7 +7,7 @@ import { Link } from "react-router";
 export default function ClientDetails({ event, hide }) {
   // Dropdown menu for the Status button in the Action section
   const statusMenu = (
-    <div className="bg-white rounded-md shadow-lg py-1 border border-gray-200">
+    <div className="bg-white rounded-xl shadow-lg py-1 border border-gray-200">
       <ul className="list-none p-0 m-0">
         <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm text-gray-700">
           Confirmed

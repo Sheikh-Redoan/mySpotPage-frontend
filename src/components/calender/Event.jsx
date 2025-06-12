@@ -20,31 +20,32 @@ export default function Event({ event }) {
   return (
     <div
       key={event.id}
-      className="cursor-pointer text-xs flex items-center gap-2 text-gray-700">
-      <span
-        className={cn("w-1.5 h-1.5 rounded-full", {
-          "bg-[#3E70DD]": event.status === "Confirmed",
-          "bg-[#3BA55C]": event.status === "Completed",
-          "bg-[#FC8B23]": event.status === "Pending",
-          "bg-[#ED4245]": event.status === "Cancelled",
-          "bg-[#82868E]": event.status === "Not-show",
-        })}
-      />
+      className="cursor-pointer text-xs flex items-center justify-between gap-2 text-gray-700">
+      <div>
+        <span
+          className={cn("w-1.5 h-1.5 rounded-full", {
+            "bg-[#3E70DD]": event.status === "Confirmed",
+            "bg-[#3BA55C]": event.status === "Completed",
+            "bg-[#FC8B23]": event.status === "Pending",
+            "bg-[#ED4245]": event.status === "Cancelled",
+            "bg-[#82868E]": event.status === "Not-show",
+          })}
+        />
 
-      <Popover
-        placement="rightTop"
-        trigger="click"
-        open={open}
-        onOpenChange={handleOpenChange}
-        arrow={false}
-        content={<ClientDetails event={event} hide={hide} />}>
-        <Button type="text" className="!p-0">
-          <span>
-            {dayjs(event.start).format("HH:mm")} - {event.title}
-          </span>
-        </Button>
-      </Popover>
-
+        <Popover
+          placement="left"
+          trigger="click"
+          open={open}
+          onOpenChange={handleOpenChange}
+          arrow={false}
+          content={<ClientDetails event={event} hide={hide} />}>
+          <Button type="text" className="!p-0">
+            <span>
+              {dayjs(event.start).format("HH:mm")} - {event.title}
+            </span>
+          </Button>
+        </Popover>
+      </div>
       <Popover
         placement="rightTop"
         trigger="click"

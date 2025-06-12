@@ -16,7 +16,7 @@ export default function MoreEvents({ events, maxEventsPerMonthCell }) {
 
   return (
     <Popover
-      placement="rightTop"
+      placement="bottomRight"
       trigger="click"
       open={open}
       onOpenChange={handleOpenChange}

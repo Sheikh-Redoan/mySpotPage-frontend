@@ -2,10 +2,9 @@ import { Tooltip, Input, Checkbox } from "antd";
 import { MdCheckCircleOutline } from "react-icons/md";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { FilterFilled, SearchOutlined } from "../../../assets/icons/icons";
+import { ArrowUpRight } from "lucide-react";
 
-export const getPendingBookingsColumns = (
-  handleApproveBooking,
-  handleRejectBooking,
+export const getConfirmedBookingsColumnsByClient = (
   navigate,
   selectedServiceFilters,
   handleServiceFilterChange,
@@ -34,18 +33,6 @@ export const getPendingBookingsColumns = (
     ),
   },
   {
-    title: "Client Information",
-    dataIndex: "clientName",
-    key: "clientInfo",
-    sorter: (a, b) => a.clientName.localeCompare(b.clientName),
-    render: (text, record) => (
-      <div className="flex flex-col">
-        <span className="text-[#262626] text-sm font-medium">{text}</span>
-        <span className="text-[#888] text-xs">{record.clientPhone}</span>
-      </div>
-    ),
-  },
-  {
     title: "Service",
     dataIndex: "serviceDetails",
     key: "service",
@@ -62,7 +49,7 @@ export const getPendingBookingsColumns = (
       </div>
     ),
     filterDropdown: ({ confirm, clearFilters }) => (
-      <div className="p-2 bg-white rounded-lg shadow-lg w-[320px]">
+      <div className="p-2 bg-white rounded-lg shadow-lg max-w-[320px]">
         <div className="mb-4">
           <Input
             placeholder="Search services"
@@ -155,7 +142,7 @@ export const getPendingBookingsColumns = (
     key: "status",
     render: (text) => (
       <div
-        className={`rounded-full text-center ${
+        className={`rounded-full text-center px-2 py-1 ${
           text === "Pending"
             ? "bg-[#FFF4EA] text-[#FC8B23]"
             : text === "Confirmed"
@@ -177,30 +164,14 @@ export const getPendingBookingsColumns = (
     title: "Action",
     key: "action",
     render: (_, record) => (
-      <div className="flex gap-2">
-        <Tooltip placement="top" color="#52c41a" title="Approve">
+      <div className="flex gap-3">
+        <Tooltip placement="top" color="" title="Booking Detail">
           <button
             type="button"
-            onClick={(event) => {
-              event.stopPropagation();
-              handleApproveBooking(record.id);
-            }}
-            className="cursor-pointer text-[#52c41a] hover:text-[#73d13d]"
+            onClick={() => navigate(`/dashboard/calendar/bookings-details/${record.id}`)}
+            className="cursor-pointer"
           >
-            <MdCheckCircleOutline className="size-5" />
-          </button>
-        </Tooltip>
-
-        <Tooltip placement="top" color="#f5222d" title="Reject">
-          <button
-            type="button"
-            onClick={(event) => {
-              event.stopPropagation();
-              handleRejectBooking(record.id);
-            }}
-            className="cursor-pointer text-[#f5222d] hover:text-[#ff4d4f]"
-          >
-            <IoCloseCircleOutline className="size-5" />
+            <ArrowUpRight size={20} />
           </button>
         </Tooltip>
       </div>

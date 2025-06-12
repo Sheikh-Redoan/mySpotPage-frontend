@@ -523,16 +523,126 @@ export const MOCK_EVENTS = [
 ];
 
 export const specialDatesData = [
-  { date: "2025-06-01", isBusy: true },
-  { date: "2025-06-02", isBusy: true },
-  { date: "2025-06-06", sale: "🔥 25% OFF" },
-  { date: "2025-06-08", isBusy: true },
-  { date: "2025-06-09", isBusy: true },
-  { date: "2025-06-14", sale: "🔥 25% OFF" },
-  { date: "2025-06-15", sale: "🔥 10% OFF", isBusy: true },
-  { date: "2025-06-16", isBusy: true },
-  { date: "2025-06-17", isBusy: true },
-  { date: "2025-06-22", isBusy: true },
-  { date: "2025-06-23", isBusy: true },
-  { date: "2025-06-30", sale: "🔥 50% OFF" },
+  {
+    date: "2025-06-01",
+    isBusy: true,
+    timeSlots: [
+      { time: "09:00", isBusy: true },
+      { time: "10:00", isBusy: true },
+      { time: "11:00", isBusy: false },
+      { time: "14:00", isBusy: true },
+      { time: "15:00", isBusy: true },
+    ],
+  },
+  {
+    date: "2025-06-02",
+    isBusy: true,
+    timeSlots: [
+      { time: "09:00", isBusy: true },
+      { time: "10:00", isBusy: false, sale: "🔥 15% OFF" },
+      { time: "14:00", isBusy: true },
+      { time: "15:00", isBusy: true },
+    ],
+  },
+  {
+    date: "2025-06-06",
+    sale: "🔥 25% OFF",
+    timeSlots: [
+      { time: "09:00", isBusy: false, sale: "🔥 25% OFF" },
+      { time: "10:00", isBusy: false, sale: "🔥 25% OFF" },
+      { time: "14:00", isBusy: false, sale: "🔥 25% OFF" },
+      { time: "15:00", isBusy: false, sale: "🔥 25% OFF" },
+    ],
+  },
+  {
+    date: "2025-06-08",
+    isBusy: true,
+    timeSlots: [
+      { time: "09:00", isBusy: true },
+      { time: "10:00", isBusy: true },
+      { time: "14:00", isBusy: true },
+      { time: "15:00", isBusy: false },
+    ],
+  },
+  {
+    date: "2025-06-11",
+    isBusy: true,
+    timeSlots: [
+      { time: "09:00", isBusy: true },
+      { time: "10:00", isBusy: false, sale: "🔥 25% OFF" },
+      { time: "14:00", isBusy: true },
+      { time: "15:00", isBusy: true },
+    ],
+  },
+  {
+    date: "2025-06-14",
+
+    timeSlots: [
+      { time: "09:00", isBusy: false, sale: "🔥 25% OFF" },
+      { time: "10:00", isBusy: false, sale: "🔥 25% OFF" },
+      { time: "14:00", isBusy: false, sale: "🔥 25% OFF" },
+      { time: "15:00", isBusy: false, sale: "🔥 25% OFF" },
+    ],
+  },
+  {
+    date: "2025-06-15",
+
+    isBusy: true,
+    timeSlots: [
+      { time: "09:00", isBusy: true, sale: "🔥 10% OFF" },
+      { time: "10:00", isBusy: false, sale: "🔥 10% OFF" },
+      { time: "14:00", isBusy: true },
+      { time: "15:00", isBusy: true },
+    ],
+  },
+  {
+    date: "2025-06-16",
+    isBusy: true,
+    timeSlots: [
+      { time: "09:00", isBusy: true },
+      { time: "10:00", isBusy: true },
+      { time: "14:00", isBusy: true },
+      { time: "15:00", isBusy: true },
+    ],
+  },
+  {
+    date: "2025-06-17",
+    isBusy: true,
+    timeSlots: [
+      { time: "09:00", isBusy: true },
+      { time: "10:00", isBusy: true },
+      { time: "14:00", isBusy: true },
+      { time: "15:00", isBusy: true },
+    ],
+  },
+  {
+    date: "2025-06-22",
+    isBusy: true,
+    timeSlots: [
+      { time: "09:00", isBusy: true },
+      { time: "10:00", isBusy: true },
+      { time: "14:00", isBusy: true },
+      { time: "15:00", isBusy: true },
+    ],
+  },
+  {
+    date: "2025-06-23",
+    isBusy: true,
+    timeSlots: [
+      { time: "09:00", isBusy: true },
+      { time: "10:00", isBusy: true },
+      { time: "14:00", isBusy: true },
+      { time: "15:00", isBusy: true },
+    ],
+  },
+  {
+    date: "2025-06-30",
+    sale: "🔥 50% OFF",
+    timeSlots: [
+      { time: "09:00", isBusy: false, sale: "🔥 50% OFF" },
+      { time: "10:00", isBusy: false, sale: "🔥 50% OFF" },
+      { time: "14:00", isBusy: false, sale: "🔥 50% OFF" },
+      { time: "15:00", isBusy: false, sale: "🔥 50% OFF" },
+    ],
+  },
 ];

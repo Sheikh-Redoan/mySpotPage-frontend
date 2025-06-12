@@ -3,48 +3,72 @@ import { useState } from "react";
 import { cn } from "../../lib/utils";
 import EventModal from "../selectTimeComponents/EventModal";
 import Event from "./Event";
+import MoreEvents from "./MoreEvents";
 
 export default function DayCell({
   day,
   service,
   selectTimeFromProvider = false,
+  maxEventsPerMonthCell = 3,
   timeSlots,
   isToday = false,
   isCurrentMonth = true,
-  hiddenEventsCount,
   index = 0,
   onTimeSelect,
-  eventsToShow,
+  weekView = false,
+  dayView = false,
+  events = [],
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedTimes, setSelectedTimes] = useState([]);
 
-  // Add function to check if day is in the past
   const isPastDay = () => {
     const today = dayjs().startOf("day");
     return day.isBefore(today);
   };
 
-  // Filter available time slots to remove past times for today
-  const availableTimeSlots =
-    timeSlots?.map((slot) => {
-      const slotTime = dayjs(
-        `${day.format("YYYY-MM-DD")} ${dayjs(slot).format("HH:mm")}`
+  const getCurrentTimeSlot = () => {
+    if (!service?.timeSlots) return null;
+
+    if (dayView) {
+      const currentTime = dayjs(timeSlots[index]).format("HH:mm");
+      const timeSlotData = service.timeSlots.find(
+        (slot) => slot.time === currentTime
       );
-      const isPastTime = dayjs().isAfter(slotTime);
+      return (
+        timeSlotData || {
+          time: currentTime,
+          isBusy: false,
+          sale: null,
+        }
+      );
+    }
 
-      return {
-        time: dayjs(slot).format("HH:mm"),
-        isAvailable:
-          !service?.isBusy && !(day.isSame(dayjs(), "day") && isPastTime),
-        sale: service?.sale,
-      };
-    }) || [];
+    // For week view - return specific time slot
+    if (weekView && timeSlots?.[0]) {
+      const currentTime = dayjs(timeSlots[0]).format("HH:mm");
+      const timeSlotData = service.timeSlots.find(
+        (slot) => slot.time === currentTime
+      );
+      return (
+        timeSlotData || {
+          time: currentTime,
+          isBusy: false,
+          sale: null,
+        }
+      );
+    }
 
-  // Check if all time slots are unavailable
-  const allTimeSlotsUnavailable = availableTimeSlots.every(
-    (slot) => !slot.isAvailable
-  );
+    // For month view - show day status
+    const hasAvailableSlots = service.timeSlots.some((slot) => !slot.isBusy);
+    return {
+      isBusy: service.isBusy || !hasAvailableSlots,
+      sale: service.sale,
+      availableTimeSlots: service.timeSlots.filter((slot) => !slot.isBusy),
+    };
+  };
+
+  const currentTimeSlot = getCurrentTimeSlot();
 
   const handleTimeSubmit = (data) => {
     const formattedTime = {
@@ -60,67 +84,104 @@ export default function DayCell({
     setIsOpen(false);
   };
 
-  const Element = selectTimeFromProvider ? "button" : "div"; // Use button if selectTimeFromProvider is true, otherwise use div
+  const renderContent = () => {
+    if (dayView || weekView) {
+      return (
+        <div className="flex flex-col h-full w-full">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-start gap-2">
+              {currentTimeSlot?.sale && (
+                <span className="text-xs text-primary01 bg-[#F5F4FE] px-2 py-1 rounded-full font-medium border border-[#C3BCF6]">
+                  {currentTimeSlot.sale}
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // For month view
+    return (
+      <div
+        className={cn(
+          "text-sm mb-1 text-start flex items-start justify-start gap-2",
+          !isCurrentMonth ? "text-gray-400" : "text-gray-800",
+          {
+            "flex-col": !selectTimeFromProvider,
+          }
+        )}>
+        <span
+          className={cn({
+            "bg-primary01 w-8 h-8 text-white grid place-items-center rounded-full":
+              selectTimeFromProvider && isToday,
+          })}>
+          {day.format("D")}{" "}
+          {!selectTimeFromProvider && isToday && (
+            <span className="text-xs text-primary01 border border-primary01 px-3 py-1 rounded-full font-medium ml-2">
+              Today
+            </span>
+          )}
+        </span>
+        {service?.sale && currentTimeSlot?.availableTimeSlots?.length > 0 && (
+          <span className="text-xs text-primary01 bg-[#F5F4FE] px-2 py-1 rounded-full font-medium border border-[#C3BCF6]">
+            {service.sale}
+          </span>
+        )}
+
+        {!selectTimeFromProvider && events.length > 0 && (
+          <div className="flex flex-col items-start">
+            {events.slice(0, maxEventsPerMonthCell).map((event) => (
+              <Event key={event.id} event={event} />
+            ))}
+            {events.length > maxEventsPerMonthCell && (
+              <MoreEvents
+                events={events}
+                maxEventsPerMonthCell={maxEventsPerMonthCell}
+              />
+            )}
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  const Element = !selectTimeFromProvider ? "div" : "button";
 
   return (
     <>
       <Element
-        disabled={service?.isBusy || isPastDay() || allTimeSlotsUnavailable}
-        onClick={selectTimeFromProvider ? () => setIsOpen(true) : undefined}
+        disabled={currentTimeSlot?.isBusy || isPastDay()}
+        onClick={selectTimeFromProvider ? () => setIsOpen(true) : null}
         className={cn(
-          "p-2 min-h-[120px] border-b border-r border-gray-200 bg-white",
-          "cursor-pointer flex flex-col justify-start transition-colors duration-200",
-
+          "border-b border-r border-gray-200 relative overflow-hidden",
+          "cursor-pointer transition-colors duration-200",
+          dayView ? "w-full p-0" : "p-2",
           {
-            "text-gray-400": !isCurrentMonth || isPastDay(),
-            "border-r-0": (index + 1) % 7 === 0,
-            "vertical-stripes-bg": service?.isBusy,
+            "min-h-[120px]": !dayView,
+            "min-h-[80px]": dayView,
+            "vertical-stripes-bg": currentTimeSlot?.isBusy,
+            "disabled:cursor-not-allowed":
+              selectTimeFromProvider &&
+              (currentTimeSlot?.isBusy || isPastDay()),
+            "hover:bg-gray-50": !currentTimeSlot?.isBusy && !isPastDay(),
             "bg-[#F5F4FE] border border-[#866BE7]": selectedTimes.some((time) =>
               dayjs(time.fullDateTime).isSame(day, "day")
             ),
-            "disabled:cursor-not-allowed":
-              selectTimeFromProvider &&
-              (service?.isBusy || isPastDay() || allTimeSlotsUnavailable),
           }
         )}>
-        <div
-          className={cn(
-            "text-sm mb-1 text-start flex items-center justify-start gap-2",
-            !isCurrentMonth ? "text-gray-400" : "text-gray-800"
-          )}>
-          <span
-            className={cn({
-              " bg-primary01 w-8 h-8 text-white grid place-items-center rounded-full":
-                selectTimeFromProvider && isToday,
-            })}>
-            {day.format("D")}
-          </span>
-          {!selectTimeFromProvider && isToday && (
-            <span className="text-xs font-normal border border-gray-200 px-2 py-1 text-primary01 rounded-full ml-1 flex items-center justify-center">
-              Today
-            </span>
-          )}
-
-          {(selectTimeFromProvider && service?.isBusy) ||
-            (service?.sale && <div className="">{service.sale}</div>)}
-
-          {!selectTimeFromProvider && hiddenEventsCount > 0 && (
-            <div className="text-xs text-gray-600 mt-1 cursor-pointer hover:underline">
-              {hiddenEventsCount} others
-            </div>
-          )}
-        </div>
-        <div className="flex flex-col space-y-1 mt-2">
-          {!selectTimeFromProvider &&
-            eventsToShow.map((event) => <Event key={event.id} event={event} />)}
+        <div className={cn("relative z-10 h-full", dayView ? "p-4" : "")}>
+          {renderContent()}
         </div>
       </Element>
+
       <EventModal
         isOpen={isOpen}
         onClose={() => setIsOpen(false)}
         onSubmit={handleTimeSubmit}
         selectedDate={day}
-        timeSlots={availableTimeSlots}
+        timeSlots={currentTimeSlot?.availableTimeSlots || []}
+        dayView={dayView}
       />
     </>
   );

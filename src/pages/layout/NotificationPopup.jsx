@@ -1,16 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { imageProvider } from "../../lib/imageProvider";
 
-function NotificationPopup({ toggle, popupRef, notificationButtons }) {
+function NotificationPopup({ notificationButtons }) {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
-    <div
-      ref={popupRef}
-      className={` ${
-        toggle ? "scale-0 opacity-0 invisible" : "scale-100 opacity-100 visible"
-      } p-6 w-[400px] transition-all duration-300  absolute top-16 z-[10] right-4 rounded-xl bg-white shadow-lg inset-shadow-sm`}
-    >
+    <div className="max-w-xs">
       <div className="flex justify-between items-center">
         <h3 className="text-lg font-semibold">Notifications</h3>
         <h4 className="text-black/60 text-sm underline cursor-pointer">
@@ -25,8 +20,7 @@ function NotificationPopup({ toggle, popupRef, notificationButtons }) {
             key={index}
             className={`px-4 py-2 cursor-pointer rounded-xl text-sm ${
               index === activeTab ? "bg-primary01 text-white" : "text-black/90"
-            }`}
-          >
+            }`}>
             {item}
           </button>
         ))}

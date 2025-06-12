@@ -35,7 +35,6 @@ import {
 } from "../lib/staticData";
 import BasicInfo from "../pages/BasicInfo";
 import BookingInfo from "../pages/BookingInfo";
-import DynamicSubSideBarLayout from "../pages/DynamicSubSideBarLayout";
 import ErrorPage from "../pages/ErrorPage";
 import ForbiddenPage from "../pages/ForbiddenPage";
 import ProviderNotes from "../pages/ProviderNotes";
@@ -165,6 +164,7 @@ export const routes = createBrowserRouter([
     element: <Authentication />,
     hydrateFallbackElement: <div>Loading...</div>,
     children: [
+      { index: true, element: <Navigate to="signin" replace /> }, // Redirect to signin by default
       { path: "signin", element: <Signin /> },
       { path: "forgot-password", element: <ForgotPassword /> },
       { path: "verify-number", element: <VerifyNumber /> },
@@ -318,12 +318,7 @@ export const routes = createBrowserRouter([
 
       {
         path: "settings",
-        element: (
-          <DynamicSubSideBarLayout
-            indexPath="/dashboard/settings"
-            items={settingsNavItems}
-          />
-        ),
+        element: <MyProfileLayout tabs={settingsNavItems} />,
         children: [
           { index: true, element: <BusinessInfo /> },
           { path: "location", element: <Location /> },

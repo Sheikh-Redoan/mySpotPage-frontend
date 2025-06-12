@@ -1,7 +1,7 @@
 import { Button } from "antd";
 import { CircleAlert, CircleCheck, CircleOff, CircleX } from "lucide-react";
 
-export default function EventActions() {
+export default function EventActions({ block = true }) {
   return (
     <div
       className="flex flex-col space-y-2 p-2 items-start 
@@ -21,11 +21,15 @@ export default function EventActions() {
         className="!text-gray-600 !gap-0.5 w-full !justify-start">
         <CircleOff size={16} strokeWidth={1} /> <span>Not Show</span>
       </Button>
-      <Button
-        type="text"
-        className="!text-red-600 !gap-0.5 w-full !justify-start">
-        <CircleAlert size={16} strokeWidth={1} /> <span>Add to blacklist</span>
-      </Button>
+
+      {block && (
+        <Button
+          type="text"
+          className="!text-red-600 !gap-0.5 w-full !justify-start">
+          <CircleAlert size={16} strokeWidth={1} />{" "}
+          <span>Add to blacklist</span>
+        </Button>
+      )}
     </div>
   );
 }

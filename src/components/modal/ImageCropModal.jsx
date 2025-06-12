@@ -43,7 +43,7 @@ const ImageCropModal = ({
 
   return (
     <div className="fixed inset-0 z-50 bg-[#111113cc] flex items-center justify-center">
-      <div className="bg-white rounded-lg shadow-lg w-[90%] max-w-3xl">
+      <div className="bg-white rounded-lg shadow-lg w-[95%] max-w-3xl">
         {/* Header */}
         <div className="flex justify-between items-center py-6 px-6">
           <h3 className="text-xl font-semibold text-[#242528]">Crop image</h3>
@@ -60,8 +60,8 @@ const ImageCropModal = ({
           <AvatarEditor
             ref={editorRef}
             image={image}
-            width={718}
-            height={450}
+            width={480}
+            height={250}
             scale={imgScaleValue}
             rotate={0}
             color={[255, 255, 255, 0.6]}

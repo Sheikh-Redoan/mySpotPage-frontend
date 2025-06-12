@@ -3,6 +3,7 @@ import { Check } from "lucide-react";
 import { Clock } from "lucide-react";
 import React from "react";
 import { useState } from "react";
+import useDeviceWidth from "../../../hooks/useDeviceWidth";
 
 const timeSlots = [
   "08:00 AM",
@@ -24,6 +25,11 @@ const timeSlots = [
 
 const TimePicker = ({ scheduledTime }) => {
   const [selectedTime, setSelectedTime] = useState(scheduledTime);
+
+  const deviceWidth = useDeviceWidth();
+  const isMobile = deviceWidth <= 768;
+  console.log("isMobile", isMobile);
+  const placement = isMobile ? "rightTop" : "bottomRight";
 
   const handleTimeSelect = (time) => {
     // Handle time selection
@@ -71,7 +77,7 @@ const TimePicker = ({ scheduledTime }) => {
     <Popover
       content={content}
       arrow={false}
-      placement="bottomRight"
+      placement={placement}
       trigger="click"
     >
       <Button className="bg-[#FFFFFF] px-3 py-2 rounded-lg border-[1px] border-[#262626] text-[#242528] text-sm font-normal flex gap-2 items-center">

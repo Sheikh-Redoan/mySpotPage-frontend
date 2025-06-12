@@ -1,7 +1,7 @@
-import { Link } from "react-router";
-import { Progress, Flex } from "antd";
-import { ArrowUpRight } from "lucide-react";
+import { Flex, Progress } from "antd";
 import dayjs from "dayjs";
+import { ArrowUpRight } from "lucide-react";
+import { Link } from "react-router";
 
 const PlanCard = ({
   planName,
@@ -61,13 +61,12 @@ const PlanCard = ({
       <div
         className={`pt-5 text-sm font-medium flex ${
           showCancel ? "justify-between" : "justify-end"
-        }`}
-      >
+        }`}>
         <Link to={"/cancel-subscription"}>
           {showCancel && (
             <p className="text-red-500 underline cursor-pointer">
               Cancel Subscription
-            </p> 
+            </p>
           )}
         </Link>
 

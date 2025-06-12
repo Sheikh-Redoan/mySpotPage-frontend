@@ -50,7 +50,7 @@ export const getPendingBookingsColumnsByClient = (
       </div>
     ),
     filterDropdown: ({ confirm, clearFilters }) => (
-      <div className="p-2 bg-white rounded-lg shadow-lg w-[320px]">
+      <div className="p-2 bg-white rounded-lg shadow-lg max-w-[320px]">
         <div className="mb-4">
           <Input
             placeholder="Search services"
@@ -143,7 +143,7 @@ export const getPendingBookingsColumnsByClient = (
     key: "status",
     render: (text) => (
       <div
-        className={`rounded-full text-center ${
+        className={`rounded-full text-center px-2 py-1 ${
           text === "Pending"
             ? "bg-[#FFF4EA] text-[#FC8B23]"
             : text === "Confirmed"
@@ -169,7 +169,10 @@ export const getPendingBookingsColumnsByClient = (
         <Tooltip placement="top" color="#f5222d" title="Reject">
           <button
             type="button"
-            onClick={() => handleRejectBooking(record.id)}
+            onClick={(event) => {
+              event.stopPropagation();
+              handleRejectBooking(record.id)
+            }}
             className="cursor-pointer text-[#f5222d] hover:text-[#ff4d4f]"
           >
             <IoCloseCircleOutline className="size-5" />
@@ -179,7 +182,10 @@ export const getPendingBookingsColumnsByClient = (
         <Tooltip placement="top" color="#52c41a" title="Approve">
           <button
             type="button"
-            onClick={() => handleApproveBooking(record.id)}
+            onClick={(event) => {
+              event.stopPropagation();
+              handleApproveBooking(record.id)
+            }}
             className="cursor-pointer text-[#52c41a] hover:text-[#73d13d]"
           >
             <MdCheckCircleOutline className="size-5" />

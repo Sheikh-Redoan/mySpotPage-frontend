@@ -13,7 +13,8 @@ const PendingBookingByClient = () => {
 
   const allBookings = getPendingBookings();
   const pendingBookings =
-    allBookings && allBookings.filter((booking) => booking.status === "Pending");
+    allBookings &&
+    allBookings.filter((booking) => booking.status === "Pending");
 
   const [bookings, setBookings] = useState(pendingBookings || []);
   const [searchQuery, setSearchQuery] = useState("");
@@ -24,7 +25,10 @@ const PendingBookingByClient = () => {
 
   // State for service filter dropdown
   const [selectedServiceFilters, setSelectedServiceFilters] = useState([]);
-  const [serviceFilterDropdownSearchQuery, setServiceFilterDropdownSearchQuery] = useState("");
+  const [
+    serviceFilterDropdownSearchQuery,
+    setServiceFilterDropdownSearchQuery,
+  ] = useState("");
 
   const applyFilters = (currentSearchQuery, currentServiceFilters) => {
     let results = [...pendingBookings];
@@ -39,7 +43,9 @@ const PendingBookingByClient = () => {
           booking.clientPhone
             .toLowerCase()
             .includes(currentSearchQuery.toLowerCase()) ||
-          booking.staffName.toLowerCase().includes(currentSearchQuery.toLowerCase())
+          booking.staffName
+            .toLowerCase()
+            .includes(currentSearchQuery.toLowerCase())
       );
     }
 
@@ -90,12 +96,16 @@ const PendingBookingByClient = () => {
 
   // Filtered services for the dropdown search
   const filteredDropdownServices = allUniqueServices.filter((service) =>
-    service.toLowerCase().includes(serviceFilterDropdownSearchQuery.toLowerCase())
+    service
+      .toLowerCase()
+      .includes(serviceFilterDropdownSearchQuery.toLowerCase())
   );
 
   const handleServiceFilterChange = (service) => {
     setSelectedServiceFilters((prev) =>
-      prev.includes(service) ? prev.filter((s) => s !== service) : [...prev, service]
+      prev.includes(service)
+        ? prev.filter((s) => s !== service)
+        : [...prev, service]
     );
   };
 
@@ -129,7 +139,7 @@ const PendingBookingByClient = () => {
   const endIndex = startIndex + pageSize;
   const paginatedBookings = bookings.slice(startIndex, endIndex);
 
-  if(!bookings.length) return <CustomEmptyTable />
+  if (!bookings.length) return <CustomEmptyTable />;
 
   return (
     <div className="w-full py-2">
@@ -138,25 +148,31 @@ const PendingBookingByClient = () => {
         columns={columns}
         pagination={false}
         rowKey="id"
-        className="w-full"
+        className="w-full overflow-x-auto border border-border rounded-md"
         locale={{ emptyText: <CustomEmptyTable /> }}
         rowClassName={(record) =>
           searchQuery &&
-          (record.clientName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            record.clientPhone.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          (record.clientName
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase()) ||
+            record.clientPhone
+              .toLowerCase()
+              .includes(searchQuery.toLowerCase()) ||
             record.staffName.toLowerCase().includes(searchQuery.toLowerCase()))
             ? "bg-highlight01"
             : ""
         }
         onRow={(record) => ({
-          onClick: () => navigate(`/dashboard/calendar/bookings-details/${record.id}`),
+          onClick: (event) => {
+            navigate(`/dashboard/calendar/bookings-details/${record.id}`);
+          },
           className: "cursor-pointer hover:bg-gray-50",
         })}
       />
 
       {/* Pagination */}
-      <div className="flex justify-between items-center mt-4">
-        <div>
+      <div className="flex justify-center md:justify-between items-center mt-4">
+        <div className="hidden md:block">
           <span className="text-sm text-gray-600">Show </span>
           <Select
             value={pageSize}

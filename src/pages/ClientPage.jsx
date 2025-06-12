@@ -29,8 +29,8 @@ function ClientPage() {
   };
 
   return (
-    <div className="w-full p-5">
-      <div className="flex items-center justify-between mb-4">
+    <div className="w-full md:p-5">
+      <div className="flex flex-col md:flex-row items-center justify-between mb-4">
         <Tabs
           defaultActiveKey="1"
           items={items}
@@ -41,7 +41,7 @@ function ClientPage() {
         <button
           type="button"
           onClick={() => setIsModalOpen(true)}
-          className="inline-flex items-center px-3 py-2 gap-2 text-sm font-semibold text-white bg-primary01 border border-primary01 rounded-lg hover:bg-primary01 focus:outline-none focus:ring-2 focus:ring-primary01 focus:ring-offset-2"
+          className="w-full md:w-[150px] inline-flex items-center justify-center px-3 py-2 gap-2 text-sm font-semibold text-white bg-primary01 border border-primary01 rounded-lg hover:bg-primary01 focus:outline-none focus:ring-2 focus:ring-primary01 focus:ring-offset-2"
         >
           <PlusIcon />
           Add Client

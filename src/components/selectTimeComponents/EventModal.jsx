@@ -49,7 +49,8 @@ const EventModal = ({ isOpen, onClose, onSubmit, selectedDate, timeSlots }) => {
       style={{
         backgroundColor: "rgba(75, 85, 99, 0.7)",
       }}
-      centered>
+      centered
+    >
       <h4 className="text-[#262626] text-[16px] font-medium">
         {formattedDate}
       </h4>
@@ -64,7 +65,8 @@ const EventModal = ({ isOpen, onClose, onSubmit, selectedDate, timeSlots }) => {
                   ? "border-[1px] border-[#866BE7] bg-[#F5F4FE]"
                   : "border-[1px] border-[#E5E7E8]"
               }`}
-              onClick={() => setSelectedTime(slot.time)}>
+              onClick={() => setSelectedTime(slot.time)}
+            >
               <span>{slot.time}</span>
               {slot.sale && (
                 <span className="text-[#866BE7] bg-[#F5F4FE] px-2 py-1 rounded-full text-xs font-medium border-[1px] border-[#C3BCF6]">
@@ -79,13 +81,15 @@ const EventModal = ({ isOpen, onClose, onSubmit, selectedDate, timeSlots }) => {
         <Button
           type="default"
           onClick={onClose}
-          className="!text-[#242528] !border-none !bg-transparent hover:!bg-gray-100">
+          className="!text-[#242528] !border-none !bg-transparent hover:!bg-gray-100"
+        >
           Cancel
         </Button>
         <Button
           type="primary"
           onClick={handleSubmit}
-          className="!px-3 !py-2 !bg-[#242528] !text-white !rounded-md !ml-1">
+          className="!px-3 !py-2 !bg-[#242528] !text-white !rounded-md !ml-1"
+        >
           Continue
         </Button>
       </div>

@@ -1,10 +1,22 @@
 import { Button, Popover } from "antd";
 import dayjs from "dayjs";
 import { EllipsisVertical } from "lucide-react";
+import { useState } from "react";
 import { cn } from "../../lib/utils";
+import ClientDetails from "./ClientDetails";
 import EventActions from "./EventActions";
 
 export default function Event({ event }) {
+  const [open, setOpen] = useState(false);
+
+  const hide = () => {
+    setOpen(false);
+  };
+
+  const handleOpenChange = (newOpen) => {
+    setOpen(newOpen);
+  };
+
   return (
     <div
       key={event.id}
@@ -18,9 +30,20 @@ export default function Event({ event }) {
           "bg-[#82868E]": event.status === "Not-show",
         })}
       />
-      <span>
-        {dayjs(event.start).format("HH:mm")} - {event.title}
-      </span>
+
+      <Popover
+        placement="rightTop"
+        trigger="click"
+        open={open}
+        onOpenChange={handleOpenChange}
+        arrow={false}
+        content={<ClientDetails event={event} hide={hide} />}>
+        <Button type="text" className="!p-0">
+          <span>
+            {dayjs(event.start).format("HH:mm")} - {event.title}
+          </span>
+        </Button>
+      </Popover>
 
       <Popover
         placement="rightTop"

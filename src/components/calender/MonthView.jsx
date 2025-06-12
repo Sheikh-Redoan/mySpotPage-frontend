@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import "dayjs/locale/en"; // Or your preferred locale
+import "dayjs/locale/en";
 import DayCell from "./DayCell";
 
 export default function MonthView({
@@ -9,14 +9,14 @@ export default function MonthView({
   events,
   maxEventsPerMonthCell = 3,
   selectTimeFromProvider,
-  resources = [], // Assuming resources is an array of objects
+  resources = [],
 }) {
   const daysInGrid = getDaysInMonthGrid(currentDate);
   const today = dayjs();
 
   const getService = (date) => {
-    if (!resources || (resources.length === 0 && selectTimeFromProvider))
-      return null;
+    if (!resources || resources.length === 0) return null;
+
     return resources.find((resource) =>
       dayjs(resource.date).isSame(date, "day")
     );
@@ -25,12 +25,11 @@ export default function MonthView({
   const getTimeSlots = (date, startHour = 8, endHour = 17) => {
     const slots = [];
     for (let i = startHour; i <= endHour; i++) {
-      slots.push(date.hour(i).minute(0).second(0));
+      const time = date.hour(i).minute(0);
+      slots.push(time);
     }
     return slots;
   };
-
-  const timeSlots = getTimeSlots(currentDate);
 
   return (
     <div className="grid grid-cols-7 border-gray-200">
@@ -44,33 +43,27 @@ export default function MonthView({
       ))}
 
       {/* Day Cells */}
-      {daysInGrid.map((day, index) => {
+      {daysInGrid.map((day) => {
         const isToday = day.isSame(today, "day");
         const isCurrentMonth = day.isSame(currentDate, "month");
-        const dailyEvents = events
-          .filter((event) => dayjs(event.start).isSame(day, "day"))
-          .sort((a, b) => dayjs(a.start).diff(dayjs(b.start))); // Sort by time
-
-        const eventsToShow = dailyEvents.slice(0, maxEventsPerMonthCell);
-        const hiddenEventsCount = dailyEvents.length - eventsToShow.length;
-
         const service = getService(day);
+        const timeSlots = getTimeSlots(day);
 
         return (
           <DayCell
-            key={index}
-            index={index}
+            key={day.format("YYYY-MM-DD")}
             day={day}
             service={service}
+            events={events.filter((event) =>
+              dayjs(event.start).isSame(day, "day")
+            )}
             selectTimeFromProvider={selectTimeFromProvider}
+            maxEventsPerMonthCell={maxEventsPerMonthCell}
             timeSlots={timeSlots}
             isToday={isToday}
             isCurrentMonth={isCurrentMonth}
-            hiddenEventsCount={hiddenEventsCount}
-            eventsToShow={eventsToShow}
             onTimeSelect={(selectedTime) => {
               console.log("Selected:", selectedTime);
-              // Handle the selection
             }}
           />
         );

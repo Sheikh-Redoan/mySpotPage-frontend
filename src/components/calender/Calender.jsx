@@ -106,6 +106,7 @@ export default function Calender({
             currentDate={currentDate}
             resources={resources}
             events={events}
+            weekView
             selectTimeFromProvider={selectTimeFromProvider}
           />
         )}

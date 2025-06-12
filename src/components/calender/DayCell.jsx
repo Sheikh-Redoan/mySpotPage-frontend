@@ -3,6 +3,7 @@ import { useState } from "react";
 import { cn } from "../../lib/utils";
 import EventModal from "../selectTimeComponents/EventModal";
 import Event from "./Event";
+import MoreEvents from "./MoreEvents";
 
 export default function DayCell({
   day,
@@ -134,9 +135,10 @@ export default function DayCell({
               <Event key={event.id} event={event} />
             ))}
             {events.length > maxEventsPerMonthCell && (
-              <span className="text-xs text-gray-500">
-                +{events.length - maxEventsPerMonthCell} more
-              </span>
+              <MoreEvents
+                events={events}
+                maxEventsPerMonthCell={maxEventsPerMonthCell}
+              />
             )}
           </div>
         )}

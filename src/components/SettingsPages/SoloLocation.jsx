@@ -21,6 +21,7 @@ import FixedLocationModal from "../modal/FixedLocationModal";
 import DeleteLocationModal from "../modal/DeleteLocationModal";
 import LocationList from "./LocationList";
 import MobileServiceLocationList from "./MobileServiceLocationList";
+import { Grid } from "antd";
 
 
 dayjs.extend(customParseFormat);
@@ -84,6 +85,8 @@ const SoloLocation = () => {
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [selectedCities, setSelectedCities] = useState({});
   const [deleteLocationModalOpen, setDeleteLocationModalOpen] = useState(false);
+  const { useBreakpoint } = Grid;
+  const screens = useBreakpoint();
 
 
   const handleCityChange = (city) => {
@@ -148,7 +151,7 @@ const SoloLocation = () => {
           </div>
         </div>
         <hr className="my-6 text-[#F6F6F6]" />
-        
+
         {/* location List */}
         <LocationList
           locationData={locationData}
@@ -178,7 +181,7 @@ const SoloLocation = () => {
       {/* Mobile Modal */}
       {mobileModalOpen && (
         <div className="fixed inset-0 z-50 bg-[#111113cc] flex items-center justify-center">
-          <div className="bg-white rounded-lg shadow-lg w-[90%] max-w-3xl h-[750px] flex flex-col">
+          <div className="bg-white rounded-lg shadow-lg w-[95%] max-w-3xl h-[550px] md:h-[750px] flex flex-col">
             {/* Header */}
             <h3 className="text-xl font-semibold text-[#242528] py-6 px-6">
               Mobile service setup
@@ -187,11 +190,11 @@ const SoloLocation = () => {
             <div className="py-6 px-6 flex-1 overflow-y-auto">
               {/* Toggle */}
               <div className="flex items-center justify-between gap-3">
-                <div className="flex items-center gap-3">
-                  <Switch defaultChecked onChange={onChange} />
-                  <p className="text-[#262626]">Charge travel fees</p>
+                <div className="flex items-center gap-1.5 md:gap-3">
+                  <Switch defaultChecked onChange={onChange} size={screens.sm ? "default" : "small"} />
+                  <p className="text-[#262626] ">Charge travel fees</p>
                 </div>
-                <div className="flex items-center justify-between w-[120px] border border-[#E5E7E8] rounded-lg px-4 py-2.5">
+                <div className="flex items-center justify-between w-14 md:w-[120px] border border-[#E5E7E8] rounded-lg px-2 md:px-4 py-1 md:py-2.5">
                   <p>50</p>
                   <img src={imageProvider.dollor} alt="icon" />
                 </div>
@@ -434,14 +437,16 @@ const SoloLocation = () => {
                       exit="exit"
                       custom={0}
                     >
-                      <div className="flex justify-between items-center pt-3">
-                        <h2>Date</h2>
-                        <h2 className="text-[#82868E] ml-12">Opening</h2>
-                        <h2 className="text-[#82868E] mr-12">Closed</h2>
+                      <div className="hidden md:block">
+                        <div className="flex justify-between items-center pt-3">
+                          <h2>Date</h2>
+                          <h2 className="text-[#82868E] ml-12">Opening</h2>
+                          <h2 className="text-[#82868E] mr-12">Closed</h2>
+                        </div>
                       </div>
                       <div className="py-4">
                         {/* Sunday */}
-                        <div className="flex justify-between items-center">
+                        <div className="flex flex-col md:flex-row justify-between md:items-center mb-4">
                           <Checkbox
                             onChange={onChange}
                             className="custom-checkbox"
@@ -449,7 +454,7 @@ const SoloLocation = () => {
                           >
                             Sunday
                           </Checkbox>
-                          <div className="flex gap-8 my-2">
+                          <div className="flex gap-4 md:gap-8 items-center mt-2">
                             <TimePicker
                               defaultValue={dayjs("11:00 AM", format)}
                               format={format}
@@ -469,7 +474,7 @@ const SoloLocation = () => {
                         </div>
 
                         {/* Monday */}
-                        <div className="flex justify-between items-center">
+                        <div className="flex flex-col md:flex-row justify-between md:items-center mb-4">
                           <Checkbox
                             onChange={onChange}
                             className="custom-checkbox"
@@ -478,7 +483,7 @@ const SoloLocation = () => {
                             Monday
                           </Checkbox>
 
-                          <div className="flex gap-8 my-2">
+                          <div className="flex gap-4 md:gap-8 items-center mt-2">
                             <TimePicker
                               defaultValue={dayjs("11:00 AM", format)}
                               format={format}
@@ -498,7 +503,7 @@ const SoloLocation = () => {
                         </div>
 
                         {/* Tuesday */}
-                        <div className="flex justify-between items-center">
+                        <div className="flex flex-col md:flex-row justify-between md:items-center mb-4">
                           <Checkbox
                             onChange={onChange}
                             className="custom-checkbox"
@@ -507,7 +512,7 @@ const SoloLocation = () => {
                             Tuesday
                           </Checkbox>
 
-                          <div className="flex gap-8 my-2">
+                          <div className="flex gap-4 md:gap-8 items-center mt-2">
                             <TimePicker
                               defaultValue={dayjs("11:00 AM", format)}
                               format={format}
@@ -527,7 +532,7 @@ const SoloLocation = () => {
                         </div>
 
                         {/* Wednesday */}
-                        <div className="flex justify-between items-center">
+                        <div className="flex flex-col md:flex-row justify-between md:items-center mb-4">
                           <Checkbox
                             onChange={onChange}
                             className="custom-checkbox"
@@ -535,7 +540,7 @@ const SoloLocation = () => {
                           >
                             Wednesday
                           </Checkbox>
-                          <div className="flex gap-8 my-2">
+                          <div className="flex gap-4 md:gap-8 items-center mt-2">
                             <TimePicker
                               defaultValue={dayjs("11:00 AM", format)}
                               format={format}
@@ -555,7 +560,7 @@ const SoloLocation = () => {
                         </div>
 
                         {/* Thursday */}
-                        <div className="flex justify-between items-center">
+                        <div className="flex flex-col md:flex-row justify-between md:items-center mb-4">
                           <Checkbox
                             onChange={onChange}
                             className="custom-checkbox"
@@ -563,7 +568,7 @@ const SoloLocation = () => {
                           >
                             Thursday
                           </Checkbox>
-                          <div className="flex gap-8 my-2">
+                          <div className="flex gap-4 md:gap-8 items-center mt-2">
                             <TimePicker
                               defaultValue={dayjs("11:00 AM", format)}
                               format={format}
@@ -583,7 +588,7 @@ const SoloLocation = () => {
                         </div>
 
                         {/* Friday */}
-                        <div className="flex justify-between items-center">
+                        <div className="flex flex-col md:flex-row justify-between md:items-center mb-4">
                           <Checkbox
                             onChange={onChange}
                             className="custom-checkbox"
@@ -591,7 +596,7 @@ const SoloLocation = () => {
                           >
                             Friday
                           </Checkbox>
-                          <div className="flex gap-8 my-2">
+                          <div className="flex gap-4 md:gap-8 items-center mt-2">
                             <TimePicker
                               defaultValue={dayjs("11:00 AM", format)}
                               format={format}
@@ -611,7 +616,7 @@ const SoloLocation = () => {
                         </div>
 
                         {/* Saturday */}
-                        <div className="flex justify-between items-center">
+                        <div className="flex flex-col md:flex-row justify-between md:items-center">
                           <Checkbox
                             onChange={onChange}
                             className="custom-checkbox"
@@ -620,7 +625,7 @@ const SoloLocation = () => {
                             Saturday
                           </Checkbox>
                           <div className="my-2">
-                            <button className="py-2.5 pr-4 rounded-lg text-center bg-[#F5F6F6] min-w-[382px] text-[#82868E] hover:scale-95 transform transition-all ease-in-out duration-300">
+                            <button className="py-2.5 pr-4 rounded-lg text-center bg-[#F5F6F6] w-full md:min-w-[382px] text-[#82868E] hover:scale-95 transform transition-all ease-in-out duration-300">
                               Closed
                             </button>
                           </div>
@@ -634,13 +639,13 @@ const SoloLocation = () => {
             <div className="flex justify-end items-center gap-6 p-6">
               <button
                 onClick={() => setMobileModalOpen(false)}
-                className="text-[#242528] hover:scale-95 transform transition-all ease-in-out duration-300"
+                className="text-[#242528] hover:scale-95 transform transition-all ease-in-out duration-300 hidden md:block"
               >
                 Cancel
               </button>
               <button
                 onClick={() => setMobileModalOpen(false)}
-                className="bg-[#242528] text-[#FFF]  py-2 px-3 rounded-lg  hover:scale-95 transform transition-all ease-in-out duration-300"
+                className="bg-[#242528] text-[#FFF]  py-2 px-3 rounded-lg  hover:scale-95 transform transition-all ease-in-out duration-300 w-full md:w-fit"
               >
                 Save
               </button>
@@ -652,7 +657,7 @@ const SoloLocation = () => {
       {/*  regional Modal */}
       {regionalModal && (
         <div className="fixed inset-0 bg-[#111113cc] flex items-center justify-center z-50">
-          <div className="bg-white text-black rounded-md w-[90%] min-h-md max-w-lg relative">
+          <div className="bg-white text-black rounded-md w-[95%] min-h-md max-w-lg relzative">
             <div className="flex items-center gap-3 my-2 p-6">
               <ArrowLeft onClick={() => setRegionalModal(false)} />
               <p className="text-[#262626] font-semibold">{selectedDistrict}</p>

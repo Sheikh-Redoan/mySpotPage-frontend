@@ -21,9 +21,9 @@ export default function Event({ event }) {
     <div
       key={event.id}
       className="cursor-pointer text-xs flex items-center justify-between gap-2 text-gray-700">
-      <div>
+      <div className="flex items-center gap-2">
         <span
-          className={cn("w-1.5 h-1.5 rounded-full", {
+          className={cn("w-1.5 h-1.5 rounded-full block", {
             "bg-[#3E70DD]": event.status === "Confirmed",
             "bg-[#3BA55C]": event.status === "Completed",
             "bg-[#FC8B23]": event.status === "Pending",

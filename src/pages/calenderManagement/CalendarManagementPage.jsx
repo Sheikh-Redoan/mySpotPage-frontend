@@ -97,8 +97,8 @@ function CalendarManagementPage() {
   };
 
   return (
-    <div className="w-full p-5">
-      <div className="flex items-center justify-between">
+    <div className="w-full md:p-5">
+      <div className="flex items-center justify-between max-md:px-4">
         <Tabs
           defaultActiveKey="1"
           items={items}

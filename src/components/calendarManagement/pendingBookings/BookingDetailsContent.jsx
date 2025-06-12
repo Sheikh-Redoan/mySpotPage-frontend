@@ -14,9 +14,13 @@ import BookingDetailsServices from "./BookingDetailsServices";
 import BookingSummary from "./BookingSummary";
 import { Avatar } from "antd";
 import { formatToDDMonYYYY } from "../../../utils/dateFormatter";
+import { ArrowDown } from "lucide-react";
+import { ArrowUp } from "lucide-react";
+import { useState } from "react";
+import { ChevronUp } from "lucide-react";
 
 const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
-  console.log("booking", booking);
+  const [showMore, setShowMore] = useState(false);
 
   const navigate = useNavigate();
 
@@ -41,10 +45,10 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
     <div className="w-full flex flex-col md:flex-row">
       {/* Left Section: Client and Booking Info */}
       <div className="w-full h-full md:w-[30%] md:border-r-[1px] md:border-t-[1px] md:border-t-gray-300 md:border-r-gray-300 md:p-4">
-        <div className="flex flex-row lg:flex-col gap-2 md:gap-4 items-start md:border-b-[1px] md:border-b-gray-300 pb-3">
+        <div className="flex flex-row lg:flex-col gap-2 md:gap-4 items-start md:border-b-[1px] md:border-b-gray-300 pb-3 max-md:px-4">
           <div className="w-[64px] h-[64px]">
             <Avatar
-              size={64}
+              size={60}
               style={{
                 backgroundColor: "#744CDB",
                 color: "white",
@@ -83,7 +87,7 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
               </div>
             </div>
 
-            <div className="py-4 space-y-3 border-b-[2px] border-dashed border-b-gray-300 md:hidden">
+            <div className="py-2 space-y-3">
               <div className="flex items-center gap-3">
                 <PhoneCall className="size-5 text-gray-600" />
                 <p className="text-[#242528] text-[14px] font-normal">
@@ -113,12 +117,52 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
                   {booking.scheduledTime}
                 </p>
               </div>
-
-              <p className="text-[#424348] text-sm font-noramal p-2">
-                Hair is thick and slightly wavy, prefers a shoulder-length
-                layered cut with light texture.
-              </p>
             </div>
+
+            {showMore && (
+              <>
+                <p className="text-[#424348] text-sm font-noramal py-2">
+                  Hair is thick and slightly wavy, prefers a shoulder-length
+                  layered cut with light texture.
+                </p>
+
+                <div className="border-b-[2px] border-dashed border-b-gray-300 my-2" />
+
+                <div className="py-2">
+                  <p className="text-[#3A3B3F] text-[14px] font-normal mb-1">
+                    Specific notes
+                  </p>
+                  <div className="border-[1px] border-[#E5E7E8] p-1 h-44 rounded-lg shadow-sm">
+                    <p className="text-[#424348] text-sm font-normal p-2">
+                      Shop recommend booking a trim every 6-8 weeks
+                    </p>
+                  </div>
+                </div>
+
+                <div className="">
+                  <Button
+                    color="danger"
+                    variant="text"
+                    className="flex items-center"
+                  >
+                    <CircleAlert className="size-5" />
+                    Add to blacklist
+                  </Button>
+                </div>
+              </>
+            )}
+
+            <button
+              onClick={() => setShowMore(!showMore)}
+              className="flex items-center gap-1 text-[#888888] text-sm font-normal mt-2"
+            >
+              {showMore ? "Show less" : "Show more"}{" "}
+              {showMore ? (
+                <ChevronUp className="size-5" />
+              ) : (
+                <ChevronDown className="size-5" />
+              )}
+            </button>
           </div>
         </div>
 
@@ -153,7 +197,7 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
           </p>
         </div>
 
-        <div className="py-4">
+        <div className="py-4 max-md:hidden">
           <p className="text-[#3A3B3F] text-[14px] font-normal">
             Specific notes
           </p>
@@ -164,7 +208,7 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
           </div>
         </div>
 
-        <div>
+        <div className="max-md:hidden">
           <Button color="danger" variant="text" className="flex items-center">
             <CircleAlert className="size-5" />
             Add to blacklist
@@ -174,7 +218,7 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
 
       {/* Middle Section: Services INfo */}
       <div className="w-full lg:w-[50%] lg:border-r-[1px] lg:border-t-[1px] lg:border-t-gray-300 lg:border-r-gray-300">
-        <div className="bg-[#F5F4FE] w-full md:p-4 flex justify-between items-center">
+        <div className="bg-[#F5F4FE] w-full p-4 flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center max-md:gap-2 max-md:my-2">
           {/* Date Picker */}
           <div className="relative">
             <StyledDatePicker
@@ -191,6 +235,7 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
               }
             />
           </div>
+
           <div className="flex items-center gap-2">
             {/* Time Picker */}
             <TimePicker scheduledTime={booking?.scheduledTime} />

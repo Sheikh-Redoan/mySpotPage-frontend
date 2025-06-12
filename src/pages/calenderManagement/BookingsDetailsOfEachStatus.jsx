@@ -23,8 +23,8 @@ const BookingsDetailsOfEachStatus = () => {
   }
 
   return (
-    <section className="p-4">
-      <h3 className="text-[18px] text-[#242528] font-semibold mb-4">
+    <section className="md:p-4">
+      <h3 className="text-[18px] text-[#242528] font-semibold mb-4 max-md:px-4">
         Booking Details
       </h3>
 

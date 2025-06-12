@@ -8,7 +8,7 @@ const BookingDetailsServices = ({ services }) => {
   return (
     <div>
       <div className="w-full mt-4 border-b-[2px] border-dashed border-b-gray-300">
-        {services.map((service) => (
+        {services && services.map((service) => (
           <div
             key={service.id}
             className="flex items-center rounded-lg mb-2 p-2 border-[1px] border-[#F6F6F6] shadow-md"

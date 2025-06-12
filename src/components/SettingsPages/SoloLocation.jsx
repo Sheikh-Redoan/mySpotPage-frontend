@@ -20,7 +20,7 @@ import LocationDropdown from "../ui/LocationDropdown";
 import FixedLocationModal from "../modal/FixedLocationModal";
 import DeleteLocationModal from "../modal/DeleteLocationModal";
 import LocationList from "./LocationList";
-import { Grid } from "antd";
+import MobileServiceLocationList from "./MobileServiceLocationList";
 
 
 dayjs.extend(customParseFormat);
@@ -84,8 +84,7 @@ const SoloLocation = () => {
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [selectedCities, setSelectedCities] = useState({});
   const [deleteLocationModalOpen, setDeleteLocationModalOpen] = useState(false);
-  const { useBreakpoint } = Grid;
-  const screens = useBreakpoint();
+
 
   const handleCityChange = (city) => {
     setSelectedCities((prev) => {
@@ -141,45 +140,30 @@ const SoloLocation = () => {
 
           <div className="hidden md:block">
             <Button
-            onClick={() => setFixedLocationModalOpen(true)}
-            className="!text-primary01 !border-primary01 "
-          >
-            <Plus size={20} /> Add Location
-          </Button>
+              onClick={() => setFixedLocationModalOpen(true)}
+              className="!text-primary01 !border-primary01 "
+            >
+              <Plus size={20} /> Add Location
+            </Button>
           </div>
         </div>
         <hr className="my-6 text-[#F6F6F6]" />
-
-        <LocationList locationData={locationData} setFixedLocationModalOpen={setFixedLocationModalOpen} setDeleteLocationModalOpen={setDeleteLocationModalOpen} />
+        
+        {/* location List */}
+        <LocationList
+          locationData={locationData}
+          setFixedLocationModalOpen={setFixedLocationModalOpen}
+          setDeleteLocationModalOpen={setDeleteLocationModalOpen}
+        />
 
         <hr className="my-6 text-[#F6F6F6]" />
-        <div className="flex items-start justify-between">
-          <div className="flex gap-5">
-            <Switch
-              checked={mobileServiceEnabled}
-              onChange={handleSwitchChange}
-              style={{
-                marginTop: "3px",
-              }}
-              size={screens.sm ? "default" : "small"  }
-            />
 
-            <div className="flex flex-col justify-start">
-              <h4 className="text-[#242528] font-semibold text-base md:text-lg">
-                Mobile Service
-              </h4>
-              <p className="text-[#797979] my-2 text-sm">
-                Your mobile service is currently inactive. Please enable it to
-                offer on-location services to your clients.
-              </p>
-            </div>
-          </div>
-          {mobileServiceEnabled && (
-            <div className="pr-5">
-              <EditIcon onClick={()=> setMobileModalOpen(true)} />
-            </div>
-          )}
-        </div>
+        {/* mobile service location list */}
+        <MobileServiceLocationList
+          setMobileModalOpen={setMobileModalOpen}
+          mobileServiceEnabled={mobileServiceEnabled}
+          handleSwitchChange={handleSwitchChange}
+        />
       </div>
 
       {/* Fixed Modal */}

@@ -1,39 +1,41 @@
 import { Modal, Button, Switch, Checkbox, TimePicker } from "antd";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import { Clock, X } from "lucide-react"; 
-import { SearchIcon, AlertIcon } from "../../assets/icons/icons2"; 
+import { Clock, X } from "lucide-react";
+import { SearchIcon, AlertIcon } from "../../assets/icons/icons2";
+import { Grid } from "antd";
 
 dayjs.extend(customParseFormat);
 
 const format = "hh:mm A";
 
 const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
+  const { useBreakpoint } = Grid;
+  const screens = useBreakpoint();
+
   const onChange = (e) => {
     console.log("checked =", e.target.checked);
   };
 
   return (
     <Modal
-      open={isOpen} 
+      open={isOpen}
       onCancel={onClose}
       footer={null}
       closable={true}
       closeIcon={<X className="w-6 h-6" />}
       title={
-        <h3 className="text-[#242528] text-[18px] font-semibold">
+        <h3 className="text-[#242528] text-[18px] font-semibold mb-5">
           Fixed location setup
         </h3>
       }
-      className="!w-[90%] !max-w-3xl" 
+      className="!w-[90%] !max-w-3xl"
       styles={{
         header: {
-          padding: "16px 24px",
           borderBottom: "1px solid #E5E7E8",
         },
         body: {
-          padding: "16px 24px",
-          minHeight: "calc(750px - 64px - 88px)", 
+          minHeight: "calc(750px - 64px - 88px)",
           display: "flex",
           flexDirection: "column",
         },
@@ -44,15 +46,15 @@ const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
             "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
           display: "flex",
           flexDirection: "column",
-          height: "750px", 
+          height: "750px",
         },
       }}
       style={{
-        backgroundColor: "rgba(75, 85, 99, 0.7)", 
+        backgroundColor: "rgba(75, 85, 99, 0.7)",
       }}
       centered
     >
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto mt-5">
         {/* Location name */}
         <div className="mb-4">
           <label className="block mb-2 text-[#3A3B3F]">
@@ -82,11 +84,11 @@ const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
         </div>
 
         {/* Toggle Show Full Address */}
-        <div className="flex items-center gap-3 mb-4">
+        <div className="flex items-center gap-1 md:gap-3 mb-4">
           <div>
-            <Switch defaultChecked onChange={(checked) => console.log(checked)} />
+            <Switch defaultChecked onChange={(checked) => console.log(checked)} size={screens.sm ? "default" : "small"}/>
           </div>
-          <p className="text-[#262626]">Show full address only after booking</p>
+          <p className="text-[#262626] text-sm md:text-base">Show full address only after booking</p>
         </div>
 
         {/* Payment */}
@@ -121,13 +123,13 @@ const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
             <h2 className="text-[16px] font-medium text-[#262626]">
               Booking availability <span className="text-orange-600">*</span>
             </h2>
-            <h2 className="text-[#82868E] ml-12">Opening</h2>
-            <h2 className="text-[#82868E] mr-12">Closed</h2>
+            <h2 className="text-[#82868E] ml-12 hidden md:block">Opening</h2>
+            <h2 className="text-[#82868E] mr-12 hidden md:block">Closed</h2>
           </div>
 
           <div className="py-4">
             {/* Sunday */}
-            <div className="flex justify-between items-center mb-2">
+            <div className="flex flex-col md:flex-row justify-between md:items-center mb-4">
               <Checkbox
                 onChange={onChange}
                 className="custom-checkbox"
@@ -135,7 +137,7 @@ const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
               >
                 Sunday
               </Checkbox>
-              <div className="flex gap-8">
+              <div className="flex gap-4 md:gap-8 items-center mt-2">
                 <TimePicker
                   defaultValue={dayjs("11:00 AM", format)}
                   format={format}
@@ -155,7 +157,7 @@ const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
             </div>
 
             {/* Monday */}
-            <div className="flex justify-between items-center mb-2">
+            <div className="flex flex-col md:flex-row justify-between md:items-center mb-4">
               <Checkbox
                 onChange={onChange}
                 className="custom-checkbox"
@@ -163,7 +165,7 @@ const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
               >
                 Monday
               </Checkbox>
-              <div className="flex gap-8">
+              <div className="flex gap-4 md:gap-8 items-center mt-2">
                 <TimePicker
                   defaultValue={dayjs("11:00 AM", format)}
                   format={format}
@@ -183,7 +185,7 @@ const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
             </div>
 
             {/* Tuesday */}
-            <div className="flex justify-between items-center mb-2">
+            <div className="flex flex-col md:flex-row justify-between md:items-center mb-4">
               <Checkbox
                 onChange={onChange}
                 className="custom-checkbox"
@@ -191,7 +193,7 @@ const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
               >
                 Tuesday
               </Checkbox>
-              <div className="flex gap-8">
+              <div className="flex gap-4 md:gap-8 items-center mt-2">
                 <TimePicker
                   defaultValue={dayjs("11:00 AM", format)}
                   format={format}
@@ -211,7 +213,7 @@ const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
             </div>
 
             {/* Wednesday */}
-            <div className="flex justify-between items-center mb-2">
+            <div className="flex flex-col md:flex-row justify-between md:items-center mb-4">
               <Checkbox
                 onChange={onChange}
                 className="custom-checkbox"
@@ -219,7 +221,7 @@ const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
               >
                 Wednesday
               </Checkbox>
-              <div className="flex gap-8">
+              <div className="flex gap-4 md:gap-8 items-center mt-2">
                 <TimePicker
                   defaultValue={dayjs("11:00 AM", format)}
                   format={format}
@@ -239,7 +241,7 @@ const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
             </div>
 
             {/* Thursday */}
-            <div className="flex justify-between items-center mb-2">
+            <div className="flex flex-col md:flex-row justify-between md:items-center mb-4">
               <Checkbox
                 onChange={onChange}
                 className="custom-checkbox"
@@ -247,7 +249,7 @@ const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
               >
                 Thursday
               </Checkbox>
-              <div className="flex gap-8">
+              <div className="flex gap-4 md:gap-8 items-center mt-2">
                 <TimePicker
                   defaultValue={dayjs("11:00 AM", format)}
                   format={format}
@@ -267,7 +269,7 @@ const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
             </div>
 
             {/* Friday */}
-            <div className="flex justify-between items-center mb-2">
+            <div className="flex flex-col md:flex-row justify-between md:items-center mb-4">
               <Checkbox
                 onChange={onChange}
                 className="custom-checkbox"
@@ -275,7 +277,7 @@ const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
               >
                 Friday
               </Checkbox>
-              <div className="flex gap-8">
+              <div className="flex gap-4 md:gap-8 items-center mt-2">
                 <TimePicker
                   defaultValue={dayjs("11:00 AM", format)}
                   format={format}
@@ -295,7 +297,7 @@ const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
             </div>
 
             {/* Saturday */}
-            <div className="flex justify-between items-center">
+            <div className="flex flex-col md:flex-row justify-between md:items-center">
               <Checkbox
                 onChange={onChange}
                 className="custom-checkbox"
@@ -304,7 +306,7 @@ const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
                 Saturday
               </Checkbox>
               <div>
-                <button className="py-2.5 pr-4 rounded-lg text-center bg-[#F5F6F6] min-w-[382px] text-[#82868E] hover:scale-95 transform transition-all ease-in-out duration-300">
+                <button className="py-2.5 pr-4 rounded-lg text-center bg-[#F5F6F6] w-full md:min-w-[382px] text-[#82868E] hover:scale-95 transform transition-all ease-in-out duration-300 mt-2 md:mt-0">
                   Closed
                 </button>
               </div>
@@ -312,18 +314,18 @@ const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
           </div>
         </div>
       </div>
-      <div className="flex justify-end items-center gap-6 p-6 border-t-[1px] border-[#E5E7E8]">
+      <div className="flex justify-end items-center gap-6 md:p-6 border-t-[1px] border-[#E5E7E8] pt-4">
         <Button
           type="default"
           onClick={onClose}
-          className="!text-[#242528] !border-none !bg-transparent hover:!bg-gray-100"
+          className="!text-[#242528] !border-none !bg-transparent hover:!bg-gray-100 !hidden md:!block"
         >
           Cancel
         </Button>
         <Button
           type="primary"
           onClick={onSave}
-          className="!px-3 !py-2 !bg-[#242528] !text-white !rounded-md !ml-1"
+          className="!px-3 !py-5 md:!py-2 !bg-[#242528] !text-white !rounded-md !ml-1 w-full md:w-fit"
         >
           Save
         </Button>

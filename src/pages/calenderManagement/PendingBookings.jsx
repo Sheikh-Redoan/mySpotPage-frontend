@@ -13,7 +13,8 @@ const PendingBookings = () => {
 
   const allBookings = getPendingBookings();
   const pendingBookings =
-    allBookings && allBookings.filter((booking) => booking.status === "Pending");
+    allBookings &&
+    allBookings.filter((booking) => booking.status === "Pending");
 
   const [bookings, setBookings] = useState(pendingBookings || []);
   const [searchQuery, setSearchQuery] = useState("");
@@ -24,7 +25,10 @@ const PendingBookings = () => {
 
   // State for service filter dropdown
   const [selectedServiceFilters, setSelectedServiceFilters] = useState([]);
-  const [serviceFilterDropdownSearchQuery, setServiceFilterDropdownSearchQuery] = useState("");
+  const [
+    serviceFilterDropdownSearchQuery,
+    setServiceFilterDropdownSearchQuery,
+  ] = useState("");
 
   const applyFilters = (currentSearchQuery, currentServiceFilters) => {
     let results = [...pendingBookings];
@@ -39,7 +43,9 @@ const PendingBookings = () => {
           booking.clientPhone
             .toLowerCase()
             .includes(currentSearchQuery.toLowerCase()) ||
-          booking.staffName.toLowerCase().includes(currentSearchQuery.toLowerCase())
+          booking.staffName
+            .toLowerCase()
+            .includes(currentSearchQuery.toLowerCase())
       );
     }
 
@@ -90,12 +96,16 @@ const PendingBookings = () => {
 
   // Filtered services for the dropdown search
   const filteredDropdownServices = allUniqueServices.filter((service) =>
-    service.toLowerCase().includes(serviceFilterDropdownSearchQuery.toLowerCase())
+    service
+      .toLowerCase()
+      .includes(serviceFilterDropdownSearchQuery.toLowerCase())
   );
 
   const handleServiceFilterChange = (service) => {
     setSelectedServiceFilters((prev) =>
-      prev.includes(service) ? prev.filter((s) => s !== service) : [...prev, service]
+      prev.includes(service)
+        ? prev.filter((s) => s !== service)
+        : [...prev, service]
     );
   };
 
@@ -140,14 +150,20 @@ const PendingBookings = () => {
         locale={{ emptyText: <CustomEmptyTable /> }}
         rowClassName={(record) =>
           searchQuery &&
-          (record.clientName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            record.clientPhone.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          (record.clientName
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase()) ||
+            record.clientPhone
+              .toLowerCase()
+              .includes(searchQuery.toLowerCase()) ||
             record.staffName.toLowerCase().includes(searchQuery.toLowerCase()))
             ? "bg-highlight01"
             : ""
         }
         onRow={(record) => ({
-          onClick: () => navigate(`/dashboard/calendar/bookings-details/${record.id}`),
+          onClick: (event) => {
+            navigate(`/dashboard/calendar/bookings-details/${record.id}`);
+          },
           className: "cursor-pointer hover:bg-gray-50",
         })}
       />

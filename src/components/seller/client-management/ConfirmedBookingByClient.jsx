@@ -3,8 +3,8 @@ import { Table, Select, Pagination, Tooltip, Input, Checkbox } from "antd";
 import { IoArrowDownOutline } from "react-icons/io5";
 import { useNavigate } from "react-router";
 import { getPendingBookings } from "../../../dummy-data/bookingsData";
-import { getPendingBookingsColumnsByClient } from "./PendingBookingsColumnsByClient";
 import CustomEmptyTable from "../../DashboardPageComponents/shared/CustomEmptyTable";
+import { getConfirmedBookingsColumnsByClient } from "./ConfirmedBookingsColumnsByClient";
 
 const { Option } = Select;
 
@@ -66,18 +66,6 @@ const ConfirmedBookingByClient = () => {
     setCurrentPage(1);
   };
 
-  const handleApproveBooking = (id) => {
-    console.log(`Booking ${id} approved`);
-    setBookings(bookings.filter((booking) => booking.id !== id));
-    setTotalBookings(totalBookings - 1);
-  };
-
-  const handleRejectBooking = (id) => {
-    console.log(`Booking ${id} rejected`);
-    setBookings(bookings.filter((booking) => booking.id !== id));
-    setTotalBookings(totalBookings - 1);
-  };
-
   // Extract unique services for filter dropdown
   const allUniqueServices = [
     ...new Set(
@@ -110,9 +98,7 @@ const ConfirmedBookingByClient = () => {
     clearFilters();
   };
 
-  const columns = getPendingBookingsColumnsByClient(
-    handleApproveBooking,
-    handleRejectBooking,
+  const columns = getConfirmedBookingsColumnsByClient(
     navigate,
     selectedServiceFilters,
     handleServiceFilterChange,

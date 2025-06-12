@@ -19,6 +19,9 @@ import { collapseVariants } from "../../animations/variants";
 import LocationDropdown from "../ui/LocationDropdown";
 import FixedLocationModal from "../modal/FixedLocationModal";
 import DeleteLocationModal from "../modal/DeleteLocationModal";
+import LocationList from "./LocationList";
+import { Grid } from "antd";
+
 
 dayjs.extend(customParseFormat);
 const format = "hh:mm A";
@@ -69,8 +72,6 @@ const cityOptions = [
 ];
 
 const SoloLocation = () => {
-  const [showMenu1, setShowMenu1] = useState(false);
-  const [showMenu2, setShowMenu2] = useState(false);
   const [mobileServiceEnabled, setMobileServiceEnabled] = useState(false);
   const [paymentOpen, setPaymentOpen] = useState(true);
   const [serviceModalOpen, setServiceModalOpen] = useState(true);
@@ -83,6 +84,8 @@ const SoloLocation = () => {
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [selectedCities, setSelectedCities] = useState({});
   const [deleteLocationModalOpen, setDeleteLocationModalOpen] = useState(false);
+  const { useBreakpoint } = Grid;
+  const screens = useBreakpoint();
 
   const handleCityChange = (city) => {
     setSelectedCities((prev) => {
@@ -136,121 +139,19 @@ const SoloLocation = () => {
             </p>
           </div>
 
-          <Button
+          <div className="hidden md:block">
+            <Button
             onClick={() => setFixedLocationModalOpen(true)}
-            className="!text-primary01 !border-primary01"
+            className="!text-primary01 !border-primary01 "
           >
             <Plus size={20} /> Add Location
           </Button>
+          </div>
         </div>
         <hr className="my-6 text-[#F6F6F6]" />
 
-        <div className="flex justify-between items-start mb-2">
-          <div className="flex items-start gap-5">
-            <div>
-              <Switch defaultChecked onChange={onChange} />
-            </div>
-            <div className="flex flex-col justify-start">
-              <h4 className="text-[#242528] font-semibold text-base md:text-lg">
-                TCL Beauty Studio 01{" "}
-                <span className="text-[#866BE7] bg-[#F5F4FE] ml-2 p-1 rounded text-sm">
-                  Hidden
-                </span>
-              </h4>
-              <p className="text-[#797979] my-2 text-sm">
-                15 Rothschild Boulevard, Tel Aviv-Yafo, Israel
-              </p>
-            </div>
-          </div>
+        <LocationList locationData={locationData} setFixedLocationModalOpen={setFixedLocationModalOpen} setDeleteLocationModalOpen={setDeleteLocationModalOpen} />
 
-          {/* Action buttons */}
-          <div className="hidden sm:flex items-center gap-6">
-            <button
-              onClick={() => setFixedLocationModalOpen(true)}
-              className="cursor-pointer"
-            >
-              <img src={imageProvider.edit} alt="Edit Icon" />
-            </button>
-            <button
-              onClick={() => setDeleteLocationModalOpen(true)}
-              className="cursor-pointer"
-            >
-              <img src={imageProvider.deleteIcon} alt="Delete Icon" />
-            </button>
-          </div>
-
-          {/* Show on small screens */}
-          <div className="block md:hidden relative">
-            <button
-              className="text-3xl"
-              onClick={() => setShowMenu1(!showMenu1)}
-            >
-              ⋯
-            </button>
-            {showMenu1 && (
-              <div className="absolute  bg-gray-200 rounded z-10 w-10 h-14 p-2 pl-3 mr-3 shadow-md">
-                <img
-                  className="pb-2"
-                  src={imageProvider.edit}
-                  alt="Edit Icon"
-                />
-                <img src={imageProvider.deleteIcon} alt="Delete Icon" />
-              </div>
-            )}
-          </div>
-        </div>
-
-        <div className="flex justify-between items-start my-4">
-          <div className="flex items-start gap-5">
-            <div>
-              <Switch defaultChecked={false} onChange={onChange} />
-            </div>
-            <div className="flex flex-col justify-start">
-              <h4 className="text-[#242528] font-semibold text-base md:text-lg">
-                TCL Beauty Studio 01
-              </h4>
-              <p className="text-[#797979] my-2 text-sm">
-                15 Rothschild Boulevard, Tel Aviv-Yafo, Israel
-              </p>
-            </div>
-          </div>
-
-          {/* Action buttons */}
-          <div className="hidden sm:flex items-center gap-6">
-            <button
-              className="cursor-pointer"
-              onClick={() => setFixedLocationModalOpen(true)}
-            >
-              <img src={imageProvider.edit} alt="Edit Icon" />
-            </button>
-            <button
-              className="cursor-pointer"
-              onClick={() => setDeleteLocationModalOpen(true)}
-            >
-              <img src={imageProvider.deleteIcon} alt="Delete Icon" />
-            </button>
-          </div>
-
-          {/* Show on small screens */}
-          <div className="block md:hidden relative">
-            <button
-              className="text-3xl"
-              onClick={() => setShowMenu2(!showMenu2)}
-            >
-              ⋯
-            </button>
-            {showMenu1 && (
-              <div className="absolute  bg-gray-200 rounded z-10 w-10 h-14 p-2 pl-3 mr-3 shadow-md">
-                <img
-                  className="pb-2"
-                  src={imageProvider.edit}
-                  alt="Edit Icon"
-                />
-                <img src={imageProvider.deleteIcon} alt="Delete Icon" />
-              </div>
-            )}
-          </div>
-        </div>
         <hr className="my-6 text-[#F6F6F6]" />
         <div className="flex items-start justify-between">
           <div className="flex gap-5">
@@ -260,6 +161,7 @@ const SoloLocation = () => {
               style={{
                 marginTop: "3px",
               }}
+              size={screens.sm ? "default" : "small"  }
             />
 
             <div className="flex flex-col justify-start">
@@ -274,7 +176,7 @@ const SoloLocation = () => {
           </div>
           {mobileServiceEnabled && (
             <div className="pr-5">
-              <EditIcon />
+              <EditIcon onClick={()=> setMobileModalOpen(true)} />
             </div>
           )}
         </div>
@@ -842,3 +744,19 @@ const SoloLocation = () => {
 };
 
 export default SoloLocation;
+
+
+const locationData = [
+  {
+    id: 1,
+    name: "TCL Beauty Studio 01",
+    address: "15 Rothschild Boulevard, Tel Aviv-Yafo, Israel",
+    isActive: true,
+  },
+  {
+    id: 2,
+    name: "TCL Beauty Studio 02",
+    address: "15 Rothschild Boulevard, Tel Aviv-Yafo, Israel",
+    isActive: false,
+  },
+];

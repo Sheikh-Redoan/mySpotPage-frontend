@@ -65,6 +65,9 @@ import upgradeIcon from "../assets/icons/upgradeIcon.png";
 import upload from "../assets/icons/upload.png";
 import visa from "../assets/icons/visa.png";
 import TextLogo from "../assets/images/my_spot_page_text_favicon.png";
+import locationPink from "../assets/icons/locationpink.png";
+import subscriptionBlack from '../assets/icons/subsCriptionBlack.png';
+import subscriptionPink from '../assets/icons/subscriptionPink.png';
 
 export const imageProvider = {
   incognito,
@@ -132,4 +135,7 @@ export const imageProvider = {
   sparkIcon,
   bookmark,
   databaseCol,
+  locationPink,
+  subscriptionPink,
+  subscriptionBlack
 };

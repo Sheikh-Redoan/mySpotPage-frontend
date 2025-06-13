@@ -161,7 +161,7 @@ const Subscription = () => {
         </div>
       )}
 
-      <div className="flex gap-6 w-full my-2">
+      <div className="flex flex-col md:flex-row gap-6 w-full my-2">
         {/* card */}
         {currentPlan === "Spark" && (
           <PlanCard
@@ -198,10 +198,10 @@ const Subscription = () => {
           />
         )}
 
-        <div className="min-w-[660px] h-[260px] flex-[6] bg-[#FFFFFF] p-5 rounded-lg hover:scale-95 transform transition-all duration-300 ease-in-ou">
-          <div className="flex justify-between items-start my-2">
+        <div className="md:min-w-[660px] h-[260px] flex-[6] bg-[#FFFFFF] p-5 rounded-lg hover:scale-95 transform transition-all duration-300 ease-in-ou">
+          <div className="flex flex-col md:flex-row justify-between items-start my-2 space-y-4">
             <div>
-              <h2 className="text-[#262626] font-semibold text-xl pb-2">
+              <h2 className="text-[#262626] font-semibold text-base md:text-xl pb-2">
                 Payment Method
               </h2>
 
@@ -212,7 +212,7 @@ const Subscription = () => {
             </div>
             <div>
               <Link to={"/add-card"}>
-                <button className="flex gap-2 font-semibold border border-[#744CDB] text-[#744CDB] px-3.5 py-2 shadow-md rounded-md hover:scale-95 transform transition-all ease-in-out duration-300">
+                <button className="flex gap-2 font-semibold border border-[#744CDB] text-[#744CDB] px-3.5 py-1 md:py-2 shadow-md rounded-md hover:scale-95 transform transition-all ease-in-out duration-300">
                   <Plus /> Add Card
                 </button>
               </Link>
@@ -223,11 +223,11 @@ const Subscription = () => {
 
       <div className="min-w-full min-h-[480px] bg-[#FFFFFF] p-5 my-6 rounded-lg flex flex-col justify-between">
         {/* Top Section */}
-        <div className="flex justify-between my-2">
+        <div className="flex flex-col md:flex-row justify-between my-2">
           <h2 className="text-[#262626] font-semibold text-lg">
             Billing History
           </h2>
-          <div className="custom-range-picker-wrapper mx-4 border border-gray-300 rounded-lg py-2 px-1">
+          <div className="flex flex-row sm:flex-col custom-range-picker-wrapper md:mx-4 border border-gray-300 rounded-lg md:py-2 px-1 mt-3 md:mt-0">
             <RangePicker
               format={dateFormat}
               defaultValue={[

@@ -1,12 +1,17 @@
+import { Popover } from "antd";
 import { ListFilter } from "lucide-react";
+import { useState } from "react";
 import UserCard from "../../components/admin/UserCard";
 import UserFilter from "../../components/admin/UserFilter";
 import Filter from "../../components/shared/Filter";
 import Paginate from "../../components/shared/Paginate";
-import Popup from "../../components/shared/Popup";
 import Search from "../../components/shared/Search";
 
 export default function UserManagement() {
+  const [isUserOpen, setIsUserOpen] = useState(false);
+  const handlePopup = () => {
+    setIsUserOpen(!isUserOpen);
+  };
   return (
     <section>
       <div className="flex w-full gap-4 mb-4 p-5">
@@ -22,12 +27,18 @@ export default function UserManagement() {
           />
         </div>
         <div className="w-[200px]">
-          <Popup
-            name="Filter"
-            icon={<ListFilter size={20} className="text-gray-400" />}
-            className="xl:left-[280px]">
-            {(handlePopup) => <UserFilter closePopup={handlePopup} />}
-          </Popup>
+          <Popover
+            title="Filter"
+            trigger={["click"]}
+            placement="bottomLeft"
+            open={isUserOpen}
+            onOpenChange={handlePopup}
+            arrow={false}
+            content={<UserFilter closePopup={handlePopup} />}>
+            <button className="cursor-pointer">
+              <ListFilter size={20} className="text-gray-400" />
+            </button>
+          </Popover>
         </div>
       </div>
 

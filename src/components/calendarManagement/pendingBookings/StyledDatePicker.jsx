@@ -4,8 +4,6 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import "/src/styles/datePicker.css";
 import { Button, Drawer } from "antd";
 import { useState } from "react";
-import { Space } from "antd";
-import useDeviceWidth from "../../../hooks/useDeviceWidth";
 import { cloneElement } from "react";
 import { ArrowLeft } from "lucide-react";
 import { X } from "lucide-react";
@@ -15,11 +13,9 @@ const StyledDatePicker = ({
   setSelectedDate,
   dateFormat,
   customInput,
+  isMobile = false,
   ...rest
 }) => {
-  const deviceWidth = useDeviceWidth();
-  const isMobile = deviceWidth <= 768;
-  console.log("isMobile", isMobile);
   const [open, setOpen] = useState(false);
 
   const onClose = () => {
@@ -55,7 +51,7 @@ const StyledDatePicker = ({
             selected={selectedDate}
             onChange={(date) => {
               setSelectedDate(date);
-              onClose(); 
+              onClose();
             }}
             dateFormat={dateFormat}
             showPopperArrow={false}

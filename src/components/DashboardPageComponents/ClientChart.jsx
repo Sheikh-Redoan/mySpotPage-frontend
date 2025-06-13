@@ -1,16 +1,14 @@
-import React, { PureComponent } from "react";
+import { Progress, Select } from "antd";
+import { GoArrowUp } from "react-icons/go";
 import {
-  BarChart,
   Bar,
+  BarChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
 } from "recharts";
-import { GoArrowUp } from "react-icons/go";
-import { Progress, Select } from "antd";
 import { imageProvider } from "../../lib/imageProvider";
 
 function ClientChart() {
@@ -65,9 +63,9 @@ function ClientChart() {
   ];
 
   return (
-    <div className="bg-white space-x-8 divide-x divide-gray-200 rounded-2xl flex w-full h-full p-6 inset-shadow-sm ">
-      <div className="w-9/12 pr-8 chart-1 flex flex-col  ">
-        <div className="px-0 pt-0 pb-4 w-full flex justify-between items-center">
+    <div className="bg-white gap-8 divide-x divide-gray-200 rounded-2xl flex max-lg:flex-col w-full h-full p-6 inset-shadow-sm ">
+      <div className="w-full lg:w-9/12 pr-8 chart-1 flex flex-col  ">
+        <div className="px-0 pt-0 pb-4 w-full flex flex-wrap gap-4 justify-between items-center">
           <div className="flex items-start gap-4">
             <img
               className="p-4 rounded-lg bg-[#F5F4FE]"
@@ -89,10 +87,10 @@ function ClientChart() {
             </div>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 md:max-w-xs w-full">
             <Select
               defaultValue="Month"
-              className="font-golos font-medium"
+              className="font-golos font-medium flex-1"
               style={{ width: 150 }}
               onChange={handleChange}
               options={month}
@@ -111,8 +109,7 @@ function ClientChart() {
                 left: 20,
                 bottom: 5,
               }}
-              barSize={20}
-            >
+              barSize={20}>
               <XAxis
                 dataKey="name"
                 scale="point"
@@ -121,13 +118,13 @@ function ClientChart() {
               <YAxis />
               <Tooltip />
               {/* <Legend /> */}
-              <CartesianGrid  strokeAarray="2 2" />
+              <CartesianGrid strokeAarray="2 2" />
               <Bar dataKey="pv" fill="#866BE7" />
             </BarChart>
           </ResponsiveContainer>
         </div>
       </div>
-      <div className="w-3/12 ">
+      <div className="w-full lg:w-3/12 ">
         <h3 className="font-semibold pb-4">Client By Cities</h3>
         <div className=" w-full space-y-2">
           <div className="flex flex-col gap-1">

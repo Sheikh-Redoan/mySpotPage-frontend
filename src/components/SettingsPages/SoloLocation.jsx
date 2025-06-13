@@ -22,6 +22,7 @@ import DeleteLocationModal from "../modal/DeleteLocationModal";
 import LocationList from "./LocationList";
 import MobileServiceLocationList from "./MobileServiceLocationList";
 import { Grid } from "antd";
+import CitySelectionModal from "../modal/CitySelectionModal";
 
 
 dayjs.extend(customParseFormat);
@@ -85,6 +86,8 @@ const SoloLocation = () => {
   const [selectedDistrict, setSelectedDistrict] = useState("");
   const [selectedCities, setSelectedCities] = useState({});
   const [deleteLocationModalOpen, setDeleteLocationModalOpen] = useState(false);
+  const [openCitySelectionModal, setOpenCitySelectionModal] = useState(false);
+
   const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
 
@@ -355,7 +358,7 @@ const SoloLocation = () => {
                                       }
                                       onClick={() => {
                                         setSelectedDistrict(district);
-                                        setRegionalModal(true);
+                                        setOpenCitySelectionModal(true)
                                       }}
                                       className="text-[#262626]"
                                     >
@@ -386,7 +389,7 @@ const SoloLocation = () => {
                                   <ArrowUpRight
                                     onClick={() => {
                                       setSelectedDistrict(district);
-                                      setRegionalModal(true);
+                                      setOpenCitySelectionModal(true);
                                     }}
                                     className="text-[#888888] hover:text-[#744CDB] hover:font-semibold"
                                     size={20}
@@ -654,70 +657,16 @@ const SoloLocation = () => {
         </div>
       )}
 
-      {/*  regional Modal */}
-      {regionalModal && (
-        <div className="fixed inset-0 bg-[#111113cc] flex items-center justify-center z-50">
-          <div className="bg-white text-black rounded-md w-[95%] min-h-md max-w-lg relzative">
-            <div className="flex items-center gap-3 my-2 p-6">
-              <ArrowLeft onClick={() => setRegionalModal(false)} />
-              <p className="text-[#262626] font-semibold">{selectedDistrict}</p>
-            </div>
-            <hr className="text-[#E5E7E8]" />
-            <h2 className="text-sm my-4 px-6 text-[#797979]">
-              All cities within the district:
-            </h2>
-            <div className="px-6 py-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <Checkbox onChange={() => handleCityChange("All cities")}>
-                All cities
-              </Checkbox>
-              <Checkbox onChange={() => handleCityChange("Karmiel")}>
-                Karmiel
-              </Checkbox>
-              <Checkbox onChange={() => handleCityChange("Migdal HaEmek")}>
-                Migdal HaEmek
-              </Checkbox>
-              <Checkbox onChange={() => handleCityChange("Nazareth (Nazerat)")}>
-                Nazareth (Nazerat)
-              </Checkbox>
-              <div className="flex gap-2 items-center">
-                <Checkbox
-                  onChange={() => handleCityChange("Ma'alot-Tarshiha")}
-                />
-                <p className="text-sm">Ma'alot-Tarshiha</p>
-              </div>
-              <div className="flex gap-2 items-center">
-                <Checkbox onChange={() => handleCityChange("Yokneam Illit")} />
-                <p className="text-sm">Yokneam Illit</p>
-              </div>
-
-              <Checkbox onChange={() => handleCityChange("Sakhnin")}>
-                Sakhnin
-              </Checkbox>
-              <Checkbox onChange={() => handleCityChange("Acre (Akko)")}>
-                Acre (Akko)
-              </Checkbox>
-              <Checkbox onChange={() => handleCityChange("Kiryat Shmona")}>
-                Kiryat Shmona
-              </Checkbox>
-            </div>
-
-            <div className="flex justify-end items-center gap-6 px-6 py-3">
-              <button
-                onClick={() => setRegionalModal(false)}
-                className="text-[#242528] text-sm hover:scale-95 transform transition-all ease-in-out duration-300"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={() => setRegionalModal(false)}
-                className="bg-[#242528] text-[#FFF] text-sm  py-2 px-3 rounded-lg  hover:scale-95 transform transition-all ease-in-out duration-300"
-              >
-                Save
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      {
+        openCitySelectionModal &&
+        (<CitySelectionModal
+          openCitySelectionModal={openCitySelectionModal}
+          onClose={() => setOpenCitySelectionModal(false)}
+          selectedDistrict={selectedDistrict}
+          handleCityChange={handleCityChange}
+          selectedCities={selectedCities}
+        />)
+      }
 
       {/* delete location modal */}
       {deleteLocationModalOpen && (

@@ -16,7 +16,7 @@ const Upgradeplan = () => {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (UpgradeCard.current && !UpgradeCard.current.contains(event.target)) {
-        navigate("/settings/subscription");
+        navigate("/dashboard/settings/subscription");
       }
     };
     document.addEventListener("mousedown", handleClickOutside);

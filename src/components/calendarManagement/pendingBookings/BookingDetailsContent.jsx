@@ -57,7 +57,7 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
               }}
               shape="circle"
             >
-              {booking.avatar}
+              {booking?.avatar}
             </Avatar>
           </div>
 
@@ -66,7 +66,7 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
               to={"#"}
               className="text-[#3E70DD] underline decoration-1 decoration-Boulder-400 text-[20px] font-medium"
             >
-              {booking.clientName}
+              {booking?.clientName}
             </Link>
             <div className="w-5 h-5 rounded-full bg-[#FFB743] flex items-center justify-center">
               <Crown className="text-white size-3" />
@@ -80,7 +80,7 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
                 to={"#"}
                 className="text-[#3E70DD] underline decoration-1 decoration-Boulder-400 text-[20px] font-medium"
               >
-                {booking.clientName}
+                {booking?.clientName}
               </Link>
               <div className="w-5 h-5 rounded-full bg-[#FFB743] flex items-center justify-center">
                 <Crown className="text-white size-3" />
@@ -91,7 +91,7 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
               <div className="flex items-center gap-3">
                 <PhoneCall className="size-5 text-gray-600" />
                 <p className="text-[#242528] text-[14px] font-normal">
-                  {booking.clientPhone}
+                  {booking?.clientPhone}
                 </p>
               </div>
 
@@ -111,10 +111,10 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
               <div className="flex items-center gap-3">
                 <Calendar className="size-5 text-gray-600" />
                 <p className="text-[#242528] text-sm">
-                  {formatToDDMonYYYY(booking.scheduledDate)},
+                  {formatToDDMonYYYY(booking?.scheduledDate)},
                 </p>
                 <p className="text-[#242528] text-sm ml-[-2px]">
-                  {booking.scheduledTime}
+                  {booking?.scheduledTime}
                 </p>
               </div>
             </div>
@@ -170,7 +170,7 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
           <div className="flex items-center gap-3">
             <PhoneCall className="size-5 text-gray-600" />
             <p className="text-[#242528] text-[14px] font-normal">
-              {booking.clientPhone}
+              {booking?.clientPhone}
             </p>
           </div>
 
@@ -187,8 +187,8 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
 
           <div className="flex items-center gap-3">
             <Calendar className="size-5 text-gray-600" />
-            <p className="text-[#242528] text-sm">{booking.scheduledDate},</p>
-            <p className="text-[#242528] text-sm">{booking.scheduledTime}</p>
+            <p className="text-[#242528] text-sm">{booking?.scheduledDate},</p>
+            <p className="text-[#242528] text-sm">{booking?.scheduledTime}</p>
           </div>
 
           <p className="text-[#424348] text-sm font-noramal p-2">
@@ -220,7 +220,7 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
       <div className="w-full lg:w-[50%] lg:border-r-[1px] lg:border-t-[1px] lg:border-t-gray-300 lg:border-r-gray-300">
         <div className="bg-[#F5F4FE] w-full p-4 flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center max-md:gap-2 max-md:my-2">
           {/* Date Picker */}
-          <div className="relative">
+          <div className="relative max-md:hidden">
             <StyledDatePicker
               selectedDate={selectedDate}
               setSelectedDate={setSelectedDate}
@@ -236,26 +236,47 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
             />
           </div>
 
+          {/* Mobile Screen Date Picker */}
+          <div className="relative md:hidden">
+            <StyledDatePicker
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
+              dateFormat="EEE, dd MMM yyyy"
+              customInput={
+                <div className="flex items-center gap-1 cursor-pointer">
+                  <span className="text-lg font-semibold text-[#6C5DD3]">
+                    {formatDate(selectedDate)}
+                  </span>
+                  <ChevronDown className="w-5 h-5 text-[#6C5DD3]" />
+                </div>
+              }
+              isMobile={true}
+            />
+          </div>
+
           <div className="flex items-center gap-2">
             {/* Time Picker */}
             <TimePicker scheduledTime={booking?.scheduledTime} />
 
+            {/* Mobile Screen Time Picker */}
+            <TimePicker isMobile={true} scheduledTime={booking?.scheduledTime} />
+
             <div
               className={`px-3 py-2 bg-[#FFFFFF] rounded-lg text-sm font-medium ${
-                booking.status === "Pending"
+                booking?.status === "Pending"
                   ? "text-[#FC8B23]"
-                  : booking.status === "Confirmed"
+                  : booking?.status === "Confirmed"
                   ? "text-[#3E70DD]"
-                  : booking.status === "Completed"
+                  : booking?.status === "Completed"
                   ? "text-[#21C66E]"
-                  : booking.status === "Cancelled"
+                  : booking?.status === "Cancelled"
                   ? "text-[#ED4245]"
-                  : booking.status === "No Show"
+                  : booking?.status === "No Show"
                   ? "text-[#82868E]"
                   : ""
               }`}
             >
-              {booking.status}
+              {booking?.status}
             </div>
           </div>
         </div>
@@ -277,7 +298,7 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
           </div>
 
           {/* Serivices List */}
-          <BookingDetailsServices services={booking.serviceDetails} />
+          <BookingDetailsServices services={booking?.serviceDetails} />
         </div>
       </div>
 

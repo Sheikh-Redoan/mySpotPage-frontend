@@ -1,16 +1,14 @@
-import React, { PureComponent } from "react";
+import { Select } from "antd";
+import { GoArrowDown, GoArrowUp } from "react-icons/go";
 import {
-  BarChart,
   Bar,
+  BarChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
 } from "recharts";
-import { GoArrowDown, GoArrowUp } from "react-icons/go";
-import { Select } from "antd";
 import { imageProvider } from "../../lib/imageProvider";
 import RepeatClientChart from "./RepeatClientChart";
 
@@ -81,10 +79,10 @@ function SalesChart() {
   ];
 
   return (
-    <div className="bg-white space-x-8 divide-x divide-gray-200 rounded-xl flex w-full h-full p-6 inset-shadow-sm ">
-      <div className="w-9/12 pr-8 chart-1 flex flex-col  ">
+    <div className="bg-white gap-8 divide-x divide-gray-200 rounded-xl flex w-full h-full p-6 inset-shadow-sm max-lg:flex-col">
+      <div className="w-full lg:w-9/12 pr-8 chart-1 flex flex-col  ">
         <div className="">
-          <div className="px-0 pt-0 pb-4 w-full flex justify-between items-center">
+          <div className="px-0 pt-0 pb-4 w-full flex flex-wrap justify-between gap-4">
             <div className="flex items-start gap-4">
               <img
                 className="p-3.5 rounded-lg bg-[#FEE8D3]"
@@ -106,16 +104,16 @@ function SalesChart() {
               </div>
             </div>
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 md:max-w-sm w-full">
               <Select
                 defaultValue="Month"
-                className="font-golos font-medium"
+                className="font-golos font-medium flex-1"
                 style={{ width: 150 }}
                 onChange={handleChange}
                 options={month}
               />
               <Select
-                className="font-golos font-medium"
+                className="font-golos font-medium flex-1 md:flex-2"
                 defaultValue="Services"
                 style={{ width: 250 }}
                 onChange={handleChange}
@@ -123,28 +121,35 @@ function SalesChart() {
               />
             </div>
           </div>
-          <div className="grid grid-cols-2 py-4 gap-4">
+
+          <div className="grid lg:grid-cols-2 py-4 gap-4">
             <div className="border p-4 space-y-1.5 border-black/10 rounded-xl">
               <h4 className="text-description ">Average Daily Bookings</h4>
               <h3 className="text-black font-semibold text-lg">950</h3>
               <h4 className="flex items-center">
-                {" "}
                 <GoArrowDown color="red" />{" "}
-                <span className="text-red-400 font-semibold pr-2">-2.1%</span> <span className="text-description">since
-                last month</span>
+                <span className="text-red-400 font-semibold pr-2">-2.1%</span>{" "}
+                <span className="text-description">since last month</span>
               </h4>
             </div>
+
             <div className="border p-4 space-y-1.5 border-black/10 rounded-xl">
-              <h4 className="text-description flex w-full justify-between">Peek- Time Booking Volume <span className="text-primary01 bg-[#ECEBFC] px-4 py-2 rounded-full text-sm font-medium ">Peak time: 14:00 - 18:00</span></h4>
+              <h4 className="text-description flex flex-wrap w-full justify-between gap-3">
+                Peek- Time Booking Volume{" "}
+                <span className="text-primary01 bg-[#ECEBFC] px-4 py-2 rounded-full text-sm font-medium ">
+                  Peak time: 14:00 - 18:00
+                </span>
+              </h4>
               <h3 className="font-semibold text-black text-lg">950</h3>
               <h4 className="flex items-center ">
                 <GoArrowUp color="#05DF72" />{" "}
                 <span className="text-green-400 font-semibold pr-2">-2.1%</span>{" "}
-               <span className="text-description"> from daily average</span>
+                <span className="text-description"> from daily average</span>
               </h4>
             </div>
           </div>
         </div>
+
         <div className="w-full chart-1 overflow-x-auto">
           <ResponsiveContainer width={1900} height={300}>
             <BarChart
@@ -157,8 +162,7 @@ function SalesChart() {
                 left: 20,
                 bottom: 5,
               }}
-              barSize={20}
-            >
+              barSize={20}>
               <XAxis
                 dataKey="name"
                 scale="point"
@@ -173,10 +177,9 @@ function SalesChart() {
           </ResponsiveContainer>
         </div>
       </div>
-      <div className="w-3/12 ">
+      <div className="w-full lg:w-3/12 ">
         <h3 className="font-semibold pb-4">Repeat Clients</h3>
-
-        <RepeatClientChart/>
+        <RepeatClientChart />
       </div>
     </div>
   );

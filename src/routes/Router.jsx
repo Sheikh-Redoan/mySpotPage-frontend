@@ -193,7 +193,7 @@ export const routes = createBrowserRouter([
     path: "/onboard",
     element: (
       <ProtectedRoute>
-        <OnboardLayout />{" "}
+        <OnboardLayout />
         {/* Assuming OnboardLayout handles overall onboarding UI */}
       </ProtectedRoute>
     ),

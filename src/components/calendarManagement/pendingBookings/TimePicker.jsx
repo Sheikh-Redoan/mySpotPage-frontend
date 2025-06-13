@@ -3,7 +3,6 @@ import { Check } from "lucide-react";
 import { Clock } from "lucide-react";
 import React from "react";
 import { useState } from "react";
-import useDeviceWidth from "../../../hooks/useDeviceWidth";
 
 const timeSlots = [
   "08:00 AM",
@@ -23,12 +22,9 @@ const timeSlots = [
   "22:00 PM",
 ];
 
-const TimePicker = ({ scheduledTime }) => {
+const TimePicker = ({ scheduledTime, isMobile = false }) => {
   const [selectedTime, setSelectedTime] = useState(scheduledTime);
 
-  const deviceWidth = useDeviceWidth();
-  const isMobile = deviceWidth <= 768;
-  console.log("isMobile", isMobile);
   const placement = isMobile ? "rightTop" : "bottomRight";
 
   const handleTimeSelect = (time) => {

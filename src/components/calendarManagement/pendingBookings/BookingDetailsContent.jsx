@@ -220,7 +220,7 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
       <div className="w-full lg:w-[50%] lg:border-r-[1px] lg:border-t-[1px] lg:border-t-gray-300 lg:border-r-gray-300">
         <div className="bg-[#F5F4FE] w-full p-4 flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center max-md:gap-2 max-md:my-2">
           {/* Date Picker */}
-          <div className="relative">
+          <div className="relative max-md:hidden">
             <StyledDatePicker
               selectedDate={selectedDate}
               setSelectedDate={setSelectedDate}
@@ -236,9 +236,30 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
             />
           </div>
 
+          {/* Mobile Screen Date Picker */}
+          <div className="relative md:hidden">
+            <StyledDatePicker
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
+              dateFormat="EEE, dd MMM yyyy"
+              customInput={
+                <div className="flex items-center gap-1 cursor-pointer">
+                  <span className="text-lg font-semibold text-[#6C5DD3]">
+                    {formatDate(selectedDate)}
+                  </span>
+                  <ChevronDown className="w-5 h-5 text-[#6C5DD3]" />
+                </div>
+              }
+              isMobile={true}
+            />
+          </div>
+
           <div className="flex items-center gap-2">
             {/* Time Picker */}
             <TimePicker scheduledTime={booking?.scheduledTime} />
+
+            {/* Mobile Screen Time Picker */}
+            <TimePicker isMobile={true} scheduledTime={booking?.scheduledTime} />
 
             <div
               className={`px-3 py-2 bg-[#FFFFFF] rounded-lg text-sm font-medium ${

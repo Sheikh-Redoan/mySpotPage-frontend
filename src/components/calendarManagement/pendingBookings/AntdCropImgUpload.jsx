@@ -33,8 +33,9 @@ var __awaiter =
   };
 
 import React, { useState } from "react";
-import { Upload } from "antd";
+import { Avatar, Button, Upload } from "antd";
 import ImgCrop from "antd-img-crop";
+import { Upload as UploadImg, X } from "lucide-react";
 
 const AntdCropImgUpload = () => {
   const [fileList, setFileList] = useState([
@@ -67,17 +68,54 @@ const AntdCropImgUpload = () => {
         ? void 0
         : imgWindow.document.write(image.outerHTML);
     });
-    
+
+  const onRemove = (file) => {
+    setFileList(fileList.filter((item) => item.uid !== file.uid));
+  };
+
   return (
     <ImgCrop rotationSlider>
       <Upload
         action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
-        listType="picture-card"
         fileList={fileList}
         onChange={onChange}
         onPreview={onPreview}
+        listType="text"
+        showUploadList={false}
+        maxCount={5}
       >
-        {fileList.length < 5 && "+ Upload"}
+        {fileList.length < 5 && (
+          <Button
+            icon={<UploadImg size={16} />}
+            className="py-2 px-3 rounded-md text-[#FFFFFF] mt-2"
+          >
+            Upload Your Image
+          </Button>
+        )}
+
+        {fileList.length > 0 && (
+          <div className="mt-4">
+              {fileList.map((file) => (
+                <div
+                  key={file.uid}
+                  className="relative"
+                >
+                  {console.log("file", file)}
+                  <Avatar
+                    src={file.url}
+                    shape="square"
+                    size={100}
+                  />
+                  <button
+                    onClick={() => onRemove(file)}
+                    className="text-red-500 text-sm absolute top-1 right-22 cursor-pointer"
+                  >
+                    <X size={16} />
+                  </button>
+                </div>
+              ))}
+          </div>
+        )}
       </Upload>
     </ImgCrop>
   );

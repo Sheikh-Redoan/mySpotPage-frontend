@@ -56,19 +56,21 @@ function TopNavbar({ activeTab, onMenuClick }) {
             onOpenChange={handleNotification}
             arrow={false}
             content={
-              <NotificationPopup notificationButtons={notificationButtons} />
+              <div className="w-full md:max-w-xs sm:w-80 p-2">
+                <NotificationPopup notificationButtons={notificationButtons} />
+              </div>
             }>
             <button
               onClick={handleNotification}
-              type="text"
+              type="button"
               className={cn(
-                "!rounded-full w-8 h-8 grid place-items-center transition-colors duration-200",
+                "!rounded-full w-8 h-8 sm:w-10 sm:h-10 grid place-items-center transition-colors duration-200",
                 {
                   "!bg-primary01": !toggle,
                 }
               )}>
               <img
-                className="cursor-pointer filter"
+                className="cursor-pointer filter w-4 h-4 sm:w-5 sm:h-5"
                 src={
                   toggle
                     ? imageProvider.Notification

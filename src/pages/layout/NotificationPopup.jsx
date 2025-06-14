@@ -1,19 +1,25 @@
 import { useState } from "react";
 import { imageProvider } from "../../lib/imageProvider";
+import { cn } from "../../lib/utils";
 
-function NotificationPopup({ notificationButtons }) {
+function NotificationPopup({ notificationButtons, isDrawerOpen = true }) {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
     <div className="max-w-xs">
-      <div className="flex justify-between items-center">
-        <h3 className="text-lg font-semibold">Notifications</h3>
-        <h4 className="text-black/60 text-sm underline cursor-pointer">
-          Mark all as Read
-        </h4>
-      </div>
+      {isDrawerOpen && (
+        <div className="flex justify-between items-center">
+          <h3 className="text-lg font-semibold">Notifications</h3>
+          <h4 className="text-black/60 text-sm underline cursor-pointer">
+            Mark all as Read
+          </h4>
+        </div>
+      )}
 
-      <div className="flex items-center gap-2 pt-4">
+      <div
+        className={cn("flex items-center gap-2", {
+          "pt-4": isDrawerOpen,
+        })}>
         {notificationButtons.map((item, index) => (
           <button
             onClick={() => setActiveTab(index)}

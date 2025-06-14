@@ -29,7 +29,7 @@ function ClientPage() {
   };
 
   return (
-    <div className="w-full md:p-5">
+    <div className="w-full p-3 md:p-5">
       <div className="flex flex-col md:flex-row items-center justify-between mb-4">
         <Tabs
           defaultActiveKey="1"

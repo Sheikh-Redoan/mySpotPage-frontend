@@ -1,4 +1,4 @@
-import { DatePicker } from "antd";
+import { Button, DatePicker } from "antd";
 import { imageProvider } from "../../lib/imageProvider";
 import { Plus } from "lucide-react";
 import dayjs from "dayjs";
@@ -148,7 +148,7 @@ const Subscription = () => {
   return (
     <div className="min-h-full">
       {currentPlan === "Spark" && currentBookings >= 8 && (
-        <div className="flex gap-4 bg-[#FFE6E6] rounded-md py-2 pl-4 my-4">
+        <div className="flex gap-4 bg-[#FFE6E6] rounded-md py-2 pl-2 md:pl-4 my-4">
           <img
             className="object-contain"
             src={imageProvider.subscriptionAlert}
@@ -198,7 +198,7 @@ const Subscription = () => {
           />
         )}
 
-        <div className="md:min-w-[660px] h-[260px] flex-[6] bg-[#FFFFFF] p-5 rounded-lg hover:scale-95 transform transition-all duration-300 ease-in-ou">
+        <div className="md:min-w-[660px] h-[260px] flex-[6] bg-[#FFFFFF] p-2 md:p-5 rounded-lg hover:scale-95 transform transition-all duration-300 ease-in-ou">
           <div className="flex flex-col md:flex-row justify-between items-start my-2 space-y-4">
             <div>
               <h2 className="text-[#262626] font-semibold text-base md:text-xl pb-2">
@@ -212,16 +212,16 @@ const Subscription = () => {
             </div>
             <div>
               <Link to={"/add-card"}>
-                <button className="flex gap-2 font-semibold border border-[#744CDB] text-[#744CDB] px-3.5 py-1 md:py-2 shadow-md rounded-md hover:scale-95 transform transition-all ease-in-out duration-300">
+                <Button color="primary" variant="outlined">
                   <Plus /> Add Card
-                </button>
+                </Button>
               </Link>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="min-w-full min-h-[480px] bg-[#FFFFFF] p-5 my-6 rounded-lg flex flex-col justify-between">
+      <div className="min-w-full min-h-[480px] bg-[#FFFFFF] p-2 md:p-5 my-6 rounded-lg flex flex-col justify-between">
         {/* Top Section */}
         <div className="flex flex-col md:flex-row justify-between my-2">
           <h2 className="text-[#262626] font-semibold text-lg">
@@ -235,8 +235,9 @@ const Subscription = () => {
                 dayjs("2026/01/01", dateFormat),
               ]}
               bordered={false}
-              className="custom-range-picker"
+              className="custom-range-picker w-full"
               onChange={handleDateChange}
+              dropdownClassName="vertical-range-picker"
             />
           </div>
         </div>

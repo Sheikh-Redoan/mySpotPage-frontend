@@ -252,7 +252,7 @@ const StaffManagement = () => {
               )}
             </div>
 
-            <div className="w-80 h-full sticky top-5 max-[475px]:hidden">
+            <div className="w-80 h-full sticky top-5 max-[700px]:hidden">
               <QuickViewPanel selectedStaff={selectedStaff} />
             </div>
           </div>

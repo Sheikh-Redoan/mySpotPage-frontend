@@ -68,6 +68,7 @@ import TextLogo from "../assets/images/my_spot_page_text_favicon.png";
 import locationPink from "../assets/icons/locationpink.png";
 import subscriptionBlack from '../assets/icons/subsCriptionBlack.png';
 import subscriptionPink from '../assets/icons/subscriptionPink.png';
+import dollerIcon from "../assets/icons/dollarIcon.png"
 
 export const imageProvider = {
   incognito,
@@ -137,5 +138,6 @@ export const imageProvider = {
   databaseCol,
   locationPink,
   subscriptionPink,
-  subscriptionBlack
+  subscriptionBlack,
+  dollerIcon
 };

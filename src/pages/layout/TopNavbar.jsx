@@ -61,11 +61,11 @@ function TopNavbar({ activeTab, onMenuClick }) {
           <button
             type="button"
             className={cn(
-              "!rounded-full w-8 h-8 sm:w-10 sm:h-10 grid place-items-center transition-colors duration-200 lg:hidden"
+              "!rounded-full w-8 h-8 sm:w-10 sm:h-10 grid place-items-center transition-colors duration-200 lg:!hidden"
             )}
             onClick={showDrawer}>
             <img
-              className="cursor-pointer filter w-4 h-4 sm:w-5 sm:h-5"
+              className="cursor-pointer filter w-4 h-4 sm:w-5 sm:h-5 object-contain"
               src={
                 !open
                   ? imageProvider.Notification
@@ -87,7 +87,8 @@ function TopNavbar({ activeTab, onMenuClick }) {
                   Mark all as Read
                 </h4>
               </button>
-            }>
+            }
+            className="lg:!hidden">
             <NotificationPopup
               notificationButtons={notificationButtons}
               isDrawerOpen={false}
@@ -115,7 +116,7 @@ function TopNavbar({ activeTab, onMenuClick }) {
                 }
               )}>
               <img
-                className="cursor-pointer filter w-4 h-4 sm:w-5 sm:h-5"
+                className="cursor-pointer filter w-4 h-4 sm:w-5 sm:h-5 object-contain"
                 src={
                   toggle
                     ? imageProvider.Notification

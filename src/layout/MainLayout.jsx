@@ -115,35 +115,40 @@ function MainLayout({ activeTab }) {
                   <Tooltip
                     placement="right"
                     title={isSidebarCollapsed && isDesktop ? tab.name : null}
-                    color="white">
+                    color="white"
+                    trigger="hover">
                     <NavLink
                       to={tab.link}
+                      end={tab?.end}
                       className={({ isActive }) =>
                         cn(
-                          "py-2 px-3 transition-all duration-300 flex items-center rounded-xl",
-                          isActive
-                            ? "bg-primary01 text-white"
-                            : "text-primary01 hover:bg-primary01/10"
+                          "flex items-center transition-colors duration-300 rounded-lg hover:bg-primary01/10 hover:text-primary01",
+                          {
+                            "bg-primary01 text-white hover:bg-primary01 hover:text-white":
+                              isActive,
+                            "p-2": !isSidebarCollapsed,
+                          }
                         )
-                      }
-                      end={tab?.end}>
+                      }>
                       {({ isActive }) => (
                         <>
-                          <img
-                            src={isActive ? tab.imageWhite : tab.imagePink}
-                            alt=""
-                            className="w-5 h-5"
-                          />
+                          <div
+                            className={cn(
+                              "flex items-center justify-center w-10 h-10 transition-colors duration-300 rounded-xl cursor-pointer",
+                              {
+                                "bg-primary01": isActive,
+                              }
+                            )}>
+                            <img
+                              src={isActive ? tab.imageWhite : tab.imagePink}
+                              alt=""
+                              className="w-5 h-5 object-contain"
+                            />
+                          </div>
                           <span
                             className={cn(
-                              "ml-2 transition-all duration-300 leading-[12px]",
-                              // Show text always on mobile when sidebar is open
-                              isMobileSidebarOpen
-                                ? "opacity-100 w-auto"
-                                : // On desktop, follow collapsed state
-                                isSidebarCollapsed
-                                ? "opacity-0 w-0"
-                                : "opacity-100 w-auto"
+                              "ml-2 text-sm transition-all duration-300",
+                              isSidebarCollapsed ? "hidden" : "block"
                             )}>
                             {tab.name}
                           </span>

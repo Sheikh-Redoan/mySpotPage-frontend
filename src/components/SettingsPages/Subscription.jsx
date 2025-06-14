@@ -1,4 +1,4 @@
-import { DatePicker } from "antd";
+import { Button, DatePicker } from "antd";
 import { imageProvider } from "../../lib/imageProvider";
 import { Plus } from "lucide-react";
 import dayjs from "dayjs";
@@ -212,9 +212,9 @@ const Subscription = () => {
             </div>
             <div>
               <Link to={"/add-card"}>
-                <button className="flex gap-2 font-semibold border border-[#744CDB] text-[#744CDB] px-3.5 py-1 md:py-2 shadow-md rounded-md hover:scale-95 transform transition-all ease-in-out duration-300">
+                <Button color="primary" variant="outlined">
                   <Plus /> Add Card
-                </button>
+                </Button>
               </Link>
             </div>
           </div>

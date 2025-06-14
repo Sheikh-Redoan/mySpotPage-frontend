@@ -70,7 +70,13 @@ const PlanCard = ({
           )}
         </Link>
 
-        <Link to={"/upgrade-plan"} state={{ currentPlan: planName }}>
+        <Link to={"/upgrade-plan"} state={{ currentPlan: planName }} className="max-md:hidden">
+          <p className="text-[#744CDB] underline flex items-center gap-2">
+            Upgrade Plan <ArrowUpRight size={20} />
+          </p>
+        </Link>
+
+        <Link to={"/upgrade-plan"} state={{ currentPlan: planName, isMobile: true }} className="md:hidden">
           <p className="text-[#744CDB] underline flex items-center gap-2">
             Upgrade Plan <ArrowUpRight size={20} />
           </p>

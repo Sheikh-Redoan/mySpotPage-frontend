@@ -190,7 +190,7 @@ export default function ClientDetails({ event, hide }) {
             Booking Details
           </h3>
         }
-        className="!w-full !max-w-6xl"
+        className="!w-full !max-w-[1200px]"
         centered
       >
         <BookingDetailsContent

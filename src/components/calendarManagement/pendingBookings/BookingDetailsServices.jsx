@@ -1,7 +1,7 @@
 import { Trash2 } from "lucide-react";
 import { IoIosArrowDown } from "react-icons/io";
 import React from "react";
-import AntdCropImgUpload from "./AntdCropImgUpload";
+import CropImgUploader from "./CropImgUploader";
 
 const BookingDetailsServices = ({ services }) => {
   // console.log("services", services);
@@ -70,7 +70,7 @@ const BookingDetailsServices = ({ services }) => {
           </span>
         </h3>
 
-        <AntdCropImgUpload />
+        <CropImgUploader />
       </div>
     </div>
   );

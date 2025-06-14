@@ -94,7 +94,7 @@ const AddStaffModal = ({ onClose, onAddStaff, allStaffData }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-[#0000007c] flex justify-center items-center z-40 max-[475px]:items-end">
+    <div className="fixed inset-0 bg-[#0000007c] flex justify-center items-center z-40 max-[700px]:items-end">
       <div
         ref={modalRef}
         className="relative w-[600px] max-h-[700px] bg-white rounded-lg flex flex-col justify-start items-start shadow-xl"
@@ -220,17 +220,17 @@ const AddStaffModal = ({ onClose, onAddStaff, allStaffData }) => {
           <div className="flex-grow"></div>
 
           {/* Action Buttons */}
-          <div className="self-stretch px-6 py-4 border-t border-gray-200 flex justify-end items-center gap-3 mt-auto max-[475px]:p-0 max-[475px]:m-0 max-[475px]:w-full">
+          <div className="self-stretch px-6 py-4 border-t border-gray-200 flex justify-end items-center gap-3 mt-auto max-[700px]:p-0 max-[700px]:m-0 max-[700px]:w-full">
             <button
               type="button"
               onClick={onClose}
-              className="w-20 py-0.5 flex justify-center items-center gap-1 text-neutral-800 text-sm font-semibold font-['Golos_Text'] leading-tight hover:bg-gray-100 rounded transition-colors duration-200 max-[475px]:none max-[475px]:hidden"
+              className="w-20 py-0.5 flex justify-center items-center gap-1 text-neutral-800 text-sm font-semibold font-['Golos_Text'] leading-tight hover:bg-gray-100 rounded transition-colors duration-200 max-[700px]:none max-[700px]:hidden"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="h-10 px-3 py-2 bg-neutral-800 rounded-lg flex justify-center items-center gap-2 hover:bg-gray-700 transition-colors duration-200 text-white text-sm font-semibold font-['Golos_Text'] leading-tight max-[475px]:w-full"
+              className="h-10 px-3 py-2 bg-neutral-800 rounded-lg flex justify-center items-center gap-2 hover:bg-gray-700 transition-colors duration-200 text-white text-sm font-semibold font-['Golos_Text'] leading-tight max-[700px]:w-full"
             >
               Send SMS
             </button>

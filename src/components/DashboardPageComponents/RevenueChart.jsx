@@ -227,6 +227,11 @@ function RevenueChart() {
                 height={60}
                 tickMargin={10}
                 tickFormatter={(value, index) => (index === 0 ? '' : value)}
+                tick={{
+                  angle: 0,
+                  textAnchor: 'middle',
+                }}
+                tickLine={false}
               />
               <YAxis ticks={[100, 200, 300, 400, 500, 600, 700, 800, 900]} />
               <Tooltip content={<CustomTooltip />}

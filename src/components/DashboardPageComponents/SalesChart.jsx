@@ -14,35 +14,40 @@ import RepeatClientChart from "./RepeatClientChart";
 
 function SalesChart() {
   const data = [
-    { name: "1/2/2025", uv: 400, pv: 400, amt: 200 },
-    { name: "2/2/2025", uv: 600, pv: 200, amt: 200 },
-    { name: "3/2/2025", uv: 500, pv: 300, amt: 200 },
-    { name: "4/2/2025", uv: 500, pv: 500, amt: 200 },
-    { name: "5/2/2025", uv: 400, pv: 100, amt: 200 },
-    { name: "6/2/2025", uv: 500, pv: 200, amt: 200 },
-    { name: "7/2/2025", uv: 700, pv: 500, amt: 200 },
-    { name: "8/2/2025", uv: 400, pv: 200, amt: 200 },
-    { name: "9/2/2025", uv: 700, pv: 100, amt: 200 },
-    { name: "10/2/2025", uv: 600, pv: 600, amt: 200 },
-    { name: "11/2/2025", uv: 500, pv: 200, amt: 200 },
-    { name: "12/2/2025", uv: 700, pv: 500, amt: 200 },
-    { name: "13/2/2025", uv: 400, pv: 200, amt: 200 },
-    { name: "14/2/2025", uv: 700, pv: 100, amt: 200 },
-    { name: "15/2/2025", uv: 600, pv: 600, amt: 200 },
-    { name: "16/2/2025", uv: 400, pv: 200, amt: 200 },
-    { name: "17/2/2025", uv: 700, pv: 100, amt: 200 },
-    { name: "18/2/2025", uv: 600, pv: 600, amt: 200 },
-    { name: "19/2/2025", uv: 500, pv: 300, amt: 200 },
-    { name: "20/2/2025", uv: 600, pv: 600, amt: 200 },
-    { name: "21/2/2025", uv: 700, pv: 500, amt: 200 },
-    { name: "22/2/2025", uv: 400, pv: 200, amt: 200 },
-    { name: "23/2/2025", uv: 600, pv: 200, amt: 200 },
-    { name: "24/2/2025", uv: 500, pv: 100, amt: 200 },
-    { name: "25/2/2025", uv: 700, pv: 500, amt: 200 },
-    { name: "26/2/2025", uv: 600, pv: 600, amt: 200 },
-    { name: "27/2/2025", uv: 400, pv: 100, amt: 200 },
-    { name: "28/2/2025", uv: 500, pv: 200, amt: 200 },
+    { name: "", pv: 0 },
+    { name: "1/2/2025", pv: 23 },
+    { name: "2/2/2025", pv: 12 },
+    { name: "3/2/2025", pv: 37 },
+    { name: "4/2/2025", pv: 5 },
+    { name: "5/2/2025", pv: 19 },
+    { name: "6/2/2025", pv: 9 },
+    { name: "7/2/2025", pv: 34 },
+    { name: "8/2/2025", pv: 3 },
+    { name: "9/2/2025", pv: 28 },
+    { name: "10/2/2025", pv: 18 },
+    { name: "11/2/2025", pv: 32 },
+    { name: "12/2/2025", pv: 6 },
+    { name: "13/2/2025", pv: 15 },
+    { name: "14/2/2025", pv: 11 },
+    { name: "15/2/2025", pv: 36 },
+    { name: "16/2/2025", pv: 8 },
+    { name: "17/2/2025", pv: 1 },
+    { name: "18/2/2025", pv: 39 },
+    { name: "19/2/2025", pv: 14 },
+    { name: "20/2/2025", pv: 25 },
+    { name: "21/2/2025", pv: 31 },
+    { name: "22/2/2025", pv: 4 },
+    { name: "23/2/2025", pv: 20 },
+    { name: "24/2/2025", pv: 30 },
+    { name: "25/2/2025", pv: 2 },
+    { name: "26/2/2025", pv: 17 },
+    { name: "27/2/2025", pv: 26 },
+    { name: "28/2/2025", pv: 38 }
   ];
+
+   const totalSales = data.reduce((sum, item) => sum + item.pv, 0);
+
+
 
   const handleChange = (value) => {
     console.log(`selected ${value}`);
@@ -64,23 +69,44 @@ function SalesChart() {
   ];
 
   const services = [
-    { value: "web_design", label: "Web Design" },
-    { value: "web_development", label: "Web Development" },
-    { value: "seo", label: "SEO Optimization" },
-    { value: "content_writing", label: "Content Writing" },
-    { value: "branding", label: "Branding" },
-    { value: "ui_ux", label: "UI/UX Design" },
-    { value: "digital_marketing", label: "Digital Marketing" },
-    { value: "app_development", label: "App Development" },
-    { value: "maintenance", label: "Website Maintenance" },
-    { value: "ecommerce", label: "E-commerce Solutions" },
-    { value: "consulting", label: "Tech Consulting" },
-    { value: "cloud_services", label: "Cloud Services" },
+    { value: "Classic Ombre", label: "Classic Ombre" },
+    { value: "Reverse Ombre", label: "Reverse Ombre" },
+    { value: "Smoothing Keratin Treatment", label: "Smoothing Keratin Treatment" },
+    { value: "Balayage with Toner", label: "Balayage with Toner" },
+    { value: "Balayage & Root Shadow", label: "Balayage & Root Shadow" },
+    { value: "Full Highlights", label: "Full Highlights" },
+    { value: "Partial Highlights", label: "Partial Highlights" },
+    { value: "Root Touch-Up", label: "Root Touch-Up" },
+    { value: "Gloss Treatment", label: "Gloss Treatment" },
+    { value: "Color Correction", label: "Color Correction" },
+    { value: "Hair Botox Treatment", label: "Hair Botox Treatment" },
+    { value: "Japanese Straightening", label: "Japanese Straightening" },
+    { value: "Hair Spa Treatment", label: "Hair Spa Treatment" },
+    { value: "Fashion Color", label: "Fashion Color" },
+    { value: "Double Process Color", label: "Double Process Color" },
   ];
+
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div
+          className="flex items-center gap-1 text-sm"
+          style={{ backgroundColor: 'whitesmoke', padding: 10, borderRadius: 10 }}>
+          <p>{label}</p>
+          <p>-</p>
+          <div className="flex gap-1 items-center">
+            <p>Total Sales: {" "}</p>
+            <p>{payload[0].value}</p>
+          </div>
+        </div>
+      );
+    }
+    return null;
+  };
 
   return (
     <div className="bg-white gap-8 divide-x divide-gray-200 rounded-xl flex w-full h-full p-6 inset-shadow-sm max-lg:flex-col">
-      <div className="w-full lg:w-9/12 pr-8 chart-1 flex flex-col  ">
+      <div className="w-full lg:w-9/12 pr-8 chart-1 flex flex-col ">
         <div className="">
           <div className="px-0 pt-0 pb-4 w-full flex flex-wrap justify-between gap-4">
             <div className="flex items-start gap-4">
@@ -93,7 +119,7 @@ function SalesChart() {
               <div>
                 <h4 className="font-medium text-black/60">Total Sales</h4>
                 <h3 className="text-lg font-semibold flex items-center">
-                  12,123,874{" "}
+                  {totalSales}{" "}
                   <span className="pl-4">
                     <GoArrowUp size={18} color="#05DF72" />
                   </span>{" "}
@@ -151,27 +177,39 @@ function SalesChart() {
         </div>
 
         <div className="w-full chart-1 overflow-x-auto">
-          <ResponsiveContainer width={1900} height={300}>
+          <ResponsiveContainer width={2500} height={380}>
             <BarChart
-              width={500}
-              height={300}
+              width={1500}
+              height={380}
               data={data}
               margin={{
                 top: 5,
                 right: 30,
-                left: 20,
-                bottom: 5,
+                left: 0,
+                bottom: 0,
               }}
-              barSize={20}>
+              barSize={30}
+            >
+              <CartesianGrid strokeDasharray="0.3" vertical={false} />
               <XAxis
                 dataKey="name"
                 scale="point"
                 padding={{ left: 10, right: 10 }}
+                interval={0}
+                height={60}
+                tickMargin={10}
+                tick={{
+                  angle: 0,
+                  textAnchor: 'middle',
+                }}
+                tickLine={false}
               />
-              <YAxis />
-              <Tooltip />
-              {/* <Legend /> */}
-              <CartesianGrid strokeDasharray="3 3" />
+              <YAxis
+                domain={[0, 40]}
+                ticks={[5, 10, 15, 20, 25, 30, 35, 40]}
+                allowDataOverflow={true}
+              />
+              <Tooltip content={<CustomTooltip />} />
               <Bar dataKey="pv" fill="#FC8B23" />
             </BarChart>
           </ResponsiveContainer>

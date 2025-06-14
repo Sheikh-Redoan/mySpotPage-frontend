@@ -22,7 +22,7 @@ const PlanCard = ({
     : (currentBookings / bookingLimit) * 100;
 
   return (
-    <div className="md:min-w-[460px] min-h-[210px] flex-[4] bg-white p-5 rounded-lg hover:scale-105 transform transition-all duration-300 ease-in-ou">
+    <div className="md:min-w-[460px] min-h-[210px] flex-[4] bg-white p-2 md:p-5 rounded-lg hover:scale-105 transform transition-all duration-300 ease-in-ou">
       <h3 className="text-[#262626] font-semibold text-lg my-2">Active Plan</h3>
 
       <div className="flex justify-between items-center my-4">

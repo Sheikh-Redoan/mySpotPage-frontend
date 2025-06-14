@@ -20,7 +20,6 @@ import TimePicker from "./TimePicker";
 
 const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
   const [showMore, setShowMore] = useState(false);
-  console.log("Booking Details Content Rendered", booking);
   const navigate = useNavigate();
 
   const formatDate = (date) => {

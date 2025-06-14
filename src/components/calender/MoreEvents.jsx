@@ -35,8 +35,11 @@ export default function MoreEvents({ events, maxEventsPerMonthCell }) {
         </div>
       }>
       <Button type="text" className="!p-0">
-        <span className="text-xs text-gray-500 max-md:hidden">
+        <span className="text-xs text-gray-500 max-lg:hidden">
           +{events.length - maxEventsPerMonthCell} more
+        </span>
+        <span className="text-xs text-gray-500 lg:hidden">
+          +({events.length - maxEventsPerMonthCell})
         </span>
       </Button>
     </Popover>

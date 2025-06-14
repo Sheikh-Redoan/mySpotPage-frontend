@@ -28,7 +28,7 @@ export default function Event({ event, isMobile = false }) {
         <Button type="text" className="!p-0" onClick={() => setOpen(true)}>
           <span
             className={cn(
-              "md:hidden text-xs truncate line-clamp-1 max-w-[35px]",
+              "lg:hidden text-xs truncate line-clamp-1 max-w-[35px]",
               {
                 "bg-[#3E70DD]/10 text-[#3E70DD]": event.status === "Confirmed",
                 "bg-[#3BA55C]/10 text-[#3BA55C]": event.status === "Completed",

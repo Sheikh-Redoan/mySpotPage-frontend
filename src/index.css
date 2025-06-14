@@ -164,6 +164,36 @@
   padding: 3px 10px;
 }
 
+/* Target the RangePicker dropdown */
+.vertical-range-picker .ant-picker-panels {
+  display: flex;
+  flex-direction: column !important; /* Stack calendars vertically */
+  align-items: center;
+}
+
+/* Ensure calendars are full-width on mobile */
+@media (max-width: 767px) {
+  .vertical-range-picker .ant-picker-panel-container {
+    width: 100% !important;
+  }
+
+  .vertical-range-picker .ant-picker-panel {
+    width: 100% !important;
+    max-width: 300px; /* Adjust as needed for better fit */
+  }
+
+  .vertical-range-picker .ant-picker-panel + .ant-picker-panel {
+    margin-top: 16px; /* Add spacing between calendars */
+  }
+}
+
+/* Optional: Adjust dropdown positioning for better mobile experience */
+@media (max-width: 767px) {
+  .vertical-range-picker {
+    transform: translateY(10px); /* Adjust dropdown position if needed */
+  }
+}
+
 /* input */
 .custom-dropdown .ant-select-item-option {
   margin: 5px 16px !important;

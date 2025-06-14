@@ -1,14 +1,13 @@
-import { Button, List, Popover } from "antd";
+import { Button, List, Modal, Popover } from "antd";
 import dayjs from "dayjs";
 import "dayjs/locale/en"; // Ensure locale is loaded for dayjs formatting
 import { ArrowUpRight, ChevronDown, CircleCheck, X } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router";
-import { cn } from "../../lib/utils";
-import EventActions from "./EventActions";
-import { Modal } from "antd";
-import BookingDetailsContent from "../calendarManagement/pendingBookings/BookingDetailsContent";
 import { getPendingBookingsById } from "../../dummy-data/bookingsData";
+import { cn } from "../../lib/utils";
+import BookingDetailsContent from "../calendarManagement/pendingBookings/BookingDetailsContent";
+import EventActions from "./EventActions";
 
 export default function ClientDetails({ event, hide }) {
   const [open, setOpen] = useState(false);
@@ -26,15 +25,14 @@ export default function ClientDetails({ event, hide }) {
 
   return (
     <>
-      <div className="max-w-sm">
+      <div className="max-w-sm rounded-t-xl">
         <div className="flex items-center justify-between border-b border-gray-200 pb-4 mb-4">
           <h3 className="font-medium flex items-center">
             Booking detail
             <Button
               type="link"
               className="!p-2"
-              onClick={() => setIsBookingDetailsModal(true)}
-            >
+              onClick={() => setIsBookingDetailsModal(true)}>
               <ArrowUpRight size={20} className="text-gray-400" />
             </Button>
           </h3>
@@ -76,8 +74,7 @@ export default function ClientDetails({ event, hide }) {
                     appointmentData.status === "Cancelled",
                   "bg-[#82868E]/10 text-[#82868E]":
                     appointmentData.status === "Not-show",
-                })}
-              >
+                })}>
                 {appointmentData.status}
               </span>
             </li>
@@ -144,8 +141,7 @@ export default function ClientDetails({ event, hide }) {
             <Button
               type="default"
               size="large"
-              className="!text-[#F24458] !border-[#F24458] flex-1"
-            >
+              className="!text-[#F24458] !border-[#F24458] flex-1">
               Add to blacklist
             </Button>
 
@@ -155,15 +151,13 @@ export default function ClientDetails({ event, hide }) {
               arrow={false}
               trigger="click"
               open={open}
-              onOpenChange={handleOpenChange}
-            >
+              onOpenChange={handleOpenChange}>
               <Button
                 type="primary"
                 size="large"
                 shape="default"
                 onClick={() => setOpen(!open)}
-                className="!flex !items-center !justify-between !w-full !bg-[#242528] !text-white !border-none"
-              >
+                className="!flex !items-center !justify-between !w-full !bg-[#242528] !text-white !border-none">
                 <span>Status</span>
                 <ChevronDown
                   size={20}
@@ -191,8 +185,7 @@ export default function ClientDetails({ event, hide }) {
           </h3>
         }
         className="!w-full !max-w-[1200px]"
-        centered
-      >
+        centered>
         <BookingDetailsContent
           booking={booking}
           selectedDate={selectedDate}

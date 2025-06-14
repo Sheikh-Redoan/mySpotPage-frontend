@@ -138,9 +138,24 @@ export default function DayCell({
         )}
 
         {!selectTimeFromProvider && events.length > 0 && (
-          <div className="flex flex-col items-start">
+          <div className="flex flex-col items-start max-lg:hidden">
             {events.slice(0, maxEventsPerMonthCell).map((event) => (
               <Event key={event.id} event={event} />
+            ))}
+            {events.length > maxEventsPerMonthCell && (
+              <MoreEvents
+                events={events}
+                maxEventsPerMonthCell={maxEventsPerMonthCell}
+              />
+            )}
+          </div>
+        )}
+
+        {/* Mobile */}
+        {!selectTimeFromProvider && events.length > 0 && (
+          <div className="flex flex-col items-start lg:hidden">
+            {events.slice(0, maxEventsPerMonthCell).map((event) => (
+              <Event key={event.id} event={event} isMobile />
             ))}
             {events.length > maxEventsPerMonthCell && (
               <MoreEvents

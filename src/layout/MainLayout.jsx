@@ -1,8 +1,8 @@
 // src/layouts/MainLayout.jsx
 import { imageProvider } from "@/lib/imageProvider";
 import { Tooltip } from "antd";
-import { ChevronLeft, ChevronRight, Menu } from "lucide-react";
-import { useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, NavLink, Outlet, useLocation } from "react-router";
 import { tabs } from "../lib/staticData";
@@ -30,8 +30,8 @@ function MainLayout({ activeTab }) {
       }
     };
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, [isMobileSidebarOpen]);
 
   useEffect(() => {
@@ -61,15 +61,14 @@ function MainLayout({ activeTab }) {
       {/* Sidebar Container */}
       <aside
         className={cn(
-          "p-4 flex flex-col justify-between top-0 left-0 transition-all duration-300 h-screen fixed bg-[#F5F4FE] z-[8]",
+          "p-4 flex flex-col justify-between top-0 left-0 transition-all duration-300 h-screen fixed bg-[#F5F4FE] z-50",
           // Mobile behavior
           "w-64",
           isMobileSidebarOpen ? "translate-x-0" : "-translate-x-full",
           // Desktop behavior
           "md:translate-x-0",
           isSidebarCollapsed ? "md:w-[74px]" : "md:w-64"
-        )}
-      >
+        )}>
         {/* Desktop Sidebar Toggle Button (Close) */}
         <button
           onClick={handleToggleDesktopSidebar}
@@ -78,8 +77,9 @@ function MainLayout({ activeTab }) {
             isSidebarCollapsed ? "opacity-0 invisible" : "opacity-100 visible",
             "hidden md:flex"
           )}
-          aria-label={isSidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-        >
+          aria-label={
+            isSidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"
+          }>
           <ChevronLeft size={18} className="text-white" />
         </button>
 
@@ -88,15 +88,17 @@ function MainLayout({ activeTab }) {
           {/* Logo */}
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <img 
-                src="/my_spot_page_favicon.png" 
-                alt="My Spot Favicon" 
+              <img
+                src="/my_spot_page_favicon.png"
+                alt="My Spot Favicon"
                 className="w-8 h-8"
               />
               <img
                 className={cn(
                   "transition-all duration-300",
-                  isSidebarCollapsed ? "w-0 opacity-0" : "w-16 ml-2 opacity-100",
+                  isSidebarCollapsed
+                    ? "w-0 opacity-0"
+                    : "w-16 ml-2 opacity-100",
                   "md:block"
                 )}
                 src={imageProvider.TextLogo}
@@ -113,20 +115,18 @@ function MainLayout({ activeTab }) {
                   <Tooltip
                     placement="right"
                     title={isSidebarCollapsed && isDesktop ? tab.name : null}
-                    color="white"
-                  >
+                    color="white">
                     <NavLink
                       to={tab.link}
                       className={({ isActive }) =>
                         cn(
                           "py-2 px-3 transition-all duration-300 flex items-center rounded-xl",
-                          isActive 
-                            ? "bg-primary01 text-white" 
+                          isActive
+                            ? "bg-primary01 text-white"
                             : "text-primary01 hover:bg-primary01/10"
                         )
                       }
-                      end={tab?.end}
-                    >
+                      end={tab?.end}>
                       {({ isActive }) => (
                         <>
                           <img
@@ -138,11 +138,13 @@ function MainLayout({ activeTab }) {
                             className={cn(
                               "ml-2 transition-all duration-300 leading-[12px]",
                               // Show text always on mobile when sidebar is open
-                              isMobileSidebarOpen ? "opacity-100 w-auto" : 
-                              // On desktop, follow collapsed state
-                              isSidebarCollapsed ? "opacity-0 w-0" : "opacity-100 w-auto"
-                            )}
-                          >
+                              isMobileSidebarOpen
+                                ? "opacity-100 w-auto"
+                                : // On desktop, follow collapsed state
+                                isSidebarCollapsed
+                                ? "opacity-0 w-0"
+                                : "opacity-100 w-auto"
+                            )}>
                             {tab.name}
                           </span>
                         </>
@@ -163,8 +165,7 @@ function MainLayout({ activeTab }) {
             isSidebarCollapsed ? "opacity-100" : "opacity-0 -translate-x-6",
             "hidden md:flex"
           )}
-          aria-label="Expand sidebar"
-        >
+          aria-label="Expand sidebar">
           <ChevronRight className="text-white" />
         </button>
       </aside>
@@ -174,8 +175,7 @@ function MainLayout({ activeTab }) {
         className={cn(
           "flex-1 min-h-screen h-full bg-[#F9FAFC] transition-all duration-300",
           isSidebarCollapsed ? "md:ml-[74px]" : "md:ml-64"
-        )}
-      >
+        )}>
         <TopNavbar
           activeTab={activeTab}
           onMenuClick={handleToggleMobileSidebar}

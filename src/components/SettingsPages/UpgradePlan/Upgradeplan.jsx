@@ -12,10 +12,6 @@ const Upgradeplan = () => {
   const currentPlan = location.state?.currentPlan || "Spark";
   const UpgradeCard = useRef(null);
   const navigate = useNavigate();
-  const [planeName, setPlanName] = useState("Spark")
-  const [planePrice, setPlanPrice] = useState("")
-  const [planeDes, setPlanDes] = useState("")
-  console.log(planeName, planePrice, planeDes)
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -116,7 +112,7 @@ const Upgradeplan = () => {
             </Link>
           </div>
           <hr className="text-[#E7E7E7]" />
-          <p className="text-center text-[#744CDB] my-5 hidden md:block">
+          <p className="text-center text-[#744CDB] my-5">
             *The prices do not include VAT
           </p>
           {/* Plan card */}
@@ -125,12 +121,6 @@ const Upgradeplan = () => {
               return (
                 <div
                   key={index}
-                  onClick={() => {
-                    setPlanName(plan.name)
-                    setPlanPrice(plan.price)
-                    setPlanDes(plan.subtext)
-                  }
-                  }
                   className={`min-w-[340px] md:min-h-[180px] border rounded-xl md:p-4 pb-3 px-3 transform transition-all duration-300 ease-in-out ${currentPlan === plan.name
                     ? "bg-[#F5F4FE] border-[#866BE7] hover:scale-105"
                     : "hover:scale-95 border-[#D1D1D1]"
@@ -141,7 +131,7 @@ const Upgradeplan = () => {
                       <p className="text-lg font-semibold"> {plan.name}</p>
                     </div>
                   </div>
-                  <div className="hidden md:block">
+                  <div className="">
                     <div className="text-[#866BE7] font-medium text-2xl flex items-end gap-1 mt-3.5">
                       <p>{plan.price}</p>
                       <span className="text-[#888888] text-sm font-normal">
@@ -168,10 +158,8 @@ const Upgradeplan = () => {
                           : "bg-[#744CDB] text-[#FFFFFF]"
                         }
                        `}>
-                      {currentPlan === plan.name
-                        ? plan.name === "Spark"
-                          ? "Current Plan"
-                          : "Cancel Subscription"
+                      {currentPlan === plan.name ? plan.name === "Spark" ? "Current Plan"
+                        : "Cancel Subscription"
                         : (currentPlan === "Glow" && plan.name === "Spark") ||
                           (currentPlan === "Bloom" &&
                             (plan.name === "Glow" || plan.name === "Spark"))
@@ -246,63 +234,6 @@ const Upgradeplan = () => {
             Compare plans and pricing options
           </p>
         </motion.div>
-      </div>
-      <div className="fixed bottom-0 bg-white w-full z-50 shadow-2xl py-5 md:hidden">
-        {planeName === "Spark" &&
-          <div className="flex justify-between items-center px-2">
-            <div className="space-y-3">
-              <div className="text-[#866BE7] font-medium text-2xl flex items-end gap-1 mt-3.5">
-                <p>{planePrice}</p>
-                <span className="text-[#888888] text-sm font-normal">
-                  {planeDes}
-                </span>
-              </div>
-              <p className="text-[#744CDB] text-sm">
-                *The prices do not include VAT
-              </p>
-            </div>
-            <button className="text-primary01 bg-highlight01 py-2 px-6 rounded-md mt-7">
-              <Link>Current Plan</Link>
-            </button>
-          </div>
-        }
-        {planeName === "Bloom" &&
-          <div className="flex justify-between items-center px-2">
-            <div className="space-y-3">
-              <div className="text-[#866BE7] font-medium text-2xl flex items-end gap-1 mt-3.5">
-                <p>{planePrice}</p>
-                <span className="text-[#888888] text-sm font-normal">
-                  {planeDes}
-                </span>
-              </div>
-              <p className="text-[#744CDB] text-sm">
-                *The prices do not include VAT
-              </p>
-            </div>
-            <button className="text-white bg-primary01 py-2 px-6 rounded-md mt-7"><Link>
-              Upgrade
-            </Link></button>
-          </div>
-        }
-        {planeName === "Glow" &&
-          <div className="flex justify-between items-center px-2">
-            <div className="space-y-3">
-              <div className="text-[#866BE7] font-medium text-2xl flex items-end gap-1 mt-3.5">
-                <p>{planePrice}</p>
-                <span className="text-[#888888] text-sm font-normal">
-                  {planeDes}
-                </span>
-              </div>
-              <p className="text-[#744CDB] text-sm">
-                *The prices do not include VAT
-              </p>
-            </div>
-            <button className="text-white bg-primary01 py-2 px-6 rounded-md mt-7">
-              <Link>
-              Upgrade
-            </Link></button>
-          </div>
-        }
       </div>
     </div>
   );

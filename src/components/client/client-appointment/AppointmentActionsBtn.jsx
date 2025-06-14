@@ -25,7 +25,7 @@ const AppointmentActionsBtn = () => {
             Join our waitlist!
           </button>
         </p>
-        <Link to="/dashboard/add-booking-by-provider/confirm">
+        <Link to="/service-provider-info/confirm">
           <Button type="default" className="!bg-black !text-white">
             Continue
           </Button>

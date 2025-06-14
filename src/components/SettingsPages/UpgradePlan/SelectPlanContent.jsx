@@ -70,7 +70,9 @@ const SelectPlanContent = ({ plans, currentPlan, fromMobile = false }) => {
         *The prices do not include VAT
       </p>
       {/* Plan card */}
-      <div className="flex overflow-x-auto gap-4 my-3 px-4 w-[97%] md:w-full pb-2">
+      <div className={cn("flex overflow-x-auto gap-4 my-3 w-[97%] md:w-full pb-2", {
+        "px-4": fromMobile === false,
+      })}>
         {plans.map((plan, index) => {
           return (
             <div
@@ -135,7 +137,9 @@ const SelectPlanContent = ({ plans, currentPlan, fromMobile = false }) => {
         })}
       </div>
       {/* ........... */}
-      <div className="min-h-full border border-[#ECEBFC] rounded-lg my-4 mx-4 p-3">
+      <div className={cn("min-h-full border border-[#ECEBFC] rounded-lg my-4 p-3", {
+        "mx-4": fromMobile === false,
+      })}>
         <p className="text-[#797979] px-2">
           Starting your own business can feel overwhelming, but it doesn’t have
           to. Spark is here to give you the foundation you need to grow without

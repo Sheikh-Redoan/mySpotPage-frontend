@@ -44,6 +44,8 @@ function RevenueChart() {
     { name: "28/2/2025", uv: 500, pv: 200, amt: 200 },
   ];
 
+  const totalRevenue = data.reduce((sum, item) => sum + item.uv, 0);
+
   const handleChange = (value) => {
     console.log(`selected ${value}`);
   };
@@ -149,7 +151,7 @@ function RevenueChart() {
       return (
         <div
           className="flex items-center gap-2 text-sm"
-          style={{ backgroundColor: 'white', padding: 10, borderRadius: 10 }}>
+          style={{ backgroundColor: 'whitesmoke', padding: 10, borderRadius: 10 }}>
           <p>{label}</p>
           <p>-</p>
           <div className="flex items-center">
@@ -177,7 +179,7 @@ function RevenueChart() {
               <div>
                 <h4 className="font-medium text-black/60">Total Revenue</h4>
                 <h3 className="text-lg font-semibold flex items-center">
-                  12,123,874
+                  {totalRevenue}
                   <span className="pl-4">
                     <GoArrowUp size={18} color="#05DF72" />
                   </span>
@@ -223,7 +225,6 @@ function RevenueChart() {
               <CartesianGrid strokeDasharray="0.3" vertical={false} />
               <XAxis dataKey="name"
                 interval={0}
-                textAnchor="end"
                 height={60}
                 tickMargin={10}
                 tickFormatter={(value, index) => (index === 0 ? '' : value)}

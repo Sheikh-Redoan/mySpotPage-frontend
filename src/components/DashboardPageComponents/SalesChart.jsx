@@ -14,6 +14,7 @@ import RepeatClientChart from "./RepeatClientChart";
 
 function SalesChart() {
   const data = [
+    { name: "", pv: 0 },
     { name: "1/2/2025", pv: 23 },
     { name: "2/2/2025", pv: 12 },
     { name: "3/2/2025", pv: 37 },
@@ -43,6 +44,8 @@ function SalesChart() {
     { name: "27/2/2025", pv: 26 },
     { name: "28/2/2025", pv: 38 }
   ];
+
+   const totalSales = data.reduce((sum, item) => sum + item.pv, 0);
 
 
 
@@ -92,7 +95,6 @@ function SalesChart() {
           <p>{label}</p>
           <p>-</p>
           <div className="flex gap-1 items-center">
-            {/* <img src={imageProvider.dollerIcon} className="h-3 " /> */}
             <p>Total Sales: {" "}</p>
             <p>{payload[0].value}</p>
           </div>
@@ -117,7 +119,7 @@ function SalesChart() {
               <div>
                 <h4 className="font-medium text-black/60">Total Sales</h4>
                 <h3 className="text-lg font-semibold flex items-center">
-                  12,123,874{" "}
+                  {totalSales}{" "}
                   <span className="pl-4">
                     <GoArrowUp size={18} color="#05DF72" />
                   </span>{" "}
@@ -186,7 +188,7 @@ function SalesChart() {
                 left: 0,
                 bottom: 0,
               }}
-              barSize={20}
+              barSize={30}
             >
               <CartesianGrid strokeDasharray="0.3" vertical={false} />
               <XAxis

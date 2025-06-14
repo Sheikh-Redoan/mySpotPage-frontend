@@ -23,7 +23,7 @@ export default function Event({ event }) {
       className="cursor-pointer text-xs flex items-center justify-between gap-2 text-gray-700">
       <div className="flex items-center gap-2">
         <span
-          className={cn("w-1.5 h-1.5 rounded-full block", {
+          className={cn("w-1.5 h-1.5 rounded-full block max-md:hidden", {
             "bg-[#3E70DD]": event.status === "Confirmed",
             "bg-[#3BA55C]": event.status === "Completed",
             "bg-[#FC8B23]": event.status === "Pending",
@@ -40,8 +40,25 @@ export default function Event({ event }) {
           arrow={false}
           content={<ClientDetails event={event} hide={hide} />}>
           <Button type="text" className="!p-0">
-            <span>
+            <span className="max-md:hidden">
               {dayjs(event.start).format("HH:mm")} - {event.title}
+            </span>
+
+            <span
+              className={cn(
+                "md:hidden text-xs truncate line-clamp-1 max-w-[35px]",
+                {
+                  "bg-[#3E70DD]/10 text-[#3E70DD]":
+                    event.status === "Confirmed",
+                  "bg-[#3BA55C]/10 text-[#3BA55C]":
+                    event.status === "Completed",
+                  "bg-[#FC8B23]/10 text-[#FC8B23]": event.status === "Pending",
+                  "bg-[#ED4245]/10 text-[#ED4245]":
+                    event.status === "Cancelled",
+                  "bg-[#82868E]/10 text-[#82868E]": event.status === "Not-show",
+                }
+              )}>
+              {event.title}
             </span>
           </Button>
         </Popover>
@@ -55,7 +72,7 @@ export default function Event({ event }) {
           <EllipsisVertical
             size={16}
             strokeWidth={0.5}
-            className="text-xs text-gray-400"
+            className="text-xs text-gray-400 max-md:hidden"
           />
         </Button>
       </Popover>

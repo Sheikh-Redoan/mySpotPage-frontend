@@ -13,6 +13,7 @@ import {
 } from "recharts";
 function RevenueChart() {
   const data = [
+    { name: "0/0/0000", uv: 450, pv: 0, amt: 0 },
     { name: "1/2/2025", uv: 400, pv: 400, amt: 200 },
     { name: "2/2/2025", uv: 600, pv: 200, amt: 200 },
     { name: "3/2/2025", uv: 500, pv: 300, amt: 200 },
@@ -62,19 +63,104 @@ function RevenueChart() {
     { value: "december", label: "December" },
   ];
   const services = [
-    { value: "web_design", label: "Web Design" },
-    { value: "web_development", label: "Web Development" },
-    { value: "seo", label: "SEO Optimization" },
-    { value: "content_writing", label: "Content Writing" },
-    { value: "branding", label: "Branding" },
-    { value: "ui_ux", label: "UI/UX Design" },
-    { value: "digital_marketing", label: "Digital Marketing" },
-    { value: "app_development", label: "App Development" },
-    { value: "maintenance", label: "Website Maintenance" },
-    { value: "ecommerce", label: "E-commerce Solutions" },
-    { value: "consulting", label: "Tech Consulting" },
-    { value: "cloud_services", label: "Cloud Services" },
+    { value: "Classic Ombre", label: "Classic Ombre" },
+    { value: "Reverse Ombre", label: "Reverse Ombre" },
+    { value: "Smoothing Keratin Treatment", label: "Smoothing Keratin Treatment" },
+    { value: "Balayage with Toner", label: "Balayage with Toner" },
+    { value: "Balayage & Root Shadow", label: "Balayage & Root Shadow" },
+    { value: "Full Highlights", label: "Full Highlights" },
+    { value: "Partial Highlights", label: "Partial Highlights" },
+    { value: "Root Touch-Up", label: "Root Touch-Up" },
+    { value: "Gloss Treatment", label: "Gloss Treatment" },
+    { value: "Color Correction", label: "Color Correction" },
+    { value: "Hair Botox Treatment", label: "Hair Botox Treatment" },
+    { value: "Japanese Straightening", label: "Japanese Straightening" },
+    { value: "Hair Spa Treatment", label: "Hair Spa Treatment" },
+    { value: "Fashion Color", label: "Fashion Color" },
+    { value: "Double Process Color", label: "Double Process Color" },
   ];
+
+  const topServices = [
+    {
+      rank: 1,
+      service: "Classic Ombre",
+      bookings: 820,
+      revenue: 1029910,
+    },
+    {
+      rank: 2,
+      service: "Reverse Ombre",
+      bookings: 740,
+      revenue: 912340,
+    },
+    {
+      rank: 3,
+      service: "Smoothing Keratin Treatment",
+      bookings: 685,
+      revenue: 845210,
+    },
+    {
+      rank: 4,
+      service: "Balayage with Toner",
+      bookings: 640,
+      revenue: 798300,
+    },
+    {
+      rank: 5,
+      service: "Balayage & Root Shadow",
+      bookings: 590,
+      revenue: 755000,
+    },
+    {
+      rank: 6,
+      service: "Full Highlights",
+      bookings: 570,
+      revenue: 688900,
+    },
+    {
+      rank: 7,
+      service: "Partial Highlights",
+      bookings: 540,
+      revenue: 642100,
+    },
+    {
+      rank: 8,
+      service: "Root Touch-Up",
+      bookings: 490,
+      revenue: 595500,
+    },
+    {
+      rank: 9,
+      service: "Gloss Treatment",
+      bookings: 460,
+      revenue: 552200,
+    },
+    {
+      rank: 10,
+      service: "Color Correction",
+      bookings: 430,
+      revenue: 519000,
+    },
+  ];
+
+
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div
+          className="flex items-center gap-2 text-sm"
+          style={{ backgroundColor: 'white', padding: 10, borderRadius: 10 }}>
+          <p>{label}</p>
+          <p>-</p>
+          <div className="flex items-center">
+            <img src={imageProvider.dollerIcon} className="h-3 " />
+            <p>{payload[0].value}</p>
+          </div>
+        </div>
+      );
+    }
+    return null;
+  };
 
   return (
     <div className="bg-white gap-8 divide-x divide-gray-200 rounded-2xl flex flex-col lg:flex-row w-full h-full p-6 inset-shadow-sm">
@@ -119,13 +205,13 @@ function RevenueChart() {
           </div>
         </div>
         <div className="w-full chart-1 overflow-x-auto">
-          <ResponsiveContainer width={1900} height={400}>
+          <ResponsiveContainer width={2600} height={400}>
             <AreaChart
               data={data}
               margin={{
                 top: 10,
                 right: 50,
-                left: 0,
+                left: 10,
                 bottom: 0,
               }}>
               <defs>
@@ -134,10 +220,17 @@ function RevenueChart() {
                   <stop offset="95%" stopColor="#9DCCBC" stopOpacity={0.2} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
+              <CartesianGrid strokeDasharray="0.3" vertical={false} />
+              <XAxis dataKey="name"
+                interval={0}
+                textAnchor="end"
+                height={60}
+                tickMargin={10}
+                tickFormatter={(value, index) => (index === 0 ? '' : value)}
+              />
+              <YAxis ticks={[100, 200, 300, 400, 500, 600, 700, 800, 900]} />
+              <Tooltip content={<CustomTooltip />}
+              />
               <Area
                 type="monotone"
                 dataKey="uv"
@@ -162,132 +255,26 @@ function RevenueChart() {
             </div>
 
             <div className="pt-5 space-y-3 overflow-y-auto pr-2 chart-1 max-h-[420px] divide-y divide-gray-200 ">
-              <div className="flex items-center pb-2 justify-between">
-                <div className="flex  gap-2">
-                  <h4 className="bg-primary02 w-5 mt-1 text-sm text-white flex justify-center items-center h-5 rounded-full">
-                    1
-                  </h4>
-                  <div>
-                    <h4>Classic Ombre</h4>
-                    <h4 className="text-description text-sm">820 bookings</h4>
-                  </div>
-                </div>
-                <div>
-                  <h4 className="font-medium">₪ 1,029,910</h4>
-                </div>
-              </div>
-              <div className="flex items-center pb-2 justify-between">
-                <div className="flex  gap-2">
-                  <h4 className="bg-primary02 w-5 mt-1 text-sm text-white flex justify-center items-center h-5 rounded-full">
-                    2
-                  </h4>
-                  <div>
-                    <h4>Classic Ombre</h4>
-                    <h4 className="text-description text-sm">820 bookings</h4>
-                  </div>
-                </div>
-                <div>
-                  <h4 className="font-medium">₪ 1,029,910</h4>
-                </div>
-              </div>
-              <div className="flex items-center pb-2 justify-between">
-                <div className="flex  gap-2">
-                  <h4 className="bg-primary02 w-5 mt-1 text-sm text-white flex justify-center items-center h-5 rounded-full">
-                    3
-                  </h4>
-                  <div>
-                    <h4>Classic Ombre</h4>
-                    <h4 className="text-description text-sm">820 bookings</h4>
-                  </div>
-                </div>
-                <div>
-                  <h4 className="font-medium">₪ 1,029,910</h4>
-                </div>
-              </div>
-              <div className="flex items-center pb-2 justify-between">
-                <div className="flex  gap-2">
-                  <h4 className="bg-primary02 w-5 mt-1 text-sm text-white flex justify-center items-center h-5 rounded-full">
-                    2
-                  </h4>
-                  <div>
-                    <h4>Classic Ombre</h4>
-                    <h4 className="text-description text-sm">820 bookings</h4>
-                  </div>
-                </div>
-                <div>
-                  <h4 className="font-medium">₪ 1,029,910</h4>
-                </div>
-              </div>
-              <div className="flex items-center pb-2 justify-between">
-                <div className="flex  gap-2">
-                  <h4 className="bg-primary02 w-5 mt-1 text-sm text-white flex justify-center items-center h-5 rounded-full">
-                    3
-                  </h4>
-                  <div>
-                    <h4>Classic Ombre</h4>
-                    <h4 className="text-description text-sm">820 bookings</h4>
-                  </div>
-                </div>
-                <div>
-                  <h4 className="font-medium">₪ 1,029,910</h4>
-                </div>
-              </div>
-              <div className="flex items-center pb-2 justify-between">
-                <div className="flex  gap-2">
-                  <h4 className="bg-primary02 w-5 mt-1 text-sm text-white flex justify-center items-center h-5 rounded-full">
-                    3
-                  </h4>
-                  <div>
-                    <h4>Classic Ombre</h4>
-                    <h4 className="text-description text-sm">820 bookings</h4>
-                  </div>
-                </div>
-                <div>
-                  <h4 className="font-medium">₪ 1,029,910</h4>
-                </div>
-              </div>
-              <div className="flex items-center pb-2 justify-between">
-                <div className="flex  gap-2">
-                  <h4 className="bg-primary02 w-5 mt-1 text-sm text-white flex justify-center items-center h-5 rounded-full">
-                    2
-                  </h4>
-                  <div>
-                    <h4>Classic Ombre</h4>
-                    <h4 className="text-description text-sm">820 bookings</h4>
-                  </div>
-                </div>
-                <div>
-                  <h4 className="font-medium">₪ 1,029,910</h4>
-                </div>
-              </div>
-              <div className="flex items-center pb-2 justify-between">
-                <div className="flex  gap-2">
-                  <h4 className="bg-primary02 w-5 mt-1 text-sm text-white flex justify-center items-center h-5 rounded-full">
-                    3
-                  </h4>
-                  <div>
-                    <h4>Classic Ombre</h4>
-                    <h4 className="text-description text-sm">820 bookings</h4>
-                  </div>
-                </div>
-                <div>
-                  <h4 className="font-medium">₪ 1,029,910</h4>
-                </div>
-              </div>
-              <div className="flex items-center pb-2 justify-between">
-                <div className="flex  gap-2">
-                  <h4 className="bg-primary02 w-5 mt-1 text-sm text-white flex justify-center items-center h-5 rounded-full">
-                    3
-                  </h4>
-                  <div>
-                    <h4>Classic Ombre</h4>
-                    <h4 className="text-description text-sm">820 bookings</h4>
-                  </div>
-                </div>
-                <div>
-                  <h4 className="font-medium">₪ 1,029,910</h4>
-                </div>
-              </div>
+              {
+                topServices.map((topService, idx) => {
+                  return (
+                    <div className="flex items-center pb-2 justify-between">
+                      <div className="flex  gap-2 flex-1">
+                        <h4 className={` ${(topService.rank === (1)) && "bg-primary02 text-white" } ${(topService.rank === (2) || topService.rank === (3)) ? "bg-[#8ebdad] text-white" : "bg-[#f6f6f6]"} w-5 mt-1 text-sm text-description  flex justify-center items-center h-5 rounded-full`}>
+                          {topService.rank}
+                        </h4>
+                        <div>
+                          <h4>{topService.service}</h4>
+                          <h4 className="text-description text-sm">{topService.bookings}</h4>
+                        </div>
+                      </div>
+                      <div>
+                        <h4 className="font-medium ">₪ {topService.revenue}</h4>
+                      </div>
+                    </div>
+                  )
+                })
+              }
             </div>
           </div>
         </div>

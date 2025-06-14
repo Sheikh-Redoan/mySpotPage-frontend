@@ -7,6 +7,8 @@ import ResolveBookingsModal from "../../components/seller/ResolveBookingsModal";
 import ConfirmInactivationModal from "../../components/seller/ConfirmInactivationModal";
 import StaffDetailModal from "../../components/seller/StaffDetailModal"; // Import the new modal
 import { staffData as initialStaffData } from "../../lib/staffData";
+import Calender from "../../components/calender/Calender"; // Import Calender component
+import { MOCK_EVENTS, MOCK_RESOURCES } from "../../components/calender/mockdata"; // Import mock data for calendar
 
 const StaffManagement = () => {
   const [activeTab, setActiveTab] = useState("Active Staff");
@@ -39,37 +41,49 @@ const StaffManagement = () => {
       );
     }
 
-    if (filters.roles.length > 0) {
+    // This condition should only apply filtering for staff-related tabs
+    if (activeTab !== "Calendar View") {
+      if (filters.roles.length > 0) {
+        currentFilteredStaff = currentFilteredStaff.filter((staff) =>
+          staff.roles.some((role) => filters.roles.includes(role))
+        );
+      } else if (filters.roles.length === 0) {
+        currentFilteredStaff = [];
+      }
+
+      if (filters.serviceSearchTerm) {
+        const lowerCaseSearchTerm = filters.serviceSearchTerm.toLowerCase();
+        currentFilteredStaff = currentFilteredStaff.filter((staff) =>
+          staff.services.some((service) =>
+            service.toLowerCase().includes(lowerCaseSearchTerm)
+          )
+        );
+      }
+
       currentFilteredStaff = currentFilteredStaff.filter((staff) =>
-        staff.roles.some((role) => filters.roles.includes(role))
+        staff.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
-    } else if (filters.roles.length === 0 && activeTab !== "Calendar View") {
-      currentFilteredStaff = [];
+    } else {
+        // When in Calendar View, no staff filtering is needed as Calender component will handle its own data.
+        // We might want to clear filteredStaff or set it to an empty array to avoid rendering staff cards
+        currentFilteredStaff = [];
     }
 
-    if (filters.serviceSearchTerm) {
-      const lowerCaseSearchTerm = filters.serviceSearchTerm.toLowerCase();
-      currentFilteredStaff = currentFilteredStaff.filter((staff) =>
-        staff.services.some((service) =>
-          service.toLowerCase().includes(lowerCaseSearchTerm)
-        )
-      );
-    }
 
-    const results = currentFilteredStaff.filter((staff) =>
-      staff.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    setFilteredStaff(currentFilteredStaff);
 
-    setFilteredStaff(results);
-
+    // Logic for selectedStaff might need adjustment if Calendar View doesn't have a concept of selected staff.
+    // For now, setting to null if no staff are filtered for non-calendar views, or if actively in calendar view.
     if (
-      selectedStaff &&
-      !results.some((staff) => staff.id === selectedStaff.id)
+      activeTab === "Calendar View" ||
+      (selectedStaff && !currentFilteredStaff.some((staff) => staff.id === selectedStaff.id))
     ) {
       setSelectedStaff(null);
-    } else if (!selectedStaff && results.length > 0) {
-      setSelectedStaff(results[0]);
+    } else if (!selectedStaff && currentFilteredStaff.length > 0) {
+      setSelectedStaff(currentFilteredStaff[0]);
     }
+
+
   }, [searchTerm, activeTab, allStaffData, filters, selectedStaff]);
 
   useEffect(() => {
@@ -77,7 +91,7 @@ const StaffManagement = () => {
   }, [applyFilters]);
 
   useEffect(() => {
-    if (filteredStaff.length > 0 && !selectedStaff) {
+    if (filteredStaff.length > 0 && !selectedStaff && activeTab !== "Calendar View") {
       const ava = filteredStaff.find((staff) => staff.name === "Ava Thompson");
       if (ava) {
         setSelectedStaff(ava);
@@ -85,7 +99,7 @@ const StaffManagement = () => {
         setSelectedStaff(filteredStaff[0]);
       }
     }
-  }, [filteredStaff, selectedStaff]);
+  }, [filteredStaff, selectedStaff, activeTab]);
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -212,31 +226,37 @@ const StaffManagement = () => {
           onAddStaff={handleAddStaff} // Pass the new handler
         />
 
-        <div className="self-stretch flex-1 flex justify-start items-start gap-8 ">
-          <div className="flex-1 self-stretch flex justify-start items-start gap-3 flex-wrap content-start pr-2">
-            {filteredStaff.length > 0 ? (
-              filteredStaff.map((staff) => (
-                <StaffCard
-                  key={staff.id}
-                  staff={staff}
-                  onSelectStaff={handleSelectStaff}
-                  isActive={selectedStaff && selectedStaff.id === staff.id}
-                  onEdit={handleEditStaff}
-                  onToggleStatus={handleToggleStatus}
-                  onRemove={handleRemoveStaff}
-                />
-              ))
-            ) : (
-              <p className="text-gray-500 w-full text-center py-10">
-                No staff members found matching your criteria.
-              </p>
-            )}
+        {activeTab === "Calendar View" ? ( // Conditional rendering for Calendar View
+          <div className="self-stretch flex-1 overflow-hidden">
+            <Calender events={MOCK_EVENTS} resources={MOCK_RESOURCES} />
           </div>
+        ) : (
+          <div className="self-stretch flex-1 flex justify-start items-start gap-8 ">
+            <div className="flex-1 self-stretch flex justify-start items-start gap-3 flex-wrap content-start pr-2">
+              {filteredStaff.length > 0 ? (
+                filteredStaff.map((staff) => (
+                  <StaffCard
+                    key={staff.id}
+                    staff={staff}
+                    onSelectStaff={handleSelectStaff}
+                    isActive={selectedStaff && selectedStaff.id === staff.id}
+                    onEdit={handleEditStaff}
+                    onToggleStatus={handleToggleStatus}
+                    onRemove={handleRemoveStaff}
+                  />
+                ))
+              ) : (
+                <p className="text-gray-500 w-full text-center py-10">
+                  No staff members found matching your criteria.
+                </p>
+              )}
+            </div>
 
-          <div className="w-80 h-full sticky top-5 max-[475px]:hidden">
-            <QuickViewPanel selectedStaff={selectedStaff} />
+            <div className="w-80 h-full sticky top-5 max-[475px]:hidden">
+              <QuickViewPanel selectedStaff={selectedStaff} />
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       {/* Modals */}

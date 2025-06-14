@@ -161,33 +161,33 @@ const StaffWorkingHoursPage = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4 font-['Golos_Text'] max-[475px]:p-0 max-[475px]:bg-white max-[475px]:py-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4 font-['Golos_Text'] max-[700px]:p-0 max-[700px]:bg-white max-[700px]:py-4">
       {/* Main container adjusted for responsiveness */}
       <div className="w-full max-w-[1179px] flex flex-col justify-start items-start gap-4">
         {/* Breadcrumbs */}
-        <div className="self-stretch inline-flex flex-wrap justify-start items-center gap-2 px-4 sm:px-0 max-[475px]:gap-1">
-          <span className="text-gray-400 text-sm font-normal leading-tight max-[475px]:text-xs">Basic information</span>
+        <div className="self-stretch inline-flex flex-wrap justify-start items-center gap-2 px-4 sm:px-0 max-[700px]:gap-1">
+          <span className="text-gray-400 text-sm font-normal leading-tight max-[700px]:text-xs">Basic information</span>
           {/* GoChevronRight */}
           <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
-          <span className="text-gray-400 text-sm font-normal leading-tight max-[475px]:text-xs">Services settings</span>
+          <span className="text-gray-400 text-sm font-normal leading-tight max-[700px]:text-xs">Services settings</span>
           {/* GoChevronRight */}
           <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
-          <span className="text-gray-950 text-sm font-normal leading-tight max-[475px]:text-xs">Working shift settings</span>
+          <span className="text-gray-950 text-sm font-normal leading-tight max-[700px]:text-xs">Working shift settings</span>
           {/* GoChevronRight */}
           <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
-          <span className="text-gray-400 text-sm font-normal leading-tight max-[475px]:text-xs">Security</span>
+          <span className="text-gray-400 text-sm font-normal leading-tight max-[700px]:text-xs">Security</span>
         </div>
 
         {/* Main Form Container */}
-        <div className="self-stretch p-6 sm:p-8 bg-white rounded-xl border border-gray-200 flex flex-col justify-start items-center gap-4 max-[475px]:p-0">
+        <div className="self-stretch p-6 sm:p-8 bg-white rounded-xl border border-gray-200 flex flex-col justify-start items-center gap-4 max-[700px]:p-0">
           <div className="self-stretch inline-flex justify-start items-start gap-10 w-full max-[768px]:flex-col max-[768px]:gap-4">
             {/* Working Hours Column */}
             <div className="flex-1 p-4 rounded-xl border border-gray-200 flex flex-col justify-start items-start gap-5 overflow-hidden w-full">
               <div className="self-stretch flex flex-col justify-start items-start gap-6">
                 {/* Header Row */}
-                <div className="self-stretch rounded-xl flex justify-start items-center gap-6 max-[475px]:flex-col max-[475px]:items-start max-[475px]:gap-2">
-                  <div className="w-44 max-[475px]:w-auto text-neutral-800 text-sm font-semibold leading-tight">Working hours</div>
-                  <div className="flex-1 flex justify-start items-center gap-3 w-full max-[475px]:gap-2">
+                <div className="self-stretch rounded-xl flex justify-start items-center gap-6 max-[700px]:flex-col max-[700px]:items-start max-[700px]:gap-2">
+                  <div className="w-44 max-[700px]:w-auto text-neutral-800 text-sm font-semibold leading-tight">Working hours</div>
+                  <div className="flex-1 flex justify-start items-center gap-3 w-full max-[700px]:gap-2">
                     <div className="flex-1 text-center text-gray-500 text-sm font-normal leading-tight">Start Shift</div>
                     <div className="opacity-0 text-center text-neutral-600 text-sm font-normal leading-tight">-</div>
                     <div className="flex-1 text-center text-gray-500 text-sm font-normal leading-tight">End Shift</div>
@@ -195,8 +195,8 @@ const StaffWorkingHoursPage = () => {
                 </div>
                 {/* Days Loop */}
                 {daysOfWeek.map(day => (
-                  <div key={day} className="self-stretch rounded-xl flex justify-start items-center gap-6 max-[475px]:flex-col max-[475px]:items-start max-[475px]:gap-2">
-                    <label className="w-44 max-[475px]:w-auto flex justify-start items-center gap-2 cursor-pointer">
+                  <div key={day} className="self-stretch rounded-xl flex justify-start items-center gap-6 max-[700px]:flex-col max-[700px]:items-start max-[700px]:gap-2">
+                    <label className="w-44 max-[700px]:w-auto flex justify-start items-center gap-2 cursor-pointer">
                       <input
                         type="checkbox"
                         // Removed className="hidden" to make the native checkbox visible
@@ -208,7 +208,7 @@ const StaffWorkingHoursPage = () => {
                         {day}
                       </span>
                     </label>
-                    <div className="flex-1 flex justify-start items-center gap-3 w-full max-[475px]:gap-2">
+                    <div className="flex-1 flex justify-start items-center gap-3 w-full max-[700px]:gap-2">
                       {workingHours[day].enabled ? (
                         <>
                           <div className="flex-1 relative self-stretch">
@@ -254,9 +254,9 @@ const StaffWorkingHoursPage = () => {
             <div className="flex-1 p-4 rounded-xl border border-gray-200 flex flex-col justify-start items-start gap-5 overflow-hidden w-full">
               <div className="self-stretch flex flex-col justify-start items-start gap-6">
                 {/* Header Row */}
-                <div className="self-stretch rounded-xl flex justify-start items-center gap-6 max-[475px]:flex-col max-[475px]:items-start max-[475px]:gap-2">
-                  <div className="w-44 max-[475px]:w-auto text-neutral-800 text-sm font-semibold leading-tight">Breaking time</div>
-                  <div className="flex-1 flex justify-start items-center gap-3 w-full max-[475px]:gap-2">
+                <div className="self-stretch rounded-xl flex justify-start items-center gap-6 max-[700px]:flex-col max-[700px]:items-start max-[700px]:gap-2">
+                  <div className="w-44 max-[700px]:w-auto text-neutral-800 text-sm font-semibold leading-tight">Breaking time</div>
+                  <div className="flex-1 flex justify-start items-center gap-3 w-full max-[700px]:gap-2">
                     <div className="flex-1 text-center text-gray-500 text-sm font-normal leading-tight">Break Start</div>
                     <div className="opacity-0 text-center text-neutral-600 text-sm font-normal leading-tight">-</div>
                     <div className="flex-1 text-center text-gray-500 text-sm font-normal leading-tight">Break End</div>
@@ -264,8 +264,8 @@ const StaffWorkingHoursPage = () => {
                 </div>
                 {/* Days Loop */}
                 {daysOfWeek.map(day => (
-                  <div key={`${day}-break`} className="self-stretch rounded-xl flex justify-start items-center gap-6 max-[475px]:flex-col max-[475px]:items-start max-[475px]:gap-2">
-                    <label className="w-44 max-[475px]:w-auto flex justify-start items-center gap-2 cursor-pointer">
+                  <div key={`${day}-break`} className="self-stretch rounded-xl flex justify-start items-center gap-6 max-[700px]:flex-col max-[700px]:items-start max-[700px]:gap-2">
+                    <label className="w-44 max-[700px]:w-auto flex justify-start items-center gap-2 cursor-pointer">
                       <input
                         type="checkbox"
                         // Removed className="hidden" to make the native checkbox visible
@@ -278,7 +278,7 @@ const StaffWorkingHoursPage = () => {
                         {day}
                       </span>
                     </label>
-                    <div className="flex-1 flex justify-start items-center gap-3 w-full max-[475px]:gap-2">
+                    <div className="flex-1 flex justify-start items-center gap-3 w-full max-[700px]:gap-2">
                       {(workingHours[day].breakEnabled && workingHours[day].enabled) ? (
                         <>
                           <div className="flex-1 relative self-stretch">

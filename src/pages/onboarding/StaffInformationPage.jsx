@@ -100,21 +100,21 @@ const StaffInformationPage = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4 font-['Golos_Text'] max-[475px]:p-0 max-[475px]:bg-white max-[475px]:py-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 p-4 font-['Golos_Text'] max-[700px]:p-0 max-[700px]:bg-white max-[700px]:py-4">
       {/* Main container adjusted for responsiveness */}
       <div className="w-full max-w-[722px] flex flex-col justify-start items-start gap-4">
         {/* Breadcrumbs - adjusted to wrap on small screens */}
-        <div className="self-stretch inline-flex flex-wrap justify-start items-center gap-2 px-4 sm:px-0 max-[475px]:gap-1">
-          <span className="text-gray-950 text-sm font-normal leading-tight max-[475px]:text-xs">Basic information</span>
+        <div className="self-stretch inline-flex flex-wrap justify-start items-center gap-2 px-4 sm:px-0 max-[700px]:gap-1">
+          <span className="text-gray-950 text-sm font-normal leading-tight max-[700px]:text-xs">Basic information</span>
           {/* Replaced GoChevronRight with inline SVG */}
           <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
-          <span className="text-gray-400 text-sm font-normal leading-tight max-[475px]:text-xs">Services settings</span>
+          <span className="text-gray-400 text-sm font-normal leading-tight max-[700px]:text-xs">Services settings</span>
           {/* Replaced GoChevronRight with inline SVG */}
           <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
-          <span className="text-gray-400 text-sm font-normal leading-tight max-[475px]:text-xs">Working shift settings</span>
+          <span className="text-gray-400 text-sm font-normal leading-tight max-[700px]:text-xs">Working shift settings</span>
           {/* Replaced GoChevronRight with inline SVG */}
           <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
-          <span className="text-gray-400 text-sm font-normal leading-tight max-[475px]:text-xs">Security</span>
+          <span className="text-gray-400 text-sm font-normal leading-tight max-[700px]:text-xs">Security</span>
         </div>
 
         {/* Main Form Container */}

@@ -148,7 +148,12 @@ function MainLayout({ activeTab }) {
                           <span
                             className={cn(
                               "ml-2 text-sm transition-all duration-300",
-                              isSidebarCollapsed ? "hidden" : "block"
+                              {
+                                hidden:
+                                  !isMobileSidebarOpen && isSidebarCollapsed,
+                                block:
+                                  !isSidebarCollapsed || isMobileSidebarOpen,
+                              }
                             )}>
                             {tab.name}
                           </span>

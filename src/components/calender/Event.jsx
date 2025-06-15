@@ -69,19 +69,6 @@ export default function Event({ event, isMobile = false }) {
         `}
         </style>
       </div>
-      <Popover
-        placement="rightTop"
-        trigger="click"
-        arrow={false}
-        content={<EventActions />}>
-        <Button type="text" className="!p-0">
-          <EllipsisVertical
-            size={16}
-            strokeWidth={0.5}
-            className="text-xs text-gray-400"
-          />
-        </Button>
-      </Popover>
     </div>
   ) : (
     <div

@@ -137,34 +137,38 @@ export default function DayCell({
           </span>
         )}
 
-        {!selectTimeFromProvider && events.length > 0 && (
-          <div className="flex flex-col items-start max-lg:hidden">
-            {events.slice(0, maxEventsPerMonthCell).map((event) => (
-              <Event key={event.id} event={event} />
-            ))}
-            {events.length > maxEventsPerMonthCell && (
-              <MoreEvents
-                events={events}
-                maxEventsPerMonthCell={maxEventsPerMonthCell}
-              />
-            )}
-          </div>
-        )}
+        <div className="max-lg:hidden">
+          {!selectTimeFromProvider && events.length > 0 && (
+            <div className="flex flex-col items-start">
+              {events.slice(0, maxEventsPerMonthCell).map((event) => (
+                <Event key={event.id} event={event} isMobile={false} />
+              ))}
+              {events.length > maxEventsPerMonthCell && (
+                <MoreEvents
+                  events={events}
+                  maxEventsPerMonthCell={maxEventsPerMonthCell}
+                />
+              )}
+            </div>
+          )}
+        </div>
 
         {/* Mobile */}
-        {!selectTimeFromProvider && events.length > 0 && (
-          <div className="flex flex-col items-start lg:hidden">
-            {events.slice(0, maxEventsPerMonthCell).map((event) => (
-              <Event key={event.id} event={event} isMobile />
-            ))}
-            {events.length > maxEventsPerMonthCell && (
-              <MoreEvents
-                events={events}
-                maxEventsPerMonthCell={maxEventsPerMonthCell}
-              />
-            )}
-          </div>
-        )}
+        <div className="lg:hidden">
+          {!selectTimeFromProvider && events.length > 0 && (
+            <div className="flex flex-col items-start">
+              {events.slice(0, maxEventsPerMonthCell).map((event) => (
+                <Event key={event.id} event={event} isMobile={true} />
+              ))}
+              {events.length > maxEventsPerMonthCell && (
+                <MoreEvents
+                  events={events}
+                  maxEventsPerMonthCell={maxEventsPerMonthCell}
+                />
+              )}
+            </div>
+          )}
+        </div>
       </div>
     );
   };

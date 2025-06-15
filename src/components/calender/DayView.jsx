@@ -37,6 +37,8 @@ export default function DayView({
 
   const columnsCount = Math.max(resourcesWithEvents.length || 3, 1); // Ensure at least one column
 
+  const date = dayjs(currentDate); // replace with your date
+
   if (selectTimeFromProvider) {
     return (
       <>
@@ -58,7 +60,7 @@ export default function DayView({
             {/* Time Slot Label */}
             <div
               className={cn(
-                "p-2 text-xs font-medium text-gray-500 flex items-center justify-start py-8",
+                "p-2 text-xs font-medium text-gray-500 flex items-center justify-start py-8 ",
                 {
                   "border-b-0": rowIndex === timeSlots.length - 1,
                 }
@@ -132,10 +134,20 @@ export default function DayView({
         display: "grid",
         gridTemplateColumns: `80px repeat(${
           resourcesWithEvents.length || 3
-        }, minmax(120px, 1fr))`,
+        }, minmax(auto, 1fr))`,
       }}>
       {/* Resource Headers */}
-      <div className="p-2 border-r border-gray-200" />
+      <div className="p-2 border-r border-gray-200 grid place-items-center">
+        <div
+          className={cn(
+            "text-xs lg:text-sm lg:hidden",
+            date.isSame(currentDate, "day")
+              ? "text-white bg-primary01 rounded-full w-6 h-6 lg:w-8 lg:h-8 flex items-center justify-center mx-auto"
+              : "text-gray-800 mt-3"
+          )}>
+          {date.format("D").padStart(2, "0")}
+        </div>
+      </div>
 
       {resourcesWithEvents.length > 0
         ? resourcesWithEvents.map((resource) => (
@@ -172,7 +184,7 @@ export default function DayView({
           {/* Time Label */}
           <div
             className={cn(
-              "p-2 border-r border-gray-200 bg-gray-50 text-xs font-medium text-gray-500 flex items-center justify-start",
+              "p-2 border-r border-gray-200 bg-gray-50 text-xs font-medium text-gray-500 flex items-center justify-center lg:justify-start",
               {
                 "border-b-0": rowIndex === timeSlots.length - 1,
               }

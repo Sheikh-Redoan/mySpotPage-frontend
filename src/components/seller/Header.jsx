@@ -6,7 +6,7 @@ const Header = ({ activeTab, onTabChange }) => {
   const tabs = ["Active Staff", "Inactive Staff", "Calendar View"];
 
   return (
-    <div className="self-stretch flex justify-between items-end">
+    <div className="self-stretch flex justify-between items-end gap-4">
       <div className="flex justify-start items-center max-[700px]:overflow-x-auto max-[700px]:scrollbar-hidden">
         {tabs.map((tab) => (
           <button

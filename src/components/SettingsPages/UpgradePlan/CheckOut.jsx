@@ -71,6 +71,7 @@ const CheckOut = () => {
         height="90%"
         onClose={() => setOpen(false)}
         open={open}
+        className="rounded-t-lg"
       >
         <motion.div
           variants={slideInFromLeft()}

@@ -84,14 +84,14 @@ const Upgradeplan = () => {
     },
     {
       name: "Glow",
-      price: "$79",
+      price: "79",
       subtext: "/ Month",
       desc: "For the Professional You are",
       image: imageProvider.glow,
     },
     {
       name: "Bloom",
-      price: "$149",
+      price: "149",
       subtext: "/ Month",
       desc: "Lead The Team With Confidence",
       image: imageProvider.bloom,
@@ -102,30 +102,40 @@ const Upgradeplan = () => {
 
   if (isMobile) {
     return (
-      <Drawer
-        placement={"bottom"}
-        closable={false}
-        height="90%"
-        onClose={() => setOpen(false)}
-        open={open}
-      >
-        <motion.div
-          variants={slideInFromBottom()}
-          initial="hidden"
-          animate="visible"
-          ref={UpgradeCard}
-          className="bg-[#ffffff] w-full rounded-lg"
+      <>
+        <Drawer
+          placement={"bottom"}
+          closable={false}
+          height="90%"
+          onClose={() => setOpen(false)}
+          open={open}
+          className="rounded-t-xl"
         >
-          <MobileSelectPlanContent 
-            currentPlan={currentPlan}
-            plans={plans}
-            visibleCards={visibleCards}
-            isMobile={isMobile}
-            showAll={showAll}
-            setShowAll={setShowAll}
-          />
-        </motion.div>
-      </Drawer>
+          <motion.div
+            variants={slideInFromBottom()}
+            initial="hidden"
+            animate="visible"
+            ref={UpgradeCard}
+            className="bg-[#ffffff] w-full rounded-lg"
+          >
+            <MobileSelectPlanContent
+              currentPlan={currentPlan}
+              plans={plans}
+              visibleCards={visibleCards}
+              isMobile={isMobile}
+              showAll={showAll}
+              setShowAll={setShowAll}
+            />
+          </motion.div>
+        </Drawer>
+        <style>
+          {`
+          .ant-drawer-body {
+            padding: 0 !important;
+          }
+        `}
+        </style>
+      </>
     );
   }
 

@@ -7,129 +7,12 @@ import { Table } from "antd";
 import { useState } from "react";
 import PlanCard from "../reuseableComponent/PlanCard";
 import { Link } from "react-router";
+import BillingHistoryTableByProvider from "./BillingHistoryTableByProvider";
 
 dayjs.extend(customParseFormat);
 const { RangePicker } = DatePicker;
 
 const dateFormat = "YYYY/MM/DD";
-
-// table data
-const columns = [
-  {
-    title: "Billing Time",
-    dataIndex: "time",
-    key: "time",
-    sorter: (a, b) => {
-      const toMinutes = (t) => {
-        const [h, m] = t.split(":").map(Number);
-        return h * 60 + m;
-      };
-      return toMinutes(a.time) - toMinutes(b.time);
-    },
-    defaultSortOrder: "descend",
-  },
-  {
-    title: "Plan Name / Duration",
-    dataIndex: "plan",
-    key: "plan",
-  },
-  {
-    title: "Payment Method",
-    dataIndex: "payment",
-    key: "payment",
-  },
-  {
-    title: "Amount",
-    dataIndex: "amount",
-    key: "amount",
-    sorter: (a, b) => parseFloat(a.amount) - parseFloat(b.amount),
-  },
-  {
-    title: "Plan Status",
-    dataIndex: "status",
-    key: "status",
-  },
-  {
-    title: <span className="font-semibold text-white">Action</span>,
-    dataIndex: "action",
-    key: "action",
-  },
-];
-
-const data = [
-  {
-    key: "1",
-    time: "05:32",
-    plan: "Bloom Plan",
-    payment: "Visa ............. 2349",
-    amount: 120,
-    status: "Active",
-    action: "Download Invoice",
-  },
-  {
-    key: "2",
-    time: "08:32",
-    plan: "Bloom Plan",
-    payment: "Visa ............. 2349",
-    amount: 170,
-    status: "Expired",
-    action: "Download Invoice",
-  },
-  {
-    key: "3",
-    time: "08:35",
-    plan: "Bloom Plan",
-    payment: "Visa ............. 2349",
-    amount: 190,
-    status: "Active",
-    action: "Download Invoice",
-  },
-  {
-    key: "4",
-    time: "10:32",
-    plan: "Bloom Plan",
-    payment: "Visa ............. 2349",
-    amount: 110,
-    status: "Canceled",
-    action: "Download Invoice",
-  },
-  {
-    key: "5",
-    time: "09:32",
-    plan: "Bloom Plan",
-    payment: "Visa ............. 2349",
-    amount: 180,
-    status: "Active",
-    action: "Download Invoice",
-  },
-  {
-    key: "6",
-    time: "03:32",
-    plan: "Bloom Plan",
-    payment: "Visa ............. 2349",
-    amount: 140,
-    status: "Canceled",
-    action: "Download Invoice",
-  },
-  {
-    key: "7",
-    time: "02:32",
-    plan: "Bloom Plan",
-    payment: "Visa ............. 2349",
-    amount: 120,
-    status: "Canceled",
-    action: "Download Invoice",
-  },
-  {
-    key: "8",
-    time: "06:32",
-    plan: "Bloom Plan",
-    payment: "Visa ............. 2349",
-    amount: 150,
-    status: "Active",
-    action: "Download Invoice",
-  },
-];
 
 const Subscription = () => {
   const [selectedDates, setSelectedDates] = useState(null);
@@ -271,15 +154,7 @@ const Subscription = () => {
             </div>
           </div>
         ) : (
-          <div className="overflow-x-auto my-4 rounded shadow-md">
-            <Table
-              columns={columns}
-              dataSource={data}
-              pagination={{ pageSize: 5 }}
-              scroll={{ x: 1000 }}
-              className="custom-ant-table"
-            />
-          </div>
+          <BillingHistoryTableByProvider />
         )}
       </div>
     </div>

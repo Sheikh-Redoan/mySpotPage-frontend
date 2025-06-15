@@ -1,5 +1,5 @@
 import { Button, Checkbox, Drawer, Grid, Input, Select } from "antd";
-import { ArrowLeft, ChevronDown, X } from "lucide-react";
+import { ArrowLeft, ChevronDown, Search, X } from "lucide-react";
 import { useState } from "react";
 import { SearchOutlined } from "../../assets/icons/icons";
 
@@ -125,17 +125,21 @@ const LocationDropdown = ({
           popupRender={(menu) => (
             <div className="rounded-lg px-3">
               {/* Search input */}
-              <div className="border border-[#E7E7E7] rounded-lg my-2">
+              <div className="my-2">
                 <Input
                   placeholder={searchPlaceholder}
-                  prefix={<SearchOutlined />}
+                  prefix={
+                    <Search
+                      size={20}
+                      strokeWidth={1.5}
+                      className="text-gray-400"
+                    />
+                  }
                   value={searchValue}
                   onChange={(e) => setSearchValue(e.target.value)}
                   onClick={(e) => e.stopPropagation()}
-                  style={{
-                    fontSize: "20px",
-                    height: "38px",
-                  }}
+                  size="large"
+                  className="placeholder:!text-xs"
                 />
               </div>
 

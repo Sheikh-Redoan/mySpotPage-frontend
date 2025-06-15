@@ -110,7 +110,7 @@ const MobileSelectPlanContent = ({
       <div className="flex items-center justify-between gap-2 w-full bg-[#FFFFFF] rounded-t-2xl shadow-2xl p-4">
         <div>
           <div className="text-[#866BE7] font-medium text-xl flex items-end gap-1 mt-3.5">
-            <p>{foundPlan.price}</p>
+            <p>₪{foundPlan.price}</p>
             <span className="text-[#888888] text-sm font-normal">
               {foundPlan.subtext}
             </span>

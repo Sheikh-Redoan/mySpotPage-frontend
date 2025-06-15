@@ -84,14 +84,14 @@ const Upgradeplan = () => {
     },
     {
       name: "Glow",
-      price: "$79",
+      price: "79",
       subtext: "/ Month",
       desc: "For the Professional You are",
       image: imageProvider.glow,
     },
     {
       name: "Bloom",
-      price: "$149",
+      price: "149",
       subtext: "/ Month",
       desc: "Lead The Team With Confidence",
       image: imageProvider.bloom,

@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { Table, Select, Pagination, Tooltip, Input, Checkbox } from "antd";
+import { Pagination, Select, Table } from "antd";
+import { useState } from "react";
 import { IoArrowDownOutline } from "react-icons/io5";
-import CustomEmptyTable from "../../components/DashboardPageComponents/shared/CustomEmptyTable";
-import { getPendingBookings } from "../../dummy-data/bookingsData";
 import { useNavigate } from "react-router";
 import { getPendingBookingsColumns } from "../../components/calendarManagement/pendingBookings/PendingBookingsColumns";
+import CustomEmptyTable from "../../components/DashboardPageComponents/shared/CustomEmptyTable";
+import { getPendingBookings } from "../../dummy-data/bookingsData";
 
 const { Option } = Select;
 
@@ -140,7 +140,7 @@ const PendingBookings = () => {
   const paginatedBookings = bookings.slice(startIndex, endIndex);
 
   return (
-    <div className="w-full py-2">
+    <div className="w-full py-2 overflow-x-auto">
       <Table
         dataSource={paginatedBookings}
         columns={columns}
@@ -177,8 +177,7 @@ const PendingBookings = () => {
             onChange={handlePageSizeChange}
             className="mx-2"
             popupMatchSelectWidth={false}
-            suffixIcon={<IoArrowDownOutline />}
-          >
+            suffixIcon={<IoArrowDownOutline />}>
             <Option value={5}>5</Option>
             <Option value={10}>10</Option>
             <Option value={20}>20</Option>

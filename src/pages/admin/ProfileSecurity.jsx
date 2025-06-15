@@ -44,7 +44,7 @@ const ProfileSecurity = () => {
               name: "Security",
               link: nameParam
                 ? `/account-management/${nameParam}/security`
-                : "/profile-management/my-profile/security",
+                : "/my-profile/security",
             },
           ] // removes `false`
         )}

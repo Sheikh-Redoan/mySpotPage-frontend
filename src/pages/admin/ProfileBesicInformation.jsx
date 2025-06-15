@@ -99,7 +99,7 @@ const ProfileBasicInformation = () => {
             name: "Basic Information",
             link: nameParam
               ? `/admin/account-management/${nameParam}/basic-information`
-              : "/profile-management/my-profile/basic-information",
+              : "/my-profile/basic-information",
           },
         ])}
       />

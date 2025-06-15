@@ -134,7 +134,14 @@ export default function WeekView({
                     "flex flex-col space-y-1": true,
                   })}>
                   {dailyEvents.map((event) => (
-                    <Event key={event.id} event={event} isMobile />
+                    <React.Fragment key={event.id}>
+                      <div className="lg:hidden">
+                        <Event event={event} isMobile={true} />
+                      </div>
+                      <div className="max-lg:hidden">
+                        <Event event={event} isMobile={false} />
+                      </div>
+                    </React.Fragment>
                   ))}
                 </div>
               );

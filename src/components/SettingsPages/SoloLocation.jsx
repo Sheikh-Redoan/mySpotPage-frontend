@@ -88,12 +88,8 @@ const SoloLocation = () => {
   const [deleteLocationModalOpen, setDeleteLocationModalOpen] = useState(false);
   const [openCitySelectionModal, setOpenCitySelectionModal] = useState(false);
 
-  // Mobile View State Only
-  const [fixedLocationDrawerOpen, setFixedLocationDrawerOpen] = useState(false); 
-
   const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
-  console.log("screens", screens);
 
   const handleCityChange = (city) => {
     setSelectedCities((prev) => {
@@ -182,31 +178,6 @@ const SoloLocation = () => {
           onClose={() => setFixedLocationModalOpen(false)}
           onSave={() => setFixedLocationModalOpen(false)}
         />
-      )}
-
-      {screens.xs && (
-        <>
-          <Drawer
-            placement={"bottom"}
-            closable={false}
-            height="90%"
-            onClose={() => setFixedLocationDrawerOpen(false)}
-            open={fixedLocationDrawerOpen}
-            className="rounded-t-xl"
-          >
-            <button onClick={() => setFixedLocationDrawerOpen(false)}>
-              <X />
-            </button>
-            dfhgjurd
-          </Drawer>
-          <style>
-            {`
-          .ant-drawer-body {
-            padding: 0 !important;
-          }
-        `}
-          </style>
-        </>
       )}
 
       {/* Mobile Modal */}

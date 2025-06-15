@@ -6,7 +6,7 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import { Table } from "antd";
 import { useState } from "react";
 import PlanCard from "../reuseableComponent/PlanCard";
-import { Link} from "react-router";
+import { Link } from "react-router";
 
 dayjs.extend(customParseFormat);
 const { RangePicker } = DatePicker;
@@ -211,7 +211,17 @@ const Subscription = () => {
               </p>
             </div>
             <div>
-              <Link to={"/add-card"}>
+              <Link to={"/add-card"} className="max-md:hidden">
+                <Button color="primary" variant="outlined">
+                  <Plus /> Add Card
+                </Button>
+              </Link>
+              {/* Mobile View */}
+              <Link
+                to={"/add-card"}
+                className="md:hidden"
+                state={{ isMobile: true }}
+              >
                 <Button color="primary" variant="outlined">
                   <Plus /> Add Card
                 </Button>

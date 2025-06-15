@@ -132,6 +132,10 @@ export const routes = createBrowserRouter([
         children: [
           {
             index: true,
+            element: <Navigate to="select-staff" />,
+          },
+          {
+            path: "select-staff",
             element: <SelectStaff />,
           },
           {

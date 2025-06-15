@@ -12,11 +12,15 @@ const SuccessUpgrade = () => {
         variants={slideInFromRight()}
         initial="hidden"
         animate="visible"
-        className="bg-[#ffffff] min-h-[260px] w-[430px] rounded-lg"
+        className="bg-[#ffffff] min-h-[260px] w-[430px] rounded-lg max-md:mx-2"
       >
         <div className="flex justify-between items-center my-2 py-3 px-6">
           <p className="text-xl font-semibold"> Notification</p>
-          <Link className="hover:scale-105" to={"/upgrade-plan"}>
+          <Link className="hover:scale-105 max-md:hidden" to={"/upgrade-plan"}>
+            <X />
+          </Link>
+          {/* Mobile view */}
+          <Link className="hover:scale-105 md:hidden" to={"/upgrade-plan"} state={{ isMobile: true }}>
             <X />
           </Link>
         </div>

@@ -1,4 +1,4 @@
-import { Flex, Progress } from "antd";
+import { Button, Flex, Progress } from "antd";
 import dayjs from "dayjs";
 import { ArrowUpRight } from "lucide-react";
 import { Link } from "react-router";
@@ -61,8 +61,18 @@ const PlanCard = ({
       <div
         className={`pt-5 text-sm font-medium flex ${
           showCancel ? "justify-between" : "justify-end"
-        }`}>
-        <Link to={"/cancel-subscription"}>
+        }`}
+      >
+        <Link to={"/cancel-subscription"} className="max-md:hidden">
+          {showCancel && (
+            <p className="text-red-500 underline cursor-pointer">
+              Cancel Subscription
+            </p>
+          )}
+        </Link>
+        
+        {/* Mobile View */}
+        <Link to={"/cancel-subscription"} state={{ isMobile: true }} className="md:hidden">
           {showCancel && (
             <p className="text-red-500 underline cursor-pointer">
               Cancel Subscription
@@ -70,13 +80,22 @@ const PlanCard = ({
           )}
         </Link>
 
-        <Link to={"/upgrade-plan"} state={{ currentPlan: planName }} className="max-md:hidden">
+        <Link
+          to={"/upgrade-plan"}
+          state={{ currentPlan: planName }}
+          className="max-md:hidden"
+        >
           <p className="text-[#744CDB] underline flex items-center gap-2">
             Upgrade Plan <ArrowUpRight size={20} />
           </p>
         </Link>
 
-        <Link to={"/upgrade-plan"} state={{ currentPlan: planName, isMobile: true }} className="md:hidden">
+        {/* Mobile View */}
+        <Link
+          to={"/upgrade-plan"}
+          state={{ currentPlan: planName, isMobile: true }}
+          className="md:hidden"
+        >
           <p className="text-[#744CDB] underline flex items-center gap-2">
             Upgrade Plan <ArrowUpRight size={20} />
           </p>

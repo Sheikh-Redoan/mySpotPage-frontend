@@ -1,6 +1,6 @@
 // src/pages/layout/TopNavbar.jsx (Revised)
-import { Popover } from "antd";
-import { Menu } from "lucide-react"; // Import Menu icon
+import { Drawer, Popover } from "antd";
+import { ArrowLeft, Menu } from "lucide-react"; // Import Menu icon
 import { useState } from "react";
 import { useLocation } from "react-router";
 import UserMenuPopUp from "../../components/admin/UserMenuPopUp";
@@ -9,6 +9,7 @@ import { cn } from "../../lib/utils";
 import NotificationPopup from "./NotificationPopup";
 
 function TopNavbar({ activeTab, onMenuClick }) {
+  const [open, setOpen] = useState(false);
   const [toggle, setToggle] = useState(true);
   const [isUserOpen, setIsUserOpen] = useState(false);
   const location = useLocation();
@@ -26,6 +27,14 @@ function TopNavbar({ activeTab, onMenuClick }) {
 
   const handlePopup = () => {
     setIsUserOpen(!isUserOpen);
+  };
+
+  const showDrawer = () => {
+    setOpen(true);
+  };
+
+  const onClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -49,6 +58,42 @@ function TopNavbar({ activeTab, onMenuClick }) {
         </div>
                
         <div className="flex items-center gap-4">
+          <button
+            type="button"
+            className={cn(
+              "!rounded-full w-8 h-8 sm:w-10 sm:h-10 grid place-items-center transition-colors duration-200 lg:!hidden"
+            )}
+            onClick={showDrawer}>
+            <img
+              className="cursor-pointer filter w-4 h-4 sm:w-5 sm:h-5 object-contain"
+              src={
+                !open
+                  ? imageProvider.Notification
+                  : imageProvider.NotificationWhite
+              }
+              alt="Notification Bell"
+            />
+          </button>
+          <Drawer
+            title="Notifications"
+            placement="right"
+            width="100%"
+            onClose={onClose}
+            open={open}
+            closeIcon={<ArrowLeft size={20} strokeWidth={1.5} />}
+            extra={
+              <button type="button" onClick={onClose}>
+                <h4 className="text-black/60 text-sm underline cursor-pointer">
+                  Mark all as Read
+                </h4>
+              </button>
+            }
+            className="lg:!hidden">
+            <NotificationPopup
+              notificationButtons={notificationButtons}
+              isDrawerOpen={false}
+            />
+          </Drawer>
           <Popover
             trigger={["click"]}
             placement="bottomRight"
@@ -56,10 +101,11 @@ function TopNavbar({ activeTab, onMenuClick }) {
             onOpenChange={handleNotification}
             arrow={false}
             content={
-              <div className="w-full md:max-w-xs sm:w-80 p-2">
+              <div className={cn("w-full md:max-w-xs sm:w-80 p-2")}>
                 <NotificationPopup notificationButtons={notificationButtons} />
               </div>
-            }>
+            }
+            className="!hidden lg:!block">
             <button
               onClick={handleNotification}
               type="button"
@@ -70,7 +116,7 @@ function TopNavbar({ activeTab, onMenuClick }) {
                 }
               )}>
               <img
-                className="cursor-pointer filter w-4 h-4 sm:w-5 sm:h-5"
+                className="cursor-pointer filter w-4 h-4 sm:w-5 sm:h-5 object-contain"
                 src={
                   toggle
                     ? imageProvider.Notification

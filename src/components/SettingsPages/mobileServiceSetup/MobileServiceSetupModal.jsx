@@ -1,29 +1,28 @@
 import {
-  Button,
   Checkbox,
   ConfigProvider,
   Drawer,
+  Modal,
   Switch,
-  TimePicker,
+  TimePicker
 } from "antd";
+import dayjs from "dayjs";
 import {
-  ArrowLeft,
   ArrowUpRight,
   ChevronDown,
   ChevronUp,
   Clock,
-  Plus,
-  X,
+  X
 } from "lucide-react";
 import { useState } from "react";
 import { AlertIcon } from "../../../assets/icons/icons2";
-import dayjs from "dayjs";
 import { imageProvider } from "../../../lib/imageProvider";
 // eslint-disable-next-line no-unused-vars
+import { Grid } from "antd";
 import { AnimatePresence, motion } from "framer-motion";
 import { collapseVariants } from "../../../animations/variants";
 import LocationDropdown from "../../ui/LocationDropdown";
-import { Grid } from "antd";
+import { MobileServiceSetupDrawerContent } from "./MobileServiceSetupDrawerContent";
 
 const cityOptions = [
   {
@@ -47,16 +46,8 @@ const cityOptions = [
     label: "Beit Shemesh",
   },
   {
-    value: "Beit Shemesh",
-    label: "Beit Shemesh",
-  },
-  {
     value: "Dimona",
     label: "Dimona",
-  },
-  {
-    value: "Baqa al-Gharbiyye",
-    label: "Baqa al-Gharbiyye",
   },
   {
     value: "Even Yehuda",
@@ -70,7 +61,14 @@ const cityOptions = [
 
 const format = "hh:mm A";
 
-export const MobileServiceSetupModal = ({setMobileModalOpen}) => {
+export const MobileServiceSetupModal = ({
+  setMobileModalOpen,
+  isOpen,
+  onClose,
+  setSelectedDistrict,
+  selectedCities,
+  setOpenCitySelectionModal,
+}) => {
   const [paymentOpen, setPaymentOpen] = useState(true);
   const [serviceModalOpen, setServiceModalOpen] = useState(true);
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
@@ -95,10 +93,48 @@ export const MobileServiceSetupModal = ({setMobileModalOpen}) => {
     console.log("Selected:", value);
   };
 
-  return (
-    <div className="fixed inset-0 z-50 bg-[#111113cc] flex items-center justify-center">
-      <div className="bg-white rounded-lg shadow-lg w-[95%] max-w-3xl h-[550px] md:h-[750px] flex flex-col">
-        {/* Header */}
+  if (screens.xs || (screens.sm && !screens.md && !screens.lg && !screens.xl)) {
+    return (
+      <>
+        <Drawer
+          placement={"bottom"}
+          closable={false}
+          height="90%"
+          onClose={onClose}
+          open={isOpen}
+          className="rounded-t-xl"
+        >
+          <MobileServiceSetupDrawerContent
+            setMobileModalOpen={setMobileModalOpen}
+            isOpen={isOpen}
+            onClose={onClose}
+            setSelectedDistrict={setSelectedDistrict}
+            selectedCities={selectedCities}
+            setOpenCitySelectionModal={setOpenCitySelectionModal}
+            cityOptions={cityOptions}
+          />
+        </Drawer>
+
+        <style>
+          {`
+            .ant-drawer-body {
+              padding: 0 !important;
+            }
+          `}
+        </style>
+      </>
+    )
+  } else {
+    return (
+      <Modal
+        open={isOpen}
+        onCancel={onClose}
+        footer={null}
+        closable={true}
+        closeIcon={<X className="w-6 h-6" />}
+        className="!w-[95%] !max-w-3xl rounded-lg max-h-[80vh] overflow-y-auto"
+        centered
+      >
         <h3 className="text-xl font-semibold text-[#242528] py-6 px-6">
           Mobile service setup
         </h3>
@@ -223,7 +259,7 @@ export const MobileServiceSetupModal = ({setMobileModalOpen}) => {
                         >
                           <LocationDropdown
                             options={cityOptions}
-                            placeholder="Search"
+                            placeholder="Select"
                             onChange={handleChange}
                           />
                         </ConfigProvider>
@@ -567,7 +603,7 @@ export const MobileServiceSetupModal = ({setMobileModalOpen}) => {
             Save
           </button>
         </div>
-      </div>
-    </div>
-  );
+      </Modal>
+    );
+  }
 };

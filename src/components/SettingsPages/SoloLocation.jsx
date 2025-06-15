@@ -1,14 +1,14 @@
 import { Button } from "antd";
-import { Plus } from "lucide-react";
-import { useState } from "react";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
+import { Plus } from "lucide-react";
+import { useState } from "react";
 // eslint-disable-next-line no-unused-vars
-import FixedLocationModal from "../modal/FixedLocationModal";
+import CitySelectionModal from "../modal/CitySelectionModal";
 import DeleteLocationModal from "../modal/DeleteLocationModal";
+import FixedLocationModal from "../modal/FixedLocationModal";
 import LocationList from "./LocationList";
 import MobileServiceLocationList from "./MobileServiceLocationList";
-import CitySelectionModal from "../modal/CitySelectionModal";
 import { MobileServiceSetupModal } from "./mobileServiceSetup/MobileServiceSetupModal";
 
 dayjs.extend(customParseFormat);
@@ -23,6 +23,7 @@ const SoloLocation = () => {
   const [openCitySelectionModal, setOpenCitySelectionModal] = useState(false);
 
   const handleCityChange = (city) => {
+    console.log("city", city);
     setSelectedCities((prev) => {
       const district = selectedDistrict;
 
@@ -101,7 +102,16 @@ const SoloLocation = () => {
       )}
 
       {/* Mobile Service Setup Modal */}
-      {mobileModalOpen && <MobileServiceSetupModal setMobileModalOpen={setMobileModalOpen} />}
+      {mobileModalOpen && (
+        <MobileServiceSetupModal
+          setMobileModalOpen={setMobileModalOpen}
+          isOpen={mobileModalOpen}
+          onClose={() => setMobileModalOpen(false)}
+          selectedCities ={selectedCities}
+          setSelectedDistrict={setSelectedDistrict}
+          setOpenCitySelectionModal={setOpenCitySelectionModal}
+        />
+      )}
 
       {openCitySelectionModal && (
         <CitySelectionModal

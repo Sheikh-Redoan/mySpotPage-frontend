@@ -42,7 +42,7 @@ export default function CalendarToolbar({
   return (
     <>
       {/* Desktop */}
-      <div className="flex flex-col md:flex-row gap-4 md:gap-0 items-center justify-between mb-4 max-md:hidden">
+      <div className="flex flex-col md:flex-row gap-4 md:gap-0 items-center justify-between mb-4 max-lg:hidden">
         <div className="flex items-center gap-4">
           <div className="flex items-center space-x-4">
             <button
@@ -97,7 +97,7 @@ export default function CalendarToolbar({
       </div>
 
       {/* Mobile */}
-      <div className="px-4 md:hidden mb-4">
+      <div className="px-4 lg:hidden mb-4">
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <Button

@@ -103,7 +103,8 @@ export default function WeekView({
               <div className="p-2 border-r border-b border-gray-200 flex flex-col items-center gap-2 justify-center bg-primary01/10">
                 <Avatar
                   src={resource.avatar}
-                  size={55}
+                  alt={resource.name}
+                  size={40}
                   className="outline-1 outline-offset-2 outline-primary01/30"
                 />
 

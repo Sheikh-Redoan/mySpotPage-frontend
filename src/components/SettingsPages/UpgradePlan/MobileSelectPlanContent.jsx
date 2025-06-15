@@ -11,9 +11,11 @@ const MobileSelectPlanContent = ({
   showAll,
   setShowAll,
 }) => {
+  const foundPlan = plans.find((plan) => plan.name === currentPlan);
+
   return (
     <>
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center p-2">
         <p className="text-lg font-semibold"> Select Plan</p>
         <Link
           className="hover:scale-105"
@@ -22,9 +24,9 @@ const MobileSelectPlanContent = ({
           <X />
         </Link>
       </div>
-      <hr className="text-[#E7E7E7] mt-2" />
+      <hr className="text-[#E7E7E7]" />
       {/* Plan card */}
-      <div className="flex overflow-x-auto gap-4 my-3 w-[97%] md:w-full pb-2">
+      <div className="flex overflow-x-auto gap-4 my-3 w-[97%] md:w-full pb-2 p-2">
         {plans.map((plan, index) => {
           return (
             <div
@@ -49,7 +51,7 @@ const MobileSelectPlanContent = ({
         })}
       </div>
       {/* ........... */}
-      <div className="min-h-full border border-[#ECEBFC] rounded-lg my-4 p-3">
+      <div className="min-h-full border border-[#ECEBFC] rounded-lg my-4 mx-2 p-3">
         <p className="text-[#797979] px-2">
           Starting your own business can feel overwhelming, but it doesn’t have
           to. Spark is here to give you the foundation you need to grow without
@@ -105,52 +107,50 @@ const MobileSelectPlanContent = ({
         Compare plans and pricing options
       </p>
 
-      {plans && plans.map((plan, index) => (
-          <div className="" key={index}>
-            <div className="text-[#866BE7] font-medium text-2xl flex items-end gap-1 mt-3.5">
-              <p>{plan.price}</p>
-              <span className="text-[#888888] text-sm font-normal">
-                {plan.subtext}
-              </span>
-            </div>
-            <p className="text-center text-[#744CDB] my-5">
-              *The prices do not include VAT
-            </p>
-            <Link
-              to={
-                currentPlan === plan.name
-                  ? plan.name === "Spark"
-                    ? "#"
-                    : "/cancel-subscription"
-                  : (currentPlan === "Glow" && plan.name === "Spark") ||
-                    (currentPlan === "Bloom" &&
-                      (plan.name === "Glow" || plan.name === "Spark"))
-                  ? "/success-downgrade"
-                  : "/checkout"
-              }
-              state={{ isMobile, currentPlan }}
-              className={`w-full block text-center p-2 rounded-lg my-2 font-medium hover:scale-95 transform transition-all duration-300 ease-in-out
+      <div className="flex items-center justify-between gap-2 w-full bg-[#FFFFFF] rounded-t-2xl shadow-2xl p-4">
+        <div>
+          <div className="text-[#866BE7] font-medium text-xl flex items-end gap-1 mt-3.5">
+            <p>{foundPlan.price}</p>
+            <span className="text-[#888888] text-sm font-normal">
+              {foundPlan.subtext}
+            </span>
+          </div>
+          <p className="text-xs text-[#744CDB] my-3">*The prices do not include VAT</p>
+        </div>
+        <Link
+          to={
+            currentPlan === foundPlan.name
+              ? foundPlan.name === "Spark"
+                ? "#"
+                : "/cancel-subscription"
+              : (currentPlan === "Glow" && foundPlan.name === "Spark") ||
+                (currentPlan === "Bloom" &&
+                  (foundPlan.name === "Glow" || foundPlan.name === "Spark"))
+              ? "/success-downgrade"
+              : "/checkout"
+          }
+          state={{ isMobile, currentPlan }}
+          className={`w-full block text-center p-2 rounded-lg my-2 font-medium hover:scale-95 transform transition-all duration-300 ease-in-out
                         ${
-                          currentPlan === plan.name
-                            ? plan.name === "Spark"
+                          currentPlan === foundPlan.name
+                            ? foundPlan.name === "Spark"
                               ? "bg-[#E4E3FD] text-[#A496EF]"
                               : "border border-[#ED4245] bg-[#FFFFFF] text-[#ED4245]"
                             : "bg-[#744CDB] text-[#FFFFFF]"
                         }
                        `}
-            >
-              {currentPlan === plan.name
-                ? plan.name === "Spark"
-                  ? "Current Plan"
-                  : "Cancel Subscription"
-                : (currentPlan === "Glow" && plan.name === "Spark") ||
-                  (currentPlan === "Bloom" &&
-                    (plan.name === "Glow" || plan.name === "Spark"))
-                ? "Downgrade"
-                : "Upgrade"}
-            </Link>
-          </div>
-        ))}
+        >
+          {currentPlan === foundPlan.name
+            ? foundPlan.name === "Spark"
+              ? "Current Plan"
+              : "Cancel Subscription"
+            : (currentPlan === "Glow" && foundPlan.name === "Spark") ||
+              (currentPlan === "Bloom" &&
+                (foundPlan.name === "Glow" || foundPlan.name === "Spark"))
+            ? "Downgrade"
+            : "Upgrade"}
+        </Link>
+      </div>
     </>
   );
 };

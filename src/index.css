@@ -164,15 +164,15 @@
   padding: 3px 10px;
 }
 
-/* Target the RangePicker dropdown */
-.vertical-range-picker .ant-picker-panels {
-  display: flex;
-  flex-direction: column !important; /* Stack calendars vertically */
-  align-items: center;
-}
-
 /* Ensure calendars are full-width on mobile */
 @media (max-width: 767px) {
+  /* Target the RangePicker dropdown */
+  .vertical-range-picker .ant-picker-panels {
+    display: flex;
+    flex-direction: column !important; /* Stack calendars vertically */
+    align-items: center;
+  }
+
   .vertical-range-picker .ant-picker-panel-container {
     width: 100% !important;
   }

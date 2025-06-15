@@ -13,7 +13,7 @@ import {
 } from "recharts";
 function RevenueChart() {
   const data = [
-    { name: "0/0/0000", uv: 450, pv: 0, amt: 0 },
+    { name: "", uv: 450, pv: 0, amt: 0 },
     { name: "1/2/2025", uv: 400, pv: 400, amt: 200 },
     { name: "2/2/2025", uv: 600, pv: 200, amt: 200 },
     { name: "3/2/2025", uv: 500, pv: 300, amt: 200 },

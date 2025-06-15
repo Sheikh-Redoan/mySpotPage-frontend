@@ -68,7 +68,6 @@ import StaffManagement from "../pages/seller/StaffManagement";
 import AccountManagement from "../pages/admin/AccountManagement";
 import MenuCategory from "../pages/admin/MenuCategory";
 import ServiceClassification from "../pages/admin/ServiceClassification";
-import Subscriptions from "../pages/admin/Subscriptions";
 import CalendarManagementPage from "../pages/calenderManagement/CalendarManagementPage";
 import AddBookingByProvider from "../pages/calenderManagement/addBookingByProvider/AddBookingByProvider";
 import ClientAppointmentCalForProvider from "../pages/calenderManagement/addBookingByProvider/ClientAppointmentCalForProvider";
@@ -95,6 +94,8 @@ import StaffInformationPage from "../pages/onboarding/StaffInformationPage";
 import StaffSecurityPage from "../pages/onboarding/StaffSecurityPage";
 import StaffServicesPage from "../pages/onboarding/StaffServicesPage";
 import StaffWorkingHoursPage from "../pages/onboarding/StaffWorkingHoursPage";
+import AdminSubscriptionsPage from "../pages/admin/AdminSubscriptionsPage";
+import ReviewContainer from "../components/shared/ReviewContainer";
 
 export const routes = createBrowserRouter([
   // Public Routes (Accessible to everyone)
@@ -111,6 +112,10 @@ export const routes = createBrowserRouter([
       {
         path: "our-work", // Public route
         element: <OurWorkDetails />,
+      },
+      {
+        path: "review",
+        element: <ReviewContainer />
       },
 
       // Client-specific booking flow (can be accessed by authenticated clients)
@@ -378,7 +383,7 @@ export const routes = createBrowserRouter([
               },
               {
                 path: "subscription", // e.g., /admin/user-management/john-doe/subscription
-                element: <Subscriptions />, // Subscriptions is now a direct child element
+                element: <AdminSubscriptionsPage />, // AdminSubscriptionsPage is now a direct child element
               },
             ],
           },

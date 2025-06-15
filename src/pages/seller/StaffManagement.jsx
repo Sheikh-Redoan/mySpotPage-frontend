@@ -8,9 +8,7 @@ import ResolveBookingsModal from "../../components/seller/ResolveBookingsModal";
 import ConfirmInactivationModal from "../../components/seller/ConfirmInactivationModal";
 import StaffDetailModal from "../../components/seller/StaffDetailModal"; // Import the new modal
 import { staffData as initialStaffData } from "../../lib/staffData";
-import { MOCK_EVENTS, MOCK_RESOURCES } from "../../components/calender/mockdata"; // Import mock data for calendar
-import WeekView from "../../components/calender/weekView";
-import dayjs from "dayjs"; // Import dayjs
+import StaffManagementCalemdarView from "../../components/seller/StaffManagementCalemdarView"; // Import StaffManagementCalemdarView if needed
 
 const StaffManagement = () => {
   const [activeTab, setActiveTab] = useState("Active Staff");
@@ -29,10 +27,6 @@ const StaffManagement = () => {
   const [showConfirmInactivationModal, setShowConfirmInactivationModal] = useState(false);
   const [staffToInactivate, setStaffToInactivate] = useState(null);
   const [showStaffDetailModal, setShowStaffDetailModal] = useState(false); // State for StaffDetailModal
-
-  // Add currentDate state for the calendar view
-  const [currentDate, setCurrentDate] = useState(dayjs());
-
 
   const applyFilters = useCallback(() => {
     let currentFilteredStaff = allStaffData;
@@ -70,16 +64,11 @@ const StaffManagement = () => {
         staff.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
     } else {
-        // When in Calendar View, no staff filtering is needed as Calender component will handle its own data.
-        // We might want to clear filteredStaff or set it to an empty array to avoid rendering staff cards
         currentFilteredStaff = [];
     }
 
-
     setFilteredStaff(currentFilteredStaff);
 
-    // Logic for selectedStaff might need adjustment if Calendar View doesn't have a concept of selected staff.
-    // For now, setting to null if no staff are filtered for non-calendar views, or if actively in calendar view.
     if (
       activeTab === "Calendar View" ||
       (selectedStaff && !currentFilteredStaff.some((staff) => staff.id === selectedStaff.id))
@@ -223,18 +212,20 @@ const StaffManagement = () => {
     <div className="min-h-screen  p-5 font-['Golos_Text']">
       <div className="self-stretch bg-white p-5 rounded-lg flex flex-col justify-start items-start gap-4 max-[475px]:text-[12px] max-[475px]:p-1">
         <Header activeTab={activeTab} onTabChange={handleTabChange} />
-        <SearchBarAndFilter
-          searchTerm={searchTerm}
-          onSearchChange={handleSearchChange}
-          allStaffData={allStaffData}
-          onApplyFilters={handleApplyFilters}
-          currentFilters={filters}
-          onAddStaff={handleAddStaff} // Pass the new handler
-        />
+        {activeTab !== "Calendar View" && ( // Conditionally render SearchBarAndFilter
+          <SearchBarAndFilter
+            searchTerm={searchTerm}
+            onSearchChange={handleSearchChange}
+            allStaffData={allStaffData}
+            onApplyFilters={handleApplyFilters}
+            currentFilters={filters}
+            onAddStaff={handleAddStaff}
+          />
+        )}
 
         {activeTab === "Calendar View" ? ( // Conditional rendering for Calendar View
           <div className="self-stretch flex-1 overflow-hidden">
-            <WeekView events={MOCK_EVENTS} resources={MOCK_RESOURCES} currentDate={currentDate} />
+            <StaffManagementCalemdarView /> {/* Render StaffManagementCalemdarView for calendar view */}
           </div>
         ) : (
           <div className="self-stretch flex-1 flex justify-start items-start gap-8 ">
@@ -298,7 +289,7 @@ const StaffManagement = () => {
           staff={selectedStaff}
           onClose={() => setShowStaffDetailModal(false)}
           onSave={handleSaveStaffDetail}
-          onRemove={handleRemoveStaff} // Pass onRemove to the modal for direct removal
+          onRemove={handleRemoveStaff}
         />
       )}
     </div>

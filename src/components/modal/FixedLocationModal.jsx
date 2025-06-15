@@ -1,4 +1,4 @@
-import { Modal, Button, Switch, Checkbox, TimePicker } from "antd";
+import { Modal, Button, Switch, Checkbox, TimePicker, Drawer } from "antd";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { Clock, X } from "lucide-react";
@@ -9,7 +9,7 @@ dayjs.extend(customParseFormat);
 
 const format = "hh:mm A";
 
-const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
+const FixedLocationModal = ({ isOpen, onClose, onSave}) => {
   const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
 
@@ -30,28 +30,6 @@ const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
         </h3>
       }
       className="!w-[90%] !max-w-3xl"
-      styles={{
-        header: {
-          borderBottom: "1px solid #E5E7E8",
-        },
-        body: {
-          minHeight: "calc(750px - 64px - 88px)",
-          display: "flex",
-          flexDirection: "column",
-        },
-        content: {
-          backgroundColor: "#FFFFFF",
-          borderRadius: "8px",
-          boxShadow:
-            "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
-          display: "flex",
-          flexDirection: "column",
-          height: "750px",
-        },
-      }}
-      style={{
-        backgroundColor: "rgba(75, 85, 99, 0.7)",
-      }}
       centered
     >
       <div className="flex-1 overflow-y-auto mt-5">
@@ -86,9 +64,15 @@ const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
         {/* Toggle Show Full Address */}
         <div className="flex items-center gap-1 md:gap-3 mb-4">
           <div>
-            <Switch defaultChecked onChange={(checked) => console.log(checked)} size={screens.sm ? "default" : "small"}/>
+            <Switch
+              defaultChecked
+              onChange={(checked) => console.log(checked)}
+              size={screens.sm ? "default" : "small"}
+            />
           </div>
-          <p className="text-[#262626] text-sm md:text-base">Show full address only after booking</p>
+          <p className="text-[#262626] text-sm md:text-base">
+            Show full address only after booking
+          </p>
         </div>
 
         {/* Payment */}

@@ -1,4 +1,4 @@
-import { Button, Checkbox, ConfigProvider, Switch, TimePicker } from "antd";
+import { Button, Checkbox, ConfigProvider, Drawer, Switch, TimePicker } from "antd";
 import {
   ArrowLeft,
   ArrowUpRight,
@@ -23,7 +23,7 @@ import LocationList from "./LocationList";
 import MobileServiceLocationList from "./MobileServiceLocationList";
 import { Grid } from "antd";
 import CitySelectionModal from "../modal/CitySelectionModal";
-
+import { set } from "date-fns";
 
 dayjs.extend(customParseFormat);
 const format = "hh:mm A";
@@ -88,9 +88,12 @@ const SoloLocation = () => {
   const [deleteLocationModalOpen, setDeleteLocationModalOpen] = useState(false);
   const [openCitySelectionModal, setOpenCitySelectionModal] = useState(false);
 
+  // Mobile View State Only
+  const [fixedLocationDrawerOpen, setFixedLocationDrawerOpen] = useState(false); 
+
   const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
-
+  console.log("screens", screens);
 
   const handleCityChange = (city) => {
     setSelectedCities((prev) => {
@@ -172,13 +175,38 @@ const SoloLocation = () => {
         />
       </div>
 
-      {/* Fixed Modal */}
+      {/* Fixed Location Setup Modal */}
       {fixedLocationModalOpen && (
         <FixedLocationModal
           isOpen={fixedLocationModalOpen}
           onClose={() => setFixedLocationModalOpen(false)}
           onSave={() => setFixedLocationModalOpen(false)}
         />
+      )}
+
+      {screens.xs && (
+        <>
+          <Drawer
+            placement={"bottom"}
+            closable={false}
+            height="90%"
+            onClose={() => setFixedLocationDrawerOpen(false)}
+            open={fixedLocationDrawerOpen}
+            className="rounded-t-xl"
+          >
+            <button onClick={() => setFixedLocationDrawerOpen(false)}>
+              <X />
+            </button>
+            dfhgjurd
+          </Drawer>
+          <style>
+            {`
+          .ant-drawer-body {
+            padding: 0 !important;
+          }
+        `}
+          </style>
+        </>
       )}
 
       {/* Mobile Modal */}
@@ -194,7 +222,11 @@ const SoloLocation = () => {
               {/* Toggle */}
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-1.5 md:gap-3">
-                  <Switch defaultChecked onChange={onChange} size={screens.sm ? "default" : "small"} />
+                  <Switch
+                    defaultChecked
+                    onChange={onChange}
+                    size={screens.sm ? "default" : "small"}
+                  />
                   <p className="text-[#262626] ">Charge travel fees</p>
                 </div>
                 <div className="flex items-center justify-between w-14 md:w-[120px] border border-[#E5E7E8] rounded-lg px-2 md:px-4 py-1 md:py-2.5">
@@ -358,7 +390,7 @@ const SoloLocation = () => {
                                       }
                                       onClick={() => {
                                         setSelectedDistrict(district);
-                                        setOpenCitySelectionModal(true)
+                                        setOpenCitySelectionModal(true);
                                       }}
                                       className="text-[#262626]"
                                     >
@@ -657,16 +689,15 @@ const SoloLocation = () => {
         </div>
       )}
 
-      {
-        openCitySelectionModal &&
-        (<CitySelectionModal
+      {openCitySelectionModal && (
+        <CitySelectionModal
           openCitySelectionModal={openCitySelectionModal}
           onClose={() => setOpenCitySelectionModal(false)}
           selectedDistrict={selectedDistrict}
           handleCityChange={handleCityChange}
           selectedCities={selectedCities}
-        />)
-      }
+        />
+      )}
 
       {/* delete location modal */}
       {deleteLocationModalOpen && (
@@ -682,7 +713,6 @@ const SoloLocation = () => {
 };
 
 export default SoloLocation;
-
 
 const locationData = [
   {

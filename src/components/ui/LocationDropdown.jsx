@@ -51,7 +51,7 @@ const LocationDropdown = ({
             </Button>
           }
         >
-          <div className="rounded-lg px-3">
+          <div className="px-4 h-full">
             {/* Search input */}
             <div className="border border-[#E7E7E7] rounded-lg my-2">
               <Input
@@ -60,15 +60,12 @@ const LocationDropdown = ({
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
                 onClick={(e) => e.stopPropagation()}
-                style={{
-                  fontSize: "20px",
-                  height: "38px",
-                }}
+                size="large"
               />
             </div>
 
             {/* Custom list with checkboxes */}
-            <div className="max-h-[200px] overflow-y-auto pr-1">
+            <div className="h-full">
               {filteredOptions.map((option) => (
                 <div
                   key={option.value}
@@ -94,6 +91,15 @@ const LocationDropdown = ({
                 </div>
               ))}
             </div>
+
+              <Button
+                type="primary"
+                size="small"
+                onClick={() => setOpen(false)}
+                className="w-full !bg-black !text-white !mt-auto"
+              >
+                Apply
+              </Button>
           </div>
         </Drawer>
 

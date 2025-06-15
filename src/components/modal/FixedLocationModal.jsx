@@ -1,9 +1,16 @@
-import { Modal, Button, Switch, Checkbox, TimePicker, Drawer } from "antd";
+import {
+  Button,
+  Checkbox,
+  Drawer,
+  Grid,
+  Modal,
+  Switch,
+  TimePicker,
+} from "antd";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { Clock, X } from "lucide-react";
-import { SearchIcon, AlertIcon } from "../../assets/icons/icons2";
-import { Grid } from "antd";
+import { AlertIcon, SearchIcon } from "../../assets/icons/icons2";
 
 dayjs.extend(customParseFormat);
 
@@ -18,7 +25,7 @@ const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
     console.log("checked =", e.target.checked);
   };
 
-  if (screens.xs || screens.sm && !screens.md && !screens.lg && !screens.xl) {
+  if (screens.xs || (screens.sm && !screens.md && !screens.lg && !screens.xl)) {
     return (
       <>
         <Drawer
@@ -27,14 +34,10 @@ const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
           height="90%"
           onClose={onClose}
           open={isOpen}
-          className="rounded-t-xl"
-        >
+          className="rounded-t-xl">
           <div className="flex justify-between items-center p-3 shadow">
             <p className="text-lg font-semibold">Fixed location setup</p>
-            <buttn
-              className="hover:scale-105"
-              onClick={onClose}
-            >
+            <buttn className="hover:scale-105" onClick={onClose}>
               <X />
             </buttn>
           </div>
@@ -121,189 +124,41 @@ const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
               </div>
 
               <div className="py-4">
-                {/* Sunday */}
-                <div className="flex flex-col md:flex-row justify-between md:items-center mb-4">
-                  <Checkbox
-                    onChange={onChange}
-                    className="custom-checkbox"
-                    style={{ fontSize: "16px" }}
-                  >
-                    Sunday
-                  </Checkbox>
-                  <div className="flex gap-4 md:gap-8 items-center mt-2">
-                    <TimePicker
-                      defaultValue={dayjs("11:00 AM", format)}
-                      format={format}
-                      use12Hours
-                      className="custom-time-picker"
-                      suffixIcon={<Clock size={22} />}
-                    />
-                    <p>-</p>
-                    <TimePicker
-                      defaultValue={dayjs("11:00 AM", format)}
-                      format={format}
-                      use12Hours
-                      className="custom-time-picker"
-                      suffixIcon={<Clock size={22} />}
-                    />
+                {[
+                  "Sunday",
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday",
+                  "Saturday",
+                ].map((day) => (
+                  <div className="flex flex-col md:flex-row justify-between md:items-center mb-4">
+                    <Checkbox
+                      onChange={onChange}
+                      className="custom-checkbox"
+                      style={{ fontSize: "16px" }}>
+                      {day}
+                    </Checkbox>
+                    <div className="flex gap-4 md:gap-8 items-center mt-2">
+                      <TimePicker
+                        defaultValue={dayjs("11:00 AM", format)}
+                        format={format}
+                        use12Hours
+                        className="custom-time-picker flex-1"
+                        suffixIcon={<Clock size={22} />}
+                      />
+                      <p>-</p>
+                      <TimePicker
+                        defaultValue={dayjs("11:00 AM", format)}
+                        format={format}
+                        use12Hours
+                        className="custom-time-picker flex-1"
+                        suffixIcon={<Clock size={22} />}
+                      />
+                    </div>
                   </div>
-                </div>
-
-                {/* Monday */}
-                <div className="flex flex-col md:flex-row justify-between md:items-center mb-4">
-                  <Checkbox
-                    onChange={onChange}
-                    className="custom-checkbox"
-                    style={{ fontSize: "16px" }}
-                  >
-                    Monday
-                  </Checkbox>
-                  <div className="flex gap-4 md:gap-8 items-center mt-2">
-                    <TimePicker
-                      defaultValue={dayjs("11:00 AM", format)}
-                      format={format}
-                      use12Hours
-                      className="custom-time-picker"
-                      suffixIcon={<Clock size={22} />}
-                    />
-                    <p>-</p>
-                    <TimePicker
-                      defaultValue={dayjs("11:00 AM", format)}
-                      format={format}
-                      use12Hours
-                      className="custom-time-picker"
-                      suffixIcon={<Clock size={22} />}
-                    />
-                  </div>
-                </div>
-
-                {/* Tuesday */}
-                <div className="flex flex-col md:flex-row justify-between md:items-center mb-4">
-                  <Checkbox
-                    onChange={onChange}
-                    className="custom-checkbox"
-                    style={{ fontSize: "16px" }}
-                  >
-                    Tuesday
-                  </Checkbox>
-                  <div className="flex gap-4 md:gap-8 items-center mt-2">
-                    <TimePicker
-                      defaultValue={dayjs("11:00 AM", format)}
-                      format={format}
-                      use12Hours
-                      className="custom-time-picker"
-                      suffixIcon={<Clock size={22} />}
-                    />
-                    <p>-</p>
-                    <TimePicker
-                      defaultValue={dayjs("11:00 AM", format)}
-                      format={format}
-                      use12Hours
-                      className="custom-time-picker"
-                      suffixIcon={<Clock size={22} />}
-                    />
-                  </div>
-                </div>
-
-                {/* Wednesday */}
-                <div className="flex flex-col md:flex-row justify-between md:items-center mb-4">
-                  <Checkbox
-                    onChange={onChange}
-                    className="custom-checkbox"
-                    style={{ fontSize: "16px" }}
-                  >
-                    Wednesday
-                  </Checkbox>
-                  <div className="flex gap-4 md:gap-8 items-center mt-2">
-                    <TimePicker
-                      defaultValue={dayjs("11:00 AM", format)}
-                      format={format}
-                      use12Hours
-                      className="custom-time-picker"
-                      suffixIcon={<Clock size={22} />}
-                    />
-                    <p>-</p>
-                    <TimePicker
-                      defaultValue={dayjs("11:00 AM", format)}
-                      format={format}
-                      use12Hours
-                      className="custom-time-picker"
-                      suffixIcon={<Clock size={22} />}
-                    />
-                  </div>
-                </div>
-
-                {/* Thursday */}
-                <div className="flex flex-col md:flex-row justify-between md:items-center mb-4">
-                  <Checkbox
-                    onChange={onChange}
-                    className="custom-checkbox"
-                    style={{ fontSize: "16px" }}
-                  >
-                    Thursday
-                  </Checkbox>
-                  <div className="flex gap-4 md:gap-8 items-center mt-2">
-                    <TimePicker
-                      defaultValue={dayjs("11:00 AM", format)}
-                      format={format}
-                      use12Hours
-                      className="custom-time-picker"
-                      suffixIcon={<Clock size={22} />}
-                    />
-                    <p>-</p>
-                    <TimePicker
-                      defaultValue={dayjs("11:00 AM", format)}
-                      format={format}
-                      use12Hours
-                      className="custom-time-picker"
-                      suffixIcon={<Clock size={22} />}
-                    />
-                  </div>
-                </div>
-
-                {/* Friday */}
-                <div className="flex flex-col md:flex-row justify-between md:items-center mb-4">
-                  <Checkbox
-                    onChange={onChange}
-                    className="custom-checkbox"
-                    style={{ fontSize: "16px" }}
-                  >
-                    Friday
-                  </Checkbox>
-                  <div className="flex gap-4 md:gap-8 items-center mt-2">
-                    <TimePicker
-                      defaultValue={dayjs("11:00 AM", format)}
-                      format={format}
-                      use12Hours
-                      className="custom-time-picker"
-                      suffixIcon={<Clock size={22} />}
-                    />
-                    <p className="text-[#5d5f67]">-</p>
-                    <TimePicker
-                      defaultValue={dayjs("11:00 AM", format)}
-                      format={format}
-                      use12Hours
-                      className="custom-time-picker"
-                      suffixIcon={<Clock size={22} />}
-                    />
-                  </div>
-                </div>
-
-                {/* Saturday */}
-                <div className="flex flex-col md:flex-row justify-between md:items-center">
-                  <Checkbox
-                    onChange={onChange}
-                    className="custom-checkbox"
-                    style={{ fontSize: "16px" }}
-                  >
-                    Saturday
-                  </Checkbox>
-                  <div>
-                    <button className="py-2.5 pr-4 rounded-lg text-center bg-[#F5F6F6] w-full md:min-w-[382px] text-[#82868E] hover:scale-95 transform transition-all ease-in-out duration-300 mt-2 md:mt-0">
-                      Closed
-                    </button>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
@@ -311,15 +166,13 @@ const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
             <Button
               type="default"
               onClick={onClose}
-              className="!text-[#242528] !border-none !bg-transparent hover:!bg-gray-100 !hidden md:!block"
-            >
+              className="!text-[#242528] !border-none !bg-transparent hover:!bg-gray-100 !hidden md:!block">
               Cancel
             </Button>
             <Button
               type="primary"
               onClick={onSave}
-              className="!px-3 !py-5 md:!py-2 !bg-[#242528] !text-white !rounded-md !ml-1 w-full md:w-fit"
-            >
+              className="!px-3 !py-5 md:!py-2 !bg-[#242528] !text-white !rounded-md !ml-1 w-full md:w-fit">
               Save
             </Button>
           </div>
@@ -347,10 +200,9 @@ const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
             Fixed location setup
           </h3>
         }
-        className="!w-[90%] !max-w-3xl"
-        centered
-      >
-        <div className="flex-1 overflow-y-auto mt-5">
+        className="!w-[90%] !max-w-3xl max-h-[80vh] !overflow-y-auto !rounded-xl"
+        centered>
+        <div className="flex-1 mt-5">
           {/* Location name */}
           <div className="mb-4">
             <label className="block mb-2 text-[#3A3B3F]">
@@ -435,8 +287,7 @@ const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
                 <Checkbox
                   onChange={onChange}
                   className="custom-checkbox"
-                  style={{ fontSize: "16px" }}
-                >
+                  style={{ fontSize: "16px" }}>
                   Sunday
                 </Checkbox>
                 <div className="flex gap-4 md:gap-8 items-center mt-2">
@@ -463,8 +314,7 @@ const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
                 <Checkbox
                   onChange={onChange}
                   className="custom-checkbox"
-                  style={{ fontSize: "16px" }}
-                >
+                  style={{ fontSize: "16px" }}>
                   Monday
                 </Checkbox>
                 <div className="flex gap-4 md:gap-8 items-center mt-2">
@@ -491,8 +341,7 @@ const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
                 <Checkbox
                   onChange={onChange}
                   className="custom-checkbox"
-                  style={{ fontSize: "16px" }}
-                >
+                  style={{ fontSize: "16px" }}>
                   Tuesday
                 </Checkbox>
                 <div className="flex gap-4 md:gap-8 items-center mt-2">
@@ -519,8 +368,7 @@ const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
                 <Checkbox
                   onChange={onChange}
                   className="custom-checkbox"
-                  style={{ fontSize: "16px" }}
-                >
+                  style={{ fontSize: "16px" }}>
                   Wednesday
                 </Checkbox>
                 <div className="flex gap-4 md:gap-8 items-center mt-2">
@@ -547,8 +395,7 @@ const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
                 <Checkbox
                   onChange={onChange}
                   className="custom-checkbox"
-                  style={{ fontSize: "16px" }}
-                >
+                  style={{ fontSize: "16px" }}>
                   Thursday
                 </Checkbox>
                 <div className="flex gap-4 md:gap-8 items-center mt-2">
@@ -575,8 +422,7 @@ const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
                 <Checkbox
                   onChange={onChange}
                   className="custom-checkbox"
-                  style={{ fontSize: "16px" }}
-                >
+                  style={{ fontSize: "16px" }}>
                   Friday
                 </Checkbox>
                 <div className="flex gap-4 md:gap-8 items-center mt-2">
@@ -603,8 +449,7 @@ const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
                 <Checkbox
                   onChange={onChange}
                   className="custom-checkbox"
-                  style={{ fontSize: "16px" }}
-                >
+                  style={{ fontSize: "16px" }}>
                   Saturday
                 </Checkbox>
                 <div>
@@ -620,15 +465,13 @@ const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
           <Button
             type="default"
             onClick={onClose}
-            className="!text-[#242528] !border-none !bg-transparent hover:!bg-gray-100 !hidden md:!block"
-          >
+            className="!text-[#242528] !border-none !bg-transparent hover:!bg-gray-100 !hidden md:!block">
             Cancel
           </Button>
           <Button
             type="primary"
             onClick={onSave}
-            className="!px-3 !py-5 md:!py-2 !bg-[#242528] !text-white !rounded-md !ml-1 w-full md:w-fit"
-          >
+            className="!px-3 !py-5 md:!py-2 !bg-[#242528] !text-white !rounded-md !ml-1 w-full md:w-fit">
             Save
           </Button>
         </div>

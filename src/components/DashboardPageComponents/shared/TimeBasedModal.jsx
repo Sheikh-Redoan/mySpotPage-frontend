@@ -1,12 +1,12 @@
 import { Checkbox, DatePicker, Modal, Select, TimePicker } from "antd";
-import { CalenderIcon, DownArrowIcon } from "../../../assets/icons/icons";
-const { RangePicker } = DatePicker;
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { Clock, PlusIcon } from "lucide-react";
+import { useState } from "react";
+import { CalenderIcon, DownArrowIcon } from "../../../assets/icons/icons";
 import { DeleteIcon } from "../../../assets/icons/icons2";
 import { imageProvider } from "../../../lib/imageProvider";
-import { useState } from "react";
+const { RangePicker } = DatePicker;
 dayjs.extend(customParseFormat);
 
 const format = "hh:mm A";
@@ -40,8 +40,7 @@ const TimeBasedModal = ({ isModalOpen, setIsModalOpen }) => {
       closable={false}
       footer={null}
       width={600}
-      height={500}
-    >
+      height={500}>
       <div className="text-[#3A3B3F] flex flex-col justify-between h-full">
         <div className="space-y-3 mt-4">
           <div className="grid grid-cols-2 gap-3">
@@ -73,6 +72,7 @@ const TimeBasedModal = ({ isModalOpen, setIsModalOpen }) => {
                   suffixIcon={<CalenderIcon />}
                   format="YYYY-MM-DD"
                   style={{ height: "40px", borderRadius: "8px" }}
+                  dropdownClassName="vertical-range-picker"
                 />
               )}
             </fieldset>
@@ -85,9 +85,8 @@ const TimeBasedModal = ({ isModalOpen, setIsModalOpen }) => {
                 id="gender"
                 onChange={handleGenderChange}
                 placeholder="Does not repeat"
-                className="border border-[#E0E0E0] rounded-lg w-full !h-10"
-                suffixIcon={<DownArrowIcon />}
-              >
+                className="border border-[#E0E0E0] rounded-lg w-full !h-10 !truncate"
+                suffixIcon={<DownArrowIcon />}>
                 {[
                   "Does not repeat",
                   "Every day",
@@ -114,29 +113,26 @@ const TimeBasedModal = ({ isModalOpen, setIsModalOpen }) => {
             )}
 
             <div
-              className={`flex justify-between ${
+              className={`flex justify-between gap-2 ${
                 isAllDay ? "pointer-events-none opacity-50" : ""
-              }`}
-            >
+              }`}>
               <div className="space-y-1">
                 <h4 className="text-[#ACAFB4]">Start time</h4>
                 <TimePicker
                   defaultValue={dayjs("11:00 AM", format)}
                   format={format}
                   use12Hours
-                  style={{ width: "220px" }}
-                  className="custom-time-picker"
+                  className="custom-time-picker max-w-xs"
                   suffixIcon={<Clock size={22} />}
                 />
               </div>
               <div className="space-y-1">
                 <h4 className="text-[#ACAFB4]">End time</h4>
                 <TimePicker
-                  style={{ width: "220px" }}
+                  className="custom-time-picker max-w-xs"
                   defaultValue={dayjs("11:00 AM", format)}
                   format={format}
                   use12Hours
-                  className="custom-time-picker"
                   suffixIcon={<Clock size={22} />}
                 />
               </div>
@@ -152,8 +148,7 @@ const TimeBasedModal = ({ isModalOpen, setIsModalOpen }) => {
             <button
               className={`flex items-center gap-2 p-2 text-[#744CDB] rounded-lg mt-2 hover:underline ${
                 isAllDay ? "pointer-events-none opacity-50" : ""
-              }`}
-            >
+              }`}>
               <PlusIcon size={20} className="text-[#744CDB]" />
               <p className="text-[15px] font-semibold">Add Time Range</p>
             </button>
@@ -186,15 +181,13 @@ const TimeBasedModal = ({ isModalOpen, setIsModalOpen }) => {
             <button
               onClick={handleCancel}
               type="button"
-              className="font-semibold cursor-pointer hover:scale-95 transform transition-all duration-300 ease-in-out"
-            >
+              className="font-semibold cursor-pointer hover:scale-95 transform transition-all duration-300 ease-in-out">
               Cancel
             </button>
             <button
               onClick={handleCancel}
               type="button"
-              className="text-[#82868E] font-semibold bg-[#E5E7E8] py-2.5 w-18 rounded-lg cursor-pointer hover:scale-95 transform transition-all duration-300 ease-in-out"
-            >
+              className="text-[#82868E] font-semibold bg-[#E5E7E8] py-2.5 w-18 rounded-lg cursor-pointer hover:scale-95 transform transition-all duration-300 ease-in-out">
               Publish
             </button>
           </div>

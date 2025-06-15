@@ -1,8 +1,4 @@
-import { Button, Input, Form } from "antd"; 
-import { Popover } from "antd";
-import { Radio } from "antd";
-import { Modal } from "antd";
-import { Switch } from "antd";
+import { Button, Form, Input, Modal, Popover, Radio, Switch } from "antd";
 import { CircleAlert } from "lucide-react";
 import { useState } from "react";
 
@@ -16,7 +12,7 @@ const SettingsBookingsRulesModal = ({
   settingsModalOpen,
   setSettingsModalOpen,
 }) => {
-  const [form] = Form.useForm(); 
+  const [form] = Form.useForm();
   const [isAutoConfirm, setIsAutoConfirm] = useState(false);
   const [manualLimit, setManualLimit] = useState("");
 
@@ -46,8 +42,7 @@ const SettingsBookingsRulesModal = ({
           <Button
             color="default"
             variant="text"
-            onClick={() => setSettingsModalOpen(false)}
-          >
+            onClick={() => setSettingsModalOpen(false)}>
             Cancel
           </Button>
           <Button color="default" variant="solid" onClick={handleModalSubmit}>
@@ -56,9 +51,16 @@ const SettingsBookingsRulesModal = ({
         </div>
       )}
       closable={true}
-      className="!rounded-2xl !max-w-xl z-50"
-      centered
-    >
+      className="!rounded-2xl !max-w-xl"
+      width={{
+        xs: "90%",
+        sm: "80%",
+        md: "70%",
+        lg: "60%",
+        xl: "50%",
+        xxl: "40%",
+      }}
+      centered>
       <div className="mb-8">
         <h3 className="text-[#242528] text-[18px] font-semibold">Settings</h3>
         <div className="h-[1px] bg-[#E5E7E8] my-4" />
@@ -69,8 +71,8 @@ const SettingsBookingsRulesModal = ({
               Advance Booking Limits
             </h6>
 
-            <div className="flex items-cente gap-4 w-full">
-              <div className="flex flex-col gap-1 w-1/2">
+            <div className="flex flex-col sm:flex-row items-cente gap-4 w-full">
+              <div className="flex flex-col gap-1 w-full sm:w-1/2">
                 <Form.Item
                   label={
                     <span className="text-[#3A3B3F] text-[14px] font-normal flex items-center gap-1">
@@ -79,8 +81,7 @@ const SettingsBookingsRulesModal = ({
                         placement="top"
                         content={
                           <p>Define how far in advance clients can book.</p>
-                        }
-                      >
+                        }>
                         <CircleAlert size={16} className="text-primary01" />
                       </Popover>
                       <sup className="text-red-600 text-sm">*</sup>{" "}
@@ -98,8 +99,7 @@ const SettingsBookingsRulesModal = ({
                       message: "Hours must be a positive number!",
                       transform: (value) => Number(value),
                     },
-                  ]}
-                >
+                  ]}>
                   <Input
                     type="number"
                     placeholder="Enter Hours"
@@ -107,7 +107,7 @@ const SettingsBookingsRulesModal = ({
                   />
                 </Form.Item>
               </div>
-              <div className="flex flex-col gap-1 w-1/2">
+              <div className="flex flex-col gap-1 w-full sm:w-1/2">
                 <Form.Item
                   label={
                     <span className="text-[#3A3B3F] text-[14px] font-normal flex items-center gap-1">
@@ -119,8 +119,7 @@ const SettingsBookingsRulesModal = ({
                             Specify how soon a client can book before the
                             appointment.
                           </p>
-                        }
-                      >
+                        }>
                         <CircleAlert size={16} className="text-primary01" />
                       </Popover>
                       <sup className="text-red-600 text-sm">*</sup>{" "}
@@ -138,8 +137,7 @@ const SettingsBookingsRulesModal = ({
                       message: "Days must be a positive number!",
                       transform: (value) => Number(value),
                     },
-                  ]}
-                >
+                  ]}>
                   <Input
                     type="number"
                     placeholder="Enter Days"

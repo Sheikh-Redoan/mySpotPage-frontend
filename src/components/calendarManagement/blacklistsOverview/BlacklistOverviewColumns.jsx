@@ -1,7 +1,5 @@
-import { Tooltip, Input, Checkbox } from "antd";
-import { MdDelete } from "react-icons/md";
-import { FaBan } from "react-icons/fa";
-import { FilterFilled, SearchOutlined } from "../../../assets/icons/icons";
+import { Tooltip } from "antd";
+import { Trash2 } from "lucide-react";
 
 export const getBlacklistOverviewColumns = () => [
   {
@@ -31,9 +29,14 @@ export const getBlacklistOverviewColumns = () => [
     title: "Note / Reasons",
     dataIndex: "note",
     key: "note",
-    render: (text) => <span className="text-[#262626] text-sm">
-      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iste est repellat officiis eveniet. Libero repellat, mollitia enim soluta, reiciendis optio provident dolore eligendi facere nulla in excepturi maiores totam magni maxime sm!
-    </span>,
+    render: (text) => (
+      <span className="text-[#262626] text-sm">
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iste est
+        repellat officiis eveniet. Libero repellat, mollitia enim soluta,
+        reiciendis optio provident dolore eligendi facere nulla in excepturi
+        maiores totam magni maxime sm!
+      </span>
+    ),
   },
   {
     title: "Ban Date",
@@ -56,9 +59,8 @@ export const getBlacklistOverviewColumns = () => [
           <button
             type="button"
             onClick={() => console.log("Remove From Blacklist", record.id)}
-            className="cursor-pointer text-red-500 hover:text-red-600 transition-colors duration-200"
-          >
-            <MdDelete className="size-4" />
+            className="cursor-pointer text-red-500 hover:text-red-600 transition-colors duration-200">
+            <Trash2 size={20} strokeWidth={1.5} />
           </button>
         </Tooltip>
       </div>

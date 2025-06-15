@@ -1,10 +1,17 @@
 // src/components/seller/StaffCard.jsx
-import React, { useState } from "react";
-import { HiOutlineDotsVertical } from "react-icons/hi";
-import { FaMoon, FaCircle } from "react-icons/fa";
+import { Ellipsis } from "lucide-react";
+import { useState } from "react";
+import { FaCircle, FaMoon } from "react-icons/fa";
 import StaffCardDropdown from "./StaffCardDropdown";
 
-const StaffCard = ({ staff, onSelectStaff, isActive, onEdit, onToggleStatus, onRemove }) => {
+const StaffCard = ({
+  staff,
+  onSelectStaff,
+  isActive,
+  onEdit,
+  onToggleStatus,
+  onRemove,
+}) => {
   const [showDropdown, setShowDropdown] = useState(false);
 
   const statusIcon = {
@@ -23,8 +30,7 @@ const StaffCard = ({ staff, onSelectStaff, isActive, onEdit, onToggleStatus, onR
       className={`relative w-80 p-4 bg-white rounded-lg border max-[700px]:w-full ${
         isActive ? "bg-violet-50 border-violet-500" : "border-gray-200"
       } flex flex-col justify-start items-start gap-4 cursor-pointer hover:bg-violet-50 hover:border-violet-500 transition-all duration-200`}
-      onClick={() => onSelectStaff(staff)}
-    >
+      onClick={() => onSelectStaff(staff)}>
       <div className="self-stretch flex justify-between items-start gap-2">
         <div className="flex-1 flex flex-col justify-center items-center gap-3 max-[700px]:flex-row max-[700px]:gap-2 max-[700px]:items-center max-[700px]:justify-start">
           <div className="w-14 h-14 relative rounded-full border border-white">
@@ -35,8 +41,7 @@ const StaffCard = ({ staff, onSelectStaff, isActive, onEdit, onToggleStatus, onR
             />
             <div
               className="absolute bottom-0 right-0 flex items-center justify-center w-4 h-4 bg-white rounded-full border border-white"
-              title={staff.status}
-            >
+              title={staff.status}>
               {statusIcon[staff.status]}
             </div>
           </div>
@@ -48,8 +53,7 @@ const StaffCard = ({ staff, onSelectStaff, isActive, onEdit, onToggleStatus, onR
               {staff.roles.map((role, index) => (
                 <span
                   key={index}
-                  className="px-2 py-1 bg-violet-50 rounded text-violet-500 text-xs font-medium font-['Golos_Text'] leading-none"
-                >
+                  className="px-2 py-1 bg-violet-50 rounded text-violet-500 text-xs font-medium font-['Golos_Text'] leading-none">
                   {role}
                 </span>
               ))}
@@ -61,9 +65,8 @@ const StaffCard = ({ staff, onSelectStaff, isActive, onEdit, onToggleStatus, onR
         </div>
         <button
           className="flex justify-center items-center w-6 h-6 text-gray-400 hover:text-gray-600 transition-colors duration-200"
-          onClick={handleMoreOptionsClick}
-        >
-          <HiOutlineDotsVertical className="w-full h-full" />
+          onClick={handleMoreOptionsClick}>
+          <Ellipsis size={20} strokeWidth={1.5} />
         </button>
       </div>
 

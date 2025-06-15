@@ -1,6 +1,5 @@
-import { Tooltip, Input, Checkbox } from "antd";
-import { MdDelete } from "react-icons/md";
-import { FaBan } from "react-icons/fa";
+import { Checkbox, Input, Tooltip } from "antd";
+import { CircleAlert, Trash2 } from "lucide-react";
 import { FilterFilled, SearchOutlined } from "../../../assets/icons/icons";
 
 export const getWaitlistOverviewColumns = (
@@ -84,8 +83,7 @@ export const getWaitlistOverviewColumns = (
                 <Checkbox
                   checked={selectedServiceFilters.includes(service)}
                   onChange={() => handleServiceFilterChange(service)}
-                  className="rounded border-[#E5E7EB] checked:bg-[#111827] checked:border-[#111827] checked:hover:bg-[#111827] hover:border-[#111827]"
-                >
+                  className="rounded border-[#E5E7EB] checked:bg-[#111827] checked:border-[#111827] checked:hover:bg-[#111827] hover:border-[#111827]">
                   <span className="text-sm text-[#111827]">{service}</span>
                 </Checkbox>
               </div>
@@ -95,14 +93,12 @@ export const getWaitlistOverviewColumns = (
         <div className="flex gap-3">
           <button
             onClick={() => handleResetServiceFilter(clearFilters)}
-            className="flex-1 px-4 py-2 text-sm font-medium text-[#111827] bg-white border border-[#E5E7EB] rounded-lg hover:bg-gray-50 transition-colors"
-          >
+            className="flex-1 px-4 py-2 text-sm font-medium text-[#111827] bg-white border border-[#E5E7EB] rounded-lg hover:bg-gray-50 transition-colors">
             Reset
           </button>
           <button
             onClick={() => handleApplyServiceFilter(confirm)}
-            className="flex-1 px-4 py-2 text-sm font-medium text-white bg-[#111827] rounded-lg hover:bg-black transition-colors"
-          >
+            className="flex-1 px-4 py-2 text-sm font-medium text-white bg-[#111827] rounded-lg hover:bg-black transition-colors">
             Apply
           </button>
         </div>
@@ -158,24 +154,22 @@ export const getWaitlistOverviewColumns = (
     title: "Action",
     key: "action",
     render: (_, record) => (
-      <div className="flex gap-2">
-        <Tooltip placement="top" color="#52c41a" title="Remove from blacklist">
-          <button
-            type="button"
-            onClick={() => console.log("Remove From Blacklist", record.id)}
-            className="cursor-pointer text-red-500 hover:text-red-600 transition-colors duration-200"
-          >
-            <MdDelete className="size-4" />
-          </button>
-        </Tooltip>
-
-        <Tooltip placement="top" color="#f5222d" title="Add to blacklist">
+      <div className="flex gap-4">
+        <Tooltip placement="top" title="Add to blacklist">
           <button
             type="button"
             onClick={() => console.log("Add To Blacklist", record.id)}
-            className="cursor-pointer text-[#f5222d] hover:text-[#ff4d4f]"
-          >
-            <FaBan className="size-4" />
+            className="cursor-pointer text-[#f5222d] hover:text-[#ff4d4f]">
+            <CircleAlert size={16} strokeWidth={1.5} />
+          </button>
+        </Tooltip>
+
+        <Tooltip placement="top" title="Remove from blacklist">
+          <button
+            type="button"
+            onClick={() => console.log("Remove From Blacklist", record.id)}
+            className="cursor-pointer text-red-500 hover:text-red-600 transition-colors duration-200">
+            <Trash2 size={16} strokeWidth={1.5} />
           </button>
         </Tooltip>
       </div>

@@ -32,8 +32,7 @@ const LocationDropdown = ({
         <Button
           type="default"
           className="w-full !flex !justify-between"
-          onClick={() => setOpen(true)}
-        >
+          onClick={() => setOpen(true)}>
           select <ChevronDown />
         </Button>
         <Drawer
@@ -49,8 +48,7 @@ const LocationDropdown = ({
             <Button type="text" onClick={() => setOpen(false)}>
               <X size={22} className="" />
             </Button>
-          }
-        >
+          }>
           <div className="px-4 h-full">
             {/* Search input */}
             <div className="border border-[#E7E7E7] rounded-lg my-2">
@@ -79,8 +77,7 @@ const LocationDropdown = ({
                       ? selectedValues.filter((v) => v !== option.value)
                       : [...selectedValues, option.value];
                     handleChange(updatedValues);
-                  }}
-                >
+                  }}>
                   <Checkbox
                     style={{
                       transform: "scale(1.2)",
@@ -92,14 +89,15 @@ const LocationDropdown = ({
               ))}
             </div>
 
+            <div className="fixed bottom-4 inset-x-0 px-5">
               <Button
                 type="primary"
-                size="small"
+                size="large"
                 onClick={() => setOpen(false)}
-                className="w-full !bg-black !text-white !mt-auto"
-              >
+                className="w-full !bg-black !text-white">
                 Apply
               </Button>
+            </div>
           </div>
         </Drawer>
 
@@ -156,8 +154,7 @@ const LocationDropdown = ({
                         ? selectedValues.filter((v) => v !== option.value)
                         : [...selectedValues, option.value];
                       handleChange(updatedValues);
-                    }}
-                  >
+                    }}>
                     <Checkbox
                       style={{
                         transform: "scale(1.2)",
@@ -183,8 +180,7 @@ const LocationDropdown = ({
             return (
               <div
                 key={val}
-                className="flex items-center  text-[#866BE7] rounded-full px-3 py-1 text-sm bg-[#ECEBFC]"
-              >
+                className="flex items-center  text-[#866BE7] rounded-full px-3 py-1 text-sm bg-[#ECEBFC]">
                 <span>{label}</span>
                 <button
                   onClick={() => {
@@ -193,8 +189,7 @@ const LocationDropdown = ({
                     onChange?.(newValues);
                   }}
                   className="ml-2 text-gray-500 hover:text-red-600 font-bold focus:outline-none"
-                  type="button"
-                >
+                  type="button">
                   <X
                     size={16}
                     className="text-[#C3BCF6] hover:scale-110 hover:font-medium"

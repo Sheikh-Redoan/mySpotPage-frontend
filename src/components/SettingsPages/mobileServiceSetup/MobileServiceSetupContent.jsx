@@ -1,16 +1,16 @@
 import {
-    Checkbox,
-    ConfigProvider,
-    Switch,
-    TimePicker
+  Checkbox,
+  ConfigProvider,
+  Switch,
+  TimePicker
 } from "antd";
 import dayjs from "dayjs";
 import {
-    ArrowUpRight,
-    ChevronDown,
-    ChevronUp,
-    Clock,
-    X
+  ArrowUpRight,
+  ChevronDown,
+  ChevronUp,
+  Clock,
+  X
 } from "lucide-react";
 import { useState } from "react";
 import { AlertIcon } from "../../../assets/icons/icons2";
@@ -23,7 +23,7 @@ import LocationDropdown from "../../ui/LocationDropdown";
 
 const format = "hh:mm A";
 
-export const MobileServiceSetupDrawerContent = ({
+export const MobileServiceSetupContent = ({
   setMobileModalOpen,
   isOpen,
   onClose,
@@ -32,7 +32,6 @@ export const MobileServiceSetupDrawerContent = ({
   setOpenCitySelectionModal,
   cityOptions
 }) => {
-    console.log("selectedCities", selectedCities);
   const [paymentOpen, setPaymentOpen] = useState(true);
   const [serviceModalOpen, setServiceModalOpen] = useState(true);
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
@@ -187,7 +186,7 @@ export const MobileServiceSetupDrawerContent = ({
                       >
                         <LocationDropdown
                           options={cityOptions}
-                          placeholder="Search"
+                          placeholder="Select"
                           onChange={handleChange}
                         />
                       </ConfigProvider>

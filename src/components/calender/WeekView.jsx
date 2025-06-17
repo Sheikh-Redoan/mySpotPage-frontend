@@ -135,10 +135,10 @@ export default function WeekView({
                   })}>
                   {dailyEvents.map((event) => (
                     <React.Fragment key={event.id}>
-                      <div className="lg:hidden">
+                      <div className="xl:hidden">
                         <Event event={event} isMobile={true} />
                       </div>
-                      <div className="max-lg:hidden">
+                      <div className="max-xl:hidden">
                         <Event event={event} isMobile={false} />
                       </div>
                     </React.Fragment>

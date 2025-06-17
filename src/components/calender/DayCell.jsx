@@ -118,14 +118,14 @@ export default function DayCell({
           })}>
           <span
             className={cn({
-              "max-md:bg-primary01 w-8 h-8 max-md:text-white max-md:grid place-items-center rounded-full":
+              "max-md:bg-primary01 w-8 h-8 max-md:text-white max-md:grid place-items-center rounded-full text-sm -mt-1":
                 !selectTimeFromProvider && isToday,
             })}>
-            {day.format("D")}
+            {day.format("DD")}
           </span>
 
           {!selectTimeFromProvider && isToday && (
-            <span className="text-xs text-primary01 border border-primary01 px-3 py-1 rounded-full font-medium ml-2 max-md:hidden">
+            <span className="text-sm text-primary01 border border-gray-300 px-3 py-1 rounded-full ml-2 max-md:hidden">
               Today
             </span>
           )}
@@ -137,38 +137,21 @@ export default function DayCell({
           </span>
         )}
 
-        <div className="max-lg:hidden">
-          {!selectTimeFromProvider && events.length > 0 && (
-            <div className="flex flex-col items-start">
-              {events.slice(0, maxEventsPerMonthCell).map((event) => (
-                <Event key={event.id} event={event} isMobile={false} />
-              ))}
-              {events.length > maxEventsPerMonthCell && (
-                <MoreEvents
-                  events={events}
-                  maxEventsPerMonthCell={maxEventsPerMonthCell}
-                />
-              )}
-            </div>
-          )}
-        </div>
+        {/* <div className="max-lg:hidden"> */}
 
-        {/* Mobile */}
-        <div className="lg:hidden">
-          {!selectTimeFromProvider && events.length > 0 && (
-            <div className="flex flex-col items-start">
-              {events.slice(0, maxEventsPerMonthCell).map((event) => (
-                <Event key={event.id} event={event} isMobile={true} />
-              ))}
-              {events.length > maxEventsPerMonthCell && (
-                <MoreEvents
-                  events={events}
-                  maxEventsPerMonthCell={maxEventsPerMonthCell}
-                />
-              )}
-            </div>
-          )}
-        </div>
+        {!selectTimeFromProvider && events.length > 0 && (
+          <div className="flex flex-col items-start">
+            {events.slice(0, maxEventsPerMonthCell).map((event) => (
+              <Event key={event.id} event={event} />
+            ))}
+            {events.length > maxEventsPerMonthCell && (
+              <MoreEvents
+                events={events}
+                maxEventsPerMonthCell={maxEventsPerMonthCell}
+              />
+            )}
+          </div>
+        )}
       </div>
     );
   };
@@ -197,7 +180,10 @@ export default function DayCell({
             ),
           }
         )}>
-        <div className={cn("relative z-10 h-full", dayView ? "p-4" : "")}>
+        <div
+          className={cn("relative z-10 h-full", {
+            "p-4": dayView,
+          })}>
           {renderContent()}
         </div>
       </Element>

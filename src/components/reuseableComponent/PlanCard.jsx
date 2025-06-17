@@ -1,7 +1,7 @@
-import { Link } from "react-router";
-import { Progress, Flex } from "antd";
-import { ArrowUpRight } from "lucide-react";
+import { Button, Flex, Progress } from "antd";
 import dayjs from "dayjs";
+import { ArrowUpRight } from "lucide-react";
+import { Link } from "react-router";
 
 const PlanCard = ({
   planName,
@@ -22,7 +22,7 @@ const PlanCard = ({
     : (currentBookings / bookingLimit) * 100;
 
   return (
-    <div className="min-w-[460px] min-h-[210px] flex-[4] bg-white p-5 rounded-lg hover:scale-105 transform transition-all duration-300 ease-in-ou">
+    <div className="md:min-w-[460px] min-h-[210px] flex-[4] bg-white p-2 md:p-5 rounded-lg hover:scale-105 transform transition-all duration-300 ease-in-ou">
       <h3 className="text-[#262626] font-semibold text-lg my-2">Active Plan</h3>
 
       <div className="flex justify-between items-center my-4">
@@ -63,15 +63,39 @@ const PlanCard = ({
           showCancel ? "justify-between" : "justify-end"
         }`}
       >
-        <Link to={"/cancel-subscription"}>
+        <Link to={"/cancel-subscription"} className="max-md:hidden">
           {showCancel && (
             <p className="text-red-500 underline cursor-pointer">
               Cancel Subscription
-            </p> 
+            </p>
+          )}
+        </Link>
+        
+        {/* Mobile View */}
+        <Link to={"/cancel-subscription"} state={{ isMobile: true }} className="md:hidden">
+          {showCancel && (
+            <p className="text-red-500 underline cursor-pointer">
+              Cancel Subscription
+            </p>
           )}
         </Link>
 
-        <Link to={"/upgrade-plan"} state={{ currentPlan: planName }}>
+        <Link
+          to={"/upgrade-plan"}
+          state={{ currentPlan: planName }}
+          className="max-md:hidden"
+        >
+          <p className="text-[#744CDB] underline flex items-center gap-2">
+            Upgrade Plan <ArrowUpRight size={20} />
+          </p>
+        </Link>
+
+        {/* Mobile View */}
+        <Link
+          to={"/upgrade-plan"}
+          state={{ currentPlan: planName, isMobile: true }}
+          className="md:hidden"
+        >
           <p className="text-[#744CDB] underline flex items-center gap-2">
             Upgrade Plan <ArrowUpRight size={20} />
           </p>

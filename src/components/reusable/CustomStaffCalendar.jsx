@@ -354,7 +354,7 @@ export default function CustomStaffCalendar({
               <div className="flex items-center gap-8">
                 {showStaffFilter && (
                   <Dropdown overlay={staffFilterOverlay} trigger={['click']} placement="bottomRight">
-                    <Button className="flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-200 bg-white text-zinc-700 text-sm font-normal focus:!border-[#866BE7] focus:!shadow-none hover:!border-[#866BE7]">
+                    <Button className="flex items-center gap-2 px-3 py-2 rounded-lg border  border-gray-200 bg-white text-zinc-700 text-sm font-normal focus:!border-[#866BE7] focus:!shadow-none hover:!border-[#866BE7]">
                       All staffs <ChevronDown size={16} />
                     </Button>
                   </Dropdown>
@@ -417,7 +417,7 @@ export default function CustomStaffCalendar({
   };
 
   return (
-    <section className="bg-[#F9FAFC] py-4 px-2 md:px-0">
+    <section className="bg-[#F9FAFC] px-2 md:px-0">
       <div className="bg-white shadow-md rounded-lg max-sm:py-4 max-sm:px-2 lg:p-6">
         {renderCurrentView()}
       </div>

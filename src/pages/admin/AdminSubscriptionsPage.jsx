@@ -8,7 +8,7 @@ import { imageProvider } from "../../lib/imageProvider";
 import { getBreadcrumbs } from "../../lib/staticData";
 import { cn } from "../../lib/utils";
 
-export default function Subscriptions() {
+export default function AdminSubscriptionsPage() {
   const { name } = useParams();
 
   return (

@@ -1,198 +1,198 @@
-import { Button, Checkbox, Descriptions, Dropdown, List, Space } from "antd";
+import { Button, List, Modal, Popover } from "antd";
 import dayjs from "dayjs";
 import "dayjs/locale/en"; // Ensure locale is loaded for dayjs formatting
-import { ArrowUpRight, Download, X } from "lucide-react";
+import { ArrowUpRight, ChevronDown, CircleCheck, X } from "lucide-react";
+import { useState } from "react";
 import { Link } from "react-router";
+import { getPendingBookingsById } from "../../dummy-data/bookingsData";
+import { cn } from "../../lib/utils";
+import BookingDetailsContent from "../calendarManagement/pendingBookings/BookingDetailsContent";
+import EventActions from "./EventActions";
 
 export default function ClientDetails({ event, hide }) {
-  // Dropdown menu for the Status button in the Action section
-  const statusMenu = (
-    <div className="bg-white rounded-xl shadow-lg py-1 border border-gray-200">
-      <ul className="list-none p-0 m-0">
-        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm text-gray-700">
-          Confirmed
-        </li>
-        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm text-gray-700">
-          Pending
-        </li>
-        <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm text-gray-700">
-          Cancelled
-        </li>
-      </ul>
-    </div>
+  const [open, setOpen] = useState(false);
+  const [isBookingDetailsModal, setIsBookingDetailsModal] = useState(false);
+  const booking = getPendingBookingsById("1");
+  const [selectedDate, setSelectedDate] = useState(
+    booking
+      ? new Date(booking.scheduledDate.split("/").reverse().join("-"))
+      : new Date()
   );
 
-  return (
-    <div
-      className="max-w-md" // Added custom class for
-    >
-      <div className="flex items-center justify-between border-b border-gray-200 pb-4 mb-4">
-        <h3 className="font-medium flex items-center gap-2">
-          Booking detail
-          <Link to={`/bookings/${event.id}`}>
-            <ArrowUpRight size={20} className="text-gray-400" />
-          </Link>
-        </h3>
-        <Button type="text" onClick={hide}>
-          <X size={18} className="text-gray-500" />
-        </Button>
-      </div>
+  const handleOpenChange = (newOpen) => {
+    setOpen(newOpen);
+  };
 
-      {/* Descriptions for Client Details */}
-      <Descriptions
-        column={1}
-        className="ant-descriptions-custom pb-4" // Custom class for styling Descriptions component
-        colon={false} // Remove colons after labels
-        labelStyle={{
-          color: "#8A8A8A", // Custom lighter grey from image
-          fontWeight: "normal",
-          width: "120px", // Fixed width for labels for alignment
-          paddingRight: "0", // No padding here, use gap property for spacing
-          fontSize: "0.875rem", // text-sm
-        }}
-        contentStyle={{
-          fontWeight: "500", // font-medium
-          color: "#333333", // Darker text for content
-          fontSize: "0.875rem", // text-sm
-          paddingLeft: "0", // Ensure no extra padding pushing content
-        }}>
-        {/* Client Name Row */}
-        <Descriptions.Item
-          label="Client name"
-          className="custom-dotted-border-b">
-          <div className="flex justify-between items-center w-full">
-            <span>{appointmentData.clientName}</span>
-            {/* Button type link for Alexander */}
+  return (
+    <>
+      <div className="max-w-sm rounded-t-xl">
+        <div className="flex items-center justify-between border-b border-gray-200 pb-4 mb-4">
+          <h3 className="font-medium flex items-center">
+            Booking detail
             <Button
               type="link"
-              className="text-[#0066FF] text-sm p-0 h-auto font-medium focus:outline-none focus:ring-0">
-              Alexander
+              className="!p-2"
+              onClick={() => setIsBookingDetailsModal(true)}>
+              <ArrowUpRight size={20} className="text-gray-400" />
             </Button>
-          </div>
-        </Descriptions.Item>
-
-        {/* Time Row */}
-        <Descriptions.Item label="Time" className="custom-dotted-border-b">
-          <div className="flex justify-between items-center w-full">
-            <span>{appointmentData.time.format("DD MMMYYYY, HH:mm")}</span>{" "}
-            {/* Corrected date format */}
-          </div>
-        </Descriptions.Item>
-
-        {/* Staff Row */}
-        <Descriptions.Item label="Staff" className="custom-dotted-border-b">
-          <div className="flex justify-between items-center w-full">
-            <span>{appointmentData.staff}</span>
-          </div>
-        </Descriptions.Item>
-
-        {/* Status Row */}
-        <Descriptions.Item
-          label="Status"
-          className="custom-dotted-border-b !mb-0">
-          {" "}
-          {/* Adjusted margin-bottom for last item */}
-          <div className="flex justify-between items-center w-full">
-            <span className="text-[#0066FF] font-medium">
-              {appointmentData.status}
-            </span>{" "}
-            {/* Blue color for 'Confirmed' status */}
-          </div>
-        </Descriptions.Item>
-      </Descriptions>
-
-      {/* Service Lists Section */}
-      <div className="pt-4 border-b border-dotted border-gray-300 pb-4 mt-4">
-        {" "}
-        {/* Adjusted top margin and added dotted border */}
-        <div className="flex justify-between items-center mb-2">
-          <h3 className="text-sm font-normal text-gray-700">Service lists</h3>
-          <Button
-            type="link"
-            className="text-[#0066FF] text-sm p-0 h-auto font-medium focus:outline-none focus:ring-0">
-            View detail
+          </h3>
+          <Button type="text" onClick={hide}>
+            <X size={18} className="text-gray-500" />
           </Button>
         </div>
-        <List
-          dataSource={appointmentData.serviceLists}
-          renderItem={(item) => (
-            <List.Item className="!py-1 !px-0 !border-b-0">
-              {/* Remove Ant Design's default padding/border */}
-              <div className="flex items-start text-sm w-full custom-list-item-content">
-                {/* Custom Checkbox for rounded appearance and correct alignment */}
-                <Checkbox
-                  checked={item.completed}
-                  className="ant-checkbox-rounded mr-2 mt-0.5"
-                />
-                <div className="flex flex-col flex-grow">
-                  {/* Use flex-grow to take available space */}
-                  <span className="font-medium text-gray-800">{item.name}</span>
-                  {item.description && (
-                    <span className="text-xs text-gray-500">
-                      {item.description}
-                    </span>
-                  )}
-                </div>
-              </div>
-            </List.Item>
-          )}
-          className="custom-list-no-padding" // Custom class to remove padding
-        />
-      </div>
 
-      {/* Note Section */}
-      <div className="mt-4 pb-4 border-b border-dotted border-gray-300">
-        <h3 className="text-sm font-normal text-gray-700 mb-2">Note:</h3>
-        <p className="text-sm text-gray-800 leading-relaxed">
-          {appointmentData.note}
-        </p>
-      </div>
+        {/* Client Information Section */}
+        <div>
+          <ul className="list-none flex flex-col gap-2">
+            <li className="text-sm text-[#797979] mb-2 flex items-center justify-between">
+              <span>Client name</span>
+              <Link to={`/clients/${appointmentData.clientId}`}>
+                {appointmentData.clientName}
+              </Link>
+            </li>
+            <li className="text-sm text-[#797979] mb-2 flex items-center justify-between">
+              <span>Time</span>
+              <span className="text-[#262626]">
+                {appointmentData.time.format("DD MMM YYYY, HH:mm")}
+              </span>
+            </li>
+            <li className="text-sm text-[#797979] mb-2 flex items-center justify-between">
+              <span>Staff</span>
+              <span className="text-[#262626]">{appointmentData.staff}</span>
+            </li>
+            <li className="text-sm text-[#797979] mb-2 flex items-center justify-between">
+              <span>Status</span>
+              <span
+                className={cn("rounded-full block px-2 py-0.5", {
+                  "bg-[#3E70DD]/10 text-[#3E70DD]":
+                    appointmentData.status === "Confirmed",
+                  "bg-[#3BA55C]/10 text-[#3BA55C]":
+                    appointmentData.status === "Completed",
+                  "bg-[#FC8B23]/10 text-[#FC8B23]":
+                    appointmentData.status === "Pending",
+                  "bg-[#ED4245] text-[#ED4245]":
+                    appointmentData.status === "Cancelled",
+                  "bg-[#82868E]/10 text-[#82868E]":
+                    appointmentData.status === "Not-show",
+                })}>
+                {appointmentData.status}
+              </span>
+            </li>
+          </ul>
+        </div>
 
-      {/* Specific Note Section */}
-      <div className="mt-4 pb-4">
-        {" "}
-        {/* No bottom border for the last section */}
-        <h3 className="text-sm font-normal text-gray-700 mb-2">
-          Specific note:
-        </h3>
-        <p className="text-sm text-gray-800 leading-relaxed">
-          {appointmentData.specificNote}
-        </p>
-      </div>
-
-      {/* Action Buttons */}
-      <div className="flex justify-between items-center pt-4 border-t border-gray-200 mt-4">
-        <h3 className="text-sm font-normal text-gray-700">Action</h3>
-        <Space size={8}>
-          {" "}
-          {/* Reduced space between buttons for closer match */}
-          <Button
-            className="rounded-md border border-[#F24458] text-[#F24458] hover:text-[#D1394C] hover:border-[#D1394C] px-4 py-2 flex items-center justify-center h-auto text-sm"
-            style={{
-              backgroundColor: "rgba(255, 235, 238, 0.7)", // Light red background from image
-              padding: "8px 16px", // Explicit padding for consistent size
-            }}>
-            Add to blacklist
-          </Button>
-          <Dropdown overlay={statusMenu} trigger={["click"]}>
-            <Button
-              className="rounded-md border border-gray-300 text-gray-800 hover:border-gray-400 hover:text-gray-900 px-4 py-2 flex items-center justify-center h-auto text-sm"
-              style={{
-                backgroundColor: "#F7F7F7", // Light grey background from image
-                padding: "8px 16px", // Explicit padding for consistent size
-              }}>
-              <Space size={4}>
-                {" "}
-                {/* Adjusted space within the button */}
-                Status
-                <Download className="text-xs" />{" "}
-                {/* DownOutlined from Ant Design is fine here */}
-              </Space>
+        {/* Service Lists Section */}
+        <div className="pt-4 pb-4 mt-4">
+          {/* Adjusted top margin and added dotted border */}
+          <div className="flex justify-between items-center mb-2">
+            <h3 className="text-sm font-normal text-[#797979]">
+              Service lists
+            </h3>
+            <Button type="link" className="!text-primary01 text-sm">
+              View detail
             </Button>
-          </Dropdown>
-        </Space>
+          </div>
+          <List
+            dataSource={appointmentData.serviceLists}
+            renderItem={(item) => (
+              <List.Item className="!py-1 !px-0 !border-b-0">
+                {/* Remove Ant Design's default padding/border */}
+                <div className="flex items-start text-sm w-full gap-2">
+                  {/* Custom Checkbox for rounded appearance and correct alignment */}
+                  <CircleCheck size={16} strokeWidth={1} />
+                  <div className="flex flex-col flex-grow">
+                    {/* Use flex-grow to take available space */}
+                    <span className="font-medium text-[#262626]">
+                      {item.name}
+                    </span>
+                    {item.description && (
+                      <span className="text-sm text-[#6B7280] mt-2">
+                        {item.description}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </List.Item>
+            )}
+            className="space-y-3" // Custom class to remove padding
+          />
+        </div>
+
+        {/* Note Section */}
+        <div className="mt-4 p-2.5 bg-[#FAFAFA] flex gap-2 rounded-lg">
+          <p className="text-sm text-[#4B5563] leading-relaxed">
+            <span className="text-[#262626] font-medium">Note:</span>{" "}
+            {appointmentData.note}
+          </p>
+        </div>
+
+        {/* Specific Note Section */}
+        <div className="mt-4 p-2.5 bg-[#FAFAFA] flex gap-2 rounded-lg">
+          <p className="text-sm text-[#4B5563] leading-relaxed">
+            <span className="text-[#262626] font-medium">Specific note:</span>{" "}
+            {appointmentData.specificNote}
+          </p>
+        </div>
+
+        {/* Action Buttons */}
+        <div className="flex gap-5 items-center pt-4 border-t border-gray-200 mt-4 w-full">
+          <h3 className="text-sm font-normal text-[#4B5563]">Action</h3>
+          <div className="w-full flex gap-3">
+            <Button
+              type="default"
+              size="large"
+              className="!text-[#F24458] !border-[#F24458] flex-1">
+              Add to blacklist
+            </Button>
+
+            <Popover
+              placement="rightBottom"
+              content={<EventActions block={false} />}
+              arrow={false}
+              trigger="click"
+              open={open}
+              onOpenChange={handleOpenChange}>
+              <Button
+                type="primary"
+                size="large"
+                shape="default"
+                onClick={() => setOpen(!open)}
+                className="!flex !items-center !justify-between !w-full !bg-[#242528] !text-white !border-none">
+                <span>Status</span>
+                <ChevronDown
+                  size={20}
+                  strokeWidth={1.5}
+                  className={cn("ml-2 transition-transform", {
+                    "rotate-180": open,
+                  })}
+                />
+              </Button>
+            </Popover>
+          </div>
+        </div>
       </div>
-    </div>
+
+      {/* Bookings Details Modal */}
+      <Modal
+        open={isBookingDetailsModal}
+        onCancel={() => setIsBookingDetailsModal(false)}
+        footer={null}
+        closable={true}
+        closeIcon={<X className="w-6 h-6" />}
+        title={
+          <h3 className="text-[#242528] text-[18px] font-semibold">
+            Booking Details
+          </h3>
+        }
+        className="!w-full !max-w-[1200px]"
+        centered>
+        <BookingDetailsContent
+          booking={booking}
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+        />
+      </Modal>
+    </>
   );
 }
 

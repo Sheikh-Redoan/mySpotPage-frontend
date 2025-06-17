@@ -1,4 +1,4 @@
-import { DatePicker } from "antd";
+import { Button, DatePicker } from "antd";
 import { imageProvider } from "../../lib/imageProvider";
 import { Plus } from "lucide-react";
 import dayjs from "dayjs";
@@ -6,130 +6,13 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import { Table } from "antd";
 import { useState } from "react";
 import PlanCard from "../reuseableComponent/PlanCard";
-import { Link} from "react-router";
+import { Link } from "react-router";
+import BillingHistoryTableByProvider from "./BillingHistoryTableByProvider";
 
 dayjs.extend(customParseFormat);
 const { RangePicker } = DatePicker;
 
 const dateFormat = "YYYY/MM/DD";
-
-// table data
-const columns = [
-  {
-    title: "Billing Time",
-    dataIndex: "time",
-    key: "time",
-    sorter: (a, b) => {
-      const toMinutes = (t) => {
-        const [h, m] = t.split(":").map(Number);
-        return h * 60 + m;
-      };
-      return toMinutes(a.time) - toMinutes(b.time);
-    },
-    defaultSortOrder: "descend",
-  },
-  {
-    title: "Plan Name / Duration",
-    dataIndex: "plan",
-    key: "plan",
-  },
-  {
-    title: "Payment Method",
-    dataIndex: "payment",
-    key: "payment",
-  },
-  {
-    title: "Amount",
-    dataIndex: "amount",
-    key: "amount",
-    sorter: (a, b) => parseFloat(a.amount) - parseFloat(b.amount),
-  },
-  {
-    title: "Plan Status",
-    dataIndex: "status",
-    key: "status",
-  },
-  {
-    title: <span className="font-semibold text-white">Action</span>,
-    dataIndex: "action",
-    key: "action",
-  },
-];
-
-const data = [
-  {
-    key: "1",
-    time: "05:32",
-    plan: "Bloom Plan",
-    payment: "Visa ............. 2349",
-    amount: 120,
-    status: "Active",
-    action: "Download Invoice",
-  },
-  {
-    key: "2",
-    time: "08:32",
-    plan: "Bloom Plan",
-    payment: "Visa ............. 2349",
-    amount: 170,
-    status: "Expired",
-    action: "Download Invoice",
-  },
-  {
-    key: "3",
-    time: "08:35",
-    plan: "Bloom Plan",
-    payment: "Visa ............. 2349",
-    amount: 190,
-    status: "Active",
-    action: "Download Invoice",
-  },
-  {
-    key: "4",
-    time: "10:32",
-    plan: "Bloom Plan",
-    payment: "Visa ............. 2349",
-    amount: 110,
-    status: "Canceled",
-    action: "Download Invoice",
-  },
-  {
-    key: "5",
-    time: "09:32",
-    plan: "Bloom Plan",
-    payment: "Visa ............. 2349",
-    amount: 180,
-    status: "Active",
-    action: "Download Invoice",
-  },
-  {
-    key: "6",
-    time: "03:32",
-    plan: "Bloom Plan",
-    payment: "Visa ............. 2349",
-    amount: 140,
-    status: "Canceled",
-    action: "Download Invoice",
-  },
-  {
-    key: "7",
-    time: "02:32",
-    plan: "Bloom Plan",
-    payment: "Visa ............. 2349",
-    amount: 120,
-    status: "Canceled",
-    action: "Download Invoice",
-  },
-  {
-    key: "8",
-    time: "06:32",
-    plan: "Bloom Plan",
-    payment: "Visa ............. 2349",
-    amount: 150,
-    status: "Active",
-    action: "Download Invoice",
-  },
-];
 
 const Subscription = () => {
   const [selectedDates, setSelectedDates] = useState(null);
@@ -148,7 +31,7 @@ const Subscription = () => {
   return (
     <div className="min-h-full">
       {currentPlan === "Spark" && currentBookings >= 8 && (
-        <div className="flex gap-4 bg-[#FFE6E6] rounded-md py-2 pl-4 my-4">
+        <div className="flex gap-4 bg-[#FFE6E6] rounded-md py-2 pl-2 md:pl-4 my-4">
           <img
             className="object-contain"
             src={imageProvider.subscriptionAlert}
@@ -161,7 +44,7 @@ const Subscription = () => {
         </div>
       )}
 
-      <div className="flex gap-6 w-full my-2">
+      <div className="flex flex-col md:flex-row gap-6 w-full my-2">
         {/* card */}
         {currentPlan === "Spark" && (
           <PlanCard
@@ -198,10 +81,10 @@ const Subscription = () => {
           />
         )}
 
-        <div className="min-w-[660px] h-[260px] flex-[6] bg-[#FFFFFF] p-5 rounded-lg hover:scale-95 transform transition-all duration-300 ease-in-ou">
-          <div className="flex justify-between items-start my-2">
+        <div className="md:min-w-[660px] h-[260px] flex-[6] bg-[#FFFFFF] p-2 md:p-5 rounded-lg hover:scale-95 transform transition-all duration-300 ease-in-ou">
+          <div className="flex flex-col md:flex-row justify-between items-start my-2 space-y-4">
             <div>
-              <h2 className="text-[#262626] font-semibold text-xl pb-2">
+              <h2 className="text-[#262626] font-semibold text-base md:text-xl pb-2">
                 Payment Method
               </h2>
 
@@ -211,23 +94,33 @@ const Subscription = () => {
               </p>
             </div>
             <div>
-              <Link to={"/add-card"}>
-                <button className="flex gap-2 font-semibold border border-[#744CDB] text-[#744CDB] px-3.5 py-2 shadow-md rounded-md hover:scale-95 transform transition-all ease-in-out duration-300">
+              <Link to={"/add-card"} className="max-md:hidden">
+                <Button color="primary" variant="outlined">
                   <Plus /> Add Card
-                </button>
+                </Button>
+              </Link>
+              {/* Mobile View */}
+              <Link
+                to={"/add-card"}
+                className="md:hidden"
+                state={{ isMobile: true }}
+              >
+                <Button color="primary" variant="outlined">
+                  <Plus /> Add Card
+                </Button>
               </Link>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="min-w-full min-h-[480px] bg-[#FFFFFF] p-5 my-6 rounded-lg flex flex-col justify-between">
+      <div className="min-w-full min-h-[480px] bg-[#FFFFFF] p-2 md:p-5 my-6 rounded-lg flex flex-col justify-between">
         {/* Top Section */}
-        <div className="flex justify-between my-2">
+        <div className="flex flex-col md:flex-row justify-between my-2">
           <h2 className="text-[#262626] font-semibold text-lg">
             Billing History
           </h2>
-          <div className="custom-range-picker-wrapper mx-4 border border-gray-300 rounded-lg py-2 px-1">
+          <div className="flex flex-row sm:flex-col custom-range-picker-wrapper md:mx-4 border border-gray-300 rounded-lg md:py-2 px-1 mt-3 md:mt-0">
             <RangePicker
               format={dateFormat}
               defaultValue={[
@@ -235,8 +128,9 @@ const Subscription = () => {
                 dayjs("2026/01/01", dateFormat),
               ]}
               bordered={false}
-              className="custom-range-picker"
+              className="custom-range-picker w-full"
               onChange={handleDateChange}
+              dropdownClassName="vertical-range-picker"
             />
           </div>
         </div>
@@ -260,15 +154,7 @@ const Subscription = () => {
             </div>
           </div>
         ) : (
-          <div className="overflow-x-auto my-4 rounded shadow-md">
-            <Table
-              columns={columns}
-              dataSource={data}
-              pagination={{ pageSize: 5 }}
-              scroll={{ x: 1000 }}
-              className="custom-ant-table"
-            />
-          </div>
+          <BillingHistoryTableByProvider />
         )}
       </div>
     </div>

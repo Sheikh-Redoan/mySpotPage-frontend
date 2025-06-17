@@ -69,7 +69,7 @@ export default function WeekView({
   const weekDays = getWeekDays(currentDate);
 
   return (
-    <div className="grid grid-cols-[150px_repeat(7,minmax(0,1fr))] border-gray-200">
+    <div className="grid grid-cols-[80px_repeat(7,minmax(0,1fr))] lg:grid-cols-[150px_repeat(7,minmax(0,1fr))] border-gray-200">
       {/* Top-left empty corner */}
       <div className="p-2 border-b border-r border-gray-200 bg-primary01/10"></div>
 
@@ -80,14 +80,14 @@ export default function WeekView({
           className={cn(
             "p-2 text-center border-b border-gray-200 bg-primary01/10 space-y-2"
           )}>
-          <p className="text-sm font-medium text-primary01 uppercase">
+          <p className="text-xs lg:text-sm font-medium text-primary01 uppercase">
             {day.format("ddd")}
           </p>
           <div
-            className={cn("text-sm", {
-              "text-white bg-primary01 rounded-full w-8 h-8 flex items-center justify-center mx-auto":
+            className={cn("text-xs lg:text-sm", {
+              "text-white bg-primary01 rounded-full w-6 h-6 lg:w-8 lg:h-8 flex items-center justify-center mx-auto":
                 day.isSame(today, "day"),
-              "text-gray-800": !day.isSame(today, "day"),
+              "text-gray-800 mt-3": !day.isSame(today, "day"),
             })}>
             {day.format("D").padStart(2, "0")}
           </div>
@@ -103,11 +103,12 @@ export default function WeekView({
               <div className="p-2 border-r border-b border-gray-200 flex flex-col items-center gap-2 justify-center bg-primary01/10">
                 <Avatar
                   src={resource.avatar}
-                  size={55}
+                  alt={resource.name}
+                  size={40}
                   className="outline-1 outline-offset-2 outline-primary01/30"
                 />
 
-                <span className="text-sm font-medium text-gray-700">
+                <span className="text-xs lg:text-sm font-medium text-gray-700 text-center">
                   {resource.name}
                 </span>
               </div>
@@ -124,18 +125,23 @@ export default function WeekView({
                 )
                 .sort((a, b) => dayjs(a.start).diff(dayjs(b.start)));
 
-              const service = getService(day);
-
               return (
                 <div
                   key={dayIndex}
-                  className={cn("p-2 min-h-[150px] border-b", {
+                  className={cn("p-2 min-h-[150px] border-b overflow-hidden", {
                     "border-r": dayIndex < 6,
                     "border-gray-200": true,
                     "flex flex-col space-y-1": true,
                   })}>
                   {dailyEvents.map((event) => (
-                    <Event key={event.id} event={event} />
+                    <React.Fragment key={event.id}>
+                      <div className="lg:hidden">
+                        <Event event={event} isMobile={true} />
+                      </div>
+                      <div className="max-lg:hidden">
+                        <Event event={event} isMobile={false} />
+                      </div>
+                    </React.Fragment>
                   ))}
                 </div>
               );

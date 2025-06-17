@@ -1,32 +1,32 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { imageProvider } from "../../lib/imageProvider";
+import { cn } from "../../lib/utils";
 
-function NotificationPopup({ toggle, popupRef, notificationButtons }) {
+function NotificationPopup({ notificationButtons, isDrawerOpen = true }) {
   const [activeTab, setActiveTab] = useState(0);
 
   return (
-    <div
-      ref={popupRef}
-      className={` ${
-        toggle ? "scale-0 opacity-0 invisible" : "scale-100 opacity-100 visible"
-      } p-6 w-[400px] transition-all duration-300  absolute top-16 z-[10] right-4 rounded-xl bg-white shadow-lg inset-shadow-sm`}
-    >
-      <div className="flex justify-between items-center">
-        <h3 className="text-lg font-semibold">Notifications</h3>
-        <h4 className="text-black/60 text-sm underline cursor-pointer">
-          Mark all as Read
-        </h4>
-      </div>
+    <div className="max-w-xs">
+      {isDrawerOpen && (
+        <div className="flex justify-between items-center">
+          <h3 className="text-lg font-semibold">Notifications</h3>
+          <h4 className="text-black/60 text-sm underline cursor-pointer">
+            Mark all as Read
+          </h4>
+        </div>
+      )}
 
-      <div className="flex items-center gap-2 pt-4">
+      <div
+        className={cn("flex items-center gap-2", {
+          "pt-4": isDrawerOpen,
+        })}>
         {notificationButtons.map((item, index) => (
           <button
             onClick={() => setActiveTab(index)}
             key={index}
             className={`px-4 py-2 cursor-pointer rounded-xl text-sm ${
               index === activeTab ? "bg-primary01 text-white" : "text-black/90"
-            }`}
-          >
+            }`}>
             {item}
           </button>
         ))}

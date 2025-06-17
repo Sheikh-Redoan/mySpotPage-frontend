@@ -22,8 +22,10 @@ const timeSlots = [
   "22:00 PM",
 ];
 
-const TimePicker = ({ scheduledTime }) => {
+const TimePicker = ({ scheduledTime, isMobile = false }) => {
   const [selectedTime, setSelectedTime] = useState(scheduledTime);
+
+  const placement = isMobile ? "rightTop" : "bottomRight";
 
   const handleTimeSelect = (time) => {
     // Handle time selection
@@ -71,7 +73,7 @@ const TimePicker = ({ scheduledTime }) => {
     <Popover
       content={content}
       arrow={false}
-      placement="bottomRight"
+      placement={placement}
       trigger="click"
     >
       <Button className="bg-[#FFFFFF] px-3 py-2 rounded-lg border-[1px] border-[#262626] text-[#242528] text-sm font-normal flex gap-2 items-center">

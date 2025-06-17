@@ -1,10 +1,17 @@
 // src/components/seller/StaffCard.jsx
-import React, { useState } from "react";
-import { HiOutlineDotsVertical } from "react-icons/hi";
-import { FaMoon, FaCircle } from "react-icons/fa";
+import { Ellipsis } from "lucide-react";
+import { useState } from "react";
+import { FaCircle, FaMoon } from "react-icons/fa";
 import StaffCardDropdown from "./StaffCardDropdown";
 
-const StaffCard = ({ staff, onSelectStaff, isActive, onEdit, onToggleStatus, onRemove }) => {
+const StaffCard = ({
+  staff,
+  onSelectStaff,
+  isActive,
+  onEdit,
+  onToggleStatus,
+  onRemove,
+}) => {
   const [showDropdown, setShowDropdown] = useState(false);
 
   const statusIcon = {
@@ -20,13 +27,12 @@ const StaffCard = ({ staff, onSelectStaff, isActive, onEdit, onToggleStatus, onR
 
   return (
     <div
-      className={`relative w-80 p-4 bg-white rounded-lg border max-[475px]:w-full ${
+      className={`relative w-80 p-4 bg-white rounded-lg border max-[700px]:w-full ${
         isActive ? "bg-violet-50 border-violet-500" : "border-gray-200"
       } flex flex-col justify-start items-start gap-4 cursor-pointer hover:bg-violet-50 hover:border-violet-500 transition-all duration-200`}
-      onClick={() => onSelectStaff(staff)}
-    >
+      onClick={() => onSelectStaff(staff)}>
       <div className="self-stretch flex justify-between items-start gap-2">
-        <div className="flex-1 flex flex-col justify-center items-center gap-3 max-[475px]:flex-row max-[475px]:gap-2 max-[475px]:items-center max-[475px]:justify-start">
+        <div className="flex-1 flex flex-col justify-center items-center gap-3 max-[700px]:flex-row max-[700px]:gap-2 max-[700px]:items-center max-[700px]:justify-start">
           <div className="w-14 h-14 relative rounded-full border border-white">
             <img
               src={staff.image}
@@ -35,35 +41,32 @@ const StaffCard = ({ staff, onSelectStaff, isActive, onEdit, onToggleStatus, onR
             />
             <div
               className="absolute bottom-0 right-0 flex items-center justify-center w-4 h-4 bg-white rounded-full border border-white"
-              title={staff.status}
-            >
+              title={staff.status}>
               {statusIcon[staff.status]}
             </div>
           </div>
           <div className="self-stretch flex flex-col justify-center items-center gap-0.5">
-            <h3 className="text-center text-gray-950 text-base font-semibold font-['Golos_Text'] leading-normal max-[475px]:text-sm max-[475px]:font-medium max-[475px]:leading-tight">
+            <h3 className="text-center text-gray-950 text-base font-semibold font-['Golos_Text'] leading-normal max-[700px]:text-sm max-[700px]:font-medium max-[700px]:leading-tight">
               {staff.name}
             </h3>
-            <div className="inline-flex justify-start items-start gap-2 max-[475px]:text-xs">
+            <div className="inline-flex justify-start items-start gap-2 max-[700px]:text-xs">
               {staff.roles.map((role, index) => (
                 <span
                   key={index}
-                  className="px-2 py-1 bg-violet-50 rounded text-violet-500 text-xs font-medium font-['Golos_Text'] leading-none"
-                >
+                  className="px-2 py-1 bg-violet-50 rounded text-violet-500 text-xs font-medium font-['Golos_Text'] leading-none">
                   {role}
                 </span>
               ))}
             </div>
-            <p className="self-stretch text-center text-gray-500 text-sm font-normal font-['Golos_Text'] leading-tight  max-[475px]:text-xs max-[475px]:font-light">
+            <p className="self-stretch text-center text-gray-500 text-sm font-normal font-['Golos_Text'] leading-tight  max-[700px]:text-xs max-[700px]:font-light">
               {staff.position}
             </p>
           </div>
         </div>
         <button
           className="flex justify-center items-center w-6 h-6 text-gray-400 hover:text-gray-600 transition-colors duration-200"
-          onClick={handleMoreOptionsClick}
-        >
-          <HiOutlineDotsVertical className="w-full h-full" />
+          onClick={handleMoreOptionsClick}>
+          <Ellipsis size={20} strokeWidth={1.5} />
         </button>
       </div>
 

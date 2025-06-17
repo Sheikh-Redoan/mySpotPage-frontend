@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { Table, Select, Pagination, Tooltip, Input, Checkbox } from "antd";
+import { Pagination, Select, Table } from "antd";
+import { useState } from "react";
 import { IoArrowDownOutline } from "react-icons/io5";
-import CustomEmptyTable from "../../components/DashboardPageComponents/shared/CustomEmptyTable";
-import { getPendingBookings } from "../../dummy-data/bookingsData";
 import { useNavigate } from "react-router";
 import { getPendingBookingsColumns } from "../../components/calendarManagement/pendingBookings/PendingBookingsColumns";
+import CustomEmptyTable from "../../components/DashboardPageComponents/shared/CustomEmptyTable";
+import { getPendingBookings } from "../../dummy-data/bookingsData";
 
 const { Option } = Select;
 
@@ -13,7 +13,8 @@ const PendingBookings = () => {
 
   const allBookings = getPendingBookings();
   const pendingBookings =
-    allBookings && allBookings.filter((booking) => booking.status === "Pending");
+    allBookings &&
+    allBookings.filter((booking) => booking.status === "Pending");
 
   const [bookings, setBookings] = useState(pendingBookings || []);
   const [searchQuery, setSearchQuery] = useState("");
@@ -24,7 +25,10 @@ const PendingBookings = () => {
 
   // State for service filter dropdown
   const [selectedServiceFilters, setSelectedServiceFilters] = useState([]);
-  const [serviceFilterDropdownSearchQuery, setServiceFilterDropdownSearchQuery] = useState("");
+  const [
+    serviceFilterDropdownSearchQuery,
+    setServiceFilterDropdownSearchQuery,
+  ] = useState("");
 
   const applyFilters = (currentSearchQuery, currentServiceFilters) => {
     let results = [...pendingBookings];
@@ -39,7 +43,9 @@ const PendingBookings = () => {
           booking.clientPhone
             .toLowerCase()
             .includes(currentSearchQuery.toLowerCase()) ||
-          booking.staffName.toLowerCase().includes(currentSearchQuery.toLowerCase())
+          booking.staffName
+            .toLowerCase()
+            .includes(currentSearchQuery.toLowerCase())
       );
     }
 
@@ -90,12 +96,16 @@ const PendingBookings = () => {
 
   // Filtered services for the dropdown search
   const filteredDropdownServices = allUniqueServices.filter((service) =>
-    service.toLowerCase().includes(serviceFilterDropdownSearchQuery.toLowerCase())
+    service
+      .toLowerCase()
+      .includes(serviceFilterDropdownSearchQuery.toLowerCase())
   );
 
   const handleServiceFilterChange = (service) => {
     setSelectedServiceFilters((prev) =>
-      prev.includes(service) ? prev.filter((s) => s !== service) : [...prev, service]
+      prev.includes(service)
+        ? prev.filter((s) => s !== service)
+        : [...prev, service]
     );
   };
 
@@ -130,7 +140,7 @@ const PendingBookings = () => {
   const paginatedBookings = bookings.slice(startIndex, endIndex);
 
   return (
-    <div className="w-full py-2">
+    <div className="w-full py-2 overflow-x-auto">
       <Table
         dataSource={paginatedBookings}
         columns={columns}
@@ -140,14 +150,20 @@ const PendingBookings = () => {
         locale={{ emptyText: <CustomEmptyTable /> }}
         rowClassName={(record) =>
           searchQuery &&
-          (record.clientName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            record.clientPhone.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          (record.clientName
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase()) ||
+            record.clientPhone
+              .toLowerCase()
+              .includes(searchQuery.toLowerCase()) ||
             record.staffName.toLowerCase().includes(searchQuery.toLowerCase()))
             ? "bg-highlight01"
             : ""
         }
         onRow={(record) => ({
-          onClick: () => navigate(`/dashboard/calendar/bookings-details/${record.id}`),
+          onClick: (event) => {
+            navigate(`/dashboard/calendar/bookings-details/${record.id}`);
+          },
           className: "cursor-pointer hover:bg-gray-50",
         })}
       />
@@ -161,8 +177,7 @@ const PendingBookings = () => {
             onChange={handlePageSizeChange}
             className="mx-2"
             popupMatchSelectWidth={false}
-            suffixIcon={<IoArrowDownOutline />}
-          >
+            suffixIcon={<IoArrowDownOutline />}>
             <Option value={5}>5</Option>
             <Option value={10}>10</Option>
             <Option value={20}>20</Option>

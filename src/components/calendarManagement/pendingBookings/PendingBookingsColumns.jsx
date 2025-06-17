@@ -1,6 +1,6 @@
-import { Tooltip, Input, Checkbox } from "antd";
-import { MdCheckCircleOutline } from "react-icons/md";
+import { Checkbox, Input, Tooltip } from "antd";
 import { IoCloseCircleOutline } from "react-icons/io5";
+import { MdCheckCircleOutline } from "react-icons/md";
 import { FilterFilled, SearchOutlined } from "../../../assets/icons/icons";
 
 export const getPendingBookingsColumns = (
@@ -80,8 +80,7 @@ export const getPendingBookingsColumns = (
               <Checkbox
                 checked={selectedServiceFilters.includes(service)}
                 onChange={() => handleServiceFilterChange(service)}
-                className="rounded border-[#E5E7EB] checked:bg-[#111827] checked:border-[#111827] checked:hover:bg-[#111827] hover:border-[#111827]"
-              >
+                className="rounded border-[#E5E7EB] checked:bg-[#111827] checked:border-[#111827] checked:hover:bg-[#111827] hover:border-[#111827]">
                 <span className="text-sm text-[#111827]">{service}</span>
               </Checkbox>
             </div>
@@ -90,14 +89,12 @@ export const getPendingBookingsColumns = (
         <div className="flex gap-3">
           <button
             onClick={() => handleResetServiceFilter(clearFilters)}
-            className="flex-1 px-4 py-2 text-sm font-medium text-[#111827] bg-white border border-[#E5E7EB] rounded-lg hover:bg-gray-50 transition-colors"
-          >
+            className="flex-1 px-4 py-2 text-sm font-medium text-[#111827] bg-white border border-[#E5E7EB] rounded-lg hover:bg-gray-50 transition-colors">
             Reset
           </button>
           <button
             onClick={() => handleApplyServiceFilter(confirm)}
-            className="flex-1 px-4 py-2 text-sm font-medium text-white bg-[#111827] rounded-lg hover:bg-black transition-colors"
-          >
+            className="flex-1 px-4 py-2 text-sm font-medium text-white bg-[#111827] rounded-lg hover:bg-black transition-colors">
             Apply
           </button>
         </div>
@@ -167,8 +164,7 @@ export const getPendingBookingsColumns = (
             : text === "No Show"
             ? "bg-[#E7E7E7] text-[#82868E]"
             : ""
-        }`}
-      >
+        }`}>
         <span className="text-xs">{text}</span>
       </div>
     ),
@@ -178,23 +174,27 @@ export const getPendingBookingsColumns = (
     key: "action",
     render: (_, record) => (
       <div className="flex gap-2">
-        <Tooltip placement="top" color="#52c41a" title="Approve">
+        <Tooltip placement="top" title="Reject Booking">
           <button
             type="button"
-            onClick={() => handleApproveBooking(record.id)}
-            className="cursor-pointer text-[#52c41a] hover:text-[#73d13d]"
-          >
-            <MdCheckCircleOutline className="size-5" />
+            onClick={(event) => {
+              event.stopPropagation();
+              handleRejectBooking(record.id);
+            }}
+            className="cursor-pointer text-[#f5222d] hover:text-[#ff4d4f]">
+            <IoCloseCircleOutline className="size-5" />
           </button>
         </Tooltip>
 
-        <Tooltip placement="top" color="#f5222d" title="Reject">
+        <Tooltip placement="top" title="Confirm Booking">
           <button
             type="button"
-            onClick={() => handleRejectBooking(record.id)}
-            className="cursor-pointer text-[#f5222d] hover:text-[#ff4d4f]"
-          >
-            <IoCloseCircleOutline className="size-5" />
+            onClick={(event) => {
+              event.stopPropagation();
+              handleApproveBooking(record.id);
+            }}
+            className="cursor-pointer text-[#52c41a] hover:text-[#73d13d]">
+            <MdCheckCircleOutline className="size-5" />
           </button>
         </Tooltip>
       </div>

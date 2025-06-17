@@ -57,18 +57,18 @@ const DeleteLocationModal = ({ isOpen, onClose, onDeleteConfirm }) => {
         </p>
       </div>
 
-      <div className="flex justify-between gap-4 items-center mt-6 pt-4 border-t-[1px] border-[#E5E7E8]">
+      <div className="flex justify-between gap-4 items-center w-full">
         <Button
           type="default"
           onClick={onClose}
-          className="w-[180px] h-[40px] !border !border-[#242528] !text-[#242528] !rounded-lg hover:!scale-95 transform transition-all duration-300 ease-in-out"
+          className="w-1/2 !border !border-[#242528] !text-[#242528] !rounded-lg hover:!scale-95 transform transition-all duration-300 ease-in-out"
         >
           Cancel
         </Button>
         <Button
           type="primary"
           onClick={onDeleteConfirm}
-          className="w-[180px] h-[40px] !bg-[#ED4245] !text-white !rounded-lg hover:!scale-95 transform transition-all duration-300 ease-in-out"
+          className="!w-1/2 !bg-[#ED4245] !text-white !rounded-lg hover:!scale-95 transform transition-all duration-300 ease-in-out"
         >
           Remove
         </Button>

@@ -1,12 +1,11 @@
 import { Outlet } from "react-router";
-import Container from "../../client/Container";
 
 const AddBookingByProvider = () => {
   return (
-    <Container className="">
+    <div className="md:p-4">
       {/* All form Form Step for add booking by Provider */}
       <Outlet />
-    </Container>
+    </div>
   );
 };
 

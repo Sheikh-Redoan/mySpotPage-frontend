@@ -116,32 +116,59 @@ export default function DayCell({
             "bg-primary01 w-8 h-8 text-white grid place-items-center rounded-full":
               selectTimeFromProvider && isToday,
           })}>
-          {day.format("D")}{" "}
+          <span
+            className={cn({
+              "max-md:bg-primary01 w-8 h-8 max-md:text-white max-md:grid place-items-center rounded-full":
+                !selectTimeFromProvider && isToday,
+            })}>
+            {day.format("D")}
+          </span>
+
           {!selectTimeFromProvider && isToday && (
-            <span className="text-xs text-primary01 border border-primary01 px-3 py-1 rounded-full font-medium ml-2">
+            <span className="text-xs text-primary01 border border-primary01 px-3 py-1 rounded-full font-medium ml-2 max-md:hidden">
               Today
             </span>
           )}
         </span>
+
         {service?.sale && currentTimeSlot?.availableTimeSlots?.length > 0 && (
           <span className="text-xs text-primary01 bg-[#F5F4FE] px-2 py-1 rounded-full font-medium border border-[#C3BCF6]">
             {service.sale}
           </span>
         )}
 
-        {!selectTimeFromProvider && events.length > 0 && (
-          <div className="flex flex-col items-start">
-            {events.slice(0, maxEventsPerMonthCell).map((event) => (
-              <Event key={event.id} event={event} />
-            ))}
-            {events.length > maxEventsPerMonthCell && (
-              <MoreEvents
-                events={events}
-                maxEventsPerMonthCell={maxEventsPerMonthCell}
-              />
-            )}
-          </div>
-        )}
+        <div className="max-lg:hidden">
+          {!selectTimeFromProvider && events.length > 0 && (
+            <div className="flex flex-col items-start">
+              {events.slice(0, maxEventsPerMonthCell).map((event) => (
+                <Event key={event.id} event={event} isMobile={false} />
+              ))}
+              {events.length > maxEventsPerMonthCell && (
+                <MoreEvents
+                  events={events}
+                  maxEventsPerMonthCell={maxEventsPerMonthCell}
+                />
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* Mobile */}
+        <div className="lg:hidden">
+          {!selectTimeFromProvider && events.length > 0 && (
+            <div className="flex flex-col items-start">
+              {events.slice(0, maxEventsPerMonthCell).map((event) => (
+                <Event key={event.id} event={event} isMobile={true} />
+              ))}
+              {events.length > maxEventsPerMonthCell && (
+                <MoreEvents
+                  events={events}
+                  maxEventsPerMonthCell={maxEventsPerMonthCell}
+                />
+              )}
+            </div>
+          )}
+        </div>
       </div>
     );
   };

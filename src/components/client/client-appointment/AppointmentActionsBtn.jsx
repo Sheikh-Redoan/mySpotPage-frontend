@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router";
 import WaitingListModal from "./WaitingListModal";
 
-const AppointmentActionsBtn = () => {
+const AppointmentActionsBtn = ({ to = "/service-provider-info/confirm" }) => {
   const [isWaitlistModalOpen, setIsWaitlistModalOpen] = useState(false);
 
   const handleOpenWaitlistModal = () => {
@@ -25,7 +25,7 @@ const AppointmentActionsBtn = () => {
             Join our waitlist!
           </button>
         </p>
-        <Link to="/dashboard/add-booking-by-provider/confirm">
+        <Link to={to}>
           <Button type="default" className="!bg-black !text-white">
             Continue
           </Button>

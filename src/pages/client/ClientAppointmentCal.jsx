@@ -64,7 +64,12 @@ export default function ClientAppointmentCal() {
             applyFilter={false}
           />
 
-          <AppointmentActionsBtn />
+            <AppointmentActionsBtn to="/service-provider-info/confirm" />
+
+          {/* Mobile View */}
+          <div className="md:hidden">
+            
+          </div>
         </div>
       </Container>
     </section>

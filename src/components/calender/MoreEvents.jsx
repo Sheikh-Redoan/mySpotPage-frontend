@@ -36,10 +36,10 @@ export default function MoreEvents({ events, maxEventsPerMonthCell }) {
       }>
       <Button type="text" className="!p-0">
         <span className="text-xs text-gray-500 max-lg:hidden">
-          +{events.length - maxEventsPerMonthCell} more
+          {events.length - maxEventsPerMonthCell} others
         </span>
         <span className="text-xs text-gray-500 lg:hidden">
-          +({events.length - maxEventsPerMonthCell})
+          (+{events.length - maxEventsPerMonthCell})
         </span>
       </Button>
     </Popover>

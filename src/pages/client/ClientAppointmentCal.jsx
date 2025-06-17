@@ -9,26 +9,14 @@ import AppointmentActionsBtn from "../../components/client/client-appointment/Ap
 import { getBreadcrumbs } from "../../lib/staticData";
 import Container from "./Container";
 import "/src/styles/fullCalender.css";
+import { Button, Drawer } from "antd";
+import ConfirmDetails from "../../components/client/ConfirmDetails";
+import confirm_product from "/src/assets/images/confirm.jpg";
+import React, { useState } from "react";
+import { X } from "lucide-react";
 
 let eventGuid = 0;
 let todayStr = dayjs().format("YYYY-MM-DD");
-
-const specialDatesData = [
-  { date: "2025-05-01", isBusy: true },
-  { date: "2025-05-02", isBusy: true },
-  { date: "2025-05-06", sale: "🔥 25% OFF" },
-  { date: "2025-05-08", isBusy: true },
-  { date: "2025-05-09", isBusy: true },
-  { date: "2025-05-14", sale: "🔥 25% OFF" },
-  { date: "2025-06-15", sale: "🔥 10% OFF", isBusy: true },
-  { date: "2025-05-16", isBusy: true },
-  { date: "2025-06-17", isBusy: true },
-  { date: "2025-06-22", isBusy: true },
-  { date: "2025-06-23", isBusy: true },
-  { date: "2025-06-30", sale: "🔥 50% OFF" },
-  { date: "2025-07-01", sale: "🔥 50% OFF" },
-  { date: "2025-07-02", sale: "🔥 50% OFF" },
-];
 
 export const INITIAL_EVENTS = [
   {
@@ -43,7 +31,61 @@ export const INITIAL_EVENTS = [
   },
 ];
 
+const storeData = {
+  storeName: "TCL Beauty Studio 01",
+  rating: "4.8",
+  reviewsCount: "12.5K reviews",
+  location: "15 Rothschild Boulevard, Tel Aviv-Yafo, Israel",
+  staffName: "John Doe",
+  appointmentDateTime: "06 Jan 2025, 11:00",
+  bookingNote:
+    "Hair is thick and slightly wavy, prefers a shoulder-length layered cut with light texture.",
+  services: [
+    {
+      id: 1,
+      image: confirm_product, // Using the dummy image for all services
+      name: "Classic Ombre",
+      options: "Smooth / Scalp treatment",
+      duration: "2h45m",
+      price: "₪70.00",
+    },
+    {
+      id: 2,
+      image: confirm_product,
+      name: "Reverse Ombre",
+      options: "Shadow Root",
+      duration: "3h30m",
+      price: "₪100.00",
+    },
+    {
+      id: 3,
+      image: confirm_product,
+      name: "Balayage with Toner",
+      options: "30m",
+      duration: "30m",
+      price: "₪100.00",
+    },
+    // Add more services here if needed to test "Show more"
+    // {
+    //   id: 4,
+    //   image: confirm_product,
+    //   name: "Hair Cut",
+    //   options: "Short Hair",
+    //   duration: "1h00m",
+    //   price: "₪50.00",
+    // },
+  ],
+  subtotal: "₪270.00",
+  vatIncluded: "(includes ₪48.60 VAT)",
+  discountPercentage: "20% OFF",
+  discountAmount: "-₪54.00",
+  total: "₪216.00",
+  paymentInstruction: "You will pay at the appointment location",
+};
+
 export default function ClientAppointmentCal() {
+  const [open, setOpen] = useState(true);
+
   return (
     <section className="bg-[#F9FAFC] py-4 md:py-8">
       <Container>
@@ -64,11 +106,43 @@ export default function ClientAppointmentCal() {
             applyFilter={false}
           />
 
-            <AppointmentActionsBtn to="/service-provider-info/confirm" />
+          <AppointmentActionsBtn to="/service-provider-info/confirm" />
 
           {/* Mobile View */}
           <div className="md:hidden">
-            
+            <Drawer
+              placement={"bottom"}
+              closable={false}
+              title="Summary"
+              extra={
+                <Button type="text" onClick={() => setOpen(false)}>
+                  <X size={22} className="" />
+                </Button>
+              }
+              height="40%"
+              onClose={() => setOpen(false)}
+              open={open}
+              className="rounded-t-lg"
+            >
+              <ConfirmDetails
+                className="w-full lg:w-80 p-4 flex-shrink-0"
+                storeName={storeData.storeName}
+                rating={storeData.rating}
+                reviewsCount={storeData.reviewsCount}
+                location={storeData.location}
+                staffName={storeData.staffName}
+                appointmentDateTime={storeData.appointmentDateTime}
+                bookingNote={storeData.bookingNote}
+                services={storeData.services}
+                subtotal={storeData.subtotal}
+                vatIncluded={storeData.vatIncluded}
+                discountPercentage={storeData.discountPercentage}
+                discountAmount={storeData.discountAmount}
+                total={storeData.total}
+                paymentInstruction={storeData.paymentInstruction}
+                buttonTittle={"Complete"}
+              />
+            </Drawer>
           </div>
         </div>
       </Container>

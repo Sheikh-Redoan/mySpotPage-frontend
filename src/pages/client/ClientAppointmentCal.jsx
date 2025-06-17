@@ -45,7 +45,7 @@ export const INITIAL_EVENTS = [
 
 export default function ClientAppointmentCal() {
   return (
-    <section className="bg-[#F9FAFC] py-4 px-2 md:px-0 md:py-8">
+    <section className="bg-[#F9FAFC] py-4 md:py-8">
       <Container>
         <Breadcrumb
           breadcrumbs={getBreadcrumbs(1, 0, [
@@ -61,6 +61,7 @@ export default function ClientAppointmentCal() {
             events={MOCK_EVENTS}
             resources={MOCK_RESOURCES}
             selectTimeFromProvider={true}
+            applyFilter={false}
           />
 
           <AppointmentActionsBtn />

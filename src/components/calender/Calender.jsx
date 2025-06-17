@@ -11,6 +11,7 @@ export default function Calender({
   selectTimeFromProvider = false,
   events,
   resources,
+  applyFilter,
 }) {
   // State for the currently displayed date, adjusted based on view
   const [currentDate, setCurrentDate] = useState(dayjs(Date.now())); // Start with the day view date
@@ -81,9 +82,10 @@ export default function Calender({
         onDatePickerChange={onDatePickerChange}
         handleNavButtonClick={handleNavButtonClick}
         handleTodayClick={handleToday}
-        applyFilter={true}
+        applyFilter={applyFilter}
         currentView={selectedView}
         handleViewChange={setSelectedView}
+        selectTimeFromProvider={selectTimeFromProvider}
       />
       <div
         className={cn("rounded-xl overflow-hidden border border-gray-200", {

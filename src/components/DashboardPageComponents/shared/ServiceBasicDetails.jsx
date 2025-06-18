@@ -123,10 +123,10 @@ const ServiceBasicDetails = ({
                   <label className="block mb-2 text-base text-[#3A3B3F]">
                     Description<span className="text-orange-600">*</span>
                   </label>
-                  <input
+                  <textarea
                     {...register("description", { required: true })}
                     type="text"
-                    className="block w-full text-sm border border-gray-300 p-2 rounded-md"
+                    className="block resize-none w-full text-sm border border-gray-300 p-2 rounded-md"
                     placeholder="e.g. A haircut is a process of trimming, shaping, or styling hair to achieve a specific look."
                   />
                 </div>

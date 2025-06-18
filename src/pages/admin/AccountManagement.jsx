@@ -1,9 +1,9 @@
 import { Button } from "antd";
 import { Settings } from "lucide-react";
 import AddAccount from "../../components/admin/AddAccount";
-import RoleCard from "../../components/admin/roleCard";
 import MultipleSelector from "../../components/shared/MultipleSelector";
 import Search from "../../components/shared/Search";
+import RoleCard from "../../components/admin/RoleCard";
 
 export default function AccountManagement() {
   return (

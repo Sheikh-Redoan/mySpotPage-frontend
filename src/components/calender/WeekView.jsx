@@ -2,6 +2,7 @@ import { Avatar } from "antd";
 import dayjs from "dayjs";
 import "dayjs/locale/en"; // Or your preferred locale
 import React from "react";
+import useResponsive from "../../hooks/useResponsive";
 import { cn } from "../../lib/utils";
 import DayCell from "./DayCell";
 import Event from "./Event";
@@ -13,6 +14,7 @@ export default function WeekView({
   selectTimeFromProvider,
   maxEventsPerMonthCell = 3,
 }) {
+  const { xl } = useResponsive(); // Assuming useResponsive is defined elsewhere
   const today = dayjs(); // Get today's date for highlighting
 
   // Helper to get days for a week
@@ -69,16 +71,19 @@ export default function WeekView({
   const weekDays = getWeekDays(currentDate);
 
   return (
-    <div className="grid grid-cols-[80px_repeat(7,minmax(0,1fr))] lg:grid-cols-[150px_repeat(7,minmax(0,1fr))] border-gray-200">
+    <div className="grid grid-cols-[100px_repeat(7,minmax(0,1fr))] lg:grid-cols-[120px_repeat(7,minmax(0,1fr))] border-gray-200 border-t-0">
       {/* Top-left empty corner */}
-      <div className="p-2 border-b border-r border-gray-200 bg-primary01/10"></div>
+      <div className="p-2" />
 
       {/* Day Headers */}
       {weekDays.map((day, index) => (
         <div
           key={index}
           className={cn(
-            "p-2 text-center border-b border-gray-200 bg-primary01/10 space-y-2"
+            "p-2 text-center border-b border-gray-200 bg-primary01/10 space-y-2",
+            {
+              "rounded-tl-lg": index === 0, // Add right border for all but the last column
+            }
           )}>
           <p className="text-xs lg:text-sm font-medium text-primary01 uppercase">
             {day.format("ddd")}
@@ -99,20 +104,19 @@ export default function WeekView({
         resources.map((resource) => (
           <React.Fragment key={resource.id}>
             {/* Resource Name Column */}
-            {
-              <div className="p-2 border-r border-b border-gray-200 flex flex-col items-center gap-2 justify-center bg-primary01/10">
-                <Avatar
-                  src={resource.avatar}
-                  alt={resource.name}
-                  size={40}
-                  className="outline-1 outline-offset-2 outline-primary01/30"
-                />
 
-                <span className="text-xs lg:text-sm font-medium text-gray-700 text-center">
-                  {resource.name}
-                </span>
-              </div>
-            }
+            <div className="p-4 border-r border-b border-gray-200 flex flex-col items-center gap-2 justify-center bg-primary01/10 max-h-24 lg:min-h-48">
+              <Avatar
+                src={resource.avatar}
+                alt={resource.name}
+                size={xl ? 50 : 35}
+                className="outline-1 outline-offset-2 outline-primary01/30"
+              />
+
+              <span className="text-xs lg:text-sm text-gray-700 text-center text-nowrap">
+                {resource.name}
+              </span>
+            </div>
 
             {/* Event Cells for each day */}
             {weekDays.map((day, dayIndex) => {
@@ -128,20 +132,13 @@ export default function WeekView({
               return (
                 <div
                   key={dayIndex}
-                  className={cn("p-2 min-h-[150px] border-b overflow-hidden", {
+                  className={cn("p-2  border-b overflow-hidden", {
                     "border-r": dayIndex < 6,
                     "border-gray-200": true,
                     "flex flex-col space-y-1": true,
                   })}>
                   {dailyEvents.map((event) => (
-                    <React.Fragment key={event.id}>
-                      <div className="xl:hidden">
-                        <Event event={event} isMobile={true} />
-                      </div>
-                      <div className="max-xl:hidden">
-                        <Event event={event} isMobile={false} />
-                      </div>
-                    </React.Fragment>
+                    <Event key={event.id} event={event} />
                   ))}
                 </div>
               );

@@ -67,8 +67,8 @@ const ConfirmPage = () => {
   };
 
   return (
-    <section className="py-8">
-      <Container className="max-w-[1296px] mx-auto px-4">
+    <section className="md:py-8">
+      <Container className="">
         {/* Pass isAddressPage as true to show "Enter address" and "Select staff" in the breadcrumb */}
         <Breadcrumb breadcrumbs={getBreadcrumbs()} />
         <div className="flex flex-col lg:flex-row items-start justify-between w-full gap-8 mt-6">
@@ -200,7 +200,7 @@ const ConfirmPage = () => {
           className="rounded-t-lg"
         >
           <ConfirmDetails
-            className="w-full lg:w-80 p-4 flex-shrink-0"
+            className="w-full"
             storeName={storeData.storeName}
             rating={storeData.rating}
             reviewsCount={storeData.reviewsCount}
@@ -218,6 +218,13 @@ const ConfirmPage = () => {
             buttonTittle={"Complete"}
           />
         </Drawer>
+        <style>
+          {`
+          .ant-drawer-body {
+            padding: 0;
+          }
+        `}
+        </style>
       </div>
     </section>
   );

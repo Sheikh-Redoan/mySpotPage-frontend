@@ -41,12 +41,12 @@ export default function SelectStaff() {
   };
 
   return (
-    <section className="bg-[#F9FAFC]">
+    <section className="bg-[#F9FAFC] md:py-8">
       <Container
         // className={cn("max-md:h-[610px] max-md:overflow-y-auto", {
         //   "max-md:h-[520px] max-md:overflow-y-auto": showDetails,
         // })}
-        className={cn("max-md:mb-60", { "max-md:mb-78": showDetails })}
+        className={cn("max-md:mb-56", { "max-md:mb-78": showDetails })}
       >
         <Breadcrumb
           breadcrumbs={getBreadcrumbs(1, 0, [

@@ -8,7 +8,7 @@ import after2 from "../../assets/images/after2.png";
 import after3 from "../../assets/images/after3.png";
 import after4 from "../../assets/images/after4.png";
 import ClassicBalayage from "../../assets/images/Classic-Balayage.png";
-import toner from "../../assets/images/toner.png";
+import toner from "../../assets/images/Toner.png";
 import rootShadow from "../../assets/images/balayang-root.png";
 import smoting from "../../assets/images/smoting.png";
 import smoting3 from "../../assets/images/smoting3.png";

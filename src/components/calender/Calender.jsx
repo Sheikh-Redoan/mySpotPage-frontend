@@ -5,7 +5,7 @@ import { cn } from "../../lib/utils";
 import CalendarToolbar from "../reuseableComponent/CalendarToolbar";
 import DayView from "./DayView";
 import MonthView from "./MonthView";
-import WeekView from "./weekView";
+import WeekView from "./WeekView";
 
 export default function Calender({
   selectTimeFromProvider = false,

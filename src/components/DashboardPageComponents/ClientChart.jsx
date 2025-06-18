@@ -178,7 +178,7 @@ function ClientChart() {
           </ResponsiveContainer>
         </div>
       </div>
-      <div className="w-full lg:w-3/12 px-4 md:px-0 md:pr-3 mt-4 md:mt-0">
+      <div className="w-full lg:w-3/12 px-4 md:px-0 md:pr-3 mt-4 md:mt-0 md:pt-4">
         <h3 className="font-semibold pb-2">Client By Cities</h3>
         <div className=" w-full space-y-2">
           {clientCities.map((item, index) => (

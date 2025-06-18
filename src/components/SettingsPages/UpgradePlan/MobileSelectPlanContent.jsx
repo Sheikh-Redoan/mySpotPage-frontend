@@ -103,14 +103,14 @@ const MobileSelectPlanContent = ({
           </div>
         </div>
       </div>
-      <p className="px-4 text-[#242528] pt-2 pb-8 font-semibold underline">
+      <p className="px-4 text-[#242528] pt-2 pb-8 font-semibold underline mb-32">
         Compare plans and pricing options
       </p>
 
-      <div className="flex items-center justify-between gap-2 w-full bg-[#FFFFFF] rounded-t-2xl shadow-2xl p-4">
+      <div className="fixed pb-7 bottom-0 flex items-center justify-between gap-2 w-full bg-[#FFFFFF] shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] p-4">
         <div>
-          <div className="text-[#866BE7] font-medium text-xl flex items-end gap-1 mt-3.5">
-            <p>₪{foundPlan.price}</p>
+          <div className="text-[#866BE7] font-semibold text-xl flex items-end gap-1 mt-3.5">
+            <p className="uppercase">{foundPlan.price}</p>
             <span className="text-[#888888] text-sm font-normal">
               {foundPlan.subtext}
             </span>
@@ -130,12 +130,12 @@ const MobileSelectPlanContent = ({
               : "/checkout"
           }
           state={{ isMobile, currentPlan }}
-          className={`w-full block text-center p-2 rounded-lg my-2 font-medium hover:scale-95 transform transition-all duration-300 ease-in-out
+          className={` block text-center p-2 px-7 rounded-lg my-2 font-medium hover:scale-95 transform transition-all duration-300 ease-in-out
                         ${
                           currentPlan === foundPlan.name
                             ? foundPlan.name === "Spark"
-                              ? "bg-[#E4E3FD] text-[#A496EF]"
-                              : "border border-[#ED4245] bg-[#FFFFFF] text-[#ED4245]"
+                              ? "!bg-[#E4E3FD] !text-[#A496EF] !text-base !py-3"
+                              : "border border-[#ED4245] bg-[#FFFFFF] !text-[#ED4245]"
                             : "bg-[#744CDB] text-[#FFFFFF]"
                         }
                        `}
@@ -143,7 +143,7 @@ const MobileSelectPlanContent = ({
           {currentPlan === foundPlan.name
             ? foundPlan.name === "Spark"
               ? "Current Plan"
-              : "Cancel Subscription"
+              : "Cancel"
             : (currentPlan === "Glow" && foundPlan.name === "Spark") ||
               (currentPlan === "Bloom" &&
                 (foundPlan.name === "Glow" || foundPlan.name === "Spark"))

@@ -48,15 +48,6 @@ const ConfirmPage = () => {
         duration: "30m",
         price: "₪100.00",
       },
-      // Add more services here if needed to test "Show more"
-      // {
-      //   id: 4,
-      //   image: confirm_product,
-      //   name: "Hair Cut",
-      //   options: "Short Hair",
-      //   duration: "1h00m",
-      //   price: "₪50.00",
-      // },
     ],
     subtotal: "₪270.00",
     vatIncluded: "(includes ₪48.60 VAT)",

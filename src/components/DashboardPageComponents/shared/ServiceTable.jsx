@@ -1,22 +1,27 @@
 import { useState } from "react";
 import { Pagination, Select, Table } from "antd";
 import { imageProvider } from "../../../lib/imageProvider";
+import service1 from '../../../assets/images/service1.png'
+import service2 from '../../../assets/images/service2.png'
+import service3 from '../../../assets/images/service3.png'
+import service4 from '../../../assets/images/service4.png'
+import service5 from '../../../assets/images/service5.png'
 
 // Columns
 const columns = [
   {
     title: "Thumbnail",
-    dataIndex: "date",
-    key: "date",
+    dataIndex: "image",
+    key: "image",
     width: 130,
-
     render: (_, record, index) => {
       const prev = data[index - 1];
       if (prev && prev.date === record.date) return null;
       return (
-        <div>
+        <div className="w-20 p-0">
           <img
-            src="https://i.ibb.co/MTS9Ys5/Frame-2147226180.png"
+            className="w-full"
+            src={record.image}
             alt="image"
           />
         </div>
@@ -25,14 +30,14 @@ const columns = [
   },
   {
     title: "Name / Available For",
-    dataIndex: "name",
-    key: "time",
-    width: 140,
-    render: (_) => (
+    dataIndex: "title",
+    key: "title",
+    width: 390,
+    render: (_, record) => (
       <div className="space-y-2 w-[150px]">
-        <p className="text-[#3D3D3D] font-medium mb-1">Classic Ombre</p>
+        <p className="text-[#3D3D3D] font-medium mb-1 whitespace-nowrap">{record.title}</p>
         <p className="w-[110px] rounded-2xl py-1 px-2   text-primary01 border border-primary01">
-          Female Only
+          {record.category}
         </p>
       </div>
     ),
@@ -41,8 +46,8 @@ const columns = [
     title: "Description",
     dataIndex: "dercription",
     key: "dercription",
-    width: 490,
-    render: (text) => <span style={{ color: "#797979" }}>{text}</span>,
+    width: 790,
+    render: (text) => <span style={{ color: "#797979"}} className="w-48">{text}</span>,
   },
   {
     title: "Duration",
@@ -56,7 +61,7 @@ const columns = [
     dataIndex: "option",
     key: "discount",
     align: "center",
-    width: 130,
+    width: 150,
   },
   {
     title: <span className="font-semibold text-white pr-5">Action</span>,
@@ -82,6 +87,9 @@ const data = [
     option: "09",
     dercription:
       "Classic Ombre is a hair coloring technique that gradually transitions from a darker shade at the roots to a lighter.",
+    title: "Classic Ombre",
+    category: "Female Only",
+    image: service1
   },
   {
     key: "2",
@@ -90,6 +98,9 @@ const data = [
     option: "06",
     dercription:
       "Reverse Ombre is a hair coloring style that transitions from lighter roots to darker ends, creating a bold, modern contrast.",
+    title: "Reverse Ombre",
+    category: "Female Only",
+    image: service2
   },
   {
     key: "3",
@@ -98,6 +109,9 @@ const data = [
     option: "03",
     dercription:
       "Reverse Ombre is a hair coloring style that transitions from lighter roots to darker ends, creating a bold, modern contrast.",
+    title: "Smoothing Keratin Treatment",
+    category: "Female Only",
+    image: service3
   },
   {
     key: "4",
@@ -106,6 +120,9 @@ const data = [
     option: "05",
     dercription:
       "Classic Ombre is a hair coloring technique that gradually transitions from a darker shade at the roots to a lighter.",
+    title: "Balayage with Toner",
+    category: "Female Only",
+    image: service4
   },
   {
     key: "5",
@@ -114,6 +131,9 @@ const data = [
     option: "08",
     dercription:
       "Smoothing Keratin Treatment infuses keratin to reduce frizz, enhance shine, and strengthen hair for a smoother, more manageable look.",
+    title: "Balayage & Root Shadow",
+    category: "Female Only",
+    image: service5
   },
   {
     key: "6",
@@ -122,6 +142,9 @@ const data = [
     option: "00",
     dercription:
       "Reverse Ombre is a hair coloring style that transitions from lighter roots to darker ends, creating a bold, modern contrast.",
+    title: "Classic Ombre",
+    category: "Female Only",
+    image: service1
   },
   {
     key: "7",
@@ -130,22 +153,9 @@ const data = [
     option: "02",
     dercription:
       "Smoothing Keratin Treatment infuses keratin to reduce frizz, enhance shine, and strengthen hair for a smoother, more manageable look.",
-  },
-  {
-    key: "8",
-    duration: "2h",
-    date: "12/07/25 - 14/09/25",
-    option: "11",
-    dercription:
-      "Reverse Ombre is a hair coloring style that transitions from lighter roots to darker ends, creating a bold, modern contrast.",
-  },
-  {
-    key: "9",
-    duration: "9h 11m",
-    date: "11/04/25 - 14/04/25",
-    option: "00",
-    dercription:
-      "Classic Ombre is a hair coloring technique that gradually transitions from a darker shade at the roots to a lighter.",
+    title: "Reverse Ombre",
+    category: "Female Only",
+    image: service2
   },
   {
     key: "10",
@@ -154,8 +164,35 @@ const data = [
     option: "19",
     dercription:
       "Reverse Ombre is a hair coloring style that transitions from lighter roots to darker ends, creating a bold, modern contrast.",
+    title: "Balayage & Root Shadow",
+    category: "Female Only",
+    image: service5
   },
+  {
+    key: "8",
+    duration: "2h",
+    date: "12/07/25 - 14/09/25",
+    option: "11",
+    dercription:
+      "Reverse Ombre is a hair coloring style that transitions from lighter roots to darker ends, creating a bold, modern contrast.",
+    title: "Smoothing Keratin Treatment",
+    category: "Female Only",
+    image: service3
+  },
+  {
+    key: "9",
+    duration: "9h 11m",
+    date: "11/04/25 - 14/04/25",
+    option: "00",
+    dercription:
+      "Classic Ombre is a hair coloring technique that gradually transitions from a darker shade at the roots to a lighter.",
+    title: "Balayage with Toner",
+    category: "Female Only",
+    image: service4
+  },
+  
 ];
+
 
 const ServiceTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -173,12 +210,12 @@ const ServiceTable = () => {
   );
   return (
     <>
-      <div className="overflow-x-auto my-6 rounded-lg border border-border">
+      <div className="overflow-x-auto my-6 rounded-lg border border-border pb-2">
         <Table
           columns={columns}
           dataSource={paginatedData}
           pagination={false}
-          scroll={{ x: 800 }}
+          scroll={{ x: 1120 }}
           className="custom-ant-table"
         />
       </div>

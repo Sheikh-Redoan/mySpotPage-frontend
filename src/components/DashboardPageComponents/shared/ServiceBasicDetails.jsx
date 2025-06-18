@@ -1,10 +1,14 @@
 import React from "react";
-import { Collapse, Select } from "antd";
+import { Button, Collapse, Select } from "antd";
 const { Panel } = Collapse;
 import { Check, X } from "lucide-react";
 import { Controller } from "react-hook-form";
 import { DownArrowIcon } from "../../../assets/icons/icons";
 import { imageProvider } from "../../../lib/imageProvider";
+import useResponsive from "../../../hooks/useResponsive";
+import { Drawer } from "antd";
+import { ChevronDown } from "lucide-react";
+import { useState } from "react";
 
 const ServiceBasicDetails = ({
   activeKey,
@@ -21,6 +25,10 @@ const ServiceBasicDetails = ({
   handleRemoveImage,
   setIsModalOpen,
 }) => {
+  const [open, setOpen] = useState(false)
+  const { xs, sm, md, lg } = useResponsive()
+  console.log("isMobile", xs, sm, md, lg);
+
   return (
     <div>
       <Collapse
@@ -41,11 +49,10 @@ const ServiceBasicDetails = ({
           header={
             <div className="flex items-center gap-x-3">
               <div
-                className={`w-10 h-10 flex justify-center items-center border rounded-full font-bold transition-all duration-200 ${
-                  isStepComplete
-                    ? "bg-[#262626] text-white "
-                    : "border p-4 text-[#262626]"
-                }`}
+                className={`w-10 h-10 flex justify-center items-center border rounded-full font-bold transition-all duration-200 ${isStepComplete
+                  ? "bg-[#262626] text-white "
+                  : "border p-4 text-[#262626]"
+                  }`}
               >
                 {isStepComplete ? <Check className="w-6 h-6" /> : "1"}
               </div>
@@ -132,40 +139,70 @@ const ServiceBasicDetails = ({
                 </div>
               </div>
 
-              {/* Available for  */}
-              <Controller
-                name="availableFor"
-                control={control}
-                defaultValue="For All"
-                rules={{ required: true }}
-                render={({ field }) => (
-                  <div className="relative md:w-[440px]">
-                    <label className="block mb-2 text-[#888888]">
-                      Available for <span className="text-orange-600">*</span>
-                    </label>
-                    <Select
-                      {...field}
-                      id="availableFor"
-                      placeholder="For All"
-                      className="border border-[#E0E0E0] rounded-lg w-full !h-10"
-                      suffixIcon={<DownArrowIcon />}
-                      onChange={(value) => field.onChange(value)}
-                      value={field.value}
-                    >
-                      {[
-                        "For All",
-                        "For male only",
-                        "For female only",
-                        "For kids only",
-                      ].map((option) => (
-                        <Select.Option key={option} value={option}>
-                          {option}
-                        </Select.Option>
-                      ))}
-                    </Select>
-                  </div>
-                )}
-              />
+              {lg ? (
+                <Controller
+                  name="availableFor"
+                  control={control}
+                  defaultValue="For All"
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <div className="relative md:w-[440px]">
+                      <label className="block mb-2 text-[#888888]">
+                        Available for <span className="text-orange-600">*</span>
+                      </label>
+                      <Select
+                        {...field}
+                        id="availableFor"
+                        placeholder="For All"
+                        className="border border-[#E0E0E0] rounded-lg w-full !h-10"
+                        suffixIcon={<DownArrowIcon />}
+                        onChange={(value) => field.onChange(value)}
+                        value={field.value}
+                      >
+                        {[
+                          "For All",
+                          "For male only",
+                          "For female only",
+                          "For kids only",
+                        ].map((option) => (
+                          <Select.Option key={option} value={option}>
+                            {option}
+                          </Select.Option>
+                        ))}
+                      </Select>
+                    </div>
+                  )}
+                />) : (
+                <>
+                  <Button
+                    type="default"
+                    className="w-full !flex !justify-between"
+                    onClick={() => setOpen(true)}>
+                    select <ChevronDown />
+                  </Button>
+                  <Drawer
+                    placement={"bottom"}
+                    closable={false}
+                    title="Available for"
+                    // extra={}
+                    height="90%"
+                    onClose={() => setOpen(false)}
+                    open={open}
+                    className="rounded-t-xl"
+                  >
+                    hsndfsj
+                  </Drawer>
+                  <style>
+                    {`
+          .ant-drawer-body {
+            padding: 0 !important;
+          }
+        `}
+                  </style>
+                </>
+              )}
+
+
             </form>
           </div>
         </Panel>

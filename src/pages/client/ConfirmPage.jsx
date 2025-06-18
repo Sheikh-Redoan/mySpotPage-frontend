@@ -5,8 +5,13 @@ import Breadcrumb from "../../components/client/Breadcrumb";
 import ConfirmDetails from "../../components/client/ConfirmDetails";
 import { getBreadcrumbs } from "../../lib/staticData";
 import Container from "./Container";
+import { useState } from "react";
+import { Button, Drawer } from "antd";
+import { ChevronDown, ChevronUp, X } from "lucide-react";
+import { FaStar } from "react-icons/fa";
 
 const ConfirmPage = () => {
+  const [open, setOpen] = useState(false);
   // Sample data to pass to ConfirmDetails.
   // In a real application, this data would come from API calls, Redux store, or React Context.
   const storeData = {
@@ -89,6 +94,117 @@ const ConfirmPage = () => {
             </div>
           </div>
 
+          <div className="max-md:hidden">
+            <ConfirmDetails
+            className="w-full lg:w-80 p-4 flex-shrink-0"
+            storeName={storeData.storeName}
+            rating={storeData.rating}
+            reviewsCount={storeData.reviewsCount}
+            location={storeData.location}
+            staffName={storeData.staffName}
+            appointmentDateTime={storeData.appointmentDateTime}
+            bookingNote={storeData.bookingNote}
+            services={storeData.services}
+            subtotal={storeData.subtotal}
+            vatIncluded={storeData.vatIncluded}
+            discountPercentage={storeData.discountPercentage}
+            discountAmount={storeData.discountAmount}
+            total={storeData.total}
+            paymentInstruction={storeData.paymentInstruction}
+            buttonTittle={"Complete"}
+          />
+          </div>
+        </div>
+      </Container>
+
+      {/* Mobile View */}
+      <div className="md:hidden">
+        <div className="bg-white p-4 shadow fixed bottom-0 w-full z-50">
+          <div className="flex items-end justify-between">
+            <div>
+              {storeData.storeName && (
+                <h3 className="self-stretch text-Boulder-950 text-lg font-semibold leading-relaxed">
+                  {storeData.storeName}
+                </h3>
+              )}
+              {(storeData.rating || storeData.reviewsCount) && (
+                <div className="flex gap-1 items-center">
+                  {storeData.rating && <FaStar className="text-[#FFD056]" />}
+                  {storeData.rating && (
+                    <p className="text-black text-sm font-normal leading-tight">
+                      {storeData.rating}
+                    </p>
+                  )}
+                  {storeData.reviewsCount && (
+                    <p className="text-description text-sm font-normal underline leading-tight">
+                      ({storeData.reviewsCount})
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
+
+            <div className="self-end">
+              <Button
+                type="text"
+                className="w-full"
+                onClick={() => setOpen(true)}
+              >
+                See detail{" "}
+                {open ? (
+                  <ChevronUp size={14} />
+                ) : (
+                  <ChevronDown size={14} />
+                )}
+              </Button>
+            </div>
+          </div>
+          <div className="border-b border-b-gray-200 my-3" />
+
+          {/* Price details */}
+          <div className="flex flex-col gap-[12px] w-full justify-center items-start">
+            {storeData.total && (
+              <div className="flex justify-between items-start w-full">
+                <p className="w-full max-w-48 text-description text-sm font-normal   leading-tight">
+                  Total
+                </p>
+                <p className="text-right text-violet-500 text-lg font-semibold   leading-relaxed">
+                  {storeData.total}
+                </p>
+              </div>
+            )}
+          </div>
+
+          <Button
+            color="default"
+            variant="solid"
+            className="w-full my-2"
+            disabled
+          >
+            Continue
+          </Button>
+
+          {storeData.paymentInstruction && (
+            <p className="self-stretch text-center text-description text-xs font-normal   leading-none">
+              {storeData.paymentInstruction}
+            </p>
+          )}
+        </div>
+
+        <Drawer
+          placement={"bottom"}
+          closable={false}
+          title="Summary"
+          extra={
+            <Button type="text" onClick={() => setOpen(false)}>
+              <X size={22} className="" />
+            </Button>
+          }
+          height="80%"
+          onClose={() => setOpen(false)}
+          open={open}
+          className="rounded-t-lg"
+        >
           <ConfirmDetails
             className="w-full lg:w-80 p-4 flex-shrink-0"
             storeName={storeData.storeName}
@@ -107,8 +223,8 @@ const ConfirmPage = () => {
             paymentInstruction={storeData.paymentInstruction}
             buttonTittle={"Complete"}
           />
-        </div>
-      </Container>
+        </Drawer>
+      </div>
     </section>
   );
 };

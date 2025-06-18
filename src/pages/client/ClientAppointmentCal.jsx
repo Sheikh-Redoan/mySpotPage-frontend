@@ -88,7 +88,6 @@ const storeData = {
 };
 
 export default function ClientAppointmentCal() {
-  const [open, setOpen] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
 
   return (
@@ -239,40 +238,6 @@ export default function ClientAppointmentCal() {
             </p>
           )}
         </div>
-
-        <Drawer
-          placement={"bottom"}
-          closable={false}
-          title="Summary"
-          extra={
-            <Button type="text" onClick={() => setOpen(false)}>
-              <X size={22} className="" />
-            </Button>
-          }
-          height="40%"
-          onClose={() => setOpen(false)}
-          open={open}
-          className="rounded-t-lg"
-        >
-          <ConfirmDetails
-            className="w-full lg:w-80 p-4 flex-shrink-0"
-            storeName={storeData.storeName}
-            rating={storeData.rating}
-            reviewsCount={storeData.reviewsCount}
-            location={storeData.location}
-            staffName={storeData.staffName}
-            appointmentDateTime={storeData.appointmentDateTime}
-            bookingNote={storeData.bookingNote}
-            services={storeData.services}
-            subtotal={storeData.subtotal}
-            vatIncluded={storeData.vatIncluded}
-            discountPercentage={storeData.discountPercentage}
-            discountAmount={storeData.discountAmount}
-            total={storeData.total}
-            paymentInstruction={storeData.paymentInstruction}
-            buttonTittle={"Complete"}
-          />
-        </Drawer>
       </div>
     </section>
   );

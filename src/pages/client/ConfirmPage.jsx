@@ -94,26 +94,24 @@ const ConfirmPage = () => {
             </div>
           </div>
 
-          <div className="max-md:hidden">
             <ConfirmDetails
-            className="w-full lg:w-80 p-4 flex-shrink-0"
-            storeName={storeData.storeName}
-            rating={storeData.rating}
-            reviewsCount={storeData.reviewsCount}
-            location={storeData.location}
-            staffName={storeData.staffName}
-            appointmentDateTime={storeData.appointmentDateTime}
-            bookingNote={storeData.bookingNote}
-            services={storeData.services}
-            subtotal={storeData.subtotal}
-            vatIncluded={storeData.vatIncluded}
-            discountPercentage={storeData.discountPercentage}
-            discountAmount={storeData.discountAmount}
-            total={storeData.total}
-            paymentInstruction={storeData.paymentInstruction}
-            buttonTittle={"Complete"}
-          />
-          </div>
+              className="w-full lg:w-80 p-4 flex-shrink-0 max-md:hidden"
+              storeName={storeData.storeName}
+              rating={storeData.rating}
+              reviewsCount={storeData.reviewsCount}
+              location={storeData.location}
+              staffName={storeData.staffName}
+              appointmentDateTime={storeData.appointmentDateTime}
+              bookingNote={storeData.bookingNote}
+              services={storeData.services}
+              subtotal={storeData.subtotal}
+              vatIncluded={storeData.vatIncluded}
+              discountPercentage={storeData.discountPercentage}
+              discountAmount={storeData.discountAmount}
+              total={storeData.total}
+              paymentInstruction={storeData.paymentInstruction}
+              buttonTittle={"Complete"}
+            />
         </div>
       </Container>
 
@@ -151,11 +149,7 @@ const ConfirmPage = () => {
                 onClick={() => setOpen(true)}
               >
                 See detail{" "}
-                {open ? (
-                  <ChevronUp size={14} />
-                ) : (
-                  <ChevronDown size={14} />
-                )}
+                {open ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
               </Button>
             </div>
           </div>

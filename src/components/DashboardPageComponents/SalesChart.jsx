@@ -115,7 +115,7 @@ function SalesChart() {
   };
 
   return (
-    <div className="bg-white gap-8 divide-x divide-gray-200 rounded-xl md:pb-6 flex w-full h-full inset-shadow-sm max-lg:flex-col">
+    <div className="bg-white gap-4 divide-x divide-gray-200 rounded-xl md:pb-6 flex w-full h-full inset-shadow-sm max-lg:flex-col">
       <div className="w-full lg:w-9/12 chart-1 flex flex-col pr-4">
         <div className="pl-4 pt-4">
           <div className="px-0 pt-0 pb-4 w-full flex flex-wrap justify-between gap-4">
@@ -225,7 +225,7 @@ function SalesChart() {
           </ResponsiveContainer>
         </div>
       </div>
-      <div className="w-full lg:w-3/12 p-4">
+      <div className="w-full lg:w-3/12 p-4 md:p-0 md:pr-3 md:pt-4">
         <h3 className="font-semibold pb-4">Repeat Clients</h3>
         <RepeatClientChart />
       </div>

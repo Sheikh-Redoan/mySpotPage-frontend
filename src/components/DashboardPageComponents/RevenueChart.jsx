@@ -194,7 +194,7 @@ function RevenueChart() {
 
 
   return (
-    <div className="bg-white gap-8 divide-x divide-gray-200 rounded-2xl flex flex-col lg:flex-row w-full h-full inset-shadow-sm">
+    <div className="bg-white gap-4 divide-x divide-gray-200 rounded-2xl flex flex-col lg:flex-row w-full h-full inset-shadow-sm">
       <div className="w-full lg:w-9/12 pr-4 chart-1 flex flex-col">
         <div className="pl-4 pt-4 pb-4 w-full flex justify-between items-center">
           <div className="flex items-center justify-between gap-4 flex-wrap w-full">
@@ -292,7 +292,7 @@ function RevenueChart() {
           </div>
       </div>
 
-      <div className="w-full lg:w-3/12 p-4">
+      <div className="w-full lg:w-3/12 md:pr-3 md:py-4 p-4 md:p-0">
         <h3 className="font-semibold pb-4">Most Popular Service</h3>
 
         <div className=" w-full ">

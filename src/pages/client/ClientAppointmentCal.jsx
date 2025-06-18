@@ -13,7 +13,11 @@ import { Button, Drawer } from "antd";
 import ConfirmDetails from "../../components/client/ConfirmDetails";
 import confirm_product from "/src/assets/images/confirm.jpg";
 import React, { useState } from "react";
-import { X } from "lucide-react";
+import { ChevronDown, ChevronUp, X } from "lucide-react";
+import { FaStar } from "react-icons/fa";
+import { Link } from "react-router";
+import { PiFireLight, PiInfo } from "react-icons/pi";
+import { cn } from "../../lib/utils";
 
 let eventGuid = 0;
 let todayStr = dayjs().format("YYYY-MM-DD");
@@ -84,11 +88,12 @@ const storeData = {
 };
 
 export default function ClientAppointmentCal() {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
 
   return (
-    <section className="bg-[#F9FAFC] py-4 md:py-8">
-      <Container>
+    <section className="bg-[#F9FAFC] md:py-8">
+      <Container className={cn("max-md:mb-54", { "max-md:mb-78": showDetails })}>
         <Breadcrumb
           breadcrumbs={getBreadcrumbs(1, 0, [
             {
@@ -107,45 +112,168 @@ export default function ClientAppointmentCal() {
           />
 
           <AppointmentActionsBtn to="/service-provider-info/confirm" />
-
-          {/* Mobile View */}
-          <div className="md:hidden">
-            <Drawer
-              placement={"bottom"}
-              closable={false}
-              title="Summary"
-              extra={
-                <Button type="text" onClick={() => setOpen(false)}>
-                  <X size={22} className="" />
-                </Button>
-              }
-              height="40%"
-              onClose={() => setOpen(false)}
-              open={open}
-              className="rounded-t-lg"
-            >
-              <ConfirmDetails
-                className="w-full lg:w-80 p-4 flex-shrink-0"
-                storeName={storeData.storeName}
-                rating={storeData.rating}
-                reviewsCount={storeData.reviewsCount}
-                location={storeData.location}
-                staffName={storeData.staffName}
-                appointmentDateTime={storeData.appointmentDateTime}
-                bookingNote={storeData.bookingNote}
-                services={storeData.services}
-                subtotal={storeData.subtotal}
-                vatIncluded={storeData.vatIncluded}
-                discountPercentage={storeData.discountPercentage}
-                discountAmount={storeData.discountAmount}
-                total={storeData.total}
-                paymentInstruction={storeData.paymentInstruction}
-                buttonTittle={"Complete"}
-              />
-            </Drawer>
-          </div>
         </div>
       </Container>
+
+      {/* Mobile View */}
+      <div className="md:hidden">
+        <div className="bg-white p-4 shadow fixed bottom-0 w-full z-50">
+          <div className="flex items-end justify-between">
+            <div>
+              {storeData.storeName && (
+                <h3 className="self-stretch text-Boulder-950 text-lg font-semibold leading-relaxed">
+                  {storeData.storeName}
+                </h3>
+              )}
+              {(storeData.rating || storeData.reviewsCount) && (
+                <div className="flex gap-1 items-center">
+                  {storeData.rating && <FaStar className="text-[#FFD056]" />}
+                  {storeData.rating && (
+                    <p className="text-black text-sm font-normal leading-tight">
+                      {storeData.rating}
+                    </p>
+                  )}
+                  {storeData.reviewsCount && (
+                    <p className="text-description text-sm font-normal underline leading-tight">
+                      ({storeData.reviewsCount})
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
+
+            <div className="self-end">
+              <Button
+                type="text"
+                className="w-full"
+                onClick={() => setShowDetails(!showDetails)}
+              >
+                See detail{" "}
+                {showDetails ? (
+                  <ChevronUp size={14} />
+                ) : (
+                  <ChevronDown size={14} />
+                )}
+              </Button>
+            </div>
+          </div>
+          <div className="border-b border-b-gray-200 my-3" />
+
+          {/* Price details */}
+          <div className="flex flex-col gap-[12px] w-full justify-center items-start">
+            {showDetails && (
+              <>
+                {(storeData.subtotal || storeData.vatIncluded) && (
+                  <div className="flex justify-between items-start w-full mb-2">
+                    <p className="self-stretch text-description text-sm font-normal   leading-tight flex items-center gap-1">
+                      Subtotal{" "}
+                      {storeData.subtotal && (
+                        <PiInfo className="text-gray-500" />
+                      )}
+                    </p>
+                    <div>
+                      {storeData.subtotal && (
+                        <p className="text-right text-black text-sm font-normal leading-tight">
+                          {storeData.subtotal}
+                        </p>
+                      )}
+                      {storeData.vatIncluded && (
+                        <p className=" text-description text-xs font-normal text-right  leading-none">
+                          {storeData.vatIncluded}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                )}
+                {(storeData.discountPercentage || storeData.discountAmount) && (
+                  <div className="flex justify-between items-start w-full">
+                    <p className="self-stretch text-description text-sm font-normal   leading-tight flex items-center gap-1">
+                      Discount
+                    </p>
+                    <div className="flex gap-1 items-center">
+                      {storeData.discountPercentage && (
+                        <p className="text-violet-500 text-xs font-medium   leading-none px-2 py-1 flex bg-[#ecebfc] w-max rounded items-center gap-1">
+                          <PiFireLight /> {storeData.discountPercentage}
+                        </p>
+                      )}
+                      {storeData.discountAmount && (
+                        <p className="text-right text-red-500 text-sm font-normal   leading-tight">
+                          {storeData.discountAmount}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                )}
+                {/* Separator Line for Total - Renders only if discount or subtotal is present AND total is present */}
+                {(storeData.subtotal || storeData.discountAmount) &&
+                  storeData.total && (
+                    <div className="h-[1px] w-full border-t border-[#E9EAEC]"></div>
+                  )}
+              </>
+            )}
+
+            {storeData.total && (
+              <div className="flex justify-between items-start w-full">
+                <p className="w-full max-w-48 text-description text-sm font-normal   leading-tight">
+                  Total
+                </p>
+                <p className="text-right text-violet-500 text-lg font-semibold   leading-relaxed">
+                  {storeData.total}
+                </p>
+              </div>
+            )}
+          </div>
+
+          <Button
+            color="default"
+            variant="solid"
+            className="w-full my-2"
+            disabled
+          >
+            Continue
+          </Button>
+
+          {storeData.paymentInstruction && (
+            <p className="self-stretch text-center text-description text-xs font-normal   leading-none">
+              {storeData.paymentInstruction}
+            </p>
+          )}
+        </div>
+
+        <Drawer
+          placement={"bottom"}
+          closable={false}
+          title="Summary"
+          extra={
+            <Button type="text" onClick={() => setOpen(false)}>
+              <X size={22} className="" />
+            </Button>
+          }
+          height="40%"
+          onClose={() => setOpen(false)}
+          open={open}
+          className="rounded-t-lg"
+        >
+          <ConfirmDetails
+            className="w-full lg:w-80 p-4 flex-shrink-0"
+            storeName={storeData.storeName}
+            rating={storeData.rating}
+            reviewsCount={storeData.reviewsCount}
+            location={storeData.location}
+            staffName={storeData.staffName}
+            appointmentDateTime={storeData.appointmentDateTime}
+            bookingNote={storeData.bookingNote}
+            services={storeData.services}
+            subtotal={storeData.subtotal}
+            vatIncluded={storeData.vatIncluded}
+            discountPercentage={storeData.discountPercentage}
+            discountAmount={storeData.discountAmount}
+            total={storeData.total}
+            paymentInstruction={storeData.paymentInstruction}
+            buttonTittle={"Complete"}
+          />
+        </Drawer>
+      </div>
     </section>
   );
 }

@@ -216,12 +216,12 @@ const ConfirmDetails = ({
               </p>
               <div>
                 {subtotal && (
-                  <p className="text-right text-black text-sm font-normal   leading-tight">
+                  <p className="text-right text-black text-sm font-normal leading-tight">
                     {subtotal}
                   </p>
                 )}
                 {vatIncluded && (
-                  <p className="w-32 h-4 text-description text-xs font-normal   leading-none">
+                  <p className="text-description text-xs font-normal  text-right leading-none">
                     {vatIncluded}
                   </p>
                 )}

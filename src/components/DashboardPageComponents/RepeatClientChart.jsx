@@ -56,7 +56,7 @@ function RepeatClientChart() {
   return (
     <div
       ref={chartRef}
-      className="w-full max-w-full h-[60vw] max-h-[440px] min-h-[360px] bg-white rounded-xl p-4 sm:p-6 flex flex-col justify-between"
+      className="w-full max-w-full h-[60vw] max-h-[480px] min-h-[420px] bg-white rounded-xl flex flex-col justify-between"
       style={{ minWidth: 0 }}
     >
       <ResponsiveContainer width="100%" height="100%">

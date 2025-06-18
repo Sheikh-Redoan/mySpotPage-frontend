@@ -9,7 +9,7 @@ import BookingDetailsContent from "../calendarManagement/pendingBookings/Booking
 import ClientDetails from "./ClientDetails";
 import EventActions from "./EventActions";
 
-export default function Event({ event }) {
+export default function Event({ event, dayView = false }) {
   const [open, setOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState(dayjs(event.start).toDate());
   const { xl } = useResponsive();
@@ -33,7 +33,7 @@ export default function Event({ event }) {
               "text-xs truncate line-clamp-1 max-w-[40px] md:max-w-full px-1 rounded-sm",
               {
                 "bg-[#3E70DD]/10 text-[#3E70DD]": event.status === "Confirmed",
-                "bg-[#3BA55C]/10 text-[#3BA55C]": event.status === "Completed",
+                "bg-[#21C66E]/10 text-[#21C66E]": event.status === "Completed",
                 "bg-[#FC8B23]/10 text-[#FC8B23]": event.status === "Pending",
                 "bg-[#ED4245]/10 text-[#ED4245]": event.status === "Cancelled",
                 "bg-[#82868E]/10 text-[#82868E]": event.status === "Not-show",
@@ -77,15 +77,17 @@ export default function Event({ event }) {
       key={event.id}
       className="cursor-pointer text-xs flex items-center justify-between gap-2 text-gray-700 w-full">
       <div className="flex items-center gap-2 flex-1">
-        <span
-          className={cn("w-1.5 h-1.5 rounded-full block", {
-            "bg-[#3E70DD]": event.status === "Confirmed",
-            "bg-[#3BA55C]": event.status === "Completed",
-            "bg-[#FC8B23]": event.status === "Pending",
-            "bg-[#ED4245]": event.status === "Cancelled",
-            "bg-[#82868E]": event.status === "Not-show",
-          })}
-        />
+        {!dayView && (
+          <span
+            className={cn("w-1.5 h-1.5 rounded-full block", {
+              "bg-[#3E70DD]": event.status === "Confirmed",
+              "bg-[#21C66E]": event.status === "Completed",
+              "bg-[#FC8B23]": event.status === "Pending",
+              "bg-[#ED4245]": event.status === "Cancelled",
+              "bg-[#82868E]": event.status === "Not-show",
+            })}
+          />
+        )}
 
         <Popover
           placement="left"
@@ -95,7 +97,8 @@ export default function Event({ event }) {
           arrow={false}
           content={<ClientDetails event={event} hide={hide} />}>
           <Button type="text" className="!p-0">
-            {dayjs(event.start).format("HH:mm")} - {event.title}
+            {!dayView && <span>{dayjs(event.start).format("HH:mm")} - </span>}
+            {event.title}
           </Button>
         </Popover>
       </div>

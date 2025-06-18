@@ -89,7 +89,7 @@ export default function Calender({
       />
       <div
         className={cn("lg:rounded-xl overflow-hidden border border-gray-200", {
-          "border-l-0 border-t-0": selectedView === "day",
+          "border-0": selectedView === "day",
           "border-t-0": selectedView === "week",
           "border-b-0": selectedView === "month",
         })}>

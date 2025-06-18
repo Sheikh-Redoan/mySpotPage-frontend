@@ -104,20 +104,19 @@ export default function WeekView({
         resources.map((resource) => (
           <React.Fragment key={resource.id}>
             {/* Resource Name Column */}
-            {
-              <div className="p-4 border-r border-b border-gray-200 flex flex-col items-center gap-2 justify-center bg-primary01/10 max-h-24 lg:min-h-48">
-                <Avatar
-                  src={resource.avatar}
-                  alt={resource.name}
-                  size={xl ? 50 : 35}
-                  className="outline-1 outline-offset-2 outline-primary01/30"
-                />
 
-                <span className="text-xs lg:text-sm text-gray-700 text-center text-nowrap">
-                  {resource.name}
-                </span>
-              </div>
-            }
+            <div className="p-4 border-r border-b border-gray-200 flex flex-col items-center gap-2 justify-center bg-primary01/10 max-h-24 lg:min-h-48">
+              <Avatar
+                src={resource.avatar}
+                alt={resource.name}
+                size={xl ? 50 : 35}
+                className="outline-1 outline-offset-2 outline-primary01/30"
+              />
+
+              <span className="text-xs lg:text-sm text-gray-700 text-center text-nowrap">
+                {resource.name}
+              </span>
+            </div>
 
             {/* Event Cells for each day */}
             {weekDays.map((day, dayIndex) => {

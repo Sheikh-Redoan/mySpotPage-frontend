@@ -207,7 +207,7 @@ const columns = [
     width: 120,
     render: (_, record) => (
       <div className="flex gap-4 justify-end pr-4">
-        <Link>
+        <Link to={`/dashboard/service-menu/create?serviceId=${record.key}`}>
           <img src={imageProvider.edit} alt="icon" />
         </Link>
         <img onClick={() => setDeleteServiceModalOpen(true)} src={imageProvider.deleteIcon} alt="icon" />

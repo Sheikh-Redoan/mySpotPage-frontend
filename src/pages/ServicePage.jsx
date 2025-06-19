@@ -71,7 +71,7 @@ function ServicePage() {
             <div className="flex items-center gap-5">
               <button
                 type="button"
-                onClick={() => navigate("/dashboard/service-menu/create", { beforeAfter: beforeAfter })}
+                onClick={() => navigate("/dashboard/service-menu/create", {state: { beforeAfter: beforeAfter }})}
                 className="inline-flex items-center px-3 py-2 gap-2 text-white bg-[#744CDB] border border-[#744CDB] rounded-lg hover:bg-primary01 focus:outline-none focus:ring-2 focus:ring-primary01 focus:ring-offset-2"
               >
                 <PlusIcon className="text-[#FFF]" />

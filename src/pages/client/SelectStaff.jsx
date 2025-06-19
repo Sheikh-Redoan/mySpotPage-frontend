@@ -41,7 +41,7 @@ export default function SelectStaff() {
   };
 
   return (
-    <section className="bg-[#F9FAFC] md:py-8">
+    <section className="bg-[#F9FAFC] md:py-8 px-0 md:px-4">
       <Container
         // className={cn("max-md:h-[610px] max-md:overflow-y-auto", {
         //   "max-md:h-[520px] max-md:overflow-y-auto": showDetails,

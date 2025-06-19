@@ -5,6 +5,7 @@ import React from "react";
 import useResponsive from "../../hooks/useResponsive";
 import { cn } from "../../lib/utils";
 import DayCell from "./DayCell";
+import DayViewAppointment from "./DayViewAppointment";
 import Event from "./Event";
 import EventTag from "./EventTag";
 
@@ -130,6 +131,14 @@ export default function DayView({
       </div>
     );
   }
+
+  return (
+    <DayViewAppointment
+      currentDate={currentDate}
+      resources={resources}
+      events={events}
+    />
+  );
 
   return (
     <div className="h-full max-h-[calc(100vh-200px)] overflow-hidden">

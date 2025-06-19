@@ -5,7 +5,7 @@ import { cn } from "../../lib/utils";
 import CalendarToolbar from "../reuseableComponent/CalendarToolbar";
 import DayView from "./DayView";
 import MonthView from "./MonthView";
-import WeekView from "./weekView";
+import WeekView from "./WeekView";
 
 export default function Calender({
   selectTimeFromProvider = false,
@@ -13,6 +13,7 @@ export default function Calender({
   resources,
   applyFilter,
 }) {
+  console.log("first")
   // State for the currently displayed date, adjusted based on view
   const [currentDate, setCurrentDate] = useState(dayjs(Date.now())); // Start with the day view date
   const [selectedView, setSelectedView] = useState("month"); // Default to 'day' view

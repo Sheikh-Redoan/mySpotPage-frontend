@@ -91,7 +91,7 @@ export default function ClientAppointmentCal() {
   const [showDetails, setShowDetails] = useState(false);
 
   return (
-    <section className="bg-[#F9FAFC] md:py-8">
+    <section className="bg-[#F9FAFC] lg:py-8 md:px-4">
       <Container
         className={cn("max-md:mb-54", { "max-md:mb-78": showDetails })}
       >
@@ -104,7 +104,7 @@ export default function ClientAppointmentCal() {
           ])}
         />
 
-        <div className="bg-white shadow-md rounded-lg max-sm:py-4 max-sm:px-2 lg:p-6">
+        <div className="bg-white shadow-md rounded-lg max-lg:py-4 max-lg:px-2 lg:p-6">
           <Calender
             events={MOCK_EVENTS}
             resources={MOCK_RESOURCES}

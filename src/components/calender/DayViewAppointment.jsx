@@ -72,22 +72,21 @@ export default function DayViewAppointment({ currentDate, resources, events }) {
   console.log(gridTemplateColumns);
 
   return (
-    <div className="w-full max-w-5xl bg-white rounded-lg shadow-xl overflow-hidden min-w-screen">
-      <div>
-        {/* Main scrollable container */}
-        <div className="relative overflow-auto max-h-screen rounded-md border border-gray-200">
-          {/* The actual grid container */}
-          <div
-            className="grid relative" // Add relative positioning here
-            style={{
-              gridTemplateColumns: gridTemplateColumns,
-              minWidth: "100%", // Instead of width: "max-content"
-            }}>
-            {/* Sticky Header Row (Users) */}
-            {columns.map((column, colIndex) => (
-              <div
-                key={column.key}
-                className={`
+    <div className="bg-white rounded-lg shadow-xl overflow-hidden">
+      {/* Main scrollable container */}
+      <div className="relative overflow-auto max-h-screen lg:rounded-md">
+        {/* The actual grid container */}
+        <div
+          className="grid relative" // Add relative positioning here
+          style={{
+            gridTemplateColumns: gridTemplateColumns,
+            minWidth: "100%", // Instead of width: "max-content"
+          }}>
+          {/* Sticky Header Row (Users) */}
+          {columns.map((column, colIndex) => (
+            <div
+              key={column.key}
+              className={`
                     sticky top-0 p-3 bg-indigo-100 text-left
                     border-b-2 border-gray-200 z-20 whitespace-nowrap overflow-hidden text-ellipsis
                     flex items-center justify-center flex-col
@@ -97,50 +96,50 @@ export default function DayViewAppointment({ currentDate, resources, events }) {
                         : ""
                     }
                   `}>
-                {colIndex === 0 ? (
+              {colIndex === 0 ? (
+                <div
+                  className={cn(
+                    "text-sm lg:hidden",
+                    date.isSame(currentDate, "day")
+                      ? "text-white bg-primary01 rounded-full w-8 h-8 flex items-center justify-center mx-auto"
+                      : "text-gray-800 mt-3"
+                  )}>
+                  {date.format("DD")}
+                </div>
+              ) : (
+                <div className="flex flex-col items-center gap-2">
+                  <Avatar
+                    src={column.avatar}
+                    alt={column.title}
+                    size={xl ? 50 : 30}
+                    className="outline-1 outline-offset-2 outline-primary01/30 object-cover"
+                  />
+
+                  <span className="text-xs lg:text-sm text-gray-700 text-center text-nowrap">
+                    {column.title}
+                  </span>
+                </div>
+              )}
+            </div>
+          ))}
+
+          {/* Data Rows (Time Slots and User Appointments) */}
+          {appointmentGridData.map((rowData) => (
+            <React.Fragment key={rowData.time}>
+              {columns.map((column, colIndex) => {
+                const cellContent =
+                  colIndex === 0
+                    ? rowData.time // First column is the time slot
+                    : rowData[column.key]; // Other columns are appointment data for that user/time slot
+
+                const isAppointment =
+                  cellContent && typeof cellContent === "object";
+
+                return (
                   <div
-                    className={cn(
-                      "text-sm lg:hidden",
-                      date.isSame(currentDate, "day")
-                        ? "text-white bg-primary01 rounded-full w-8 h-8 flex items-center justify-center mx-auto"
-                        : "text-gray-800 mt-3"
-                    )}>
-                    {date.format("DD")}
-                  </div>
-                ) : (
-                  <div className="flex flex-col items-center gap-2">
-                    <Avatar
-                      src={column.avatar}
-                      alt={column.title}
-                      size={xl ? 50 : 30}
-                      className="outline-1 outline-offset-2 outline-primary01/30 object-cover"
-                    />
-
-                    <span className="text-xs lg:text-sm text-gray-700 text-center text-nowrap">
-                      {column.title}
-                    </span>
-                  </div>
-                )}
-              </div>
-            ))}
-
-            {/* Data Rows (Time Slots and User Appointments) */}
-            {appointmentGridData.map((rowData) => (
-              <React.Fragment key={rowData.time}>
-                {columns.map((column, colIndex) => {
-                  const cellContent =
-                    colIndex === 0
-                      ? rowData.time // First column is the time slot
-                      : rowData[column.key]; // Other columns are appointment data for that user/time slot
-
-                  const isAppointment =
-                    cellContent && typeof cellContent === "object";
-
-                  return (
-                    <div
-                      key={`${rowData.time}-${column.key}`}
-                      className={`
-                          p-3 border border-gray-200 text-gray-800 whitespace-nowrap overflow-hidden text-ellipsis h-48 max-h-[90px]
+                    key={`${rowData.time}-${column.key}`}
+                    className={`
+                          lg:p-3 border border-gray-200 text-gray-800 whitespace-nowrap overflow-hidden text-ellipsis h-48 max-h-[130px]
                           ${
                             colIndex === 0
                               ? "sticky left-0 bg-gray-50 z-10 text-sm !border-0 !max-w-[120px]"
@@ -157,35 +156,34 @@ export default function DayViewAppointment({ currentDate, resources, events }) {
                               : ""
                           } /* Grey out 'Available' */
                         `}>
-                      {
-                        isAppointment ? (
-                          <div className="flex flex-col items-start justify-between gap-2">
-                            {cellContent.vip && (
-                              <span className="bg-[#FFB743] p-1 rounded-full flex items-center justify-center">
-                                <Crown
-                                  size={12}
-                                  strokeWidth={1.5}
-                                  className="text-white text-xs"
-                                  fill="#fff"
-                                />
-                              </span>
-                            )}
-                            <span className="text-sm text-ellipsis overflow-hidden">
-                              {cellContent.title}
+                    {
+                      isAppointment ? (
+                        <div className="flex flex-col items-start justify-between gap-2">
+                          {cellContent.vip && (
+                            <span className="bg-[#FFB743] p-1 rounded-full flex items-center justify-center">
+                              <Crown
+                                size={12}
+                                strokeWidth={1.5}
+                                className="text-white text-xs"
+                                fill="#fff"
+                              />
                             </span>
-                          </div>
-                        ) : colIndex === 0 ? (
-                          cellContent
-                        ) : (
-                          ""
-                        ) // Display 'Available' for empty slots
-                      }
-                    </div>
-                  );
-                })}
-              </React.Fragment>
-            ))}
-          </div>
+                          )}
+                          <span className="text-sm text-ellipsis overflow-hidden">
+                            {cellContent.title}
+                          </span>
+                        </div>
+                      ) : colIndex === 0 ? (
+                        cellContent
+                      ) : (
+                        ""
+                      ) // Display 'Available' for empty slots
+                    }
+                  </div>
+                );
+              })}
+            </React.Fragment>
+          ))}
         </div>
       </div>
     </div>

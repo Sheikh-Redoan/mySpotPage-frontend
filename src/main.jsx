@@ -17,8 +17,9 @@ import { routes } from "./routes/Router";
 const queryClient = new QueryClient();
 
 const theme = {
+  cssVar: true,
   token: {
-    colorPrimary: "var(--primary-color)",
+    colorPrimary: "#866be7",
     borderRadius: "var(--border-radius)",
     fontFamily: '"Golos Text", sans-serif',
   },

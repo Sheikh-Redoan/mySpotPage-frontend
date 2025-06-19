@@ -104,7 +104,10 @@ export default function DayViewAppointment({ currentDate, resources, events }) {
                   {date.format("DD")}
                 </div>
               ) : (
-                <div className="flex flex-col items-center gap-2">
+                <div
+                  className={cn("flex flex-col items-center gap-2", {
+                    "rounded-tl-xl": colIndex === 1,
+                  })}>
                   <Avatar
                     src={column.avatar}
                     alt={column.title}

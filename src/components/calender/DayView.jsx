@@ -37,8 +37,6 @@ export default function DayView({
       )
     );
 
-  const date = dayjs(currentDate); // replace with your date
-
   if (selectTimeFromProvider) {
     return (
       <div className="flex flex-col h-full max-h-[calc(100vh-200px)] overflow-hidden">

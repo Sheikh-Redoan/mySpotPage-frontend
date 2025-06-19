@@ -88,10 +88,10 @@ export default function Calender({
         selectTimeFromProvider={selectTimeFromProvider}
       />
       <div
-        className={cn("lg:rounded-xl overflow-hidden border border-gray-200", {
-          "border-0": selectedView === "day",
-          "border-t-0": selectedView === "week",
-          "border-b-0": selectedView === "month",
+        className={cn("lg:rounded-xl overflow-hidden border-gray-200", {
+          "border-r": selectedView === "day",
+          "border border-t-0 border-l-0": selectedView === "week",
+          "border border-gray-200": selectedView === "month",
         })}>
         {/* Render the appropriate calendar content based on the selected view */}
         {selectedView === "month" && (

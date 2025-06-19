@@ -49,7 +49,7 @@ export default function CalendarToolbar({
   };
 
   const months = Array.from({ length: 12 }, (_, i) =>
-    dayjs().month(i).format("MMMM")
+    dayjs().month(i).format("MMM")
   );
 
   return (
@@ -202,12 +202,18 @@ export default function CalendarToolbar({
               {months.map((month, index) => (
                 <Button
                   key={month}
-                  type="default"
+                  type="text"
                   onClick={() => {
                     onDatePickerChange(dayjs().month(index));
                     setSelectMonth(index + 1);
                     // setOpenMonth(false);
-                  }}>
+                  }}
+                  className={cn(
+                    "!text-sm !rounded-lg",
+                    selectMonth === index + 1
+                      ? "!bg-primary01/15 !text-primary01"
+                      : "text-gray-500 hover:text-gray-700 !border !border-gray-200"
+                  )}>
                   {month}
                 </Button>
               ))}

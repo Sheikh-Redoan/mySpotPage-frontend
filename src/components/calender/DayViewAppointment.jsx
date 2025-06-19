@@ -1,5 +1,6 @@
 import { Avatar } from "antd";
 import dayjs from "dayjs";
+import { Crown } from "lucide-react";
 import React from "react";
 import useResponsive from "../../hooks/useResponsive";
 import { cn } from "../../lib/utils";
@@ -20,13 +21,15 @@ export default function DayViewAppointment({ currentDate, resources, events }) {
   };
   const timeSlots = getTimeSlots(currentDate);
 
+  // Set minimum width for user columns
+  const MIN_COLUMN_WIDTH = xl ? "180px" : "120px";
   const columns = [
     { key: "time", title: "Time Slot", width: "70px" },
     ...appointmentUsers.map((user) => ({
       key: user.id,
       title: user.name,
       avatar: user.avatar,
-      width: "50px",
+      width: `minmax(${MIN_COLUMN_WIDTH}, 1fr)`, // Min width with auto resize
     })),
   ];
 
@@ -36,7 +39,7 @@ export default function DayViewAppointment({ currentDate, resources, events }) {
     const eventsByResourceAndTime = {};
     events.forEach((event) => {
       const eventStart = dayjs(event.start);
-      if (eventStart.isSame(today, "day")) {
+      if (eventStart.isSame(currentDate, "day")) {
         const resourceId = event.resourceId;
         const timeKey = eventStart.format("h:mm A");
 
@@ -63,8 +66,10 @@ export default function DayViewAppointment({ currentDate, resources, events }) {
 
   const appointmentGridData = generateAppointmentData();
 
-  const gridTemplateColumns = columns.map((col) => col.width).join(" ");
+  const gridTemplateColumns = `70px repeat(${appointmentUsers.length}, minmax(${MIN_COLUMN_WIDTH}, 1fr))`;
   const date = dayjs(currentDate);
+
+  console.log(gridTemplateColumns);
 
   return (
     <div className="w-full max-w-5xl bg-white rounded-lg shadow-xl overflow-hidden min-w-screen">
@@ -76,7 +81,7 @@ export default function DayViewAppointment({ currentDate, resources, events }) {
             className="grid relative" // Add relative positioning here
             style={{
               gridTemplateColumns: gridTemplateColumns,
-              width: "max-content", // Ensure the grid expands to fit all content
+              minWidth: "100%", // Instead of width: "max-content"
             }}>
             {/* Sticky Header Row (Users) */}
             {columns.map((column, colIndex) => (
@@ -95,9 +100,9 @@ export default function DayViewAppointment({ currentDate, resources, events }) {
                 {colIndex === 0 ? (
                   <div
                     className={cn(
-                      "text-xs lg:text-sm lg:hidden",
+                      "text-sm lg:hidden",
                       date.isSame(currentDate, "day")
-                        ? "text-white bg-primary01 rounded-full w-6 h-6 lg:w-8 lg:h-8 flex items-center justify-center mx-auto"
+                        ? "text-white bg-primary01 rounded-full w-8 h-8 flex items-center justify-center mx-auto"
                         : "text-gray-800 mt-3"
                     )}>
                     {date.format("DD")}
@@ -107,7 +112,7 @@ export default function DayViewAppointment({ currentDate, resources, events }) {
                     <Avatar
                       src={column.avatar}
                       alt={column.title}
-                      size={xl ? 50 : 35}
+                      size={xl ? 50 : 30}
                       className="outline-1 outline-offset-2 outline-primary01/30 object-cover"
                     />
 
@@ -135,10 +140,10 @@ export default function DayViewAppointment({ currentDate, resources, events }) {
                     <div
                       key={`${rowData.time}-${column.key}`}
                       className={`
-                          p-3 border border-gray-200 text-gray-800 whitespace-nowrap overflow-hidden text-ellipsis h-48 max-h-[180px]
+                          p-3 border border-gray-200 text-gray-800 whitespace-nowrap overflow-hidden text-ellipsis h-48 max-h-[90px]
                           ${
                             colIndex === 0
-                              ? "sticky left-0 bg-gray-50 z-10 font-medium !border-0 !max-w-[120px]"
+                              ? "sticky left-0 bg-gray-50 z-10 text-sm !border-0 !max-w-[120px]"
                               : "bg-white"
                           }
                           ${
@@ -154,33 +159,25 @@ export default function DayViewAppointment({ currentDate, resources, events }) {
                         `}>
                       {
                         isAppointment ? (
-                          <>
-                            <div className="font-semibold">
-                              {cellContent.title}
-                            </div>
-                            <div className="text-xs text-gray-600">
-                              Status:{" "}
-                              <span
-                                className={
-                                  cellContent.status === "Confirmed"
-                                    ? "text-green-600"
-                                    : cellContent.status === "Completed"
-                                    ? "text-gray-600"
-                                    : "text-orange-600" // For other statuses like Pending, etc.
-                                }>
-                                {cellContent.status}
-                              </span>
-                            </div>
+                          <div className="flex flex-col items-start justify-between gap-2">
                             {cellContent.vip && (
-                              <div className="text-xs text-purple-600 font-bold">
-                                VIP
-                              </div>
+                              <span className="bg-[#FFB743] p-1 rounded-full flex items-center justify-center">
+                                <Crown
+                                  size={12}
+                                  strokeWidth={1.5}
+                                  className="text-white text-xs"
+                                  fill="#fff"
+                                />
+                              </span>
                             )}
-                          </>
+                            <span className="text-sm text-ellipsis overflow-hidden">
+                              {cellContent.title}
+                            </span>
+                          </div>
                         ) : colIndex === 0 ? (
                           cellContent
                         ) : (
-                          "Available"
+                          ""
                         ) // Display 'Available' for empty slots
                       }
                     </div>

@@ -47,7 +47,7 @@ export default function CalendarToolbar({
       <div
         className={cn(
           "flex flex-col md:flex-row gap-4 md:gap-0 items-center justify-start md:justify-between mb-4",
-          { "max-md:hidden": !selectTimeFromProvider }
+          { "max-lg:hidden": !selectTimeFromProvider }
         )}
       >
         <div className="flex items-center gap-4 max-md:self-start">

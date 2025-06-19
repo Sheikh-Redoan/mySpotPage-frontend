@@ -74,13 +74,12 @@ const BlacklistsOverview = () => {
   const paginatedBookings = bookings.slice(startIndex, endIndex);
 
   return (
-    <div className="w-full py-2">
+    <div className="w-full py-2 max-md:px-4">
       <Table
         dataSource={paginatedBookings}
         columns={columns}
         pagination={false}
         rowKey="id"
-        className="w-full"
         locale={{ emptyText: <CustomEmptyTable /> }}
         rowClassName={(record) =>
           searchQuery &&
@@ -90,6 +89,8 @@ const BlacklistsOverview = () => {
             ? "bg-highlight01"
             : ""
         }
+        className="w-full"
+        scroll={{ x: 1120 }}
       />
 
       {/* Pagination */}

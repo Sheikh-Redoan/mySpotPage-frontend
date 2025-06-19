@@ -12,19 +12,19 @@ import {
   TextSearch,
   X,
 } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router";
 import useResponsive from "../../hooks/useResponsive";
 import { cn } from "../../lib/utils";
 import SettingsBookingsRulesModal from "../calendarManagement/SettingsBookingsRulesModal";
 import StaffSelection from "../calendarManagement/StaffSelection";
+import CalendarDatePicker from "../calender/CalendarDatePicker";
 import MultipleSelector from "../shared/MultipleSelector";
 
 export default function CalendarToolbar({
   selectedDate,
   onDatePickerChange,
   handleNavButtonClick,
-  handleTodayClick,
   applyFilter = true,
   selectTimeFromProvider = false,
 }) {
@@ -37,6 +37,11 @@ export default function CalendarToolbar({
   const [searchParams, setSearchParams] = useSearchParams();
   const view = searchParams.get("view") || "month"; // Default to 'month' view if not specified
 
+  // Refs for scrolling to the current month button
+  const monthsContainerRef = useRef(null);
+  const currentMonthButtonRef = useRef(null);
+  const currentMonth = dayjs().month() + 1; // dayjs months are 0-indexed
+
   const handleViewChange = (value) => {
     if (value) {
       searchParams.set("view", value);
@@ -44,6 +49,22 @@ export default function CalendarToolbar({
       searchParams.delete("view");
     }
     setSearchParams(searchParams);
+  };
+
+  const handleTodayClick = () => {
+    onDatePickerChange(dayjs());
+    setSelectMonth(dayjs().month() + 1);
+    searchParams.set("view", "day"); // Reset to day view
+    setSearchParams(searchParams);
+
+    // Scroll to the current month button
+    if (currentMonthButtonRef.current) {
+      currentMonthButtonRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "center",
+      });
+    }
   };
 
   const onClose = () => {
@@ -195,30 +216,36 @@ export default function CalendarToolbar({
                 </Link>
               </div>
             </div>
-
-            <div
-              className={cn(
-                "flex items-center justify-between gap-2 mt-2 overflow-x-auto py-5 transition-all",
-                { hidden: !openMonth }
-              )}>
-              {months.map((month, index) => (
-                <Button
-                  key={month}
-                  type="text"
-                  onClick={() => {
-                    onDatePickerChange(dayjs().month(index));
-                    setSelectMonth(index + 1);
-                    // setOpenMonth(false);
-                  }}
-                  className={cn(
-                    "!text-sm !rounded-lg",
-                    selectMonth === index + 1
-                      ? "!bg-primary01/15 !text-primary01"
-                      : "text-gray-500 hover:text-gray-700 !border !border-gray-200"
-                  )}>
-                  {month}
-                </Button>
-              ))}
+            <div className={cn("transition-all", { hidden: !openMonth })}>
+              <CalendarDatePicker />
+              <div
+                ref={monthsContainerRef}
+                className={cn(
+                  "flex items-center justify-between gap-2 mt-2 overflow-x-auto py-5 transition-all"
+                )}>
+                <span className="text-xs">{dayjs().format("YYYY")}</span>
+                {months.map((month, index) => (
+                  <Button
+                    key={month}
+                    ref={
+                      index + 1 === currentMonth ? currentMonthButtonRef : null
+                    }
+                    type="text"
+                    onClick={() => {
+                      onDatePickerChange(dayjs().month(index));
+                      setSelectMonth(index + 1);
+                      // setOpenMonth(false);
+                    }}
+                    className={cn(
+                      "!text-sm !rounded-lg",
+                      selectMonth === index + 1
+                        ? "!bg-primary01/15 !text-primary01"
+                        : "!text-gray-500 hover:text-gray-700 !border !border-gray-200"
+                    )}>
+                    {month}
+                  </Button>
+                ))}
+              </div>
             </div>
           </div>
 
@@ -255,6 +282,7 @@ export default function CalendarToolbar({
 
                 <div className="border-b border-gray-200 pb-3">
                   <Segmented
+                    onClick={onClose}
                     options={[
                       {
                         label: (

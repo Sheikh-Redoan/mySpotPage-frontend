@@ -17,8 +17,9 @@ import { routes } from "./routes/Router";
 const queryClient = new QueryClient();
 
 const theme = {
+  cssVar: true,
   token: {
-    colorPrimary: "var(--primary-color)",
+    colorPrimary: "#866be7",
     borderRadius: "var(--border-radius)",
     fontFamily: '"Golos Text", sans-serif',
   },
@@ -31,6 +32,15 @@ const theme = {
       trackBg: "#fff",
       itemColor: "#000",
       trackPadding: "var(--track-padding)",
+    },
+    Button: {
+      colorPrimary: "#866be7",
+      colorPrimaryHover: "#866be7",
+      colorPrimaryActive: "#866be7",
+      defaultBg: "#fff",
+      defaultActiveColor: "#fff",
+      colorPrimaryText: "#fff",
+      borderRadius: "var(--border-radius)",
     },
   },
 };

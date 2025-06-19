@@ -99,13 +99,14 @@ export default function CalendarToolbar({
 
         <Segmented
           options={[
-            { label: (<div className="!w-18">Month</div>), value: "month" },
-            { label: (<div className="!w-18">Week</div>), value: "week" },
-            { label: (<div className="!w-18">Day</div>), value: "day" },
+            { label: (<div className="!w-full md:py-1 md:px-2">Month</div>), value: "month" },
+            { label: (<div className="!w-full md:py-1 md:px-2">Week</div>), value: "week" },
+            { label: (<div className="!w-full md:py-1 md:px-2">Day</div>), value: "day" },
           ]}
           value={currentView}
           onChange={handleViewChange}
-          className="border border-gray-300"
+          className="border border-gray-300 max-md:!w-full !p-0"
+          block
         />
       </div>
 

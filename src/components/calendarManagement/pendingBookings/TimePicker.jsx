@@ -3,6 +3,7 @@ import { Check } from "lucide-react";
 import { Clock } from "lucide-react";
 import React from "react";
 import { useState } from "react";
+import { useLocation } from "react-router";
 
 const timeSlots = [
   "08:00 AM",
@@ -23,9 +24,11 @@ const timeSlots = [
 ];
 
 const TimePicker = ({ scheduledTime, isMobile = false }) => {
-  const [selectedTime, setSelectedTime] = useState(scheduledTime);
+  const [selectedTime, setSelectedTime] = useState(scheduledTime ? scheduledTime : "08:00 AM" );
 
   const placement = isMobile ? "rightTop" : "bottomRight";
+  const location = useLocation();
+  const pathName = location.pathname;
 
   const handleTimeSelect = (time) => {
     // Handle time selection
@@ -60,12 +63,12 @@ const TimePicker = ({ scheduledTime, isMobile = false }) => {
           ))}
         </div>
       </div>
-      <div className="flex gap-2 p-2 bg-white sticky bottom-0">
+      {!pathName.includes("/dashboard/pricing") && (<div className="flex gap-2 p-2 bg-white sticky bottom-0">
         <Button onClick={handleReset}>Reset</Button>
         <Button onClick={handleApply} color="default" variant="solid">
           Apply
         </Button>
-      </div>
+      </div>)}
     </div>
   );
 

@@ -1,9 +1,9 @@
 import { Avatar } from "antd";
 import dayjs from "dayjs";
-import { Crown } from "lucide-react";
 import React from "react";
 import useResponsive from "../../hooks/useResponsive";
 import { cn } from "../../lib/utils";
+import DayViewEvent from "./DayViewEvent";
 
 export default function DayViewAppointment({ currentDate, resources, events }) {
   const { xl } = useResponsive();
@@ -98,12 +98,11 @@ export default function DayViewAppointment({ currentDate, resources, events }) {
                   `}>
               {colIndex === 0 ? (
                 <div
-                  className={cn(
-                    "text-sm lg:hidden",
-                    date.isSame(currentDate, "day")
-                      ? "text-white bg-primary01 rounded-full w-8 h-8 flex items-center justify-center mx-auto"
-                      : "text-gray-800 mt-3"
-                  )}>
+                  className={cn("text-sm lg:hidden", "text-gray-800 mt-3", {
+                    "text-gray-400": !date.isSame(currentDate, "day"),
+                    "text-white bg-primary01 rounded-full w-8 h-8 flex items-center justify-center mx-auto":
+                      date.isSame(currentDate, "day"),
+                  })}>
                   {date.format("DD")}
                 </div>
               ) : (
@@ -138,41 +137,21 @@ export default function DayViewAppointment({ currentDate, resources, events }) {
                 return (
                   <div
                     key={`${rowData.time}-${column.key}`}
-                    className={`
-                          lg:p-3 border border-gray-200 text-gray-800 whitespace-nowrap overflow-hidden text-ellipsis h-48 max-h-[130px]
-                          ${
-                            colIndex === 0
-                              ? "sticky left-0 bg-gray-50 z-10 text-sm !border-0 !max-w-[120px]"
-                              : "bg-white"
-                          }
-                          ${
-                            isAppointment
-                              ? "bg-blue-50 text-blue-800 hover:bg-blue-100 cursor-pointer transition-colors duration-200"
-                              : "hover:bg-gray-50 transition-colors duration-200"
-                          }
-                          ${
-                            !isAppointment && colIndex > 0
-                              ? "text-gray-400"
-                              : ""
-                          } /* Grey out 'Available' */
-                        `}>
+                    className={cn(
+                      "bg-white border border-gray-200 text-gray-800 whitespace-nowrap overflow-hidden text-ellipsis h-48 max-h-[130px]",
+                      {
+                        "sticky left-0 bg-gray-50 z-10 text-sm !border-0 !max-w-[120px]":
+                          colIndex === 0,
+                        "bg-white": colIndex > 0 && !isAppointment,
+                        "hover:bg-gray-50 transition-colors duration-200":
+                          !isAppointment,
+                      }
+
+                      // Condition for empty non-time cells
+                    )}>
                     {
                       isAppointment ? (
-                        <div className="flex flex-col items-start justify-between gap-2">
-                          {cellContent.vip && (
-                            <span className="bg-[#FFB743] p-1 rounded-full flex items-center justify-center">
-                              <Crown
-                                size={12}
-                                strokeWidth={1.5}
-                                className="text-white text-xs"
-                                fill="#fff"
-                              />
-                            </span>
-                          )}
-                          <span className="text-sm text-ellipsis overflow-hidden">
-                            {cellContent.title}
-                          </span>
-                        </div>
+                        <DayViewEvent event={cellContent} />
                       ) : colIndex === 0 ? (
                         cellContent
                       ) : (

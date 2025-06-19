@@ -44,7 +44,7 @@ const AddCard = () => {
         <Drawer
           placement={"bottom"}
           closable={false}
-          height="68%"
+          height="72%"
           onClose={() => setOpen(false)}
           open={open}
           className="rounded-t-lg"

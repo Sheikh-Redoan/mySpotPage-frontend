@@ -6,6 +6,7 @@ import service2 from '../../../assets/images/service2.png'
 import service3 from '../../../assets/images/service3.png'
 import service4 from '../../../assets/images/service4.png'
 import service5 from '../../../assets/images/service5.png'
+import { Link } from "react-router";
 
 // Columns
 const columns = [
@@ -47,7 +48,7 @@ const columns = [
     dataIndex: "dercription",
     key: "dercription",
     width: 790,
-    render: (text) => <span style={{ color: "#797979"}} className="w-48">{text}</span>,
+    render: (text) => <span style={{ color: "#797979" }} className="w-48">{text}</span>,
   },
   {
     title: "Duration",
@@ -71,7 +72,9 @@ const columns = [
     width: 120,
     render: (_) => (
       <div className="flex gap-4 justify-end pr-4">
-        <img src={imageProvider.edit} alt="icon" />
+        <Link>
+          <img src={imageProvider.edit} alt="icon" />
+        </Link>
         <img src={imageProvider.deleteIcon} alt="icon" />
       </div>
     ),
@@ -190,7 +193,7 @@ const data = [
     category: "Female Only",
     image: service4
   },
-  
+
 ];
 
 

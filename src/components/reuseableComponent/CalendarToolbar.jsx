@@ -13,7 +13,7 @@ import {
   X,
 } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useSearchParams } from "react-router";
 import { cn } from "../../lib/utils";
 import SettingsBookingsRulesModal from "../calendarManagement/SettingsBookingsRulesModal";
 import StaffSelection from "../calendarManagement/StaffSelection";
@@ -24,8 +24,6 @@ export default function CalendarToolbar({
   onDatePickerChange,
   handleNavButtonClick,
   handleTodayClick,
-  currentView,
-  handleViewChange,
   applyFilter = true,
   selectTimeFromProvider = false,
 }) {
@@ -33,6 +31,18 @@ export default function CalendarToolbar({
   const [selectMonth, setSelectMonth] = useState(dayjs().month() + 1);
   const [settingsModalOpen, setSettingsModalOpen] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const view = searchParams.get("view") || "month"; // Default to 'month' view if not specified
+
+  const handleViewChange = (value) => {
+    if (value) {
+      searchParams.set("view", value);
+    } else {
+      searchParams.delete("view");
+    }
+    setSearchParams(searchParams);
+  };
 
   const onClose = () => {
     setOpenDrawer(false);
@@ -48,14 +58,12 @@ export default function CalendarToolbar({
         className={cn(
           "flex flex-col md:flex-row gap-4 md:gap-0 items-center justify-start md:justify-between mb-4",
           { "max-lg:hidden": !selectTimeFromProvider }
-        )}
-      >
+        )}>
         <div className="flex items-center gap-4 max-md:self-start">
           <div className="flex items-center">
             <button
               className="cursor-pointer mr-2"
-              onClick={() => handleNavButtonClick("prev")}
-            >
+              onClick={() => handleNavButtonClick("prev")}>
               <ChevronLeft size={20} />
             </button>
             <DatePicker
@@ -68,14 +76,12 @@ export default function CalendarToolbar({
             />
             <button
               className="cursor-pointer ml-1.5"
-              onClick={() => handleNavButtonClick("next")}
-            >
+              onClick={() => handleNavButtonClick("next")}>
               <ChevronRight size={20} />
             </button>
             <button
               className="text-[#866be7] cursor-pointer text-[14px] font-semibold ml-4"
-              onClick={handleTodayClick}
-            >
+              onClick={handleTodayClick}>
               Today
             </button>
           </div>
@@ -99,11 +105,20 @@ export default function CalendarToolbar({
 
         <Segmented
           options={[
-            { label: (<div className="!w-full md:py-1 md:px-2">Month</div>), value: "month" },
-            { label: (<div className="!w-full md:py-1 md:px-2">Week</div>), value: "week" },
-            { label: (<div className="!w-full md:py-1 md:px-2">Day</div>), value: "day" },
+            {
+              label: <div className="!w-full md:py-1 md:px-2">Month</div>,
+              value: "month",
+            },
+            {
+              label: <div className="!w-full md:py-1 md:px-2">Week</div>,
+              value: "week",
+            },
+            {
+              label: <div className="!w-full md:py-1 md:px-2">Day</div>,
+              value: "day",
+            },
           ]}
-          value={currentView}
+          value={view}
           onChange={handleViewChange}
           className="border border-gray-300 max-md:!w-full !p-0"
           block
@@ -119,8 +134,7 @@ export default function CalendarToolbar({
                 <Button
                   type="text"
                   className="!p-0"
-                  onClick={() => setOpenDrawer(true)}
-                >
+                  onClick={() => setOpenDrawer(true)}>
                   <TextSearch
                     size={20}
                     strokeWidth={1.5}
@@ -131,8 +145,7 @@ export default function CalendarToolbar({
                 <Button
                   type="text"
                   className="!p-0"
-                  onClick={() => setOpenMonth(!openMonth)}
-                >
+                  onClick={() => setOpenMonth(!openMonth)}>
                   <span>
                     {dayjs()
                       .month(selectMonth - 1)
@@ -152,16 +165,14 @@ export default function CalendarToolbar({
                 <Button
                   type="text"
                   className="!p-0 !text-primary01 !font-bold"
-                  onClick={handleTodayClick}
-                >
+                  onClick={handleTodayClick}>
                   Today
                 </Button>
 
                 <Button
                   type="default"
                   className="!p-0 !w-8 !h-8 !rounded-full !border-primary01"
-                  onClick={() => setSettingsModalOpen(true)}
-                >
+                  onClick={() => setSettingsModalOpen(true)}>
                   <Settings
                     size={16}
                     strokeWidth={1.5}
@@ -172,8 +183,7 @@ export default function CalendarToolbar({
                 <Link to="/dashboard/add-booking-by-provider">
                   <Button
                     type="default"
-                    className="!p-0 !w-8 !h-8 !rounded-full !border-primary01"
-                  >
+                    className="!p-0 !w-8 !h-8 !rounded-full !border-primary01">
                     <Plus
                       size={20}
                       strokeWidth={1.5}
@@ -188,8 +198,7 @@ export default function CalendarToolbar({
               className={cn(
                 "flex items-center justify-between gap-2 mt-2 overflow-x-auto py-5 transition-all",
                 { hidden: !openMonth }
-              )}
-            >
+              )}>
               {months.map((month, index) => (
                 <Button
                   key={month}
@@ -198,8 +207,7 @@ export default function CalendarToolbar({
                     onDatePickerChange(dayjs().month(index));
                     setSelectMonth(index + 1);
                     // setOpenMonth(false);
-                  }}
-                >
+                  }}>
                   {month}
                 </Button>
               ))}
@@ -222,12 +230,10 @@ export default function CalendarToolbar({
               <Button
                 type="text"
                 className="!p-0 !text-primary01 !font-bold"
-                onClick={onClose}
-              >
+                onClick={onClose}>
                 Close
               </Button>
-            }
-          >
+            }>
             <div className="flex items-center justify-between mb-4 border-b border-gray-200 py-4 px-6">
               <h3 className="text-base font-semibold">View mode</h3>
               <X
@@ -268,7 +274,7 @@ export default function CalendarToolbar({
                     value: "day",
                   },
                 ]}
-                value={currentView}
+                value={view}
                 onChange={handleViewChange}
                 size="large"
                 className="mb-4 !w-full text-start"

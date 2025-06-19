@@ -1,6 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
+import "./theme-variables.css";
 
 // react query components
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -17,15 +18,19 @@ const queryClient = new QueryClient();
 
 const theme = {
   token: {
-    colorPrimary: "#866BE7",
-    borderRadius: 6,
+    colorPrimary: "var(--primary-color)",
+    borderRadius: "var(--border-radius)",
     fontFamily: '"Golos Text", sans-serif',
   },
   components: {
     Segmented: {
-      itemSelectedBg: "#866BE7",
-      itemSelectedColor: "#FFFFFF",
-      trackBg: "#FFFFFF",
+      itemSelectedBg: "var(--selected-bg)",
+      itemHoverBg: "var(--hover-bg)",
+      itemSelectedColor: "var(--item-selected-color)",
+      itemActiveBg: "#ffff",
+      trackBg: "#fff",
+      itemColor: "#000",
+      trackPadding: "var(--track-padding)",
     },
   },
 };

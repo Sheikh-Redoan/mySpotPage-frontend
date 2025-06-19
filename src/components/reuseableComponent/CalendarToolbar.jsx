@@ -13,7 +13,8 @@ import {
   X,
 } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useSearchParams } from "react-router";
+import useResponsive from "../../hooks/useResponsive";
 import { cn } from "../../lib/utils";
 import SettingsBookingsRulesModal from "../calendarManagement/SettingsBookingsRulesModal";
 import StaffSelection from "../calendarManagement/StaffSelection";
@@ -24,22 +25,33 @@ export default function CalendarToolbar({
   onDatePickerChange,
   handleNavButtonClick,
   handleTodayClick,
-  currentView,
-  handleViewChange,
   applyFilter = true,
   selectTimeFromProvider = false,
 }) {
+  const { xl } = useResponsive();
   const [openMonth, setOpenMonth] = useState(false);
   const [selectMonth, setSelectMonth] = useState(dayjs().month() + 1);
   const [settingsModalOpen, setSettingsModalOpen] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
+
+  const [searchParams, setSearchParams] = useSearchParams();
+  const view = searchParams.get("view") || "month"; // Default to 'month' view if not specified
+
+  const handleViewChange = (value) => {
+    if (value) {
+      searchParams.set("view", value);
+    } else {
+      searchParams.delete("view");
+    }
+    setSearchParams(searchParams);
+  };
 
   const onClose = () => {
     setOpenDrawer(false);
   };
 
   const months = Array.from({ length: 12 }, (_, i) =>
-    dayjs().month(i).format("MMMM")
+    dayjs().month(i).format("MMM")
   );
 
   return (
@@ -47,15 +59,13 @@ export default function CalendarToolbar({
       <div
         className={cn(
           "flex flex-col md:flex-row gap-4 md:gap-0 items-center justify-start md:justify-between mb-4",
-          { "max-md:hidden": !selectTimeFromProvider }
-        )}
-      >
+          { "max-lg:hidden": !selectTimeFromProvider }
+        )}>
         <div className="flex items-center gap-4 max-md:self-start">
           <div className="flex items-center">
             <button
               className="cursor-pointer mr-2"
-              onClick={() => handleNavButtonClick("prev")}
-            >
+              onClick={() => handleNavButtonClick("prev")}>
               <ChevronLeft size={20} />
             </button>
             <DatePicker
@@ -68,14 +78,12 @@ export default function CalendarToolbar({
             />
             <button
               className="cursor-pointer ml-1.5"
-              onClick={() => handleNavButtonClick("next")}
-            >
+              onClick={() => handleNavButtonClick("next")}>
               <ChevronRight size={20} />
             </button>
             <button
               className="text-[#866be7] cursor-pointer text-[14px] font-semibold ml-4"
-              onClick={handleTodayClick}
-            >
+              onClick={handleTodayClick}>
               Today
             </button>
           </div>
@@ -99,13 +107,22 @@ export default function CalendarToolbar({
 
         <Segmented
           options={[
-            { label: (<div className="!w-full md:py-1 md:px-2">Month</div>), value: "month" },
-            { label: (<div className="!w-full md:py-1 md:px-2">Week</div>), value: "week" },
-            { label: (<div className="!w-full md:py-1 md:px-2">Day</div>), value: "day" },
+            {
+              label: <div className="!w-full md:py-1 md:px-2">Month</div>,
+              value: "month",
+            },
+            {
+              label: <div className="!w-full md:py-1 md:px-2">Week</div>,
+              value: "week",
+            },
+            {
+              label: <div className="!w-full md:py-1 md:px-2">Day</div>,
+              value: "day",
+            },
           ]}
-          value={currentView}
+          value={view}
           onChange={handleViewChange}
-          className="border border-gray-300 max-md:!w-full !p-0"
+          className="border border-gray-300 max-md:!w-full !p-0 segmented-gray"
           block
         />
       </div>
@@ -119,8 +136,7 @@ export default function CalendarToolbar({
                 <Button
                   type="text"
                   className="!p-0"
-                  onClick={() => setOpenDrawer(true)}
-                >
+                  onClick={() => setOpenDrawer(true)}>
                   <TextSearch
                     size={20}
                     strokeWidth={1.5}
@@ -131,8 +147,7 @@ export default function CalendarToolbar({
                 <Button
                   type="text"
                   className="!p-0"
-                  onClick={() => setOpenMonth(!openMonth)}
-                >
+                  onClick={() => setOpenMonth(!openMonth)}>
                   <span>
                     {dayjs()
                       .month(selectMonth - 1)
@@ -152,16 +167,14 @@ export default function CalendarToolbar({
                 <Button
                   type="text"
                   className="!p-0 !text-primary01 !font-bold"
-                  onClick={handleTodayClick}
-                >
+                  onClick={handleTodayClick}>
                   Today
                 </Button>
 
                 <Button
                   type="default"
                   className="!p-0 !w-8 !h-8 !rounded-full !border-primary01"
-                  onClick={() => setSettingsModalOpen(true)}
-                >
+                  onClick={() => setSettingsModalOpen(true)}>
                   <Settings
                     size={16}
                     strokeWidth={1.5}
@@ -172,8 +185,7 @@ export default function CalendarToolbar({
                 <Link to="/dashboard/add-booking-by-provider">
                   <Button
                     type="default"
-                    className="!p-0 !w-8 !h-8 !rounded-full !border-primary01"
-                  >
+                    className="!p-0 !w-8 !h-8 !rounded-full !border-primary01">
                     <Plus
                       size={20}
                       strokeWidth={1.5}
@@ -188,18 +200,22 @@ export default function CalendarToolbar({
               className={cn(
                 "flex items-center justify-between gap-2 mt-2 overflow-x-auto py-5 transition-all",
                 { hidden: !openMonth }
-              )}
-            >
+              )}>
               {months.map((month, index) => (
                 <Button
                   key={month}
-                  type="default"
+                  type="text"
                   onClick={() => {
                     onDatePickerChange(dayjs().month(index));
                     setSelectMonth(index + 1);
                     // setOpenMonth(false);
                   }}
-                >
+                  className={cn(
+                    "!text-sm !rounded-lg",
+                    selectMonth === index + 1
+                      ? "!bg-primary01/15 !text-primary01"
+                      : "text-gray-500 hover:text-gray-700 !border !border-gray-200"
+                  )}>
                   {month}
                 </Button>
               ))}
@@ -212,82 +228,84 @@ export default function CalendarToolbar({
             setSettingsModalOpen={setSettingsModalOpen}
           />
 
-          <Drawer
-            placement="left"
-            width={250}
-            onClose={onClose}
-            open={openDrawer}
-            closeIcon={false}
-            extra={
-              <Button
-                type="text"
-                className="!p-0 !text-primary01 !font-bold"
-                onClick={onClose}
-              >
-                Close
-              </Button>
-            }
-          >
-            <div className="flex items-center justify-between mb-4 border-b border-gray-200 py-4 px-6">
-              <h3 className="text-base font-semibold">View mode</h3>
-              <X
-                size={20}
-                onClick={onClose}
-                className="text-gray-500 hover:text-gray-700"
-              />
-            </div>
+          {!xl && (
+            <>
+              <Drawer
+                placement="left"
+                width={250}
+                onClose={onClose}
+                open={openDrawer}
+                closeIcon={false}
+                extra={
+                  <Button
+                    type="text"
+                    className="!p-0 !text-primary01 !font-bold"
+                    onClick={onClose}>
+                    Close
+                  </Button>
+                }>
+                <div className="flex items-center justify-between mb-4 border-b border-gray-200 py-4 px-6">
+                  <h3 className="text-base font-semibold">View mode</h3>
+                  <X
+                    size={20}
+                    onClick={onClose}
+                    className="text-gray-500 hover:text-gray-700"
+                  />
+                </div>
 
-            <div className="border-b border-gray-200 pb-3">
-              <Segmented
-                options={[
-                  {
-                    label: (
-                      <div className="flex items-center gap-2 my-2">
-                        <Grid3x3 size={20} strokeWidth={1.5} />
-                        <span>Month view</span>
-                      </div>
-                    ),
-                    value: "month",
-                  },
-                  {
-                    label: (
-                      <div className="flex items-center gap-2 my-2">
-                        <StretchVertical size={20} strokeWidth={1.5} />
-                        <span>Week view</span>
-                      </div>
-                    ),
-                    value: "week",
-                  },
-                  {
-                    label: (
-                      <div className="flex items-center gap-2 my-2">
-                        <StretchHorizontal size={20} strokeWidth={1.5} />
-                        <span>Day view</span>
-                      </div>
-                    ),
-                    value: "day",
-                  },
-                ]}
-                value={currentView}
-                onChange={handleViewChange}
-                size="large"
-                className="mb-4 !w-full text-start"
-                vertical
-              />
-            </div>
+                <div className="border-b border-gray-200 pb-3">
+                  <Segmented
+                    options={[
+                      {
+                        label: (
+                          <div className="flex items-center gap-2 my-2">
+                            <Grid3x3 size={20} strokeWidth={1.5} />
+                            <span>Month view</span>
+                          </div>
+                        ),
+                        value: "month",
+                      },
+                      {
+                        label: (
+                          <div className="flex items-center gap-2 my-2">
+                            <StretchVertical size={20} strokeWidth={1.5} />
+                            <span>Week view</span>
+                          </div>
+                        ),
+                        value: "week",
+                      },
+                      {
+                        label: (
+                          <div className="flex items-center gap-2 my-2">
+                            <StretchHorizontal size={20} strokeWidth={1.5} />
+                            <span>Day view</span>
+                          </div>
+                        ),
+                        value: "day",
+                      },
+                    ]}
+                    value={view}
+                    onChange={handleViewChange}
+                    size="large"
+                    className="mb-4 !w-full text-start"
+                    vertical
+                  />
+                </div>
 
-            <div className="flex flex-col gap-4 px-4 py-5">
-              <StaffSelection />
-            </div>
-          </Drawer>
+                <div className="flex flex-col gap-4 px-4 py-5">
+                  <StaffSelection />
+                </div>
+              </Drawer>
 
-          <style>
-            {`
+              <style>
+                {`
           .ant-drawer-body {
             padding: 0 !important;
           }
         `}
-          </style>
+              </style>
+            </>
+          )}
         </>
       )}
     </>

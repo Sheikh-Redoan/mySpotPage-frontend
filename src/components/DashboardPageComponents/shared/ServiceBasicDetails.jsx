@@ -10,6 +10,9 @@ import { Drawer } from "antd";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 import { Radio } from "antd";
+import { Input } from "antd";
+
+const { TextArea } = Input;
 
 const ServiceBasicDetails = ({
   activeKey,
@@ -26,11 +29,10 @@ const ServiceBasicDetails = ({
   handleRemoveImage,
   setIsModalOpen,
 }) => {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
   const [label, setLabel] = useState("For All");
   const [selectValue, setSelectvalue] = useState(label);
-  const { xs, sm, md, lg } = useResponsive()
-
+  const { xs, sm, md, lg } = useResponsive();
 
   return (
     <div>
@@ -52,10 +54,11 @@ const ServiceBasicDetails = ({
           header={
             <div className="flex items-center gap-x-3">
               <div
-                className={`w-10 h-10 flex justify-center items-center border rounded-full font-bold transition-all duration-200 ${isStepComplete
-                  ? "bg-[#262626] text-white "
-                  : "border p-4 text-[#262626]"
-                  }`}
+                className={`w-10 h-10 flex justify-center items-center border rounded-full font-bold transition-all duration-200 ${
+                  isStepComplete
+                    ? "bg-[#262626] text-white "
+                    : "border p-4 text-[#262626]"
+                }`}
               >
                 {isStepComplete ? <Check className="w-6 h-6" /> : "1"}
               </div>
@@ -120,7 +123,7 @@ const ServiceBasicDetails = ({
                   <label className="block mb-2 text-base text-[#3A3B3F]">
                     Service Name <span className="text-orange-600">*</span>
                   </label>
-                  <input
+                  <Input
                     {...register("serviceName", { required: true })}
                     type="text"
                     className="block w-full text-sm border border-gray-300 p-2 rounded-md"
@@ -133,16 +136,27 @@ const ServiceBasicDetails = ({
                   <label className="block mb-2 text-base text-[#3A3B3F]">
                     Description<span className="text-orange-600">*</span>
                   </label>
-                  <input
-                    {...register("description", { required: true })}
-                    type="text"
-                    className="block w-full text-sm border border-gray-300 p-2 rounded-md"
-                    placeholder="e.g. A haircut is a process of trimming, shaping, or styling hair to achieve a specific look."
-                  />
+
+                  {lg ? (
+                    <Input
+                      {...register("description", { required: true })}
+                      type="text"
+                      className="block w-full text-sm border border-gray-300 p-2 rounded-md"
+                      placeholder="e.g. A haircut is a process of trimming, shaping, or styling hair to achieve a specific look."
+                    />
+                  ) : (
+                    <TextArea
+                      {...register("description", { required: true })}
+                      rows={4}
+                      placeholder="e.g. A haircut is a process of trimming, shaping, or styling hair to achieve a specific look."
+                      maxLength={6}
+                    />
+                  )}
                 </div>
               </div>
 
-              {(lg || md) ? (
+              {/* Mobile View */}
+              {lg || md ? (
                 <Controller
                   name="availableFor"
                   control={control}
@@ -175,7 +189,8 @@ const ServiceBasicDetails = ({
                       </Select>
                     </div>
                   )}
-                />) : (
+                />
+              ) : (
                 <>
                   <label className="block mb-2 text-[#3A3B3F]">
                     Available for <span className="text-orange-600">*</span>
@@ -183,7 +198,8 @@ const ServiceBasicDetails = ({
                   <Button
                     type="default"
                     className="w-full !flex !justify-between !py-5 !border !border-gray-300"
-                    onClick={() => setOpen(true)}>
+                    onClick={() => setOpen(true)}
+                  >
                     {selectValue} <ChevronDown className="text-description" />
                   </Button>
                   <Drawer
@@ -191,7 +207,11 @@ const ServiceBasicDetails = ({
                     closable={false}
                     title="Available for"
                     extra={
-                      <Button type="text" onClick={() => setOpen(false)} className="!px-0">
+                      <Button
+                        type="text"
+                        onClick={() => setOpen(false)}
+                        className="!px-0"
+                      >
                         <X size={24} className="text-description" />
                       </Button>
                     }
@@ -206,26 +226,25 @@ const ServiceBasicDetails = ({
                         flexDirection: "column",
                         gap: 10,
                         padding: 20,
-                        fontSize: '14px'
+                        fontSize: "14px",
                       }}
-                      onChange={
-                        (e) => setLabel(e.target.value)
-                      }
+                      onChange={(e) => setLabel(e.target.value)}
                       value={label}
                       options={[
-                        { value: 'For All', label: 'For All' },
-                        { value: 'For male only', label: 'For male only' },
-                        { value: 'For female only', label: 'For female only' },
-                        { value: 'For kids only', label: 'For kids only' },
+                        { value: "For All", label: "For All" },
+                        { value: "For male only", label: "For male only" },
+                        { value: "For female only", label: "For female only" },
+                        { value: "For kids only", label: "For kids only" },
                       ]}
                     />
                     <div className="bg-white pt-5 pb-10 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] flex justify-center">
                       <button
-                        onClick={() =>{ 
-                          setOpen(false)
-                          setSelectvalue(label)
+                        onClick={() => {
+                          setOpen(false);
+                          setSelectvalue(label);
                         }}
-                        className="bg-black text-white w-[95%] flex justify-center py-2.5 rounded-md">
+                        className="bg-black text-white w-[95%] flex justify-center py-2.5 rounded-md"
+                      >
                         Apply
                       </button>
                     </div>
@@ -239,8 +258,6 @@ const ServiceBasicDetails = ({
                   </style>
                 </>
               )}
-
-
             </form>
           </div>
         </Panel>

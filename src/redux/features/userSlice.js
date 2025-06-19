@@ -6,6 +6,8 @@ const initialState = null;
 //   role: "client",
 //   photoURL: null,
 // };
+// const initialState = null;
+
 
 const userSlice = createSlice({
   name: "user",

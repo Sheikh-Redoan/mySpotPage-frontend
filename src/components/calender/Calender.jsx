@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import "dayjs/locale/en"; // Or your preferred locale
 import { useState } from "react";
+import { useSearchParams } from "react-router";
 import { cn } from "../../lib/utils";
 import CalendarToolbar from "../reuseableComponent/CalendarToolbar";
 import DayView from "./DayView";
@@ -13,10 +14,10 @@ export default function Calender({
   resources,
   applyFilter,
 }) {
-  console.log("first")
+  const [searchParams, setSearchParams] = useSearchParams();
+  const view = searchParams.get("view") || "month"; // Default to 'month' view if not specified
   // State for the currently displayed date, adjusted based on view
   const [currentDate, setCurrentDate] = useState(dayjs(Date.now())); // Start with the day view date
-  const [selectedView, setSelectedView] = useState("month"); // Default to 'day' view
 
   // Helper to get days for a month grid (including prev/next month's days)
   const getDaysInMonthGrid = (date) => {
@@ -57,6 +58,8 @@ export default function Calender({
 
   const handleToday = () => {
     setCurrentDate(dayjs()); // Set to current day, view will adjust
+    searchParams.set("view", "day"); // Reset to day view
+    setSearchParams(searchParams);
   };
 
   const dayNames = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
@@ -84,18 +87,17 @@ export default function Calender({
         handleNavButtonClick={handleNavButtonClick}
         handleTodayClick={handleToday}
         applyFilter={applyFilter}
-        currentView={selectedView}
-        handleViewChange={setSelectedView}
+        currentView={view}
         selectTimeFromProvider={selectTimeFromProvider}
       />
       <div
-        className={cn("lg:rounded-xl overflow-hidden border border-gray-200", {
-          "border-0": selectedView === "day",
-          "border-t-0": selectedView === "week",
-          "border-b-0": selectedView === "month",
+        className={cn("lg:rounded-xl overflow-hidden border-gray-200", {
+          "border-r": view === "day",
+          "border border-t-0 border-l-0": view === "week",
+          "border border-gray-200": view === "month",
         })}>
         {/* Render the appropriate calendar content based on the selected view */}
-        {selectedView === "month" && (
+        {view === "month" && (
           <MonthView
             currentDate={currentDate}
             dayNames={dayNames}
@@ -106,7 +108,7 @@ export default function Calender({
           />
         )}
 
-        {selectedView === "week" && (
+        {view === "week" && (
           <WeekView
             currentDate={currentDate}
             resources={resources}
@@ -116,7 +118,7 @@ export default function Calender({
           />
         )}
 
-        {selectedView === "day" && (
+        {view === "day" && (
           <DayView
             currentDate={currentDate}
             events={events}

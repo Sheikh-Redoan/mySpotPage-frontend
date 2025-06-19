@@ -1,3 +1,14 @@
+import dayjs from "dayjs";
+
+// Helper function to create event dates within a week
+const createEventDate = (timeString, dayOffset = 0) => {
+  // Start with today and add any offset days (0-6 for a week)
+  const baseDate = dayjs().add(dayOffset, "day");
+  // Format as YYYY-MM-DD
+  const dateStr = baseDate.format("YYYY-MM-DD");
+  // Combine with the time string
+  return `${dateStr}T${timeString}`;
+};
 export const MOCK_RESOURCES = [
   {
     id: "pixel-nomad",
@@ -32,32 +43,11 @@ export const MOCK_RESOURCES = [
 ];
 
 export const MOCK_EVENTS = [
-  // Events for January 2025 (as in previous month view)
-  {
-    id: "m1",
-    resourceId: "pixel-nomad",
-    start: "2025-01-02T14:00:00",
-    title: "Emily",
-    status: "Confirmed",
-  },
-  // ...existing January events...
-
-  // Events for Week View (June 2025, as in original resource timeline)
-  {
-    id: "w1",
-    resourceId: "pixel-nomad",
-    start: "2025-06-02T14:00:00",
-    title: "Alexander",
-    status: "Confirmed",
-    vip: true,
-  },
-  // ...existing June events...
-
-  // Additional events for current month (June 2025)
+  // Day 0 (Today)
   {
     id: "c1",
     resourceId: "pixel-nomad",
-    start: "2025-06-15T09:00:00",
+    start: createEventDate("09:00:00", 0),
     title: "Jessica",
     status: "Confirmed",
     vip: true,
@@ -65,21 +55,23 @@ export const MOCK_EVENTS = [
   {
     id: "c2",
     resourceId: "code-voyager",
-    start: "2025-06-15T10:30:00",
+    start: createEventDate("10:30:00", 0),
     title: "Robert",
     status: "Completed",
   },
   {
     id: "c3",
     resourceId: "echo-sage",
-    start: "2025-06-15T14:00:00",
+    start: createEventDate("14:00:00", 0),
     title: "Olivia",
     status: "Confirmed",
   },
+
+  // Day 1
   {
     id: "c4",
     resourceId: "nebula-drift",
-    start: "2025-06-16T09:00:00",
+    start: createEventDate("09:00:00", 1),
     title: "William",
     status: "Confirmed",
     vip: true,
@@ -87,21 +79,23 @@ export const MOCK_EVENTS = [
   {
     id: "c5",
     resourceId: "shadow-quill",
-    start: "2025-06-16T11:00:00",
+    start: createEventDate("11:00:00", 1),
     title: "Sophia",
     status: "Completed",
   },
   {
     id: "c6",
     resourceId: "anna-hilton",
-    start: "2025-06-16T15:30:00",
+    start: createEventDate("15:30:00", 1),
     title: "Noah",
     status: "Confirmed",
   },
+
+  // Day 2
   {
     id: "c7",
     resourceId: "pixel-nomad",
-    start: "2025-06-17T10:00:00",
+    start: createEventDate("10:00:00", 2),
     title: "Emma",
     status: "Completed",
     vip: true,
@@ -109,21 +103,23 @@ export const MOCK_EVENTS = [
   {
     id: "c8",
     resourceId: "code-voyager",
-    start: "2025-06-17T13:00:00",
+    start: createEventDate("13:00:00", 2),
     title: "Liam",
     status: "Confirmed",
   },
   {
     id: "c9",
     resourceId: "echo-sage",
-    start: "2025-06-17T16:00:00",
+    start: createEventDate("16:00:00", 2),
     title: "Ava",
     status: "Completed",
   },
+
+  // Day 3
   {
     id: "c10",
     resourceId: "nebula-drift",
-    start: "2025-06-18T09:30:00", // Today
+    start: createEventDate("09:30:00", 3),
     title: "Isabella",
     status: "Confirmed",
     vip: true,
@@ -131,22 +127,24 @@ export const MOCK_EVENTS = [
   {
     id: "c11",
     resourceId: "shadow-quill",
-    start: "2025-06-18T11:30:00", // Today
+    start: createEventDate("11:30:00", 3),
     title: "James",
     status: "Completed",
   },
   {
     id: "c12",
     resourceId: "anna-hilton",
-    start: "2025-06-18T14:00:00", // Today
+    start: createEventDate("14:00:00", 3),
     title: "Charlotte",
     status: "Confirmed",
     vip: true,
   },
+
+  // Day 4
   {
     id: "c13",
     resourceId: "pixel-nomad",
-    start: "2025-06-18T09:00:00",
+    start: createEventDate("09:00:00", 4),
     title: "Benjamin",
     status: "Confirmed",
     vip: true,
@@ -154,7 +152,7 @@ export const MOCK_EVENTS = [
   {
     id: "c14",
     resourceId: "code-voyager",
-    start: "2025-06-19T13:30:00",
+    start: createEventDate("13:30:00", 4),
     title: "Mia",
     status: "Completed",
     vip: true,
@@ -162,21 +160,23 @@ export const MOCK_EVENTS = [
   {
     id: "c15",
     resourceId: "echo-sage",
-    start: "2025-06-19T16:30:00",
+    start: createEventDate("16:30:00", 4),
     title: "Elijah",
     status: "Confirmed",
   },
+
+  // Day 5
   {
     id: "c16",
     resourceId: "nebula-drift",
-    start: "2025-06-20T10:00:00",
+    start: createEventDate("10:00:00", 5),
     title: "Amelia",
     status: "Completed",
   },
   {
     id: "c17",
     resourceId: "shadow-quill",
-    start: "2025-06-20T14:30:00",
+    start: createEventDate("14:30:00", 5),
     title: "Oliver",
     status: "Confirmed",
     vip: true,
@@ -184,21 +184,23 @@ export const MOCK_EVENTS = [
   {
     id: "c18",
     resourceId: "anna-hilton",
-    start: "2025-06-20T16:00:00",
+    start: createEventDate("16:00:00", 5),
     title: "Harper",
     status: "Completed",
   },
+
+  // Day 6
   {
     id: "c19",
     resourceId: "pixel-nomad",
-    start: "2025-06-21T11:00:00",
+    start: createEventDate("11:00:00", 6),
     title: "Lucas",
     status: "Confirmed",
   },
   {
     id: "c20",
     resourceId: "code-voyager",
-    start: "2025-06-21T15:00:00",
+    start: createEventDate("15:00:00", 6),
     title: "Evelyn",
     status: "Completed",
     vip: true,
@@ -206,72 +208,10 @@ export const MOCK_EVENTS = [
   {
     id: "c21",
     resourceId: "echo-sage",
-    start: "2025-06-22T09:30:00",
+    start: createEventDate("09:30:00", 6),
     title: "Mason",
     status: "Confirmed",
   },
-  {
-    id: "c22",
-    resourceId: "nebula-drift",
-    start: "2025-06-22T13:00:00",
-    title: "Abigail",
-    status: "Confirmed",
-    vip: true,
-  },
-  {
-    id: "c23",
-    resourceId: "shadow-quill",
-    start: "2025-06-25T10:30:00",
-    title: "Ethan",
-    status: "Completed",
-  },
-  {
-    id: "c24",
-    resourceId: "anna-hilton",
-    start: "2025-06-25T15:30:00",
-    title: "Elizabeth",
-    status: "Confirmed",
-    vip: true,
-  },
-  {
-    id: "c25",
-    resourceId: "pixel-nomad",
-    start: "2025-06-28T11:00:00",
-    title: "Matthew",
-    status: "Completed",
-  },
-  {
-    id: "c26",
-    resourceId: "code-voyager",
-    start: "2025-06-28T14:30:00",
-    title: "Sofia",
-    status: "Confirmed",
-  },
-  {
-    id: "c27",
-    resourceId: "echo-sage",
-    start: "2025-06-30T09:00:00",
-    title: "Daniel",
-    status: "Confirmed",
-    vip: true,
-  },
-  {
-    id: "c28",
-    resourceId: "nebula-drift",
-    start: "2025-06-30T13:30:00",
-    title: "Victoria",
-    status: "Completed",
-  },
-
-  // Events for Day View (January 6, 2025, as in last day view)
-  {
-    id: "d1",
-    resourceId: "code-voyager",
-    start: "2025-01-06T08:00:00",
-    title: "Sophia",
-    status: "Completed",
-  },
-  // ...existing day view events...
 ];
 
 export const specialDatesData = [

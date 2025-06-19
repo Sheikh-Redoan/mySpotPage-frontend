@@ -2,13 +2,19 @@ import { Space } from "antd";
 import { ArrowLeft } from "lucide-react";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import ImageCropModal from "../../modal/ImageCropModal";
-import ServicePriceSetting from "./ServicePriceSetting";
-import ServiceImageUpload from "./ServiceImageUpload";
-import ServiceBasicDetails from "./ServiceBasicDetails";
-import ServiceBeforeAfterImageUpload from "./ServiceBeforeAfterImageUpload";
+import ImageCropModal from "../../components/modal/ImageCropModal";
+import ServicePriceSetting from "../../components/DashboardPageComponents/shared/ServicePriceSetting";
+import ServiceImageUpload from "../../components/DashboardPageComponents/shared/ServiceImageUpload";
+import ServiceBasicDetails from "../../components/DashboardPageComponents/shared/ServiceBasicDetails";
+import ServiceBeforeAfterImageUpload from "../../components/DashboardPageComponents/shared/ServiceBeforeAfterImageUpload";
+import { use } from "react";
+import { useLocation } from "react-router";
 
-const AddNewService = ({ setAddNewService, beforeAfter }) => {
+const AddNewServicePage = () => {
+  const location = useLocation();
+  const beforeAfter = location.state?.beforeAfter;
+  console.log({location})
+
   const [useGalleryView, setUseGalleryView] = useState(false);
   const [activeKey, setActiveKey] = useState(["1"]);
   const [isStepComplete, setIsStepComplete] = useState(false);
@@ -149,10 +155,10 @@ const AddNewService = ({ setAddNewService, beforeAfter }) => {
   return (
     <div className="w-full p-4 md:p-5">
       <div className="flex justify-between items-center">
-        <div onClick={() => setAddNewService(false)} className="flex items-center gap-1.5">
+        {/* <div onClick={() => setAddNewService(false)} className="flex items-center gap-1.5">
           <ArrowLeft />
           <p className="text-[#242528] text-lg font-semibold">New Service</p>
-        </div>
+        </div> */}
         <button
           type="button"
           className="hidden md:block text-white font-semibold bg-gray-900 py-2.5 w-20 rounded-lg cursor-pointer hover:scale-95 transform transition-all duration-300 ease-in-out"
@@ -243,4 +249,4 @@ const AddNewService = ({ setAddNewService, beforeAfter }) => {
   );
 };
 
-export default AddNewService;
+export default AddNewServicePage;

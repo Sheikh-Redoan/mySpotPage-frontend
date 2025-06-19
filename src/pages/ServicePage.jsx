@@ -3,14 +3,16 @@ import { SearchOutlined } from "../assets/icons/icons";
 import { PlusIcon } from "lucide-react";
 import { PhotoIcon } from "../assets/icons/icons2";
 import ServiceTable from "../components/DashboardPageComponents/shared/ServiceTable";
-import AddNewService from "../components/DashboardPageComponents/shared/AddNewService";
+import AddNewService from "./seller/AddNewServicePage";
 import { useState } from "react";
 import React from "react";
 import ConfirmFormatChangeModal from "../components/modal/ConfirmFormatChangeModal ";
+import { useNavigate } from "react-router";
 
 function ServicePage() {
+  const navigate = useNavigate();
+
   const [beforeAfter, setBeforeAfter] = useState("Only Outcome");
-  const [addNewService, setAddNewService] = useState(false);
   const [selectedOption, setSelectedOption] = useState(2);
   const [popoverVisible, setPopoverVisible] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
@@ -55,7 +57,6 @@ function ServicePage() {
 
   return (
     <div className="w-full p-0 md:p-5 relative">
-      {!addNewService ? (
         <div className="px-3">
           <div className="flex flex-col md:flex-row gap-6 justify-between items-center">
             <div className="relative w-full md:w-[280px]">
@@ -70,7 +71,7 @@ function ServicePage() {
             <div className="flex items-center gap-5">
               <button
                 type="button"
-                onClick={() => setAddNewService(true)}
+                onClick={() => navigate("/dashboard/service-menu/create", { beforeAfter: beforeAfter })}
                 className="inline-flex items-center px-3 py-2 gap-2 text-white bg-[#744CDB] border border-[#744CDB] rounded-lg hover:bg-primary01 focus:outline-none focus:ring-2 focus:ring-primary01 focus:ring-offset-2"
               >
                 <PlusIcon className="text-[#FFF]" />
@@ -108,12 +109,6 @@ function ServicePage() {
 
           <ServiceTable />
         </div>
-      ) : (
-        <AddNewService
-          setAddNewService={setAddNewService}
-          beforeAfter={beforeAfter}
-        />
-      )}
 
       <ConfirmFormatChangeModal
         open={modalOpen}

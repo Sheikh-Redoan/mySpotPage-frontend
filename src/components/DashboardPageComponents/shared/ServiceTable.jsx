@@ -7,79 +7,9 @@ import service3 from '../../../assets/images/service3.png'
 import service4 from '../../../assets/images/service4.png'
 import service5 from '../../../assets/images/service5.png'
 import { Link } from "react-router";
+import DeleteServiceModal from "../../modal/DeleteServiceModal";
 
-// Columns
-const columns = [
-  {
-    title: "Thumbnail",
-    dataIndex: "image",
-    key: "image",
-    width: 130,
-    render: (_, record, index) => {
-      const prev = data[index - 1];
-      if (prev && prev.date === record.date) return null;
-      return (
-        <div className="w-20 p-0">
-          <img
-            className="w-full"
-            src={record.image}
-            alt="image"
-          />
-        </div>
-      );
-    },
-  },
-  {
-    title: "Name / Available For",
-    dataIndex: "title",
-    key: "title",
-    width: 390,
-    render: (_, record) => (
-      <div className="space-y-2 w-[150px]">
-        <p className="text-[#3D3D3D] font-medium mb-1 whitespace-nowrap">{record.title}</p>
-        <p className="w-[110px] rounded-2xl py-1 px-2   text-primary01 border border-primary01">
-          {record.category}
-        </p>
-      </div>
-    ),
-  },
-  {
-    title: "Description",
-    dataIndex: "dercription",
-    key: "dercription",
-    width: 790,
-    render: (text) => <span style={{ color: "#797979" }} className="w-48">{text}</span>,
-  },
-  {
-    title: "Duration",
-    dataIndex: "duration",
-    key: "discount",
-    align: "center",
-    width: 130,
-  },
-  {
-    title: "No. Options",
-    dataIndex: "option",
-    key: "discount",
-    align: "center",
-    width: 150,
-  },
-  {
-    title: <span className="font-semibold text-white pr-5">Action</span>,
-    dataIndex: "action",
-    key: "action",
-    align: "right",
-    width: 120,
-    render: (_) => (
-      <div className="flex gap-4 justify-end pr-4">
-        <Link>
-          <img src={imageProvider.edit} alt="icon" />
-        </Link>
-        <img src={imageProvider.deleteIcon} alt="icon" />
-      </div>
-    ),
-  },
-];
+
 
 // Data
 const data = [
@@ -200,6 +130,7 @@ const data = [
 const ServiceTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
+  const [deleteServiceModalOpen, setDeleteServiceModalOpen] = useState(false);
 
   const handlePageSizeChange = (value) => {
     setPageSize(value);
@@ -211,6 +142,80 @@ const ServiceTable = () => {
     (currentPage - 1) * pageSize,
     currentPage * pageSize
   );
+
+  // Columns
+const columns = [
+  {
+    title: "Thumbnail",
+    dataIndex: "image",
+    key: "image",
+    width: 130,
+    render: (_, record, index) => {
+      const prev = data[index - 1];
+      if (prev && prev.date === record.date) return null;
+      return (
+        <div className="w-20 p-0">
+          <img
+            className="w-full"
+            src={record.image}
+            alt="image"
+          />
+        </div>
+      );
+    },
+  },
+  {
+    title: "Name / Available For",
+    dataIndex: "title",
+    key: "title",
+    width: 390,
+    render: (_, record) => (
+      <div className="space-y-2 w-[150px]">
+        <p className="text-[#3D3D3D] font-medium mb-1 whitespace-nowrap">{record.title}</p>
+        <p className="w-[110px] rounded-2xl py-1 px-2   text-primary01 border border-primary01">
+          {record.category}
+        </p>
+      </div>
+    ),
+  },
+  {
+    title: "Description",
+    dataIndex: "dercription",
+    key: "dercription",
+    width: 790,
+    render: (text) => <span style={{ color: "#797979" }} className="w-48">{text}</span>,
+  },
+  {
+    title: "Duration",
+    dataIndex: "duration",
+    key: "discount",
+    align: "center",
+    width: 130,
+  },
+  {
+    title: "No. Options",
+    dataIndex: "option",
+    key: "discount",
+    align: "center",
+    width: 150,
+  },
+  {
+    title: <span className="font-semibold text-white pr-5">Action</span>,
+    dataIndex: "action",
+    key: "action",
+    align: "right",
+    width: 120,
+    render: (_, record) => (
+      <div className="flex gap-4 justify-end pr-4">
+        <Link>
+          <img src={imageProvider.edit} alt="icon" />
+        </Link>
+        <img onClick={() => setDeleteServiceModalOpen(true)} src={imageProvider.deleteIcon} alt="icon" />
+      </div>
+    ),
+  },
+];
+
   return (
     <>
       <div className="overflow-x-auto my-6 rounded-lg border border-border pb-2">
@@ -220,6 +225,7 @@ const ServiceTable = () => {
           pagination={false}
           scroll={{ x: 1120 }}
           className="custom-ant-table"
+          setDeleteServiceModalOpen={setDeleteServiceModalOpen}
         />
       </div>
       <div className="flex justify-center md:justify-between items-center mt-4">
@@ -250,6 +256,15 @@ const ServiceTable = () => {
           hideOnSinglePage={false}
         />
       </div>
+
+      {deleteServiceModalOpen && (
+        <DeleteServiceModal
+          isOpen={deleteServiceModalOpen}
+          onClose={() => setDeleteServiceModalOpen(false)}
+          setDeleteServiceModalOpen={setDeleteServiceModalOpen}
+          onDeleteConfirm={() => setDeleteServiceModalOpen(false)}
+        />
+      )}
     </>
   );
 };

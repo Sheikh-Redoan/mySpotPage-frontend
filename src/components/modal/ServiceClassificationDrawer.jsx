@@ -106,11 +106,12 @@ const ServiceClassificationDrawer = ({
                                 gap: 10,
                                 padding: 20,
                                 fontSize: '14px',
-                                paddingTop: 16
+                                paddingTop: 16,
                             }}
                             onChange={(e) => setLabelForClassification(e.target.value)}
                             value={labelForClassification}
                             options={filteredOptions}
+                            
                         />
 
                         {/* Optional fallback message */}

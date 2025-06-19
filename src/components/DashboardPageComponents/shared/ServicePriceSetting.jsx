@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Checkbox, Collapse, Select } from "antd";
+import { Button, Checkbox, Collapse, Select } from "antd";
 const { Panel } = Collapse;
 const { Option } = Select;
 import { Minus, Plus, Trash2, Check } from "lucide-react";
 import { DeleteIcon } from "../../../assets/icons/icons2";
 import { DownArrowIcon } from "../../../assets/icons/icons";
 import { imageProvider } from "../../../lib/imageProvider";
+import useResponsive from "../../../hooks/useResponsive";
+import { Drawer } from "antd";
+import { X } from "lucide-react";
+import { Radio } from "antd";
+import { ChevronDown } from "lucide-react";
 
 const ServicePriceSetting = ({
     priceCheckboxChange1,
@@ -20,8 +25,14 @@ const ServicePriceSetting = ({
     setPriceModalList
 }) => {
     const [isStepComplete, setIsStepComplete] = useState(false);
-    const [selectedPriceType, setSelectedPriceType] = useState("");
+    const [open, setOpen] = useState(false)
+    const [openForModal2, setOpenForModal2] = useState(false)
+    const [label, setLabel] = useState("Fixed price");
+    const [labelForModal2, setLabelForModal2] = useState("Fixed price");
+    const [selectedPriceType, setSelectedPriceType] = useState(label);
     const [amount, setAmount] = useState("");
+    const { xs, sm, md, lg } = useResponsive()
+    const [indexForModal2, setIndexForModal2] = useState(null)
 
     useEffect(() => {
         let isValid = false;
@@ -139,19 +150,81 @@ const ServicePriceSetting = ({
                                         </div>
                                     </div>
                                     <div className="space-y-1.5">
-                                        <h4>Price Type <span className="text-orange-600">*</span></h4>
-                                        <Select
-                                            id="price"
-                                            placeholder="Select"
-                                            className="w-full md:w-[210px] !h-10"
-                                            suffixIcon={<DownArrowIcon />}
-                                            value={selectedPriceType ? selectedPriceType : "Select"}
-                                            onChange={(value) => setSelectedPriceType(value)}
-                                        >
-                                            {["Fixed Price", "Initial Price Base"].map((type) => (
-                                                <Option key={type} value={type}>{type}</Option>
-                                            ))}
-                                        </Select>
+                                        {(lg || md) ? (
+                                            <div className="">
+                                                <h4 className="mb-2">Price Type <span className="text-orange-600">*</span></h4>
+                                                <Select
+                                                    id="price"
+                                                    placeholder="Select"
+                                                    className="w-full md:w-[210px] !h-10"
+                                                    suffixIcon={<DownArrowIcon />}
+                                                    value={selectedPriceType ? selectedPriceType : "Select"}
+                                                    onChange={(value) => setSelectedPriceType(value)}
+                                                >
+                                                    {["Fixed Price", "Initial Price Base"].map((type) => (
+                                                        <Option key={type} value={type}>{type}</Option>
+                                                    ))}
+                                                </Select>
+                                            </div>) : (
+                                            <>
+                                                <h4 className="mb-2">Price Type <span className="text-orange-600">*</span></h4>
+                                                <Button
+                                                    type="default"
+                                                    className="w-full !flex !justify-between !py-5 !border !border-gray-300"
+                                                    onClick={() => setOpen(true)}>
+                                                    {selectedPriceType} <ChevronDown className="text-description" />
+                                                </Button>
+                                                <Drawer
+                                                    placement={"bottom"}
+                                                    closable={false}
+                                                    title="Price type"
+                                                    extra={
+                                                        <Button type="text" onClick={() => setOpen(false)} className="!px-0">
+                                                            <X size={24} className="text-description" />
+                                                        </Button>
+                                                    }
+                                                    height="30%"
+                                                    onClose={() => setOpen(false)}
+                                                    open={open}
+                                                    className="rounded-t-xl"
+                                                >
+                                                    <Radio.Group
+                                                        style={{
+                                                            display: "flex",
+                                                            flexDirection: "column",
+                                                            gap: 10,
+                                                            padding: 20,
+                                                            fontSize: '14px'
+                                                        }}
+                                                        onChange={
+                                                            (e) => setLabel(e.target.value)
+                                                        }
+                                                        value={label}
+                                                        options={[
+                                                            { value: 'Fixed price', label: 'Fixed price' },
+                                                            { value: 'Initial price base ', label: 'Initial price base ' },
+                                                        ]}
+                                                    />
+                                                    <div className="bg-white pt-5 pb-10 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] flex justify-center">
+                                                        <button
+                                                            onClick={() => {
+                                                                setOpen(false)
+                                                                setSelectedPriceType(label)
+                                                            }}
+                                                            className="bg-black text-white w-[95%] flex justify-center py-2.5 rounded-md">
+                                                            Apply
+                                                        </button>
+                                                    </div>
+                                                </Drawer>
+                                                <style>
+                                                    {`
+          .ant-drawer-body {
+            padding: 0 !important;
+          }
+        `}
+                                                </style>
+                                            </>
+                                        )}
                                     </div>
                                     <div className="space-y-1.5">
                                         <label className="block">Amount <span className="text-orange-600">*</span></label>
@@ -179,10 +252,9 @@ const ServicePriceSetting = ({
                             {priceModal1 && (
                                 <div className="ml-4 md:ml-12">
                                     {priceModalList.map((option, index) => (
+
                                         <div key={option.id} className="flex flex-col md:flex-row items-center gap-x-6 gap-y-3 border-2 border-border border-dashed md:border-none md:overflow-x-auto md:pb-5 p-4 md:p-0 rounded-lg mb-7 md:mb-0 relative">
-                                            {/* <div className={`flex justify-center items-center mt-6 rounded-full h-[40px] w-[40px] ${priceModalList.length === 1 ? "bg-[#F6F6F6] cursor-not-allowed" : "bg-[#F6F6F6] hover:scale-105 transform transition-all duration-300 ease-in-out cursor-pointer"}`} onClick={() => { if (priceModalList.length > 1) removeOption(index); }}>
-                                                <Trash2 className={`h-5 w-10 ${priceModalList.length > 1 && "text-red-500"}`} />
-                                            </div> */}
+                                            <p>{index}</p>
                                             <div>
                                                 <Trash2
                                                     className={`absolute md:static mt-0 md:mt-7 -top-4 -right-4 size-10 p-2 bg-[#F6F6F6] rounded-full ${priceModalList.length === 1 ? "cursor-not-allowed text-gray-500" : "text-red-500"}`}
@@ -214,18 +286,94 @@ const ServicePriceSetting = ({
                                                 </div>
                                             </div>
                                             <div className="space-y-1.5 w-full md:w-fit">
-                                                <h4>Price Type <span className="text-orange-600">*</span></h4>
-                                                <Select
-                                                    id={`priceType-${option.id}`}
-                                                    value={option.priceType ? option.priceType : "Select"}
-                                                    onChange={(value) => handleChange(index, "priceType", value)}
-                                                    placeholder="Select" className="w-full md:w-[210px] !h-10"
-                                                    suffixIcon={<DownArrowIcon />}
-                                                >
-                                                    {["Fixed Price", "Initial Price Base"].map((type) => (
-                                                        <Option key={type} value={type}>{type}</Option>
-                                                    ))}
-                                                </Select>
+
+                                                {(lg || md) ? (
+                                                    <div className="">
+                                                        <h4>Price Type <span className="text-orange-600">*</span></h4>
+                                                        <Select
+                                                            id={`priceType-${option.id}`}
+                                                            value={option.priceType ? option.priceType : "Select"}
+                                                            onChange={(value) => handleChange(index, "priceType", value)}
+                                                            placeholder="Select" className="w-full md:w-[210px] !h-10"
+                                                            suffixIcon={<DownArrowIcon />}
+                                                        >
+                                                            {["Fixed Price", "Initial Price Base"].map((type) => (
+                                                                <Option key={type} value={type}>{type}</Option>
+                                                            ))}
+                                                        </Select>
+                                                    </div>) : (
+                                                    <>
+                                                        <div className="mb-6">
+                                                            <h4 className="mb-2">
+                                                                Price Type <span className="text-orange-600">*</span>
+                                                            </h4>
+                                                            <Button
+                                                                type="default"
+                                                                className="w-full !flex !justify-between !py-5 !border !border-gray-300"
+                                                                onClick={() => {
+                                                                    setIndexForModal2(index); // ← Use outer index here
+                                                                    setLabelForModal2(option?.priceType || "Fixed price");
+                                                                    setOpenForModal2(true);
+                                                                }}
+                                                            >
+                                                                {option?.priceType || "Select price type"}
+                                                                <ChevronDown className="text-description" />
+                                                            </Button>
+                                                        </div>
+
+                                                        <Drawer
+                                                            placement="bottom"
+                                                            closable={false}
+                                                            title="Price type"
+                                                            extra={
+                                                                <Button type="text" onClick={() => setOpenForModal2(false)} className="!px-0">
+                                                                    <X size={24} className="text-description" />
+                                                                </Button>
+                                                            }
+                                                            height="30%"
+                                                            onClose={() => setOpenForModal2(false)}
+                                                            open={openForModal2}
+                                                            className="rounded-t-xl"
+                                                        >
+                                                            <Radio.Group
+                                                                style={{
+                                                                    display: "flex",
+                                                                    flexDirection: "column",
+                                                                    gap: 10,
+                                                                    padding: 20,
+                                                                    fontSize: "14px",
+                                                                }}
+                                                                onChange={(e) => setLabelForModal2(e.target.value)}
+                                                                value={labelForModal2}
+                                                                options={[
+                                                                    { value: "Fixed price", label: "Fixed price" },
+                                                                    { value: "Initial price base", label: "Initial price base" },
+                                                                ]}
+                                                            />
+                                                            <div className="bg-white pt-5 pb-10 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] flex justify-center">
+                                                                <button
+                                                                    onClick={() => {
+                                                                        if (indexForModal2 !== null) {
+                                                                            handleChange(indexForModal2, "priceType", labelForModal2);
+                                                                        }
+                                                                        setOpenForModal2(false);
+                                                                    }}
+                                                                    className="bg-black text-white w-[95%] flex justify-center py-2.5 rounded-md"
+                                                                >
+                                                                    Apply
+                                                                </button>
+                                                            </div>
+                                                        </Drawer>
+
+                                                        <style>
+                                                            {`
+          .ant-drawer-body {
+            padding: 0 !important;
+          }
+        `}
+                                                        </style>
+                                                    </>
+                                                )}
                                             </div>
                                             <div className="space-y-1.5 relative w-full md:w-fit">
                                                 <label>Amount <span className="text-orange-600">*</span></label>

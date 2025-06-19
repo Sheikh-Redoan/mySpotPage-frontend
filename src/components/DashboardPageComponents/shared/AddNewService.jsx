@@ -147,7 +147,7 @@ const AddNewService = ({ setAddNewService, beforeAfter }) => {
   };
 
   return (
-    <div className="w-full md:p-5">
+    <div className="w-full p-4 md:p-5">
       <div className="flex justify-between items-center">
         <div onClick={() => setAddNewService(false)} className="flex items-center gap-1.5">
           <ArrowLeft />
@@ -231,7 +231,7 @@ const AddNewService = ({ setAddNewService, beforeAfter }) => {
         onCropFinish={handleCropFinish}
       />
 
-      <div className="flex justify-between items-center md:hidden fixed bottom-0 left-0 right-0 bg-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] p-5 z-50">
+      <div className="flex justify-between items-center md:hidden fixed bottom-0 left-0 right-0 bg-white pb-10 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] p-5 z-50">
         <button
           type="button"
           className=" md:hidden text-white font-semibold bg-gray-900 py-2.5 w-full rounded-lg cursor-pointer hover:scale-95 transform transition-all duration-300 ease-in-out"

@@ -12,7 +12,7 @@ const ServiceBeforeAfterImageUpload = ({
     onCropImage,
 }) => {
     return (
-        <div>
+        <div className="mb-10">
             <Collapse expandIconPosition="end" className="custom-collapse" bordered={false}>
                 <Panel
                     key="3"

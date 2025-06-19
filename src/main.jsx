@@ -33,6 +33,15 @@ const theme = {
       itemColor: "#000",
       trackPadding: "var(--track-padding)",
     },
+    Button: {
+      colorPrimary: "#866be7",
+      colorPrimaryHover: "#866be7",
+      colorPrimaryActive: "#866be7",
+      defaultBg: "#fff",
+      defaultActiveColor: "#fff",
+      colorPrimaryText: "#fff",
+      borderRadius: "var(--border-radius)",
+    },
   },
 };
 

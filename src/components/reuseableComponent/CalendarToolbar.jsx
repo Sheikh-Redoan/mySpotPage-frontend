@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { Link, useSearchParams } from "react-router";
+import useResponsive from "../../hooks/useResponsive";
 import { cn } from "../../lib/utils";
 import SettingsBookingsRulesModal from "../calendarManagement/SettingsBookingsRulesModal";
 import StaffSelection from "../calendarManagement/StaffSelection";
@@ -27,6 +28,7 @@ export default function CalendarToolbar({
   applyFilter = true,
   selectTimeFromProvider = false,
 }) {
+  const { xl } = useResponsive();
   const [openMonth, setOpenMonth] = useState(false);
   const [selectMonth, setSelectMonth] = useState(dayjs().month() + 1);
   const [settingsModalOpen, setSettingsModalOpen] = useState(false);
@@ -120,7 +122,7 @@ export default function CalendarToolbar({
           ]}
           value={view}
           onChange={handleViewChange}
-          className="border border-gray-300 max-md:!w-full !p-0"
+          className="border border-gray-300 max-md:!w-full !p-0 segmented-gray"
           block
         />
       </div>
@@ -226,80 +228,84 @@ export default function CalendarToolbar({
             setSettingsModalOpen={setSettingsModalOpen}
           />
 
-          <Drawer
-            placement="left"
-            width={250}
-            onClose={onClose}
-            open={openDrawer}
-            closeIcon={false}
-            extra={
-              <Button
-                type="text"
-                className="!p-0 !text-primary01 !font-bold"
-                onClick={onClose}>
-                Close
-              </Button>
-            }>
-            <div className="flex items-center justify-between mb-4 border-b border-gray-200 py-4 px-6">
-              <h3 className="text-base font-semibold">View mode</h3>
-              <X
-                size={20}
-                onClick={onClose}
-                className="text-gray-500 hover:text-gray-700"
-              />
-            </div>
+          {!xl && (
+            <>
+              <Drawer
+                placement="left"
+                width={250}
+                onClose={onClose}
+                open={openDrawer}
+                closeIcon={false}
+                extra={
+                  <Button
+                    type="text"
+                    className="!p-0 !text-primary01 !font-bold"
+                    onClick={onClose}>
+                    Close
+                  </Button>
+                }>
+                <div className="flex items-center justify-between mb-4 border-b border-gray-200 py-4 px-6">
+                  <h3 className="text-base font-semibold">View mode</h3>
+                  <X
+                    size={20}
+                    onClick={onClose}
+                    className="text-gray-500 hover:text-gray-700"
+                  />
+                </div>
 
-            <div className="border-b border-gray-200 pb-3">
-              <Segmented
-                options={[
-                  {
-                    label: (
-                      <div className="flex items-center gap-2 my-2">
-                        <Grid3x3 size={20} strokeWidth={1.5} />
-                        <span>Month view</span>
-                      </div>
-                    ),
-                    value: "month",
-                  },
-                  {
-                    label: (
-                      <div className="flex items-center gap-2 my-2">
-                        <StretchVertical size={20} strokeWidth={1.5} />
-                        <span>Week view</span>
-                      </div>
-                    ),
-                    value: "week",
-                  },
-                  {
-                    label: (
-                      <div className="flex items-center gap-2 my-2">
-                        <StretchHorizontal size={20} strokeWidth={1.5} />
-                        <span>Day view</span>
-                      </div>
-                    ),
-                    value: "day",
-                  },
-                ]}
-                value={view}
-                onChange={handleViewChange}
-                size="large"
-                className="mb-4 !w-full text-start"
-                vertical
-              />
-            </div>
+                <div className="border-b border-gray-200 pb-3">
+                  <Segmented
+                    options={[
+                      {
+                        label: (
+                          <div className="flex items-center gap-2 my-2">
+                            <Grid3x3 size={20} strokeWidth={1.5} />
+                            <span>Month view</span>
+                          </div>
+                        ),
+                        value: "month",
+                      },
+                      {
+                        label: (
+                          <div className="flex items-center gap-2 my-2">
+                            <StretchVertical size={20} strokeWidth={1.5} />
+                            <span>Week view</span>
+                          </div>
+                        ),
+                        value: "week",
+                      },
+                      {
+                        label: (
+                          <div className="flex items-center gap-2 my-2">
+                            <StretchHorizontal size={20} strokeWidth={1.5} />
+                            <span>Day view</span>
+                          </div>
+                        ),
+                        value: "day",
+                      },
+                    ]}
+                    value={view}
+                    onChange={handleViewChange}
+                    size="large"
+                    className="mb-4 !w-full text-start"
+                    vertical
+                  />
+                </div>
 
-            <div className="flex flex-col gap-4 px-4 py-5">
-              <StaffSelection />
-            </div>
-          </Drawer>
+                <div className="flex flex-col gap-4 px-4 py-5">
+                  <StaffSelection />
+                </div>
+              </Drawer>
 
-          <style>
-            {`
+              <style>
+                {`
           .ant-drawer-body {
             padding: 0 !important;
           }
         `}
-          </style>
+              </style>
+            </>
+          )}
         </>
       )}
     </>

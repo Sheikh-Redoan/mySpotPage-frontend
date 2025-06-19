@@ -14,7 +14,7 @@ export default function Calender({
   resources,
   applyFilter,
 }) {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const view = searchParams.get("view") || "month"; // Default to 'month' view if not specified
   // State for the currently displayed date, adjusted based on view
   const [currentDate, setCurrentDate] = useState(dayjs(Date.now())); // Start with the day view date
@@ -56,12 +56,6 @@ export default function Calender({
     }
   };
 
-  const handleToday = () => {
-    setCurrentDate(dayjs()); // Set to current day, view will adjust
-    searchParams.set("view", "day"); // Reset to day view
-    setSearchParams(searchParams);
-  };
-
   const dayNames = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
   // Data picker change handler
@@ -85,7 +79,6 @@ export default function Calender({
         selectedDate={currentDate}
         onDatePickerChange={onDatePickerChange}
         handleNavButtonClick={handleNavButtonClick}
-        handleTodayClick={handleToday}
         applyFilter={applyFilter}
         currentView={view}
         selectTimeFromProvider={selectTimeFromProvider}

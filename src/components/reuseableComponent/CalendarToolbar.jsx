@@ -12,7 +12,7 @@ import {
   TextSearch,
   X,
 } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router";
 import useResponsive from "../../hooks/useResponsive";
 import { cn } from "../../lib/utils";
@@ -24,7 +24,6 @@ export default function CalendarToolbar({
   selectedDate,
   onDatePickerChange,
   handleNavButtonClick,
-  handleTodayClick,
   applyFilter = true,
   selectTimeFromProvider = false,
 }) {
@@ -37,6 +36,11 @@ export default function CalendarToolbar({
   const [searchParams, setSearchParams] = useSearchParams();
   const view = searchParams.get("view") || "month"; // Default to 'month' view if not specified
 
+  // Refs for scrolling to the current month button
+  const monthsContainerRef = useRef(null);
+  const currentMonthButtonRef = useRef(null);
+  const currentMonth = dayjs().month() + 1; // dayjs months are 0-indexed
+
   const handleViewChange = (value) => {
     if (value) {
       searchParams.set("view", value);
@@ -44,6 +48,22 @@ export default function CalendarToolbar({
       searchParams.delete("view");
     }
     setSearchParams(searchParams);
+  };
+
+  const handleTodayClick = () => {
+    onDatePickerChange(dayjs());
+    setSelectMonth(dayjs().month() + 1);
+    searchParams.set("view", "day"); // Reset to day view
+    setSearchParams(searchParams);
+
+    // Scroll to the current month button
+    if (currentMonthButtonRef.current) {
+      currentMonthButtonRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest",
+        inline: "center",
+      });
+    }
   };
 
   const onClose = () => {
@@ -197,6 +217,7 @@ export default function CalendarToolbar({
             </div>
 
             <div
+              ref={monthsContainerRef}
               className={cn(
                 "flex items-center justify-between gap-2 mt-2 overflow-x-auto py-5 transition-all",
                 { hidden: !openMonth }
@@ -204,6 +225,9 @@ export default function CalendarToolbar({
               {months.map((month, index) => (
                 <Button
                   key={month}
+                  ref={
+                    index + 1 === currentMonth ? currentMonthButtonRef : null
+                  }
                   type="text"
                   onClick={() => {
                     onDatePickerChange(dayjs().month(index));

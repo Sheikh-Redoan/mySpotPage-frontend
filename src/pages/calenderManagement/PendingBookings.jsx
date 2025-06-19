@@ -140,13 +140,12 @@ const PendingBookings = () => {
   const paginatedBookings = bookings.slice(startIndex, endIndex);
 
   return (
-    <div className="w-full py-2 overflow-x-auto">
+    <div className="w-full max-md:px-4 py-2">
       <Table
         dataSource={paginatedBookings}
         columns={columns}
         pagination={false}
         rowKey="id"
-        className="w-full"
         locale={{ emptyText: <CustomEmptyTable /> }}
         rowClassName={(record) =>
           searchQuery &&
@@ -166,6 +165,8 @@ const PendingBookings = () => {
           },
           className: "cursor-pointer hover:bg-gray-50",
         })}
+        className="w-full"
+        scroll={{ x: 1120 }}
       />
 
       {/* Pagination */}

@@ -48,15 +48,6 @@ const ConfirmPage = () => {
         duration: "30m",
         price: "₪100.00",
       },
-      // Add more services here if needed to test "Show more"
-      // {
-      //   id: 4,
-      //   image: confirm_product,
-      //   name: "Hair Cut",
-      //   options: "Short Hair",
-      //   duration: "1h00m",
-      //   price: "₪50.00",
-      // },
     ],
     subtotal: "₪270.00",
     vatIncluded: "(includes ₪48.60 VAT)",
@@ -67,8 +58,8 @@ const ConfirmPage = () => {
   };
 
   return (
-    <section className="py-8">
-      <Container className="max-w-[1296px] mx-auto px-4">
+    <section className="md:py-8">
+      <Container className="">
         {/* Pass isAddressPage as true to show "Enter address" and "Select staff" in the breadcrumb */}
         <Breadcrumb breadcrumbs={getBreadcrumbs()} />
         <div className="flex flex-col lg:flex-row items-start justify-between w-full gap-8 mt-6">
@@ -94,26 +85,24 @@ const ConfirmPage = () => {
             </div>
           </div>
 
-          <div className="max-md:hidden">
             <ConfirmDetails
-            className="w-full lg:w-80 p-4 flex-shrink-0"
-            storeName={storeData.storeName}
-            rating={storeData.rating}
-            reviewsCount={storeData.reviewsCount}
-            location={storeData.location}
-            staffName={storeData.staffName}
-            appointmentDateTime={storeData.appointmentDateTime}
-            bookingNote={storeData.bookingNote}
-            services={storeData.services}
-            subtotal={storeData.subtotal}
-            vatIncluded={storeData.vatIncluded}
-            discountPercentage={storeData.discountPercentage}
-            discountAmount={storeData.discountAmount}
-            total={storeData.total}
-            paymentInstruction={storeData.paymentInstruction}
-            buttonTittle={"Complete"}
-          />
-          </div>
+              className="w-full lg:w-80 p-4 flex-shrink-0 max-md:hidden"
+              storeName={storeData.storeName}
+              rating={storeData.rating}
+              reviewsCount={storeData.reviewsCount}
+              location={storeData.location}
+              staffName={storeData.staffName}
+              appointmentDateTime={storeData.appointmentDateTime}
+              bookingNote={storeData.bookingNote}
+              services={storeData.services}
+              subtotal={storeData.subtotal}
+              vatIncluded={storeData.vatIncluded}
+              discountPercentage={storeData.discountPercentage}
+              discountAmount={storeData.discountAmount}
+              total={storeData.total}
+              paymentInstruction={storeData.paymentInstruction}
+              buttonTittle={"Complete"}
+            />
         </div>
       </Container>
 
@@ -151,11 +140,7 @@ const ConfirmPage = () => {
                 onClick={() => setOpen(true)}
               >
                 See detail{" "}
-                {open ? (
-                  <ChevronUp size={14} />
-                ) : (
-                  <ChevronDown size={14} />
-                )}
+                {open ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
               </Button>
             </div>
           </div>
@@ -206,7 +191,7 @@ const ConfirmPage = () => {
           className="rounded-t-lg"
         >
           <ConfirmDetails
-            className="w-full lg:w-80 p-4 flex-shrink-0"
+            className="w-full"
             storeName={storeData.storeName}
             rating={storeData.rating}
             reviewsCount={storeData.reviewsCount}
@@ -224,6 +209,13 @@ const ConfirmPage = () => {
             buttonTittle={"Complete"}
           />
         </Drawer>
+        <style>
+          {`
+          .ant-drawer-body {
+            padding: 0;
+          }
+        `}
+        </style>
       </div>
     </section>
   );

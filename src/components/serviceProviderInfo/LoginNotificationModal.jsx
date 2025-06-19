@@ -1,6 +1,6 @@
 import { Button, Modal } from "antd";
 import { Link, useNavigate } from "react-router";
-import notifiIcon from "/src/assets/icons/loginnotifi.png";
+import notifiIcon from "/src/assets/icons/loginNotifi.png";
 
 const LoginNotificationModal = ({ open, onCancel }) => {
   const navigate = useNavigate();

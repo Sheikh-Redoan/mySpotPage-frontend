@@ -96,6 +96,7 @@ import StaffServicesPage from "../pages/onboarding/StaffServicesPage";
 import StaffWorkingHoursPage from "../pages/onboarding/StaffWorkingHoursPage";
 import AdminSubscriptionsPage from "../pages/admin/AdminSubscriptionsPage";
 import ReviewContainer from "../components/shared/ReviewContainer";
+import AddNewServicePage from "../pages/seller/AddNewServicePage";
 
 export const routes = createBrowserRouter([
   // Public Routes (Accessible to everyone)
@@ -294,6 +295,7 @@ export const routes = createBrowserRouter([
         ],
       },
       { path: "service-menu", element: <ServicePage /> },
+      { path: "service-menu/create", element: <AddNewServicePage /> },
       { path: "pricing", element: <TimePage /> },
       {
         path: "client-management",

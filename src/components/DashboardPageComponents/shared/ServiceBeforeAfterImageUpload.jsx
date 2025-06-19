@@ -3,6 +3,7 @@ import { Collapse } from "antd";
 const { Panel } = Collapse;
 import { X, Plus } from "lucide-react";
 import { imageProvider } from "../../../lib/imageProvider";
+import { Check } from "lucide-react";
 
 const ServiceBeforeAfterImageUpload = ({
     imagePairs,
@@ -12,14 +13,25 @@ const ServiceBeforeAfterImageUpload = ({
     onCropImage,
 }) => {
     return (
-        <div>
+        <div className="mb-10">
             <Collapse expandIconPosition="end" className="custom-collapse" bordered={false}>
                 <Panel
                     key="3"
                     header={
                         <div className="flex items-center gap-x-3">
-                            <div className="w-10 h-10 flex justify-center items-center border p-4 rounded-full text-[#262626] font-bold">
-                                3
+                            <div
+                                className={`w-10 h-10 flex justify-center items-center border rounded-full font-bold transition-all duration-200 ${imagePairs.length > 0 &&
+                                        imagePairs.every(pair => pair.before !== null && pair.after !== null)
+                                    ? "bg-[#262626] text-white "
+                                    : "border p-4 text-[#262626]"
+                                    }`}
+                            >
+                                {
+                                    imagePairs.length > 0 &&
+                                        imagePairs.every(pair => pair.before !== null && pair.after !== null)
+                                        ? <Check className="w-6 h-6" />
+                                        : "3"
+                                }
                             </div>
                             <span className="text-[#262626] font-semibold text-base md:text-xl">
                                 Upload Image Of Your Work

@@ -12,8 +12,9 @@ export default function StaffCard({
 }) {
   return (
     <div
-      className="flex items-center gap-4 flex-row lg:flex-col border border-[#E7E7E7] rounded-xl w-full py-4 relative px-4 cursor-pointer"
-      onClick={handleSelect}>
+      className={cn("flex items-center gap-4 flex-row lg:flex-col border border-[#E7E7E7] rounded-xl w-full py-4 relative px-4 cursor-pointer", { "border border-primary01 bg-[#F5F4FE]": isActive,})}
+      onClick={handleSelect}
+      >
       <Avatar
         size={{ xs: 24, sm: 32, md: 40, lg: 64, xl: 80, xxl: 100 }}
         icon={<User size={48} strokeWidth={1.25} />}

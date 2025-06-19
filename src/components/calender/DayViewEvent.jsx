@@ -7,6 +7,7 @@ import useResponsive from "../../hooks/useResponsive";
 import { cn } from "../../lib/utils";
 import BookingDetailsContent from "../calendarManagement/pendingBookings/BookingDetailsContent";
 import ClientDetails from "./ClientDetails";
+import EventTag from "./EventTag";
 
 export default function DayViewEvent({ event }) {
   const [open, setOpen] = useState(false);
@@ -73,6 +74,7 @@ export default function DayViewEvent({ event }) {
                 </span>
               )}
               <span>{event.title}</span>
+              <EventTag event={event} />
             </Button>
           </Popover>
         ) : (

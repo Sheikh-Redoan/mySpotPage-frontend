@@ -13,7 +13,6 @@ export default function Calender({
   resources,
   applyFilter,
 }) {
-  console.log("first")
   // State for the currently displayed date, adjusted based on view
   const [currentDate, setCurrentDate] = useState(dayjs(Date.now())); // Start with the day view date
   const [selectedView, setSelectedView] = useState("month"); // Default to 'day' view

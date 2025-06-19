@@ -69,8 +69,6 @@ export default function DayViewAppointment({ currentDate, resources, events }) {
   const gridTemplateColumns = `70px repeat(${appointmentUsers.length}, minmax(${MIN_COLUMN_WIDTH}, 1fr))`;
   const date = dayjs(currentDate);
 
-  console.log(gridTemplateColumns);
-
   return (
     <div className="bg-white rounded-lg shadow-xl overflow-hidden">
       {/* Main scrollable container */}

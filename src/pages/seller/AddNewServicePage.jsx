@@ -8,15 +8,15 @@ import ServiceImageUpload from "../../components/DashboardPageComponents/shared/
 import ServiceBasicDetails from "../../components/DashboardPageComponents/shared/ServiceBasicDetails";
 import ServiceBeforeAfterImageUpload from "../../components/DashboardPageComponents/shared/ServiceBeforeAfterImageUpload";
 import { use } from "react";
-import { useLocation, useNavigate } from "react-router";
+import { useLocation, useNavigate, useParams, useSearchParams } from "react-router";
 
 const AddNewServicePage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const beforeAfter = location.state?.beforeAfter;
-  console.log({location})
+  const [searchParams] = useSearchParams();
+  const serviceId = searchParams.get('serviceId');
 
-  const [useGalleryView, setUseGalleryView] = useState(false);
   const [activeKey, setActiveKey] = useState(["1"]);
   const [isStepComplete, setIsStepComplete] = useState(false);
   const { register, handleSubmit, trigger, control } = useForm({
@@ -103,7 +103,11 @@ const AddNewServicePage = () => {
 
   const handleCollapseChange = async (key) => {
     if (!key.includes("1")) {
-      const isValid = await trigger(["serviceName", "description", "availableFor"]);
+      const isValid = await trigger([
+        "serviceName",
+        "description",
+        "availableFor",
+      ]);
 
       const allFilled = isValid && (croppedImage || thumbnailImage);
 
@@ -141,7 +145,6 @@ const AddNewServicePage = () => {
     reader.readAsDataURL(file);
   };
 
-
   const onRemoveImage = (index, type) => {
     const updatedPairs = [...imagePairs];
     updatedPairs[index][type] = null;
@@ -156,12 +159,15 @@ const AddNewServicePage = () => {
   return (
     <div className="w-full p-4 md:p-5">
       <div className="flex justify-between items-center">
-        <div onClick={() => navigate(-1)} className="flex items-center gap-1.5 cursor-pointer">
-          <ArrowLeft />
-          <p className="text-[#242528] text-lg font-semibold">New Service</p>
+        <div
+          onClick={() => navigate(-1)}
+          className="flex items-center gap-1.5 cursor-pointer"
+        >
+          <ArrowLeft size={18} />
+          <p className="text-[#242528] text-lg font-semibold ml-1">{serviceId ? "Update" : "New"} Service</p>
         </div>
         <Button color="default" variant="solid" disabled>
-            Publish
+          Publish
         </Button>
       </div>
       <div className="mb-20 md:mb-0">
@@ -198,28 +204,34 @@ const AddNewServicePage = () => {
             setPriceModalList={setPriceModalList}
           />
 
-          {beforeAfter === "Before & After" && <ServiceBeforeAfterImageUpload
-            imagePairs={imagePairs}
-            onAddPair={onAddPair}
-            onChangeImage={onImageChange}
-            onRemoveImage={onRemoveImage}
-            onCropImage={(index, position) => setCroppingTarget({ type: "beforeAfter", index, position })}
-          />}
+          {beforeAfter === "Before & After" && (
+            <ServiceBeforeAfterImageUpload
+              imagePairs={imagePairs}
+              onAddPair={onAddPair}
+              onChangeImage={onImageChange}
+              onRemoveImage={onRemoveImage}
+              onCropImage={(index, position) =>
+                setCroppingTarget({ type: "beforeAfter", index, position })
+              }
+            />
+          )}
 
-          {beforeAfter === "Only Outcome" && <ServiceImageUpload
-            workImages={workImages}
-            workCroppedImages={workCroppedImages}
-            handleWorkRemoveImage={handleWorkRemoveImage}
-            handleWorkFileChange={handleWorkFileChange}
-            handleButtonClick={handleButtonClick}
-            setIsModalOpen={(index) => {
-              setCroppingTarget("workImage");
-              setCurrentCropIndex(index);
-              setIsModalOpen(true);
-            }}
-            fileInputRef={fileInputRef}
-            setCurrentCropIndex={setCurrentCropIndex}
-          />}
+          {beforeAfter === "Only Outcome" && (
+            <ServiceImageUpload
+              workImages={workImages}
+              workCroppedImages={workCroppedImages}
+              handleWorkRemoveImage={handleWorkRemoveImage}
+              handleWorkFileChange={handleWorkFileChange}
+              handleButtonClick={handleButtonClick}
+              setIsModalOpen={(index) => {
+                setCroppingTarget("workImage");
+                setCurrentCropIndex(index);
+                setIsModalOpen(true);
+              }}
+              fileInputRef={fileInputRef}
+              setCurrentCropIndex={setCurrentCropIndex}
+            />
+          )}
         </Space>
       </div>
 

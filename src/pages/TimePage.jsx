@@ -14,6 +14,7 @@ import { ChevronDown } from "lucide-react";
 import { Radio } from "antd";
 import TimePicker from "../components/calendarManagement/pendingBookings/TimePicker";
 import { Calendar } from "lucide-react";
+import TimeBasePricingCalender from "./seller/TimeBasePricingCalender";
 
 function TimePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -132,20 +133,12 @@ function TimePage() {
                             <X size={24} className="text-description" />
                           </Button>
                         }
-                        height="52%"
+                        height="58%"
                         onClose={() => setOpenDateRange(false)}
                         className="rounded-t-xl"
                       >
-                        <div style={{ width: "100%" }}>
-                          <DateRange
-                            className="custom-calendar"
-                            ranges={range}
-                            onChange={(item) => setRange([item.selection])}
-                            showDateDisplay={false}
-                            showSelectionPreview={false}
-                            moveRangeOnFirstSelection={false}
-                            rangeColors={["#dedbfb"]}
-                          />
+                        <div >
+                          <TimeBasePricingCalender />
                         </div>
                         <div className="bg-white pt-5 pb-10 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] flex justify-center">
                           <button

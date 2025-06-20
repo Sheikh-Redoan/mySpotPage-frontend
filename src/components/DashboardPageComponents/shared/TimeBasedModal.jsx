@@ -11,12 +11,13 @@ import { DateRange } from "react-date-range";
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css';
 import { Calendar } from "lucide-react";
+import TimeBasePricingCalender from "../../../pages/seller/TimeBasePricingCalender";
 const { RangePicker } = DatePicker;
 dayjs.extend(customParseFormat);
 
 const format = "hh:mm A";
 
-const TimeBasedModal = ({ isModalOpen, setIsModalOpen,setOpenDateRange, openDateRange, formatDate, handleGenderChange, handleAllDayChange,  isAllDay, handleCancel}) => {
+const TimeBasedModal = ({ isModalOpen, setIsModalOpen, setOpenDateRange, openDateRange, formatDate, handleGenderChange, handleAllDayChange, isAllDay, handleCancel }) => {
   const [range, setRange] = useState([
     {
       startDate: new Date(),
@@ -33,9 +34,14 @@ const TimeBasedModal = ({ isModalOpen, setIsModalOpen,setOpenDateRange, openDate
       open={isModalOpen}
       closable={false}
       footer={null}
-      width={600}
+      width={820}
+      // height={500} 
+      bodyStyle={{
+        height: '480px',
+        overflowY: 'auto',
+      }}
       centered
-      height={500}>
+    >
       <div className="text-[#3A3B3F] flex flex-col justify-between h-full">
         <div className="space-y-3 mt-4">
           <div className="grid grid-cols-2 gap-3">
@@ -56,16 +62,8 @@ const TimeBasedModal = ({ isModalOpen, setIsModalOpen,setOpenDateRange, openDate
                 )}
                 <Calendar size={20} className="text-description" />
               </div>
-              {openDateRange && (<div className="absolute bg-white z-10  shadow-[0_0_25px_rgba(0,0,0,0.1)] rounded-lg">
-                <DateRange
-                  className="custom-calendar"
-                  ranges={range}
-                  onChange={(item) => setRange([item.selection])}
-                  showDateDisplay={false}
-                  showSelectionPreview={false}
-                  moveRangeOnFirstSelection={false}
-                  rangeColors={["#dedbfb"]}
-                />
+              {openDateRange && (<div className="absolute w-[380px] bg-white z-10  shadow-[0_0_25px_rgba(0,0,0,0.1)] rounded-xl">
+                <TimeBasePricingCalender />
               </div>)}
             </fieldset>
 

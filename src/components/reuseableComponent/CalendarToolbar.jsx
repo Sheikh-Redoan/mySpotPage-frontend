@@ -217,11 +217,11 @@ export default function CalendarToolbar({
               </div>
             </div>
             <div className={cn("transition-all", { hidden: !openMonth })}>
-              <CalendarDatePicker />
+              <CalendarDatePicker month={selectMonth} />
               <div
                 ref={monthsContainerRef}
                 className={cn(
-                  "flex items-center justify-between gap-2 mt-2 overflow-x-auto py-5 transition-all"
+                  "flex items-center justify-between gap-2 mt-2 overflow-x-auto pb-5 transition-all"
                 )}>
                 <span className="text-xs">{dayjs().format("YYYY")}</span>
                 {months.map((month, index) => (

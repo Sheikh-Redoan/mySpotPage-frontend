@@ -5,6 +5,8 @@ import Breadcrumb from "../../../components/client/Breadcrumb";
 import ServicesList from "../../../components/serviceProviderInfo/ServicesList";
 import TreatmentModal from "../../../components/serviceProviderInfo/TreatmentModal";
 import { getBreadcrumbs } from "../../../lib/staticData";
+import { cn } from "../../../lib/utils";
+import CheckoutCardForMobile from "../../../components/addBookingByProvider/CheckoutCardForMobile";
 
 const businessStaticData = {
   studioName: "TCL Beauty Studio 01",
@@ -12,9 +14,16 @@ const businessStaticData = {
   rating: 4.8,
   reviewCount: "12.5K reviews",
   address: "15 Rothschild Boulevard, Tel Aviv-Yafo, Israel",
+  subtotal: 20.0,
+  vatIncluded: true,
+  discountPercentage: 10.0,
+  discountAmount: 60.0,
+  total: 90.0,
+  paymentInstruction: "You will pay at the appointment location",
 };
 
 const ServicesPageForProvider = () => {
+  const [showDetails, setShowDetails] = useState(false);
   const navigate = useNavigate();
   const [selected, setSelected] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
@@ -24,8 +33,12 @@ const ServicesPageForProvider = () => {
   };
 
   return (
-    <>
-      <div className="py-4">
+    <section className="bg-gray-50">
+      <div
+        className={cn("max-md:mb-54 max-md:px-3 max-md:py-4", {
+          "max-md:mb-76": showDetails,
+        })}
+      >
         <Breadcrumb
           breadcrumbs={getBreadcrumbs(0, 3, [
             {
@@ -58,14 +71,24 @@ const ServicesPageForProvider = () => {
               label="Select Services"
             />
           </div>
-          <ProviderCheckoutCard
-            businessData={businessStaticData}
-            handleBookNow={handleBookNow}
-            selected={selected}
-            to="/dashboard/add-booking-by-provider/select-staff"
-          />
+          <div className="max-md:hidden">
+            <ProviderCheckoutCard
+              data={businessStaticData}
+              handleBookNow={handleBookNow}
+              selected={selected}
+              to="/dashboard/add-booking-by-provider/select-staff"
+            />
+          </div>
         </div>
       </div>
+
+      {/* Mobile View */}
+      <CheckoutCardForMobile
+        data={businessStaticData}
+        handleBookNow={handleBookNow}
+        showDetails={showDetails}
+        setShowDetails={setShowDetails}
+      />
 
       <TreatmentModal
         open={modalOpen}
@@ -75,7 +98,7 @@ const ServicesPageForProvider = () => {
         }}
         services={selected}
       />
-    </>
+    </section>
   );
 };
 

@@ -8,7 +8,12 @@ const columns = [
     title: "Date & Frequency",
     dataIndex: "date",
     key: "date",
-    width: 200,
+    onCell: () => ({
+      style: {
+        backgroundColor: 'white',
+      },
+    }),
+    width: 250,
     sorter: (a, b) => {
       const toMinutes = (t) => {
         const [h, m] = (t || "00:00").split(":").map(Number);
@@ -22,10 +27,10 @@ const columns = [
       const prev = data[index - 1];
       if (prev && prev.date === record.date) return null;
       return (
-        <div className="space-y-1">
-          <p className="text-[#797979] text-sm">Does not repeat</p>
-          <p className="text-[#262626]">{record.date}</p>
-        </div>
+          <div className="space-y-1">
+            <p className="text-[#797979] text-sm">{record.frequency}</p>
+            <p className="text-[#262626]">{record.date}</p>
+          </div>
       );
     },
   },
@@ -82,53 +87,64 @@ const data = [
     key: "1",
     discount: "30%",
     date: "12/04/25 - 14/04/25",
+    frequency: "Does not repeat",
   },
   {
     key: "2",
     discount: "20%",
-    date: "12/04/25 - 13/04/25",
+    date: "Since 04/04/25",
+    frequency: "Everyday",
   },
   {
     key: "3",
     discount: "95%",
-    date: "12/04/25 - 18/04/25",
+    date: "on Wednesday",
+    frequency: "Every week",
   },
   {
     key: "4",
     discount: "27%",
-    date: "12/04/25 - 14/06/25",
+    date: "10/03/25 - 10/03/25",
+    frequency: "Does not repeat",
   },
   {
     key: "5",
     discount: "75%",
-    date: "11/04/25 - 14/04/25",
+    date: "01/03/25 - 05/03/25",
+    frequency: "Everyday",
   },
   {
     key: "6",
     discount: "65%",
     date: "12/04/23 - 14/04/25",
+    frequency: "Every week",
   },
   {
     key: "7",
     discount: "15%",
     date: "12/04/25 - 14/08/25",
+    frequency: "Does not repeat",
   },
   {
     key: "8",
     discount: "15%",
     date: "12/07/25 - 14/09/25",
+    frequency: "Everyday",
   },
   {
     key: "9",
     discount: "75%",
     date: "11/04/25 - 14/04/25",
+    frequency: "Every week",
   },
   {
     key: "10",
     discount: "95%",
     date: "12/04/25 - 18/04/25",
+    frequency: "Does not repeat",
   },
 ];
+
 
 const TimePageTable = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -151,12 +167,12 @@ const TimePageTable = () => {
           columns={columns}
           dataSource={paginatedData}
           pagination={false}
-          scroll={{ x: 800 }}
+          scroll={{ x: 1200 }}
           className="custom-ant-table"
         />
       </div>
-      <div className="flex justify-between items-center mt-4">
-        <div className="space-x-1">
+      <div className="flex justify-center md:justify-between items-center mt-4 ">
+        <div className="space-x-1 hidden md:block">
           <span className="text-sm text-gray-600">Show </span>
           <Select
             value={pageSize}

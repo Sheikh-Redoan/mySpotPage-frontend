@@ -166,6 +166,9 @@
   padding: 3px 10px;
 }
 
+
+
+
 /* Ensure calendars are full-width on mobile */
 @media (max-width: 767px) {
   /* Target the RangePicker dropdown */

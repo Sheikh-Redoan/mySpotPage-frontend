@@ -1,40 +1,29 @@
+import { Info } from "lucide-react";
 import { MapPin, Star } from "lucide-react";
+import { CiCalendar } from "react-icons/ci";
+import { FaRegUserCircle } from "react-icons/fa";
 import { TbArrowBadgeDown } from "react-icons/tb";
 import { Link } from "react-router";
 
-const ProviderCheckoutCard = ({
-  businessData,
-  selected,
-  handleBookNow,
-  to,
-}) => {
-  const { studioName, label, rating, reviewCount, address } = businessData;
-
+const ProviderCheckoutCard = ({ data, selected, handleBookNow, to="#" }) => {
   const subtotal = 0.0;
-  const vat = 0.0;
-  const subtotalAfterVat = subtotal + vat;
+  const subtotalAfterVat = subtotal + data?.vat;
   const discountAmount = 0.0;
   const total = subtotalAfterVat - discountAmount;
 
   return (
-    <section className="w-full max-w-sm p-4 rounded-xl shadow-sm space-y-3 bg-[#FFFFFF] mx-auto">
+    <div className="w-full max-w-sm p-4 rounded-xl shadow-sm space-y-3 bg-[#FFFFFF] mx-auto">
       <div className="space-y-2">
         <h2 className="text-lg font-semibold mb-3 text-[#262626]">
-          {studioName}
+          {data.studioName}
         </h2>
         <div className="flex items-center gap-2 mb-3">
-          {/* {label && (
-            <span className="text-sm bg-red-100 text-red-600 px-2.5 py-0.5 rounded-full font-semibold">
-              {label}
-            </span>
-          )} */}
-          {/* <span className="text-gray-300">•</span> */}
           {/* Rating and Reviews */}
           <div className="flex items-center text-sm text-yellow-500 font-medium gap-1">
             <Star size={16} fill="currentColor" stroke="currentColor" />
-            <span className="text-black">{rating}</span>
+            <span className="text-black">{data?.rating}</span>
             <span className="text-gray-500 hover:underline text-sm cursor-pointer">
-              ({reviewCount})
+              ({data.reviewCount})
             </span>
           </div>
         </div>
@@ -42,11 +31,12 @@ const ProviderCheckoutCard = ({
         <div className="flex items-center gap-2 text-sm text-[#262626]">
           <MapPin size={16} />
           <a
-            href={`https://maps.google.com/?q=$${address}`}
+            href={`https://maps.google.com/?q=$${data?.address}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:underline text-sm font-medium">
-            {address}
+            className="hover:underline text-sm font-medium"
+          >
+            {data?.address}
           </a>
         </div>
       </div>
@@ -58,6 +48,118 @@ const ProviderCheckoutCard = ({
           : "No service selected."}
       </div>
 
+      {/* Staff and Appointment Details Section - Renders only if any staff/appointment/note prop is provided */}
+      {selected && selected.length > 0 && (
+        <div className="flex flex-col gap-2 w-full">
+          {staffName && (
+            <div className="flex gap-2 items-start justify-start">
+              <FaRegUserCircle className="text-black text-[20px] flex-shrink-0" />
+              <p className="self-stretch text-neutral-800 text-sm font-normal leading-tight">
+                Staff - {staffName}
+              </p>
+            </div>
+          )}
+          {appointmentDateTime && (
+            <div className="flex gap-2 items-start justify-start">
+              <CiCalendar className="text-black text-[20px] flex-shrink-0" />
+              <p className="self-stretch text-neutral-800 text-sm font-normal leading-tight">
+                {appointmentDateTime}
+              </p>
+            </div>
+          )}
+          {bookingNote && (
+            <div className="self-stretch p-3 bg-neutral-50 rounded-lg inline-flex justify-center items-center">
+              <div className="flex-1 justify-start">
+                <span className="text-neutral-800 text-sm font-semibold leading-tight">
+                  Note:{" "}
+                </span>
+                <span className="text-neutral-800 text-sm font-normal leading-tight">
+                  {bookingNote}
+                </span>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Services Section - Renders only if services array is provided and not empty */}
+      {data?.services && data?.services.length > 0 && (
+        <div className="flex flex-col gap-[12px] w-full justify-center items-start">
+          <h3 className="self-stretch text-description text-sm font-semibold leading-tight">
+            Services ({services.length})
+          </h3>
+          {displayedServices.map((service) => (
+            <div
+              key={service.id}
+              className="flex justify-start items-start gap-[12px] w-full"
+            >
+              <img
+                src={
+                  service.image ||
+                  "https://placehold.co/80x80/cccccc/333333?text=No+Image"
+                } // Fallback for broken or missing images
+                alt={service.name || "Service image"}
+                className="w-20 h-20 relative rounded-lg object-cover"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src =
+                    "https://placehold.co/80x80/cccccc/333333?text=No+Image";
+                }}
+              />
+              <div className="w-full flex flex-col">
+                {service.name && (
+                  <h3 className="self-stretch text-Boulder-950 text-sm font-medium leading-tight">
+                    {service.name}
+                  </h3>
+                )}
+                {service.options && (
+                  <p className="text-violet-500 text-xs font-normal w-max leading-none px-[8px] py-[4px] border border-violet-500 my-[8px] rounded-[20px]">
+                    {service.options}
+                  </p>
+                )}
+                {(service.duration || service.price) && (
+                  <div className="w-full flex justify-between items-center">
+                    {service.duration && (
+                      <p className="text-description text-sm font-normal leading-tight">
+                        {service.duration}
+                      </p>
+                    )}
+                    {service.price && (
+                      <p className="text-Boulder-950 text-sm font-normal leading-tight">
+                        {service.price}
+                      </p>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+
+          {/* Show less/Show more button */}
+          {services.length > 2 && ( // Only show button if there are more than 2 services
+            <button
+              onClick={toggleShowServices}
+              className="text-sm font-normal font-['Golos_Text'] leading-tight text-description flex items-center justify-center gap-2 cursor-pointer w-full"
+            >
+              {showAllServices ? (
+                <>
+                  Show less <FaChevronUp />
+                </>
+              ) : (
+                <>
+                  Show more <FaChevronDown />
+                </>
+              )}
+            </button>
+          )}
+        </div>
+      )}
+
+      {/* Separator Line (renders if services are present, AND pricing info is present) */}
+      {data?.services && data?.services.length > 0 && hasPricingInfo && (
+        <div className="w-full border-t border-dashed border-gray-300"></div>
+      )}
+
       {/* Separator */}
       <div className="border-t border-dashed border-gray-200"></div>
 
@@ -68,10 +170,10 @@ const ProviderCheckoutCard = ({
           <span>₪ {subtotal.toFixed(2)}</span>
         </div>
         <div className="flex justify-between items-center">
-          <span>
-            VAT <span className="text-gray-400">(i)</span>
+          <span className="flex gap-1 items-center">
+            VAT <Info size={16} />
           </span>
-          <span>₪ {vat.toFixed(2)}</span>
+          <span>₪ {data?.vat?.toFixed(2) || 0}</span>
         </div>
 
         <div className="border-t border-dashed border-gray-200"></div>
@@ -86,7 +188,7 @@ const ProviderCheckoutCard = ({
             <div className="bg-[#F5F4FE] border-[1px] border-[#ECEBFC] px-2 py-1 rounded-sm">
               <span className="text-[#866BE7] px-2 py-1 text-xs font-semibold flex gap-1 items-center">
                 <TbArrowBadgeDown size={16} />
-                20% OFF
+                {data.discountPercent || 0}% OFF
               </span>
             </div>
             <span className="text-red-500">-₪ {discountAmount.toFixed(2)}</span>
@@ -106,7 +208,8 @@ const ProviderCheckoutCard = ({
       <Link to={to}>
         <button
           onClick={handleBookNow}
-          className="w-full bg-[#242528] text-white py-2 px-4 rounded-lg transition hover:bg-gray-800 cursor-pointer">
+          className="w-full bg-[#242528] text-white py-2 px-4 rounded-lg transition hover:bg-gray-800 cursor-pointer"
+        >
           Continue
         </button>
       </Link>
@@ -115,7 +218,7 @@ const ProviderCheckoutCard = ({
       <p className="text-xs font-normal text-center text-[#797979] mt-4">
         You will pay at the appointment location
       </p>
-    </section>
+    </div>
   );
 };
 

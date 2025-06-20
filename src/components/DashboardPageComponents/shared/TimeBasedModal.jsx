@@ -1,4 +1,4 @@
-import { Checkbox, DatePicker, Modal, Select, TimePicker } from "antd";
+import { Checkbox, DatePicker, Modal, Select } from "antd";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { Clock, PlusIcon } from "lucide-react";
@@ -6,30 +6,24 @@ import { useState } from "react";
 import { CalenderIcon, DownArrowIcon } from "../../../assets/icons/icons";
 import { DeleteIcon } from "../../../assets/icons/icons2";
 import { imageProvider } from "../../../lib/imageProvider";
+import TimePicker from "../../calendarManagement/pendingBookings/TimePicker";
+import { DateRange } from "react-date-range";
+import 'react-date-range/dist/styles.css'; // main style file
+import 'react-date-range/dist/theme/default.css';
+import { Calendar } from "lucide-react";
 const { RangePicker } = DatePicker;
 dayjs.extend(customParseFormat);
 
 const format = "hh:mm A";
 
-const TimeBasedModal = ({ isModalOpen, setIsModalOpen }) => {
-  const [pickerType] = useState("singl");
-  const [singleDate, setSingleDate] = useState(null);
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-
-  const [isAllDay, setIsAllDay] = useState(false);
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleGenderChange = (value) => {
-    console.log(`selected ${value}`);
-  };
-
-  const handleAllDayChange = (e) => {
-    setIsAllDay(e.target.checked);
-  };
+const TimeBasedModal = ({ isModalOpen, setIsModalOpen,setOpenDateRange, openDateRange, formatDate, handleGenderChange, handleAllDayChange,  isAllDay, handleCancel}) => {
+  const [range, setRange] = useState([
+    {
+      startDate: new Date(),
+      endDate: new Date(),
+      key: "selection",
+    },
+  ]);
 
   return (
     <Modal
@@ -40,41 +34,39 @@ const TimeBasedModal = ({ isModalOpen, setIsModalOpen }) => {
       closable={false}
       footer={null}
       width={600}
+      centered
       height={500}>
       <div className="text-[#3A3B3F] flex flex-col justify-between h-full">
         <div className="space-y-3 mt-4">
           <div className="grid grid-cols-2 gap-3">
-            <fieldset>
+            <fieldset className="relative">
               <label htmlFor="date" className="block w-fit mb-1">
                 Date <span className="text-[#ED4245]">*</span>
               </label>
-
-              {pickerType === "single" ? (
-                <DatePicker
-                  id="date"
-                  onChange={(date) => setSingleDate(date)}
-                  className="w-full !h-10 border border-[#E0E0E0] rounded-lg"
-                  placeholder="Select date"
-                  suffixIcon={<CalenderIcon />}
-                  format="YYYY-MM-DD"
-                  style={{ height: "40px", borderRadius: "8px" }}
+              <div
+                className="py-2 border border-border rounded-md flex items-center justify-between px-3"
+                onClick={() => setOpenDateRange(!openDateRange)}
+              >
+                {range[0].endDate > range[0].startDate ? (
+                  <p>
+                    {formatDate(range[0].startDate)} - {formatDate(range[0].endDate)}
+                  </p>
+                ) : (
+                  <p>Select</p>
+                )}
+                <Calendar size={20} className="text-description" />
+              </div>
+              {openDateRange && (<div className="absolute bg-white z-10  shadow-[0_0_25px_rgba(0,0,0,0.1)] rounded-lg">
+                <DateRange
+                  className="custom-calendar"
+                  ranges={range}
+                  onChange={(item) => setRange([item.selection])}
+                  showDateDisplay={false}
+                  showSelectionPreview={false}
+                  moveRangeOnFirstSelection={false}
+                  rangeColors={["#dedbfb"]}
                 />
-              ) : (
-                <RangePicker
-                  id="date-range"
-                  onChange={(dates) => {
-                    setStartDate(dates?.[0]);
-                    setEndDate(dates?.[1]);
-                  }}
-                  className="w-full !h-10 border border-[#E0E0E0] rounded-lg"
-                  placeholder={["Select date"]}
-                  separator=""
-                  suffixIcon={<CalenderIcon />}
-                  format="YYYY-MM-DD"
-                  style={{ height: "40px", borderRadius: "8px" }}
-                  dropdownClassName="vertical-range-picker"
-                />
-              )}
+              </div>)}
             </fieldset>
 
             <fieldset>
@@ -113,9 +105,8 @@ const TimeBasedModal = ({ isModalOpen, setIsModalOpen }) => {
             )}
 
             <div
-              className={`flex justify-between gap-2 ${
-                isAllDay ? "pointer-events-none opacity-50" : ""
-              }`}>
+              className={`flex justify-between gap-2 ${isAllDay ? "pointer-events-none opacity-50" : ""
+                }`}>
               <div className="space-y-1">
                 <h4 className="text-[#ACAFB4]">Start time</h4>
                 <TimePicker
@@ -146,9 +137,8 @@ const TimeBasedModal = ({ isModalOpen, setIsModalOpen }) => {
             </div>
 
             <button
-              className={`flex items-center gap-2 p-2 text-[#744CDB] rounded-lg mt-2 hover:underline ${
-                isAllDay ? "pointer-events-none opacity-50" : ""
-              }`}>
+              className={`flex items-center gap-2 p-2 text-[#744CDB] rounded-lg mt-2 hover:underline ${isAllDay ? "pointer-events-none opacity-50" : ""
+                }`}>
               <PlusIcon size={20} className="text-[#744CDB]" />
               <p className="text-[15px] font-semibold">Add Time Range</p>
             </button>
@@ -177,7 +167,7 @@ const TimeBasedModal = ({ isModalOpen, setIsModalOpen }) => {
             </p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-5">
             <button
               onClick={handleCancel}
               type="button"

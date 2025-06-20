@@ -69,8 +69,6 @@ export default function DayViewAppointment({ currentDate, resources, events }) {
   const gridTemplateColumns = `70px repeat(${appointmentUsers.length}, minmax(${MIN_COLUMN_WIDTH}, 1fr))`;
   const date = dayjs(currentDate);
 
-  console.log(gridTemplateColumns);
-
   return (
     <div className="bg-white rounded-lg shadow-xl overflow-hidden">
       {/* Main scrollable container */}
@@ -106,7 +104,10 @@ export default function DayViewAppointment({ currentDate, resources, events }) {
                   {date.format("DD")}
                 </div>
               ) : (
-                <div className="flex flex-col items-center gap-2">
+                <div
+                  className={cn("flex flex-col items-center gap-2", {
+                    "rounded-tl-xl": colIndex === 1,
+                  })}>
                   <Avatar
                     src={column.avatar}
                     alt={column.title}

@@ -18,6 +18,7 @@ export const getBlacklistOverviewColumns = () => [
     title: "Client Name",
     dataIndex: "clientName",
     key: "clientName",
+    width: 150,
     render: (text, record) => (
       <div className="flex flex-col">
         <span className="text-[#262626] text-sm font-medium">{text}</span>
@@ -54,7 +55,7 @@ export const getBlacklistOverviewColumns = () => [
     title: "Action",
     key: "action",
     render: (_, record) => (
-      <div className="flex gap-2">
+      <div className="flex justify-center gap-2">
         <Tooltip placement="top" color="#52c41a" title="Remove from blacklist">
           <button
             type="button"

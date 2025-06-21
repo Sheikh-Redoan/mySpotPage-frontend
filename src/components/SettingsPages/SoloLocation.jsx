@@ -110,6 +110,7 @@ const SoloLocation = () => {
           selectedCities ={selectedCities}
           setSelectedDistrict={setSelectedDistrict}
           setOpenCitySelectionModal={setOpenCitySelectionModal}
+          handleCityChange={handleCityChange}
         />
       )}
 

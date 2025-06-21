@@ -7,6 +7,7 @@ import { getBreadcrumbs } from "../../../lib/staticData";
 import { cn } from "../../../lib/utils";
 import CheckoutCardForMobile from "../../../components/addBookingByProvider/CheckoutCardForMobile";
 import BookingCheckoutCard from "../../../components/addBookingByProvider/BookingCheckoutCard";
+import confirm_product from "/src/assets/images/confirm.jpg";
 
 const businessStaticData = {
   studioName: "TCL Beauty Studio 01",
@@ -20,6 +21,32 @@ const businessStaticData = {
   discountAmount: 60.0,
   total: 90.0,
   paymentInstruction: "You will pay at the appointment location",
+  services: [
+      {
+        id: 1,
+        image: confirm_product,
+        name: "Classic Ombre",
+        options: "Smooth / Scalp treatment",
+        duration: "2h45m",
+        price: "₪70.00",
+      },
+      {
+        id: 2,
+        image: confirm_product,
+        name: "Reverse Ombre",
+        options: "Shadow Root",
+        duration: "3h30m",
+        price: "₪100.00",
+      },
+      {
+        id: 3,
+        image: confirm_product,
+        name: "Balayage with Toner",
+        options: "30m",
+        duration: "30m",
+        price: "₪100.00",
+      },
+    ],
 };
 
 const ServicesPageForProvider = () => {

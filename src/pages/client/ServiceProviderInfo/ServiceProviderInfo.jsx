@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import banner from "../../../assets/images/ClientBanner.png";
 import BookingCart from "../../../components/serviceProviderInfo/BookingCart";
 import LoginNotificationModal from "../../../components/serviceProviderInfo/LoginNotificationModal";
@@ -9,6 +9,7 @@ import ServicesList from "../../../components/serviceProviderInfo/ServicesList";
 import TestimonialsSection from "../../../components/serviceProviderInfo/TestimonialsSection";
 import TreatmentModal from "../../../components/serviceProviderInfo/TreatmentModal";
 import { selectUser } from "../../../redux/features/userSlice";
+import { use } from "react";
 
 const businessData = {
   studioName: "TCL Beauty Studio 01",
@@ -28,6 +29,7 @@ const businessData = {
 };
 
 const ServiceProviderInfo = () => {
+  const navigate = useNavigate();
   const [selected, setSelected] = useState([]);
   const [selectedDay, setSelectedDay] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -101,13 +103,12 @@ const ServiceProviderInfo = () => {
       </div>
 
       {/* Mobile booking button */}
-      <div className="flex justify-between items-center md:hidden fixed bottom-0 left-0 right-0 bg-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] p-4 z-50">
+      <div className="flex justify-between items-center md:hidden fixed bottom-0 left-0 right-0 bg-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] px-4 pt-6 pb-12 z-50">
         <div className="text-sm text-center text-gray-500">
           {selected.length > 0
             ? `${selected.length} service selected`
             : "0 service selected"}
         </div>
-        <Link to="service-provider-info">
           <button
             className={`bg-gray-900 text-white py-2 px-8 rounded-lg transition ${
               selected.length === 0
@@ -118,7 +119,6 @@ const ServiceProviderInfo = () => {
             onClick={handleBookNow}>
             Book now
           </button>
-        </Link>
       </div>
 
       {/* modal for booking confirmation */}
@@ -127,6 +127,7 @@ const ServiceProviderInfo = () => {
         onCancel={() => setModalOpen(false)}
         onContinue={() => {
           setModalOpen(false);
+          navigate("/service-provider-info/select-staff");
         }}
         services={selected}
       />

@@ -154,15 +154,15 @@ export const getPendingBookingsColumns = (
       <div
         className={`rounded-full text-center ${
           text === "Pending"
-            ? "bg-[#FFF4EA] text-[#FC8B23]"
+            ? "bg-[#FFF4EA] text-[#FC8B23] px-2.5 py-0.5"
             : text === "Confirmed"
-            ? "text-[#3E70DD] bg-[#E6F3FF]"
+            ? "text-[#3E70DD] bg-[#E6F3FF] px-2.5 py-0.5"
             : text === "Completed"
-            ? "bg-[#E3FAE6] text-[#21C66E]"
+            ? "bg-[#E3FAE6] text-[#21C66E] px-2.5 py-0.5"
             : text === "Cancelled"
-            ? "bg-[#FFEFEF] text-[#ED4245]"
+            ? "bg-[#FFEFEF] text-[#ED4245] px-2.5 py-0.5"
             : text === "No Show"
-            ? "bg-[#E7E7E7] text-[#82868E]"
+            ? "bg-[#E7E7E7] text-[#82868E] px-2.5 py-0.5"
             : ""
         }`}>
         <span className="text-xs">{text}</span>

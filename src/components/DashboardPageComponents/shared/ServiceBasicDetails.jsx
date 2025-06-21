@@ -54,11 +54,10 @@ const ServiceBasicDetails = ({
           header={
             <div className="flex items-center gap-x-3">
               <div
-                className={`w-10 h-10 flex justify-center items-center border rounded-full font-bold transition-all duration-200 ${
-                  isStepComplete
+                className={`w-10 h-10 flex justify-center items-center border rounded-full font-bold transition-all duration-200 ${isStepComplete
                     ? "bg-[#262626] text-white "
                     : "border p-4 text-[#262626]"
-                }`}
+                  }`}
               >
                 {isStepComplete ? <Check className="w-6 h-6" /> : "1"}
               </div>
@@ -215,29 +214,31 @@ const ServiceBasicDetails = ({
                         <X size={24} className="text-description" />
                       </Button>
                     }
-                    height="40%"
+                    // height="38%"
                     onClose={() => setOpen(false)}
                     open={open}
                     className="rounded-t-xl"
                   >
-                    <Radio.Group
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: 10,
-                        padding: 20,
-                        fontSize: "14px",
-                      }}
-                      onChange={(e) => setLabel(e.target.value)}
-                      value={label}
-                      options={[
-                        { value: "For All", label: "For All" },
-                        { value: "For male only", label: "For male only" },
-                        { value: "For female only", label: "For female only" },
-                        { value: "For kids only", label: "For kids only" },
-                      ]}
-                    />
-                    <div className="bg-white pt-5 pb-10 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] flex justify-center">
+                    <div className="">
+                      <Radio.Group
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: 10,
+                          padding: 20,
+                          fontSize: "14px",
+                        }}
+                        onChange={(e) => setLabel(e.target.value)}
+                        value={label}
+                        options={[
+                          { value: "For All", label: "For All" },
+                          { value: "For male only", label: "For male only" },
+                          { value: "For female only", label: "For female only" },
+                          { value: "For kids only", label: "For kids only" },
+                        ]}
+                      />
+                    </div>
+                    <div className="bg-white pt-5 pb-10 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] flex justify-center fixed bottom-0 w-full">
                       <button
                         onClick={() => {
                           setOpen(false);

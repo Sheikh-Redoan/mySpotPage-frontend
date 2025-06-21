@@ -6,7 +6,7 @@ import { cn } from "../../lib/utils";
 export default function CalendarDatePicker({ month = 3 }) {
   const [currentDate, setCurrentDate] = useState(dayjs());
   const [value, setValue] = useState(dayjs());
-  const [selectedValue, setSelectedValue] = useState(dayjs("2025-06-06"));
+  const [selectedValue, setSelectedValue] = useState(dayjs(currentDate));
 
   const onSelect = (newValue) => {
     setValue(newValue);
@@ -17,11 +17,13 @@ export default function CalendarDatePicker({ month = 3 }) {
     setValue(newValue);
   };
 
-  // Custom cell rendering to achieve the desired look
   const dateFullCellRender = (current) => {
+    // Check if date belongs to current month view
     const isCurrentMonth =
       current.month() === value.month() && current.year() === value.year();
+
     const isSelected = current.isSame(selectedValue, "day");
+    const isToday = currentDate.isSame(current, "day");
 
     return (
       <div
@@ -29,26 +31,26 @@ export default function CalendarDatePicker({ month = 3 }) {
           "relative flex items-center justify-center",
           "h-8 w-8 sm:h-12 sm:w-12 rounded-full cursor-pointer",
           "text-xs transition-colors duration-200 ease-in-out",
+          // Base text color based on month
+          isCurrentMonth ? "text-gray-800" : "text-gray-400",
+          // Apply highlight for selected or today
           {
-            "bg-primary01 text-white shadow-lg":
-              isSelected || currentDate.isSame(current, "day"),
-            "text-gray-800 hover:bg-gray-100": !isSelected && isCurrentMonth,
-            "text-gray-400 hover:bg-gray-100": !isSelected && !isCurrentMonth,
+            "bg-primary01 !text-white shadow-lg": isSelected || isToday,
+            "hover:bg-gray-100": isCurrentMonth && !isSelected && !isToday,
           }
         )}
-        onClick={() => onSelect(current)} // Handle click on the custom cell
-      >
+        onClick={() => onSelect(current)}>
         {current.date()}
       </div>
     );
   };
 
   useEffect(() => {
-    setCurrentDate(currentDate.add(month, "month"));
+    setCurrentDate(dayjs().add(month, "month"));
+    setValue(dayjs().add(month, "month"));
   }, [month]);
 
   return (
-    // <div className="flex justify-center items-center min-h-screen bg-gray-50 p-4 font-inter">
     <div className="w-full mt-5">
       {/* Custom weekday header display */}
       <div className="grid grid-cols-7 text-center text-gray-400 mb-4 text-xs">
@@ -78,7 +80,8 @@ export default function CalendarDatePicker({ month = 3 }) {
           },
         }}>
         <Calendar
-          value={currentDate}
+          value={value}
+          selectedValue={selectedValue}
           onSelect={onSelect}
           onPanelChange={onPanelChange}
           fullscreen={false}
@@ -94,11 +97,10 @@ export default function CalendarDatePicker({ month = 3 }) {
              [&_.ant-picker-cell-inner]:!w-auto
              [&_.ant-picker-cell-inner]:!h-auto
              [&_.ant-picker-header]:hidden
-             [&_.ant-picker-content_thead]:hidden /* Added to hide Ant Design's default day row */
+             [&_.ant-picker-content_thead]:hidden
            "
         />
       </ConfigProvider>
     </div>
-    // </div>
   );
 }

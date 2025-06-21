@@ -9,6 +9,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ConfigProvider } from "antd";
 import { Provider } from "react-redux";
 import { RouterProvider } from "react-router";
+import { TranslatorProvider } from "react-translate";
 import StateContextProvider from "./provider/StateContextProvider";
 import { store } from "./redux/store";
 import { routes } from "./routes/Router";
@@ -45,13 +46,21 @@ const theme = {
   },
 };
 
+const translations = {
+  locale: "en",
+};
+
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <StateContextProvider>
-          <ConfigProvider theme={theme}>
-            <RouterProvider router={routes}></RouterProvider>
+          <ConfigProvider theme={theme} locale="en_US" direction="rtl">
+            {/* Wrap the application with TranslatorProvider for translations */}
+            <TranslatorProvider translations={translations}>
+              {/* Use the useTranslate hook to access translation functions */}
+              <RouterProvider router={routes}></RouterProvider>
+            </TranslatorProvider>
           </ConfigProvider>
         </StateContextProvider>
         <ReactQueryDevtools initialIsOpen={false} />

@@ -1,18 +1,39 @@
+import { Button } from "antd";
 import { Info } from "lucide-react";
 import { MapPin, Star } from "lucide-react";
+import { useState } from "react";
 import { CiCalendar } from "react-icons/ci";
-import { FaRegUserCircle } from "react-icons/fa";
+import { FaChevronDown, FaChevronUp, FaRegUserCircle } from "react-icons/fa";
 import { TbArrowBadgeDown } from "react-icons/tb";
-import { Link } from "react-router";
+import { cn } from "../../lib/utils";
 
-const ProviderCheckoutCard = ({ data, selected, handleBookNow, to="#" }) => {
+const BookingCheckoutCard = ({ 
+  data, 
+  selected, 
+  handleBookNow, 
+  fromDrawer=false 
+}) => {
+  const [showAllServices, setShowAllServices] = useState(false);
+
   const subtotal = 0.0;
   const subtotalAfterVat = subtotal + data?.vat;
   const discountAmount = 0.0;
   const total = subtotalAfterVat - discountAmount;
 
+  const displayedServices =
+    data?.services && data?.services.length > 2 && !showAllServices
+      ? data?.services.slice(0, 2)
+      : data?.services;
+
+  const hasPricingInfo = subtotal || discountAmount || total;
+
   return (
-    <div className="w-full max-w-sm p-4 rounded-xl shadow-sm space-y-3 bg-[#FFFFFF] mx-auto">
+    <div
+      className={cn(
+        "w-full max-w-sm p-4 rounded-xl shadow-sm space-y-3 bg-[#FFFFFF] mx-auto",
+        { "bg-none rounded-none shadow-none p-2": fromDrawer }
+      )}
+    >
       <div className="space-y-2">
         <h2 className="text-lg font-semibold mb-3 text-[#262626]">
           {data.studioName}
@@ -51,30 +72,30 @@ const ProviderCheckoutCard = ({ data, selected, handleBookNow, to="#" }) => {
       {/* Staff and Appointment Details Section - Renders only if any staff/appointment/note prop is provided */}
       {selected && selected.length > 0 && (
         <div className="flex flex-col gap-2 w-full">
-          {staffName && (
+          {data?.staffName && (
             <div className="flex gap-2 items-start justify-start">
               <FaRegUserCircle className="text-black text-[20px] flex-shrink-0" />
               <p className="self-stretch text-neutral-800 text-sm font-normal leading-tight">
-                Staff - {staffName}
+                Staff - {data?.staffName}
               </p>
             </div>
           )}
-          {appointmentDateTime && (
+          {data?.appointmentDateTime && (
             <div className="flex gap-2 items-start justify-start">
               <CiCalendar className="text-black text-[20px] flex-shrink-0" />
               <p className="self-stretch text-neutral-800 text-sm font-normal leading-tight">
-                {appointmentDateTime}
+                {data?.appointmentDateTime}
               </p>
             </div>
           )}
-          {bookingNote && (
+          {data?.bookingNote && (
             <div className="self-stretch p-3 bg-neutral-50 rounded-lg inline-flex justify-center items-center">
               <div className="flex-1 justify-start">
                 <span className="text-neutral-800 text-sm font-semibold leading-tight">
                   Note:{" "}
                 </span>
                 <span className="text-neutral-800 text-sm font-normal leading-tight">
-                  {bookingNote}
+                  {data?.bookingNote}
                 </span>
               </div>
             </div>
@@ -86,7 +107,7 @@ const ProviderCheckoutCard = ({ data, selected, handleBookNow, to="#" }) => {
       {data?.services && data?.services.length > 0 && (
         <div className="flex flex-col gap-[12px] w-full justify-center items-start">
           <h3 className="self-stretch text-description text-sm font-semibold leading-tight">
-            Services ({services.length})
+            Services ({data?.services.length})
           </h3>
           {displayedServices.map((service) => (
             <div
@@ -97,7 +118,7 @@ const ProviderCheckoutCard = ({ data, selected, handleBookNow, to="#" }) => {
                 src={
                   service.image ||
                   "https://placehold.co/80x80/cccccc/333333?text=No+Image"
-                } // Fallback for broken or missing images
+                }
                 alt={service.name || "Service image"}
                 className="w-20 h-20 relative rounded-lg object-cover"
                 onError={(e) => {
@@ -136,9 +157,9 @@ const ProviderCheckoutCard = ({ data, selected, handleBookNow, to="#" }) => {
           ))}
 
           {/* Show less/Show more button */}
-          {services.length > 2 && ( // Only show button if there are more than 2 services
+          {data?.services.length > 2 && ( // Only show button if there are more than 2 services
             <button
-              onClick={toggleShowServices}
+              onClick={() => setShowAllServices(!showAllServices)}
               className="text-sm font-normal font-['Golos_Text'] leading-tight text-description flex items-center justify-center gap-2 cursor-pointer w-full"
             >
               {showAllServices ? (
@@ -205,14 +226,14 @@ const ProviderCheckoutCard = ({ data, selected, handleBookNow, to="#" }) => {
       </div>
 
       {/* Continue Button */}
-      <Link to={to}>
-        <button
-          onClick={handleBookNow}
-          className="w-full bg-[#242528] text-white py-2 px-4 rounded-lg transition hover:bg-gray-800 cursor-pointer"
-        >
-          Continue
-        </button>
-      </Link>
+      <Button
+        color="default"
+        variant="solid"
+        onClick={handleBookNow}
+        className="w-full"
+      >
+        Continue
+      </Button>
 
       {/* Payment Note */}
       <p className="text-xs font-normal text-center text-[#797979] mt-4">
@@ -222,4 +243,4 @@ const ProviderCheckoutCard = ({ data, selected, handleBookNow, to="#" }) => {
   );
 };
 
-export default ProviderCheckoutCard;
+export default BookingCheckoutCard;

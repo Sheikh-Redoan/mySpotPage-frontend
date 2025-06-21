@@ -105,7 +105,7 @@ export default function DayCell({
     return (
       <div
         className={cn(
-          "text-sm mb-1 text-start flex items-start justify-start gap-2",
+          "text-sm mb-1 text-start flex items-start justify-start gap-2 flex-wrap",
           !isCurrentMonth ? "text-gray-400" : "text-gray-800",
           {
             "flex-col": !selectTimeFromProvider,
@@ -132,7 +132,7 @@ export default function DayCell({
         </span>
 
         {service?.sale && currentTimeSlot?.availableTimeSlots?.length > 0 && (
-          <span className="text-xs text-primary01 bg-[#F5F4FE] px-2 py-1 rounded-full font-medium border border-[#C3BCF6]">
+          <span className="text-xs text-primary01 bg-[#F5F4FE] px-2 py-1 rounded-full font-medium lg:border border-[#C3BCF6] text-wrap">
             {service.sale}
           </span>
         )}
@@ -164,7 +164,7 @@ export default function DayCell({
         disabled={currentTimeSlot?.isBusy || isPastDay()}
         onClick={selectTimeFromProvider ? () => setIsOpen(true) : null}
         className={cn(
-          "border-b border-r border-gray-200 relative overflow-hidden",
+          "border-b border-r border-l border-gray-200 relative overflow-hidden",
           "cursor-pointer transition-colors duration-200",
           dayView ? "w-full p-0" : "p-2",
           {

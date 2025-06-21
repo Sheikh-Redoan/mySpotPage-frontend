@@ -1,9 +1,10 @@
 // src/pages/layout/TopNavbar.jsx (Revised)
 import { Drawer, Popover } from "antd";
 import { ArrowLeft, Menu } from "lucide-react"; // Import Menu icon
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useLocation } from "react-router";
 import UserMenuPopUp from "../../components/admin/UserMenuPopUp";
+import Translate from "../../components/shared/Translate";
 import { imageProvider } from "../../lib/imageProvider";
 import { cn } from "../../lib/utils";
 import NotificationPopup from "./NotificationPopup";
@@ -52,7 +53,9 @@ function TopNavbar({ activeTab, onMenuClick }) {
           </button>
            
           <h3 className="font-semibold text-lg capitalize  max-[700px]:text-[14px]">
-                        {tab ? tab : "Dashboard"}       
+            <Suspense fallback={<div>Loading translation...</div>}>
+              <Translate text={tab ? tab : "Dashboard"} />
+            </Suspense>
           </h3>
              
         </div>
@@ -84,7 +87,9 @@ function TopNavbar({ activeTab, onMenuClick }) {
             extra={
               <button type="button" onClick={onClose}>
                 <h4 className="text-black/60 text-sm underline cursor-pointer">
-                  Mark all as Read
+                  <Suspense fallback={<div>Loading translation...</div>}>
+                    <Translate text={"Mark all as Read"} />
+                  </Suspense>
                 </h4>
               </button>
             }

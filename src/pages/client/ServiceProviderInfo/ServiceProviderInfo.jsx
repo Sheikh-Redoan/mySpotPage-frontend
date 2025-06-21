@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import banner from "../../../assets/images/ClientBanner.png";
 import BookingCart from "../../../components/serviceProviderInfo/BookingCart";
 import LoginNotificationModal from "../../../components/serviceProviderInfo/LoginNotificationModal";
@@ -9,6 +9,7 @@ import ServicesList from "../../../components/serviceProviderInfo/ServicesList";
 import TestimonialsSection from "../../../components/serviceProviderInfo/TestimonialsSection";
 import TreatmentModal from "../../../components/serviceProviderInfo/TreatmentModal";
 import { selectUser } from "../../../redux/features/userSlice";
+import { use } from "react";
 
 const businessData = {
   studioName: "TCL Beauty Studio 01",
@@ -28,6 +29,7 @@ const businessData = {
 };
 
 const ServiceProviderInfo = () => {
+  const navigate = useNavigate();
   const [selected, setSelected] = useState([]);
   const [selectedDay, setSelectedDay] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -127,6 +129,7 @@ const ServiceProviderInfo = () => {
         onCancel={() => setModalOpen(false)}
         onContinue={() => {
           setModalOpen(false);
+          navigate("/service-provider-info/select-staff");
         }}
         services={selected}
       />

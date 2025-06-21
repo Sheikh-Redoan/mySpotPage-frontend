@@ -7,7 +7,6 @@ const initialState = {
   photoURL: null,
 };
 
-
 const userSlice = createSlice({
   name: "user",
   initialState,

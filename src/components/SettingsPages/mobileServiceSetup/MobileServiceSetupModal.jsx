@@ -1,4 +1,5 @@
 import {
+  Button,
   Drawer,
   Grid,
   Modal
@@ -64,6 +65,16 @@ export const MobileServiceSetupModal = ({
           onClose={onClose}
           open={isOpen}
           className="rounded-t-xl"
+          title="Mobile service setup"
+          extra={
+            <Button
+              type="text"
+              onClick={onClose}
+              className="!px-0"
+            >
+              <X size={24} className="text-description" />
+            </Button>
+          }
         >
           <MobileServiceSetupContent
             setMobileModalOpen={setMobileModalOpen}
@@ -73,6 +84,7 @@ export const MobileServiceSetupModal = ({
             selectedCities={selectedCities}
             setOpenCitySelectionModal={setOpenCitySelectionModal}
             cityOptions={cityOptions}
+            drowar={true}
           />
         </Drawer>
 

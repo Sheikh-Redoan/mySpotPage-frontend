@@ -1,6 +1,5 @@
 import dayjs from "dayjs";
 import "dayjs/locale/en"; // Or your preferred locale
-import useResponsive from "../../hooks/useResponsive";
 import { cn } from "../../lib/utils";
 import DayCell from "./DayCell";
 import DayViewAppointment from "./DayViewAppointment";
@@ -15,7 +14,6 @@ export default function DayView({
   maxEventsPerMonthCell = 3,
   onTimeSelect = () => {},
 }) {
-  const { xl } = useResponsive();
   // Helper to get time slots for a day
   const getTimeSlots = (date, startHour = 8, endHour = 17) => {
     const slots = [];

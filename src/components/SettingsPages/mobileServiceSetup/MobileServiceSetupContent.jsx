@@ -31,7 +31,8 @@ export const MobileServiceSetupContent = ({
   selectedCities,
   setOpenCitySelectionModal,
   cityOptions,
-  drowar
+  drowar,
+  handleCityChange
 }) => {
   const [paymentOpen, setPaymentOpen] = useState(true);
   const [serviceModalOpen, setServiceModalOpen] = useState(true);
@@ -247,7 +248,7 @@ export const MobileServiceSetupContent = ({
                                         <X
                                           onClick={() => handleCityChange(city)}
                                           size={16}
-                                          className="text-[#C3BCF6] hover:scale-110 hover:font-medium"
+                                          className="text-[#C3BCF6] hover:scale-110 hover:font-medium cursor-pointer"
                                         />
                                       </div>
                                     )

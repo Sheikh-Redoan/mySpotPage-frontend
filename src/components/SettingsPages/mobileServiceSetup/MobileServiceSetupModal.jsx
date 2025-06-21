@@ -51,6 +51,7 @@ export const MobileServiceSetupModal = ({
   setSelectedDistrict,
   selectedCities,
   setOpenCitySelectionModal,
+  handleCityChange
 }) => {
   const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
@@ -85,6 +86,7 @@ export const MobileServiceSetupModal = ({
             setOpenCitySelectionModal={setOpenCitySelectionModal}
             cityOptions={cityOptions}
             drowar={true}
+            handleCityChange={handleCityChange}
           />
         </Drawer>
 

@@ -217,7 +217,7 @@ export default function CalendarToolbar({
               </div>
             </div>
             <div className={cn("transition-all", { hidden: !openMonth })}>
-              <CalendarDatePicker month={selectMonth} />
+              {view !== "month" && <CalendarDatePicker month={selectMonth} />}
               <div
                 ref={monthsContainerRef}
                 className={cn(

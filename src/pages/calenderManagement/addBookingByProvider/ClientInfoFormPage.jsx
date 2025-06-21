@@ -1,11 +1,11 @@
 import { AutoComplete, Input, Radio, Form, Button } from "antd";
 import { useNavigate } from "react-router";
-import ProviderCheckoutCard from "../../../components/addBookingByProvider/ProviderCheckoutCard";
 import Breadcrumb from "../../../components/client/Breadcrumb";
 import { getBreadcrumbs } from "../../../lib/staticData";
 import CheckoutCardForMobile from "../../../components/addBookingByProvider/CheckoutCardForMobile";
 import { cn } from "../../../lib/utils";
 import { useState } from "react";
+import BookingCheckoutCard from "../../../components/addBookingByProvider/BookingCheckoutCard";
 
 const options = [
   { value: "Burns Bay Road" },
@@ -36,22 +36,15 @@ const ClientInfoFormPage = () => {
     try {
       const values = await form.validateFields();
       console.log("Client Info Form Values:", values);
-      // navigate("/dashboard/add-booking-by-provider/select-services");
+      navigate("/dashboard/add-booking-by-provider/select-services");
     } catch (errorInfo) {
       console.log("Client Info Form Validation Failed:", errorInfo);
     }
   };
 
   return (
-    <section className="bg-gray-50">
-      <div
-        className={cn("max-md:mb-56 max-md:px-3 max-md:py-4", {
-          "max-md:mb-78": showDetails,
-        })}
-        // className={cn("max-md:h-[690px] max-md:overflow-y-auto max-md:px-3 max-md:py-4", {
-        //   "max-md:h-[320px] max-md:overflow-y-auto ": showDetails,
-        // })}
-      >
+    <section>
+      <div className="max-md:px-3 max-md:py-2">
         <Breadcrumb
           breadcrumbs={getBreadcrumbs(0, 3, [
             {
@@ -76,9 +69,16 @@ const ClientInfoFormPage = () => {
             },
           ])}
         />
-        
+
         <div className="flex flex-col md:flex-row justify-between gap-4 items-start">
-          <div className="p-5 rounded-xl bg-[#FFFFFF] shadow space-y-3 flex-1 w-full md:w-auto">
+          <div
+            className={cn(
+              "p-5 rounded-xl bg-[#FFFFFF] shadow space-y-3 flex-1 w-full md:w-auto max-md:mb-56",
+              {
+                "max-md:mb-80": showDetails,
+              }
+            )}
+          >
             <h3 className="text-[#262626] text-[16px] font-semibold">
               Client Information
             </h3>
@@ -178,7 +178,7 @@ const ClientInfoFormPage = () => {
           </div>
 
           <div className="w-full md:w-auto mt-4 md:mt-0 max-md:hidden">
-            <ProviderCheckoutCard
+            <BookingCheckoutCard
               data={businessStaticData}
               handleBookNow={handleBookNow}
             />

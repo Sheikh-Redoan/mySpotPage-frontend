@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import ProviderCheckoutCard from "../../../components/addBookingByProvider/ProviderCheckoutCard";
 import Breadcrumb from "../../../components/client/Breadcrumb";
 import ServicesList from "../../../components/serviceProviderInfo/ServicesList";
 import TreatmentModal from "../../../components/serviceProviderInfo/TreatmentModal";
 import { getBreadcrumbs } from "../../../lib/staticData";
 import { cn } from "../../../lib/utils";
 import CheckoutCardForMobile from "../../../components/addBookingByProvider/CheckoutCardForMobile";
+import BookingCheckoutCard from "../../../components/addBookingByProvider/BookingCheckoutCard";
 
 const businessStaticData = {
   studioName: "TCL Beauty Studio 01",
@@ -33,12 +33,8 @@ const ServicesPageForProvider = () => {
   };
 
   return (
-    <section className="bg-gray-50">
-      <div
-        className={cn("max-md:mb-54 max-md:px-3 max-md:py-4", {
-          "max-md:mb-76": showDetails,
-        })}
-      >
+    <section>
+      <div className="max-md:px-3 max-md:py-2">
         <Breadcrumb
           breadcrumbs={getBreadcrumbs(0, 3, [
             {
@@ -64,19 +60,26 @@ const ServicesPageForProvider = () => {
           ])}
         />
         <div className="flex flex-col md:flex-row gap-4 justify-between items-start">
-          <div className="p-5 rounded-xl bg-[#FFFFFF] shadow-md space-y-3 flex-1 w-full md:w-auto">
+          <div
+            className={cn(
+              "max-md:mb-54 p-5 rounded-xl bg-[#FFFFFF] shadow-md space-y-3 flex-1 w-full md:w-auto",
+              {
+                "max-md:mb-76": showDetails,
+              }
+            )}
+          >
             <ServicesList
               selected={selected}
               setSelected={setSelected}
               label="Select Services"
             />
           </div>
+
           <div className="max-md:hidden">
-            <ProviderCheckoutCard
+            <BookingCheckoutCard
               data={businessStaticData}
               handleBookNow={handleBookNow}
               selected={selected}
-              to="/dashboard/add-booking-by-provider/select-staff"
             />
           </div>
         </div>
@@ -90,11 +93,13 @@ const ServicesPageForProvider = () => {
         setShowDetails={setShowDetails}
       />
 
+      {/* Modal After Select Services */}
       <TreatmentModal
         open={modalOpen}
         onCancel={() => setModalOpen(false)}
-        onContinue={() => {
-          navigate("/add-booking-by-provider/select-staff");
+        onContinue={(selectedData) => {
+          console.log({selectedData})
+          navigate("/dashboard/add-booking-by-provider/select-staff");
         }}
         services={selected}
       />

@@ -1,4 +1,3 @@
-// Belows are the Mock staff data will be replaced with the real data
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Breadcrumb from "../../../components/client/Breadcrumb";
@@ -13,6 +12,10 @@ import staff4 from "/src/assets/images/staff/staff4.jpg";
 import staff5 from "/src/assets/images/staff/staff5.jpg";
 import staff6 from "/src/assets/images/staff/staff6.jpg";
 import staff7 from "/src/assets/images/staff/staff7.jpg";
+import BookingCheckoutCard from "../../../components/addBookingByProvider/BookingCheckoutCard";
+import { useNavigate } from "react-router";
+import CheckoutCardForMobile from "../../../components/addBookingByProvider/CheckoutCardForMobile";
+import { cn } from "../../../lib/utils";
 
 const staffData = [
   {
@@ -73,7 +76,23 @@ const staffData = [
   },
 ];
 
+const businessStaticData = {
+  studioName: "TCL Beauty Studio 01",
+  label: "Beauty",
+  rating: 4.8,
+  reviewCount: "12.5K reviews",
+  address: "15 Rothschild Boulevard, Tel Aviv-Yafo, Israel",
+  subtotal: 20.0,
+  vatIncluded: true,
+  discountPercentage: 10.0,
+  discountAmount: 60.0,
+  total: 90.0,
+  paymentInstruction: "You will pay at the appointment location",
+};
+
 const SelectStaffForProvider = () => {
+  const [showDetails, setShowDetails] = useState(false);
+  const navigate = useNavigate();
   const selectedStaff = useSelector(({ selectedStaff }) => selectedStaff);
   const [staff, setStaff] = useState(staffData);
   const dispatch = useDispatch();
@@ -90,78 +109,87 @@ const SelectStaffForProvider = () => {
     dispatch(setSelectedStaff(staffData));
   };
 
+  const handleBookNow = async () => {
+    navigate("/dashboard/add-booking-by-provider/select-time");
+  };
+
   return (
     <section>
-      <Breadcrumb
-        breadcrumbs={getBreadcrumbs(0, 3, [
-          {
-            name: "Client information",
-            link: "/dashboard/add-booking-by-provider",
-          },
-          {
-            name: "Select Services",
-            link: "/dashboard/add-booking-by-provider/select-services",
-          },
-          {
-            name: "Select staff",
-            link: "/dashboard/add-booking-by-provider/select-staff",
-          },
-          {
-            name: "Select Time",
-            link: "/dashboard/add-booking-by-provider/select-time",
-          },
-          {
-            name: "Confirm",
-            link: "/dashboard/add-booking-by-provider/confirm",
-          },
-        ])}
-      />
+      <div className="max-md:px-3 max-md:py-2">
+        <Breadcrumb
+          breadcrumbs={getBreadcrumbs(0, 3, [
+            {
+              name: "Client information",
+              link: "/dashboard/add-booking-by-provider",
+            },
+            {
+              name: "Select Services",
+              link: "/dashboard/add-booking-by-provider/select-services",
+            },
+            {
+              name: "Select staff",
+              link: "/dashboard/add-booking-by-provider/select-staff",
+            },
+            {
+              name: "Select Time",
+              link: "/dashboard/add-booking-by-provider/select-time",
+            },
+            {
+              name: "Confirm",
+              link: "/dashboard/add-booking-by-provider/confirm",
+            },
+          ])}
+        />
 
-      <div className="flex justify-between flex-col lg:flex-row w-full gap-8">
-        <div className="flex-1 bg-white rounded-xl p-5">
-          <h2 className="text-xl font-semibold font-golos">Select staff</h2>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 py-5">
-            {staff.length > 0 ? (
-              staff.map((item, index) => (
-                <StaffCard
-                  key={index}
-                  value={item.id}
-                  isActive={item.selected}
-                  handleSelect={() => handleSelect(item)}
-                  name={item.name}
-                  designation={item.designation}
-                  picture={item.picture}
-                />
-              ))
-            ) : (
-              // Should be replaced with Empty component
-              <p className="text-center text-lg font-semibold">
-                No staff found
-              </p>
+        <div className="flex justify-between flex-col lg:flex-row w-full gap-8">
+          <div
+            className={cn(
+              "flex-1 bg-white rounded-xl p-5 shadow space-y-3 w-full md:w-auto max-md:mb-56",
+              {
+                "max-md:mb-80": showDetails,
+              }
             )}
+          >
+            <h2 className="text-xl font-semibold font-golos">Select staff</h2>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 py-5">
+              {staff.length > 0 ? (
+                staff.map((item, index) => (
+                  <StaffCard
+                    key={index}
+                    value={item.id}
+                    isActive={item.selected}
+                    handleSelect={() => handleSelect(item)}
+                    name={item.name}
+                    designation={item.designation}
+                    picture={item.picture}
+                  />
+                ))
+              ) : (
+                // Should be replaced with Empty component
+                <p className="text-center text-lg font-semibold">
+                  No staff found
+                </p>
+              )}
+            </div>
+          </div>
+
+          <div className="w-full md:w-auto mt-4 md:mt-0 max-md:hidden">
+            <BookingCheckoutCard
+              data={businessStaticData}
+              handleBookNow={handleBookNow}
+            />
           </div>
         </div>
-
-        <ConfirmDetails
-          className="w-ull lg:w-1/4 p-4"
-          staffName={selectedStaff?.name}
-          storeName="TCL Beauty Studio 01"
-          appointmentDateTime={"06 Jan 2025, 11:00"}
-          bookingNote={
-            "Hair is thick and slightly wavy, prefers a shoulder-length layered cut with light texture."
-          }
-          services={[]}
-          subtotal={0}
-          vatIncluded={0}
-          discountPercentage={0}
-          discountAmount={0}
-          total={0}
-          paymentInstruction={""}
-          buttonTittle={"Continue"}
-          buttonpath="/dashboard/add-booking-by-provider/select-time"
-        />
       </div>
+
+      {/* Mobile View */}
+      <CheckoutCardForMobile
+        data={businessStaticData}
+        handleBookNow={handleBookNow}
+        showDetails={showDetails}
+        setShowDetails={setShowDetails}
+      />
     </section>
   );
 };

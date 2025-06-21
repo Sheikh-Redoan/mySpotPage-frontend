@@ -1,11 +1,11 @@
 import { AutoComplete, Input, Radio, Form, Button } from "antd";
 import { useNavigate } from "react-router";
-import ProviderCheckoutCard from "../../../components/addBookingByProvider/ProviderCheckoutCard";
 import Breadcrumb from "../../../components/client/Breadcrumb";
 import { getBreadcrumbs } from "../../../lib/staticData";
 import CheckoutCardForMobile from "../../../components/addBookingByProvider/CheckoutCardForMobile";
 import { cn } from "../../../lib/utils";
 import { useState } from "react";
+import BookingCheckoutCard from "../../../components/addBookingByProvider/BookingCheckoutCard";
 
 const options = [
   { value: "Burns Bay Road" },
@@ -178,7 +178,7 @@ const ClientInfoFormPage = () => {
           </div>
 
           <div className="w-full md:w-auto mt-4 md:mt-0 max-md:hidden">
-            <ProviderCheckoutCard
+            <BookingCheckoutCard
               data={businessStaticData}
               handleBookNow={handleBookNow}
             />

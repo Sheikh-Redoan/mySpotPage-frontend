@@ -6,7 +6,7 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { TbArrowBadgeDown } from "react-icons/tb";
 import { Link } from "react-router";
 
-const ProviderCheckoutCard = ({ data, selected, handleBookNow, to = "#" }) => {
+const BookingCheckoutCard = ({ data, selected, handleBookNow }) => {
   const subtotal = 0.0;
   const subtotalAfterVat = subtotal + data?.vat;
   const discountAmount = 0.0;
@@ -218,4 +218,4 @@ const ProviderCheckoutCard = ({ data, selected, handleBookNow, to = "#" }) => {
   );
 };
 
-export default ProviderCheckoutCard;
+export default BookingCheckoutCard;

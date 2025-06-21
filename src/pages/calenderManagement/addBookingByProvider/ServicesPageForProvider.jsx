@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import ProviderCheckoutCard from "../../../components/addBookingByProvider/ProviderCheckoutCard";
 import Breadcrumb from "../../../components/client/Breadcrumb";
 import ServicesList from "../../../components/serviceProviderInfo/ServicesList";
 import TreatmentModal from "../../../components/serviceProviderInfo/TreatmentModal";
 import { getBreadcrumbs } from "../../../lib/staticData";
 import { cn } from "../../../lib/utils";
 import CheckoutCardForMobile from "../../../components/addBookingByProvider/CheckoutCardForMobile";
+import BookingCheckoutCard from "../../../components/addBookingByProvider/BookingCheckoutCard";
 
 const businessStaticData = {
   studioName: "TCL Beauty Studio 01",
@@ -77,11 +77,10 @@ const ServicesPageForProvider = () => {
           </div>
 
           <div className="max-md:hidden">
-            <ProviderCheckoutCard
+            <BookingCheckoutCard
               data={businessStaticData}
               handleBookNow={handleBookNow}
               selected={selected}
-              to="/dashboard/add-booking-by-provider/select-staff"
             />
           </div>
         </div>
@@ -99,7 +98,8 @@ const ServicesPageForProvider = () => {
       <TreatmentModal
         open={modalOpen}
         onCancel={() => setModalOpen(false)}
-        onContinue={() => {
+        onContinue={(selectedData) => {
+          console.log({selectedData})
           navigate("/dashboard/add-booking-by-provider/select-staff");
         }}
         services={selected}

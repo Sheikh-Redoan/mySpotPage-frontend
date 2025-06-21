@@ -15,6 +15,7 @@ import { Radio } from "antd";
 import TimePicker from "../components/calendarManagement/pendingBookings/TimePicker";
 import { Calendar } from "lucide-react";
 import TimeBasePricingCalender from "./seller/TimeBasePricingCalender";
+import DeleteLocationModal from "../components/modal/DeleteLocationModal";
 
 function TimePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,6 +29,7 @@ function TimePage() {
   const [openForFrequency, setOpenForFrequency] = useState(false)
   const [label, setLabel] = useState("Does not repeat");
   const [selectValue, setSelectvalue] = useState(label);
+  const [deleteLocationModalOpen, setDeleteLocationModalOpen] = useState(false);
 
   const [range, setRange] = useState([
     {
@@ -70,7 +72,11 @@ function TimePage() {
         <PlusIcon className="text-[#FFF]" />
         Set time-based
       </button>
-      <TimePageTable />
+      <TimePageTable
+        setIsModalOpen={setIsModalOpen}
+        setOpen={setOpen}
+        setDeleteLocationModalOpen={setDeleteLocationModalOpen}
+      />
 
 
 
@@ -300,6 +306,17 @@ function TimePage() {
         `}
           </style>
         </>
+      )}
+
+      {/* delete location modal */}
+      {deleteLocationModalOpen && (
+        <DeleteLocationModal
+          isOpen={deleteLocationModalOpen}
+          onClose={() => setDeleteLocationModalOpen(false)}
+          setDeleteLocationModalOpen={setDeleteLocationModalOpen}
+          onDeleteConfirm={() => setDeleteLocationModalOpen(false)}
+          title="This set time"
+        />
       )}
 
     </div>

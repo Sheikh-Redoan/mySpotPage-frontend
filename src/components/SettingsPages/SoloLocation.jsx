@@ -131,6 +131,7 @@ const SoloLocation = () => {
           onClose={() => setDeleteLocationModalOpen(false)}
           setDeleteLocationModalOpen={setDeleteLocationModalOpen}
           onDeleteConfirm={() => setDeleteLocationModalOpen(false)}
+          title="This location"
         />
       )}
     </div>

@@ -1,3 +1,4 @@
+import { Button } from "antd";
 import { Info } from "lucide-react";
 import { MapPin, Star } from "lucide-react";
 import { CiCalendar } from "react-icons/ci";
@@ -5,7 +6,7 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { TbArrowBadgeDown } from "react-icons/tb";
 import { Link } from "react-router";
 
-const ProviderCheckoutCard = ({ data, selected, handleBookNow, to="#" }) => {
+const ProviderCheckoutCard = ({ data, selected, handleBookNow, to = "#" }) => {
   const subtotal = 0.0;
   const subtotalAfterVat = subtotal + data?.vat;
   const discountAmount = 0.0;
@@ -51,30 +52,30 @@ const ProviderCheckoutCard = ({ data, selected, handleBookNow, to="#" }) => {
       {/* Staff and Appointment Details Section - Renders only if any staff/appointment/note prop is provided */}
       {selected && selected.length > 0 && (
         <div className="flex flex-col gap-2 w-full">
-          {staffName && (
+          {data?.staffName && (
             <div className="flex gap-2 items-start justify-start">
               <FaRegUserCircle className="text-black text-[20px] flex-shrink-0" />
               <p className="self-stretch text-neutral-800 text-sm font-normal leading-tight">
-                Staff - {staffName}
+                Staff - {data?.staffName}
               </p>
             </div>
           )}
-          {appointmentDateTime && (
+          {data?.appointmentDateTime && (
             <div className="flex gap-2 items-start justify-start">
               <CiCalendar className="text-black text-[20px] flex-shrink-0" />
               <p className="self-stretch text-neutral-800 text-sm font-normal leading-tight">
-                {appointmentDateTime}
+                {data?.appointmentDateTime}
               </p>
             </div>
           )}
-          {bookingNote && (
+          {data?.bookingNote && (
             <div className="self-stretch p-3 bg-neutral-50 rounded-lg inline-flex justify-center items-center">
               <div className="flex-1 justify-start">
                 <span className="text-neutral-800 text-sm font-semibold leading-tight">
                   Note:{" "}
                 </span>
                 <span className="text-neutral-800 text-sm font-normal leading-tight">
-                  {bookingNote}
+                  {data?.bookingNote}
                 </span>
               </div>
             </div>
@@ -205,14 +206,9 @@ const ProviderCheckoutCard = ({ data, selected, handleBookNow, to="#" }) => {
       </div>
 
       {/* Continue Button */}
-      <Link to={to}>
-        <button
-          onClick={handleBookNow}
-          className="w-full bg-[#242528] text-white py-2 px-4 rounded-lg transition hover:bg-gray-800 cursor-pointer"
-        >
-          Continue
-        </button>
-      </Link>
+      <Button color="default" variant="solid" onClick={handleBookNow} className="w-full">
+        Continue
+      </Button>
 
       {/* Payment Note */}
       <p className="text-xs font-normal text-center text-[#797979] mt-4">

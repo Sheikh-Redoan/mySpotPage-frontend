@@ -36,22 +36,15 @@ const ClientInfoFormPage = () => {
     try {
       const values = await form.validateFields();
       console.log("Client Info Form Values:", values);
-      // navigate("/dashboard/add-booking-by-provider/select-services");
+      navigate("/dashboard/add-booking-by-provider/select-services");
     } catch (errorInfo) {
       console.log("Client Info Form Validation Failed:", errorInfo);
     }
   };
 
   return (
-    <section className="bg-gray-50">
-      <div
-        className={cn("max-md:mb-56 max-md:px-3 max-md:py-4", {
-          "max-md:mb-78": showDetails,
-        })}
-        // className={cn("max-md:h-[690px] max-md:overflow-y-auto max-md:px-3 max-md:py-4", {
-        //   "max-md:h-[320px] max-md:overflow-y-auto ": showDetails,
-        // })}
-      >
+    <section>
+      <div className="max-md:px-3 max-md:py-4">
         <Breadcrumb
           breadcrumbs={getBreadcrumbs(0, 3, [
             {
@@ -76,9 +69,16 @@ const ClientInfoFormPage = () => {
             },
           ])}
         />
-        
+
         <div className="flex flex-col md:flex-row justify-between gap-4 items-start">
-          <div className="p-5 rounded-xl bg-[#FFFFFF] shadow space-y-3 flex-1 w-full md:w-auto">
+          <div
+            className={cn(
+              "p-5 rounded-xl bg-[#FFFFFF] shadow space-y-3 flex-1 w-full md:w-auto max-md:mb-56",
+              {
+                "max-md:mb-80": showDetails,
+              }
+            )}
+          >
             <h3 className="text-[#262626] text-[16px] font-semibold">
               Client Information
             </h3>

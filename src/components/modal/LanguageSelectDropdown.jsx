@@ -1,23 +1,33 @@
 import { Button, Select, Space } from "antd";
 import { X } from "lucide-react";
 import { Suspense, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { languages } from "../../data/languages";
+import {
+  clearLanguageData,
+  selectLanguage,
+  setLanguageData,
+} from "../../redux/features/languageSlice";
 import Translate from "../shared/Translate";
 
 export default function LanguageSelectDropdown({ hide }) {
+  const currentLanguage = useSelector(selectLanguage);
   const dispatch = useDispatch();
-  const [selectedLanguage, setSelectedLanguage] = useState("vietnamese");
+  const [selectedLanguage, setSelectedLanguage] = useState(currentLanguage);
 
   const handleLanguageChange = (value) => {
-    setSelectedLanguage(value);
+    // Parse the JSON string back to an object
+    setSelectedLanguage(JSON.parse(value));
   };
 
   const handleReset = () => {
-    setSelectedLanguage(languages[0].value);
+    setSelectedLanguage(currentLanguage);
+    dispatch(clearLanguageData()); // Added () to invoke the function
   };
 
   const handleTranslateClick = () => {
-    console.log(`Translation initiated for: ${selectedLanguage}`);
+    // Dispatch the selected language to the store
+    dispatch(setLanguageData(selectedLanguage));
     hide();
   };
 
@@ -37,7 +47,7 @@ export default function LanguageSelectDropdown({ hide }) {
         />
       </div>
       <Select
-        value={selectedLanguage}
+        value={JSON.stringify(selectedLanguage)} // Use stringified object to match option values
         onChange={handleLanguageChange}
         className="w-full mb-6 rounded-lg"
         size="large"
@@ -48,9 +58,9 @@ export default function LanguageSelectDropdown({ hide }) {
           option.children.toLowerCase().includes(input.toLowerCase())
         }>
         {languages.map((lang) => (
-          <Option key={lang.value} value={lang.value}>
-            {lang.label}
-          </Option>
+          <Select.Option key={lang.code} value={JSON.stringify(lang)}>
+            {lang.language}
+          </Select.Option>
         ))}
       </Select>
 
@@ -68,8 +78,7 @@ export default function LanguageSelectDropdown({ hide }) {
           type="primary"
           onClick={handleTranslateClick}
           className="px-5 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-700 border-blue-600 hover:border-blue-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-200 ease-in-out transform hover:scale-105"
-          size="middle" // Makes the button a standard size.
-        >
+          size="middle">
           <Suspense fallback={<div>Loading...</div>}>
             <Translate text={"Translate"} />
           </Suspense>
@@ -78,16 +87,3 @@ export default function LanguageSelectDropdown({ hide }) {
     </div>
   );
 }
-
-// Array of available languages for the dropdown.
-const languages = [
-  { label: "Vietnamese", value: "vietnamese" },
-  { label: "English", value: "english" },
-  { label: "Spanish", value: "spanish" },
-  { label: "French", value: "french" },
-  { label: "German", value: "german" },
-  { label: "Kinyarwanda", value: "kinyarwanda" }, // Added based on text detected in your screenshot.
-  { label: "Japanese", value: "japanese" },
-  { label: "Chinese (Simplified)", value: "chinese-simplified" },
-  // You can add more languages here as needed.
-];

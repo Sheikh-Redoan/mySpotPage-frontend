@@ -5,9 +5,9 @@ const defaultLanguage = JSON.parse(
 );
 
 const initialState = {
-  languageCode: defaultLanguage.languageCode || "en",
-  languageName: defaultLanguage.languageName || "English",
-  direction: defaultLanguage.direction || "ltr",
+  code: defaultLanguage?.code || "en",
+  language: defaultLanguage?.language || "English",
+  direction: defaultLanguage?.direction || "ltr",
 };
 
 const languageSlice = createSlice({
@@ -18,7 +18,10 @@ const languageSlice = createSlice({
       localStorage.setItem("defaultLanguage", JSON.stringify(action.payload));
       return { ...state, ...action.payload };
     },
-    clearLanguageData: () => initialState,
+    clearLanguageData: () => {
+      localStorage.removeItem("defaultLanguage");
+      return initialState;
+    },
   },
 });
 

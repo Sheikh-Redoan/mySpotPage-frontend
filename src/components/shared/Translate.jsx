@@ -1,5 +1,5 @@
 import axios from "axios";
-import { use, useState, useTransition } from "react";
+import { use, useEffect, useState, useTransition } from "react";
 import { useSelector } from "react-redux";
 import { selectLanguage } from "../../redux/features/languageSlice";
 
@@ -21,57 +21,58 @@ async function fetchTranslation(text, language = "he") {
     },
   };
 
-  // Create a promise that will be used for suspense
-  return axios
-    .request(options)
-    .then((response) => {
-      if (
-        response.data &&
-        response.data.data &&
-        response.data.data.translations
-      ) {
-        return response.data.data.translations[0].translatedText;
-      } else {
-        console.error("Unexpected response structure:", response.data);
-        return text; // Return original text as fallback
-      }
-    })
-    .catch((error) => {
-      console.error(error);
+  try {
+    const response = await axios.request(options);
+    if (
+      response.data &&
+      response.data.data &&
+      response.data.data.translations
+    ) {
+      return response.data.data.translations[0].translatedText;
+    } else {
+      console.error("Unexpected response structure:", response.data);
       return text; // Return original text as fallback
-    });
+    }
+  } catch (error) {
+    console.error(error);
+    return text; // Return original text as fallback
+  }
 }
 
-// Cache to store promises for each text
+// Cache to store promises for each text+language combination
 const translationCache = new Map();
 
 // Function to get translation from cache or create new promise
 function getTranslation(text, language = "he") {
-  if (!translationCache.has(text)) {
-    translationCache.set(text, fetchTranslation(text, language));
+  // Create a unique key using both text and language
+  const cacheKey = `${text}:${language}`;
+
+  if (!translationCache.has(cacheKey)) {
+    translationCache.set(cacheKey, fetchTranslation(text, language));
   }
-  return translationCache.get(text);
+  return translationCache.get(cacheKey);
 }
 
 export default function Translate({ text }) {
   const language = useSelector(selectLanguage);
-  // State to store the current text to translate
-  const [textToTranslate, setTextToTranslate] = useState(text);
-
-  // Use transition to avoid blocking the UI during translation
+  const [translationPromise, setTranslationPromise] = useState(null);
   const [isPending, startTransition] = useTransition();
 
-  // Update the text to translate when the input text changes
-  if (text !== textToTranslate) {
+  // Create a new translation promise when text or language changes
+  useEffect(() => {
     startTransition(() => {
-      setTextToTranslate(text);
+      const promise = getTranslation(text, language.code);
+      setTranslationPromise(promise);
     });
+  }, [text, language.code]);
+
+  // If no promise yet, show loading
+  if (!translationPromise) {
+    return <span className="text-gray-400">Translating...</span>;
   }
 
-  // Use the 'use' hook to suspend while the promise resolves
-  const translated = use(
-    getTranslation(textToTranslate, language.languageCode)
-  );
+  // Use the promise with Suspense
+  const translated = use(translationPromise);
 
   return (
     <>

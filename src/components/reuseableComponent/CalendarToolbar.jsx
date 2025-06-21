@@ -16,10 +16,14 @@ import { useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router";
 import useResponsive from "../../hooks/useResponsive";
 import { cn } from "../../lib/utils";
+import LocationSelection from "../calendarManagement/LocationSelection";
 import SettingsBookingsRulesModal from "../calendarManagement/SettingsBookingsRulesModal";
 import StaffSelection from "../calendarManagement/StaffSelection";
 import CalendarDatePicker from "../calender/CalendarDatePicker";
 import MultipleSelector from "../shared/MultipleSelector";
+
+// Statically set business type for the example
+const isSolo = true; // Change this to false for multiple business
 
 export default function CalendarToolbar({
   selectedDate,
@@ -321,7 +325,11 @@ export default function CalendarToolbar({
                 </div>
 
                 <div className="flex flex-col gap-4 px-4 py-5">
-                  <StaffSelection />
+                  {/* Staff Selection for multiple business */}
+                  {!isSolo && <StaffSelection />}
+
+                  {/* Location Selection for individual business */}
+                  {isSolo && <LocationSelection />}
                 </div>
               </Drawer>
 

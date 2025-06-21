@@ -13,6 +13,7 @@ export default function Calender({
   events,
   resources,
   applyFilter,
+  solo = true,
 }) {
   const [searchParams] = useSearchParams();
   const view = searchParams.get("view") || "month"; // Default to 'month' view if not specified
@@ -84,11 +85,14 @@ export default function Calender({
         selectTimeFromProvider={selectTimeFromProvider}
       />
       <div
-        className={cn("lg:rounded-xl overflow-hidden border-gray-200", {
-          "border-r": view === "day",
-          "border border-t-0 border-l-0": view === "week",
-          "border border-gray-200": view === "month",
-        })}>
+        className={cn(
+          "lg:rounded-xl overflow-hidden border-gray-200 border-collapse w-full",
+          {
+            "border-r": view === "day",
+            "border border-t-0 border-l-0 border-b-0": view === "week",
+            "border border-gray-200": view === "month",
+          }
+        )}>
         {/* Render the appropriate calendar content based on the selected view */}
         {view === "month" && (
           <MonthView
@@ -115,7 +119,7 @@ export default function Calender({
           <DayView
             currentDate={currentDate}
             events={events}
-            resources={resources}
+            resources={solo ? resources.slice(5) : resources}
             selectTimeFromProvider={selectTimeFromProvider}
             onTimeSelect={(timeData) => {
               console.log("Selected time:", timeData);

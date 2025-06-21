@@ -164,7 +164,7 @@ export default function DayCell({
         disabled={currentTimeSlot?.isBusy || isPastDay()}
         onClick={selectTimeFromProvider ? () => setIsOpen(true) : null}
         className={cn(
-          "border-b border-r border-gray-200 relative overflow-hidden",
+          "border-b border-r border-l border-gray-200 relative overflow-hidden",
           "cursor-pointer transition-colors duration-200",
           dayView ? "w-full p-0" : "p-2",
           {

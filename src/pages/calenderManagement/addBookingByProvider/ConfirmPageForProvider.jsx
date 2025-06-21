@@ -5,6 +5,7 @@ import { getBreadcrumbs } from "../../../lib/staticData";
 import confirm_product from "/src/assets/images/confirm.jpg";
 import BookingCheckoutCard from "../../../components/addBookingByProvider/BookingCheckoutCard";
 import { useNavigate } from "react-router";
+import CheckoutCardForMobile from "../../../components/addBookingByProvider/CheckoutCardForMobile";
 
 const businessStaticData = {
   studioName: "TCL Beauty Studio 01",
@@ -47,11 +48,11 @@ const businessStaticData = {
 };
 
 const ConfirmPageForProvider = () => {
- const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  const handleBookNow =() => {
-    navigate("/dashboard/add-booking-by-provider/confirmation")
-  }
+  const handleBookNow = () => {
+    navigate("/dashboard/add-booking-by-provider/confirmation");
+  };
 
   return (
     <section>
@@ -105,79 +106,65 @@ const ConfirmPageForProvider = () => {
           </div>
 
           <div className="max-md:hidden">
-            {/* <BookingCheckoutCard
+            <BookingCheckoutCard
               data={businessStaticData}
               handleBookNow={handleBookNow}
-            /> */}
+            />
           </div>
-
-          {/* <ConfirmDetails
-            className="w-full lg:w-80 p-4 flex-shrink-0"
-            storeName={storeData.storeName}
-            rating={storeData.rating}
-            reviewsCount={storeData.reviewsCount}
-            location={storeData.location}
-            staffName={storeData.staffName}
-            appointmentDateTime={storeData.appointmentDateTime}
-            bookingNote={storeData.bookingNote}
-            services={storeData.services}
-            subtotal={storeData.subtotal}
-            vatIncluded={storeData.vatIncluded}
-            discountPercentage={storeData.discountPercentage}
-            discountAmount={storeData.discountAmount}
-            total={storeData.total}
-            paymentInstruction={storeData.paymentInstruction}
-            buttonTittle={"Complete"}
-            buttonpath="/dashboard/add-booking-by-provider/confirmation"
-          /> */}
         </div>
       </div>
+
+      {/* Mobile View */}
+      <CheckoutCardForMobile
+        data={businessStaticData}
+        handleBookNow={handleBookNow}
+        isDrawer={true}
+      />
     </section>
   );
 };
 
 export default ConfirmPageForProvider;
 
-
- const storeData = {
-    storeName: "TCL Beauty Studio 01",
-    rating: "4.8",
-    reviewsCount: "12.5K reviews",
-    location: "15 Rothschild Boulevard, Tel Aviv-Yafo, Israel",
-    staffName: "John Doe",
-    appointmentDateTime: "06 Jan 2025, 11:00",
-    bookingNote:
-      "Hair is thick and slightly wavy, prefers a shoulder-length layered cut with light texture.",
-    services: [
-      {
-        id: 1,
-        image: confirm_product,
-        name: "Classic Ombre",
-        options: "Smooth / Scalp treatment",
-        duration: "2h45m",
-        price: "₪70.00",
-      },
-      {
-        id: 2,
-        image: confirm_product,
-        name: "Reverse Ombre",
-        options: "Shadow Root",
-        duration: "3h30m",
-        price: "₪100.00",
-      },
-      {
-        id: 3,
-        image: confirm_product,
-        name: "Balayage with Toner",
-        options: "30m",
-        duration: "30m",
-        price: "₪100.00",
-      },
-    ],
-    subtotal: "₪270.00",
-    vatIncluded: "(includes ₪48.60 VAT)",
-    discountPercentage: "20% OFF",
-    discountAmount: "-₪54.00",
-    total: "₪216.00",
-    paymentInstruction: "You will pay at the appointment location",
-  };
+const storeData = {
+  storeName: "TCL Beauty Studio 01",
+  rating: "4.8",
+  reviewsCount: "12.5K reviews",
+  location: "15 Rothschild Boulevard, Tel Aviv-Yafo, Israel",
+  staffName: "John Doe",
+  appointmentDateTime: "06 Jan 2025, 11:00",
+  bookingNote:
+    "Hair is thick and slightly wavy, prefers a shoulder-length layered cut with light texture.",
+  services: [
+    {
+      id: 1,
+      image: confirm_product,
+      name: "Classic Ombre",
+      options: "Smooth / Scalp treatment",
+      duration: "2h45m",
+      price: "₪70.00",
+    },
+    {
+      id: 2,
+      image: confirm_product,
+      name: "Reverse Ombre",
+      options: "Shadow Root",
+      duration: "3h30m",
+      price: "₪100.00",
+    },
+    {
+      id: 3,
+      image: confirm_product,
+      name: "Balayage with Toner",
+      options: "30m",
+      duration: "30m",
+      price: "₪100.00",
+    },
+  ],
+  subtotal: "₪270.00",
+  vatIncluded: "(includes ₪48.60 VAT)",
+  discountPercentage: "20% OFF",
+  discountAmount: "-₪54.00",
+  total: "₪216.00",
+  paymentInstruction: "You will pay at the appointment location",
+};

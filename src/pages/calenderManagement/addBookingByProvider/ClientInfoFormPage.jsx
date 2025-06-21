@@ -44,7 +44,7 @@ const ClientInfoFormPage = () => {
 
   return (
     <section>
-      <div className="max-md:px-3 max-md:py-4">
+      <div className="max-md:px-3 max-md:py-2">
         <Breadcrumb
           breadcrumbs={getBreadcrumbs(0, 3, [
             {

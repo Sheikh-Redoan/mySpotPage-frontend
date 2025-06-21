@@ -103,13 +103,12 @@ const ServiceProviderInfo = () => {
       </div>
 
       {/* Mobile booking button */}
-      <div className="flex justify-between items-center md:hidden fixed bottom-0 left-0 right-0 bg-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] p-4 z-50">
+      <div className="flex justify-between items-center md:hidden fixed bottom-0 left-0 right-0 bg-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] px-4 pt-6 pb-12 z-50">
         <div className="text-sm text-center text-gray-500">
           {selected.length > 0
             ? `${selected.length} service selected`
             : "0 service selected"}
         </div>
-        <Link to="service-provider-info">
           <button
             className={`bg-gray-900 text-white py-2 px-8 rounded-lg transition ${
               selected.length === 0
@@ -120,7 +119,6 @@ const ServiceProviderInfo = () => {
             onClick={handleBookNow}>
             Book now
           </button>
-        </Link>
       </div>
 
       {/* modal for booking confirmation */}

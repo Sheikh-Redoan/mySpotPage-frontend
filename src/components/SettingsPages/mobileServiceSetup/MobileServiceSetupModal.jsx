@@ -1,4 +1,5 @@
 import {
+  Button,
   Drawer,
   Grid,
   Modal
@@ -50,6 +51,7 @@ export const MobileServiceSetupModal = ({
   setSelectedDistrict,
   selectedCities,
   setOpenCitySelectionModal,
+  handleCityChange
 }) => {
   const { useBreakpoint } = Grid;
   const screens = useBreakpoint();
@@ -64,6 +66,16 @@ export const MobileServiceSetupModal = ({
           onClose={onClose}
           open={isOpen}
           className="rounded-t-xl"
+          title="Mobile service setup"
+          extra={
+            <Button
+              type="text"
+              onClick={onClose}
+              className="!px-0"
+            >
+              <X size={24} className="text-description" />
+            </Button>
+          }
         >
           <MobileServiceSetupContent
             setMobileModalOpen={setMobileModalOpen}
@@ -73,6 +85,8 @@ export const MobileServiceSetupModal = ({
             selectedCities={selectedCities}
             setOpenCitySelectionModal={setOpenCitySelectionModal}
             cityOptions={cityOptions}
+            drowar={true}
+            handleCityChange={handleCityChange}
           />
         </Drawer>
 

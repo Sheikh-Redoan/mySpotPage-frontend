@@ -74,12 +74,13 @@ const BlacklistsOverview = () => {
   const paginatedBookings = bookings.slice(startIndex, endIndex);
 
   return (
-    <div className="w-full py-2">
+    <div className="w-full py-2 px-3">
       <Table
         dataSource={paginatedBookings}
         columns={columns}
         pagination={false}
         rowKey="id"
+        scroll={{ x: 1220 }}
         className="w-full"
         locale={{ emptyText: <CustomEmptyTable /> }}
         rowClassName={(record) =>
@@ -93,8 +94,8 @@ const BlacklistsOverview = () => {
       />
 
       {/* Pagination */}
-      <div className="flex justify-between items-center mt-4">
-        <div>
+      <div className="flex justify-center md:justify-between items-center mt-4">
+        <div className="hidden md:block">
           <span className="text-sm text-gray-600">Show </span>
           <Select
             value={pageSize}

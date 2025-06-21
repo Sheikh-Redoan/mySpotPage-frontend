@@ -7,15 +7,15 @@ import { FaChevronDown, FaChevronUp, FaRegUserCircle } from "react-icons/fa";
 import { TbArrowBadgeDown } from "react-icons/tb";
 import { cn } from "../../lib/utils";
 
-const BookingCheckoutCard = ({ 
-  data, 
-  selected, 
-  handleBookNow, 
-  fromDrawer=false 
+const BookingCheckoutCard = ({
+  data,
+  selected,
+  handleBookNow,
+  fromDrawer = false,
 }) => {
   const [showAllServices, setShowAllServices] = useState(false);
 
-  const subtotal = 0.0;
+  const subtotal = 100.0;
   const subtotalAfterVat = subtotal + data?.vat;
   const discountAmount = 0.0;
   const total = subtotalAfterVat - discountAmount;
@@ -31,7 +31,7 @@ const BookingCheckoutCard = ({
     <div
       className={cn(
         "w-full max-w-sm p-4 rounded-xl shadow-sm space-y-3 bg-[#FFFFFF] mx-auto",
-        { "bg-none rounded-none shadow-none p-2": fromDrawer }
+        { "bg-none rounded-none shadow-none p-2 max-w-none": fromDrawer }
       )}
     >
       <div className="space-y-2">
@@ -63,11 +63,13 @@ const BookingCheckoutCard = ({
       </div>
 
       {/* Service Selection Status */}
-      <div className="text-sm font-normal text-[#888888]">
-        {selected && selected.length > 0
-          ? `${selected.length} service selected`
-          : "No service selected."}
-      </div>
+      {selected && selected.length > 0 && (
+        <div className="text-sm font-normal text-[#888888]">
+          {selected && selected.length > 0
+            ? `${selected.length} service selected`
+            : "No service selected."}
+        </div>
+      )}
 
       {/* Staff and Appointment Details Section - Renders only if any staff/appointment/note prop is provided */}
       {selected && selected.length > 0 && (
@@ -102,6 +104,9 @@ const BookingCheckoutCard = ({
           )}
         </div>
       )}
+
+      {/* Dashed Line */}
+      <div className="border-b border-dashed border-gray-200" />
 
       {/* Services Section - Renders only if services array is provided and not empty */}
       {data?.services && data?.services.length > 0 && (
@@ -160,15 +165,15 @@ const BookingCheckoutCard = ({
           {data?.services.length > 2 && ( // Only show button if there are more than 2 services
             <button
               onClick={() => setShowAllServices(!showAllServices)}
-              className="text-sm font-normal font-['Golos_Text'] leading-tight text-description flex items-center justify-center gap-2 cursor-pointer w-full"
+              className="text-sm font-normal font-['Golos_Text'] leading-tight text-description flex items-center justify-start gap-2 cursor-pointer w-full"
             >
               {showAllServices ? (
                 <>
-                  Show less <FaChevronUp />
+                  Show less <FaChevronUp size={14} />
                 </>
               ) : (
                 <>
-                  Show more <FaChevronDown />
+                  Show more <FaChevronDown size={14} />
                 </>
               )}
             </button>
@@ -180,9 +185,6 @@ const BookingCheckoutCard = ({
       {data?.services && data?.services.length > 0 && hasPricingInfo && (
         <div className="w-full border-t border-dashed border-gray-300"></div>
       )}
-
-      {/* Separator */}
-      <div className="border-t border-dashed border-gray-200"></div>
 
       {/* Pricing Details */}
       <div className="space-y-3 text-sm text-[#888888]">
@@ -201,7 +203,7 @@ const BookingCheckoutCard = ({
 
         <div className="flex justify-between items-center text-[#888888]">
           <span>Subtotal (after VAT)</span>
-          <span>₪ {subtotalAfterVat.toFixed(2)}</span>
+          <span>₪ {subtotalAfterVat.toFixed(2) || 0}</span>
         </div>
         <div className="flex justify-between items-center">
           <span>Discount</span>
@@ -220,7 +222,7 @@ const BookingCheckoutCard = ({
         <div className="flex justify-between items-center text-sm font-semibold text-[#888888]">
           <span>Total</span>
           <span className="text-[#866BE7] text-[18px] text-semibold">
-            ₪ {total.toFixed(2)}
+            ₪ {data?.total.toFixed(2) || 0}
           </span>
         </div>
       </div>

@@ -20,6 +20,7 @@ const businessStaticData = {
   discountPercentage: 10.0,
   discountAmount: 60.0,
   total: 90.0,
+  vat: 10.0,
   paymentInstruction: "You will pay at the appointment location",
   services: [
       {

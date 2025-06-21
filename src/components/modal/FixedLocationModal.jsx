@@ -34,14 +34,19 @@ const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
           height="90%"
           onClose={onClose}
           open={isOpen}
-          className="rounded-t-xl">
-          <div className="flex justify-between items-center p-3 shadow">
-            <p className="text-lg font-semibold">Fixed location setup</p>
-            <buttn className="hover:scale-105" onClick={onClose}>
-              <X />
-            </buttn>
-          </div>
-          <div className="flex-1 overflow-y-auto mt-5 p-3">
+          className="rounded-t-xl"
+          title="Fixed location setup"
+          extra={
+            <Button
+              type="text"
+              onClick={onClose}
+              className="!px-0"
+            >
+              <X size={24} className="text-description" />
+            </Button>
+          }
+        >
+          <div className="flex-1 overflow-y-auto mt-5 p-3 pb-20">
             {/* Location name */}
             <div className="mb-4">
               <label className="block mb-2 text-[#3A3B3F]">
@@ -140,7 +145,7 @@ const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
                       style={{ fontSize: "16px" }}>
                       {day}
                     </Checkbox>
-                    <div className="flex gap-4 md:gap-8 items-center mt-2">
+                    {day !== "Saturday" && (<div className="flex gap-4 md:gap-8 items-center mt-2">
                       <TimePicker
                         defaultValue={dayjs("11:00 AM", format)}
                         format={format}
@@ -156,19 +161,20 @@ const FixedLocationModal = ({ isOpen, onClose, onSave }) => {
                         className="custom-time-picker flex-1"
                         suffixIcon={<Clock size={22} />}
                       />
-                    </div>
+                    </div>)}
+                    {
+                      day === "Saturday" && <div>
+                        <button className="py-2.5 pr-4 rounded-lg text-center bg-[#F5F6F6] w-full md:min-w-[382px] text-[#82868E] hover:scale-95 transform transition-all ease-in-out duration-300 mt-2 md:mt-0">
+                          Closed
+                        </button>
+                      </div>
+                    }
                   </div>
                 ))}
               </div>
             </div>
           </div>
-          <div className="flex justify-end items-center gap-6 border-t-[1px] border-[#E5E7E8] p-3">
-            <Button
-              type="default"
-              onClick={onClose}
-              className="!text-[#242528] !border-none !bg-transparent hover:!bg-gray-100 !hidden md:!block">
-              Cancel
-            </Button>
+          <div className="flex justify-end items-center gap-6 border-t-[1px] border-[#E5E7E8] p-3 fixed bottom-0 w-full bg-white pb-10 pt-5 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
             <Button
               type="primary"
               onClick={onSave}

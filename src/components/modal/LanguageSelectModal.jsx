@@ -1,43 +1,35 @@
-import { Button, Modal } from "antd";
-import { useState } from "react";
+import { Button, Popover } from "antd";
+import { Suspense, useState } from "react";
 import languageIcon from "../../assets/icons/language.png";
+import Translate from "../shared/Translate";
 import LanguageSelLctDropdown from "./LanguageSelectDropdown";
 
 export default function LanguageSelectModal() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const hide = () => {
+    setOpen(false);
+  };
 
-  const showModal = () => {
-    setIsModalOpen(true);
+  const handleOpenChange = (newOpen) => {
+    setOpen(newOpen);
   };
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
+
   return (
-    <>
-      <Button
-        type="default"
-        onClick={showModal}
-        variant="outlined"
-        className="!rounded-full">
+    <Popover
+      placement="left"
+      trigger="click"
+      open={open}
+      onOpenChange={handleOpenChange}
+      arrow={false}
+      content={<LanguageSelLctDropdown hide={hide} />}>
+      <Button type="default" variant="outlined" className="!rounded-full">
         <img src={languageIcon} alt="language icon" className="w-4" />
-        <span className="text-base text-primary01">Translate</span>
+        <span className="text-base text-primary01">
+          <Suspense fallback={<div>Loading...</div>}>
+            <Translate text={"Translate"} />
+          </Suspense>
+        </span>
       </Button>
-      <Modal
-        cancelText="Reset"
-        cancelButtonProps={{ className: "!rounded-full" }}
-        okText="Translate"
-        okButtonProps={{ className: "!rounded-full" }}
-        title="Language to Translate into"
-        closable={{ "aria-label": "Custom Close Button" }}
-        open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        className="!top-3 !left-1/2 !-translate-x-1/2 md:!-translate-x-4/5 !max-w-xs">
-        <LanguageSelLctDropdown />
-      </Modal>
-    </>
+    </Popover>
   );
 }

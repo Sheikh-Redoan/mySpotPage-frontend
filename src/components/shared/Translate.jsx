@@ -1,8 +1,10 @@
 import axios from "axios";
 import { use, useState, useTransition } from "react";
+import { useSelector } from "react-redux";
+import { selectLanguage } from "../../redux/features/languageSlice";
 
 // Create a function that returns a promise for the translation
-async function fetchTranslation(text) {
+async function fetchTranslation(text, language = "he") {
   const options = {
     method: "POST",
     url: "https://google-translator9.p.rapidapi.com/v2",
@@ -14,7 +16,7 @@ async function fetchTranslation(text) {
     data: {
       q: text,
       source: "en",
-      target: "he",
+      target: language,
       format: "text",
     },
   };
@@ -44,14 +46,15 @@ async function fetchTranslation(text) {
 const translationCache = new Map();
 
 // Function to get translation from cache or create new promise
-function getTranslation(text) {
+function getTranslation(text, language = "he") {
   if (!translationCache.has(text)) {
-    translationCache.set(text, fetchTranslation(text));
+    translationCache.set(text, fetchTranslation(text, language));
   }
   return translationCache.get(text);
 }
 
 export default function Translate({ text }) {
+  const language = useSelector(selectLanguage);
   // State to store the current text to translate
   const [textToTranslate, setTextToTranslate] = useState(text);
 
@@ -66,7 +69,9 @@ export default function Translate({ text }) {
   }
 
   // Use the 'use' hook to suspend while the promise resolves
-  const translated = use(getTranslation(textToTranslate));
+  const translated = use(
+    getTranslation(textToTranslate, language.languageCode)
+  );
 
   return (
     <>

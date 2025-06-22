@@ -5,6 +5,7 @@ import { TbArrowBadgeDown } from "react-icons/tb";
 import { Drawer } from "antd";
 import BookingCheckoutCard from "./BookingCheckoutCard";
 import { X } from "lucide-react";
+import useResponsive from "../../hooks/useResponsive";
 
 export default function CheckoutCardForMobile({
   data,
@@ -12,9 +13,11 @@ export default function CheckoutCardForMobile({
   isDrawer = false,
   showDetails,
   setShowDetails,
+  disabled = false,
   ...props
 }) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const { lg } = useResponsive();
 
   const subtotalAfterVat = data?.subtotal + data?.vat;
   const total = subtotalAfterVat - data?.discountAmount;
@@ -100,7 +103,7 @@ export default function CheckoutCardForMobile({
                 Subtotal (after VAT)
               </p>
               <p className="text-right text-black text-sm font-normal leading-tight">
-                ₪{subtotalAfterVat.toFixed(2) || 0.00}
+                ₪{subtotalAfterVat.toFixed(2) || 0.0}
               </p>
             </div>
 
@@ -109,13 +112,13 @@ export default function CheckoutCardForMobile({
                 Discount
               </p>
               <div className="flex gap-1 items-center">
-                  <p className="text-violet-500 text-xs font-medium leading-none px-2 py-1 flex bg-[#ecebfc] w-max rounded items-center gap-1">
-                    <TbArrowBadgeDown size={16} /> {data?.discountPercent || 0.00}%
-                    OFF
-                  </p>
-                  <p className="text-right text-red-500 text-sm font-normal leading-tight">
-                    -₪{data.discountAmount?.toFixed(2) || 0}
-                  </p>
+                <p className="text-violet-500 text-xs font-medium leading-none px-2 py-1 flex bg-[#ecebfc] w-max rounded items-center gap-1">
+                  <TbArrowBadgeDown size={16} /> {data?.discountPercent || 0.0}%
+                  OFF
+                </p>
+                <p className="text-right text-red-500 text-sm font-normal leading-tight">
+                  -₪{data.discountAmount?.toFixed(2) || 0}
+                </p>
               </div>
             </div>
 
@@ -162,7 +165,7 @@ export default function CheckoutCardForMobile({
           Total
         </p>
         <p className="text-right text-violet-500 text-lg font-semibold leading-relaxed">
-          ₪ {total.toFixed(2) || 0.00}
+          ₪ {total.toFixed(2) || 0.0}
         </p>
       </div>
 
@@ -171,6 +174,8 @@ export default function CheckoutCardForMobile({
         variant="solid"
         className="w-full text-white"
         onClick={handleBookNow}
+        size={lg ? "large" : "middle"}
+        disabled={disabled}
       >
         Continue
       </Button>

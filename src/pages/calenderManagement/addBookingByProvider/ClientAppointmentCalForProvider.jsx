@@ -63,9 +63,9 @@ export default function ClientAppointmentCalForProvider() {
 
         <div
           className={cn(
-            "max-md:mb-58 p-5 rounded-xl bg-[#FFFFFF] px-1 py-2 md:p-4",
+            "max-md:mb-58 p-5 rounded-xl bg-[#FFFFFF] px-1 py-4 md:p-4",
             {
-              "max-md:mb-80": showDetails,
+              "max-md:mb-94": showDetails,
             }
           )}
         >

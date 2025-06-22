@@ -147,7 +147,7 @@ const SelectStaffForProvider = () => {
             className={cn(
               "flex-1 bg-white rounded-xl p-5 shadow space-y-3 w-full md:w-auto max-md:mb-56",
               {
-                "max-md:mb-80": showDetails,
+                "max-md:mb-94": showDetails,
               }
             )}
           >

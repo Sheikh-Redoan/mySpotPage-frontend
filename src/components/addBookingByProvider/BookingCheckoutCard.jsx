@@ -6,14 +6,17 @@ import { CiCalendar } from "react-icons/ci";
 import { FaChevronDown, FaChevronUp, FaRegUserCircle } from "react-icons/fa";
 import { TbArrowBadgeDown } from "react-icons/tb";
 import { cn } from "../../lib/utils";
+import useResponsive from "../../hooks/useResponsive";
 
 const BookingCheckoutCard = ({
   data,
   selected,
   handleBookNow,
   fromDrawer = false,
+  disabled = false,
 }) => {
   const [showAllServices, setShowAllServices] = useState(false);
+  const {lg} = useResponsive();
 
   const subtotalAfterVat = data?.subtotal + data?.vat;
   const total = subtotalAfterVat - data?.discountAmount;
@@ -29,7 +32,7 @@ const BookingCheckoutCard = ({
     <div
       className={cn(
         "w-full max-w-sm p-4 rounded-xl shadow-sm space-y-3 bg-[#FFFFFF] mx-auto",
-        { "bg-none rounded-none shadow-none p-2 max-w-none": fromDrawer }
+        { "bg-none rounded-none shadow-none px-1 py-0 max-w-none": fromDrawer }
       )}
     >
       <div className="space-y-2">
@@ -68,7 +71,7 @@ const BookingCheckoutCard = ({
       </div>
 
       {/* Staff and Appointment Details Section - Renders only if any staff/appointment/note prop is provided */}
-      {selected && selected.length > 0 && (
+      {data?.staffName || data?.appointmentDateTime || data?.bookingNote && (
         <div className="flex flex-col gap-2 w-full">
           {data?.staffName && (
             <div className="flex gap-2 items-start justify-start">
@@ -214,7 +217,8 @@ const BookingCheckoutCard = ({
           </div>
         </div>
         {/* Separator before Total */}
-        <div className="border-t border-dashed border-gray-200 pt-3"></div>
+        <div className="border-t border-gray-200 pt-3"></div>
+
         <div className="flex justify-between items-center text-sm font-semibold text-[#888888]">
           <span>Total</span>
           <span className="text-[#866BE7] text-[18px] text-semibold">
@@ -229,6 +233,8 @@ const BookingCheckoutCard = ({
         variant="solid"
         onClick={handleBookNow}
         className="w-full"
+        size={lg ? "large" : "middle"}
+        disabled={disabled}
       >
         Continue
       </Button>

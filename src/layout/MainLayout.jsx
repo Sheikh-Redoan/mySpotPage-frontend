@@ -189,6 +189,7 @@ function MainLayout({ activeTab }) {
         <TopNavbar
           activeTab={activeTab}
           onMenuClick={handleToggleMobileSidebar}
+          isMobileSidebarOpen={isMobileSidebarOpen}
         />
         <div className="pt-20 md:pt-0  pb-4">
           <Outlet />

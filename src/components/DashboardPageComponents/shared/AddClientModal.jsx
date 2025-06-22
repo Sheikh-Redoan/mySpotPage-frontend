@@ -14,6 +14,7 @@ const AddClientModal = ({ isModalOpen, setIsModalOpen, setStep, step, fileList, 
       onCancel={handleCancel}
       footer={null}
       bodyStyle={{  display: 'flex', flexDirection: 'column' }}
+      centered
     >
       {
         step === 1 ?

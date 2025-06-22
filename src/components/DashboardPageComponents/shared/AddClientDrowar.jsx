@@ -139,7 +139,7 @@ const AddClientDrowar = ({ openDrowar, setOpenDrowar, setStep, step, fileList, s
                                 </fieldset>
 
                                 <fieldset className="flex items-center gap-2">
-                                    <Switch onChange={onSwitchChange} id="isVip" />
+                                    <Switch size="small" onChange={onSwitchChange} id="isVip" />
                                     <label htmlFor="isVip" className="">Mark as VIP Client</label>
                                 </fieldset>
                             </div>

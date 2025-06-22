@@ -55,7 +55,6 @@ const businessStaticData = {
 
 export default function ClientAppointmentCalForProvider() {
   const selectedStaff = useSelector(({ selectedStaff }) => selectedStaff);
-  const [showDetails, setShowDetails] = useState(false);
   const navigate = useNavigate();
 
   const handleBookNow = () => {
@@ -90,14 +89,7 @@ export default function ClientAppointmentCalForProvider() {
           ])}
         />
 
-        <div
-          className={cn(
-            "max-md:mb-58 p-5 rounded-xl bg-[#FFFFFF] px-1 py-4 md:p-4",
-            {
-              "max-md:mb-94": showDetails,
-            }
-          )}
-        >
+        <div className="max-md:mb-58 p-5 rounded-xl bg-[#FFFFFF] px-1 py-4 md:p-4">
           <Calender
             selectTimeFromProvider={true}
             events={MOCK_EVENTS}
@@ -113,8 +105,6 @@ export default function ClientAppointmentCalForProvider() {
       <CheckoutCardForMobile
         data={businessStaticData}
         handleBookNow={handleBookNow}
-        showDetails={showDetails}
-        setShowDetails={setShowDetails}
         selectedStaff={selectedStaff}
         isDrawer={true}
       />

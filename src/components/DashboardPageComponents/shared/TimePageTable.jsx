@@ -2,84 +2,6 @@ import { useState } from "react";
 import { Pagination, Select, Table } from "antd";
 import { imageProvider } from "../../../lib/imageProvider";
 
-// Columns (same, with align properties added)
-const columns = [
-  {
-    title: "Date & Frequency",
-    dataIndex: "date",
-    key: "date",
-    onCell: () => ({
-      style: {
-        backgroundColor: 'white',
-      },
-    }),
-    width: 250,
-    sorter: (a, b) => {
-      const toMinutes = (t) => {
-        const [h, m] = (t || "00:00").split(":").map(Number);
-        return h * 60 + m;
-      };
-
-      return toMinutes(a.time) - toMinutes(b.time);
-    },
-    defaultSortOrder: "descend",
-    render: (_, record, index) => {
-      const prev = data[index - 1];
-      if (prev && prev.date === record.date) return null;
-      return (
-          <div className="space-y-1">
-            <p className="text-[#797979] text-sm">{record.frequency}</p>
-            <p className="text-[#262626]">{record.date}</p>
-          </div>
-      );
-    },
-  },
-  {
-    title: "Time Range",
-    dataIndex: "time",
-    key: "time",
-    width: 790,
-    render: (_) => (
-      <div className="flex flex-wrap gap-4 ">
-        <p className="bg-[#F6F6F6] text-[#3E70DD] p-1 rounded-lg">
-          08:00 - 09:00
-        </p>
-        <p className="bg-[#F6F6F6] text-[#3E70DD] p-1 rounded-lg">
-          06:00 - 09:00
-        </p>
-        <p className="bg-[#F6F6F6] text-[#3E70DD] p-1 rounded-lg">
-          03:00 - 06:00
-        </p>
-        <p className="bg-[#F6F6F6] text-[#3E70DD] p-1 rounded-lg">
-          08:00 - 11:00
-        </p>
-        <p className="bg-[#F6F6F6] text-[#3E70DD] p-1 rounded-lg">
-          06:00 - 09:00
-        </p>
-      </div>
-    ),
-  },
-  {
-    title: "Discount",
-    dataIndex: "discount",
-    key: "discount",
-    align: "center",
-    width: 130,
-  },
-  {
-    title: <span className="font-semibold text-white pr-5">Action</span>,
-    dataIndex: "action",
-    key: "action",
-    align: "right",
-    width: 120,
-    render: (_) => (
-      <div className="flex gap-4 justify-end pr-4">
-        <img src={imageProvider.edit} alt="icon" />
-        <img src={imageProvider.deleteIcon} alt="icon" />
-      </div>
-    ),
-  },
-];
 
 // Data
 const data = [
@@ -146,9 +68,103 @@ const data = [
 ];
 
 
-const TimePageTable = () => {
+const TimePageTable = ({ setIsModalOpen, setOpen, setDeleteLocationModalOpen }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
+
+
+  // Columns (same, with align properties added)
+  const columns = [
+    {
+      title: "Date & Frequency",
+      dataIndex: "date",
+      key: "date",
+      onCell: () => ({
+        style: {
+          backgroundColor: 'white',
+        },
+      }),
+      width: 250,
+      sorter: (a, b) => {
+        const toMinutes = (t) => {
+          const [h, m] = (t || "00:00").split(":").map(Number);
+          return h * 60 + m;
+        };
+
+        return toMinutes(a.time) - toMinutes(b.time);
+      },
+      defaultSortOrder: "descend",
+      render: (_, record, index) => {
+        const prev = data[index - 1];
+        if (prev && prev.date === record.date) return null;
+        return (
+          <div className="space-y-1">
+            <p className="text-[#797979] text-sm">{record.frequency}</p>
+            <p className="text-[#262626]">{record.date}</p>
+          </div>
+        );
+      },
+    },
+    {
+      title: "Time Range",
+      dataIndex: "time",
+      key: "time",
+      width: 790,
+      render: (_) => (
+        <div className="flex flex-wrap gap-4 ">
+          <p className="bg-[#F6F6F6] text-[#3E70DD] p-1 rounded-lg">
+            08:00 - 09:00
+          </p>
+          <p className="bg-[#F6F6F6] text-[#3E70DD] p-1 rounded-lg">
+            06:00 - 09:00
+          </p>
+          <p className="bg-[#F6F6F6] text-[#3E70DD] p-1 rounded-lg">
+            03:00 - 06:00
+          </p>
+          <p className="bg-[#F6F6F6] text-[#3E70DD] p-1 rounded-lg">
+            08:00 - 11:00
+          </p>
+          <p className="bg-[#F6F6F6] text-[#3E70DD] p-1 rounded-lg">
+            06:00 - 09:00
+          </p>
+        </div>
+      ),
+    },
+    {
+      title: "Discount",
+      dataIndex: "discount",
+      key: "discount",
+      align: "center",
+      width: 130,
+    },
+    {
+      title: <span className="font-semibold text-white pr-5">Action</span>,
+      dataIndex: "action",
+      key: "action",
+      align: "right",
+      width: 120,
+      render: (_) => (
+        <div className="flex gap-4 justify-end pr-4">
+          <img
+            src={imageProvider.edit}
+            alt="icon"
+            onClick={() => {
+              setIsModalOpen(true)
+              setOpen(true)
+            }}
+            className="cursor-pointer"
+          />
+          <img 
+          src={imageProvider.deleteIcon} 
+          alt="icon"
+          onClick={()=> setDeleteLocationModalOpen(true)}
+          className="cursor-pointer"
+          />
+        </div>
+      ),
+    },
+  ];
+
 
   const handlePageSizeChange = (value) => {
     setPageSize(value);
@@ -199,6 +215,8 @@ const TimePageTable = () => {
           hideOnSinglePage={false}
         />
       </div>
+
+      
     </>
   );
 };

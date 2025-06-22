@@ -2,27 +2,29 @@ import { Modal, Button } from "antd";
 import { NotificationIcon } from "../../assets/icons/icons2";
 import { X } from "lucide-react";
 
-const DeleteLocationModal = ({ isOpen, onClose, onDeleteConfirm }) => {
+const DeleteLocationModal = ({ isOpen, onClose, onDeleteConfirm, title }) => {
   return (
     <Modal
       open={isOpen}
       onCancel={onClose}
       footer={null}
-      closable={true}
-      closeIcon={<X className="w-6 h-6" />}
+      closable={false}
       title={
-        <h2 className="text-[#242528] text-[18px] font-semibold">
-          Notifications
-        </h2>
+        <div className="flex items-center justify-between">
+          <h2 className="text-[#242528] text-[18px] font-semibold">
+            Notifications
+          </h2>
+          <X onClick={onClose} className="w-6 h-6 cursor-pointer" />
+        </div>
       }
       className="!w-[430px]"
       styles={{
         header: {
-          padding: "16px 24px",
+          padding: "6px 0px",
           borderBottom: "1px solid #E5E7E8",
         },
         body: {
-          padding: "24px",
+          padding: "24px 0px",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -44,15 +46,15 @@ const DeleteLocationModal = ({ isOpen, onClose, onDeleteConfirm }) => {
       centered
     >
       <div className="flex-1 flex flex-col justify-center items-center">
-        <div className="flex justify-center items-center my-2 rounded-full h-[40px] w-[40px] bg-[#FBD9DA] mx-auto">
+        <div className="flex justify-center items-center rounded-full h-[40px] w-[40px] bg-[#FBD9DA] mx-auto my-4">
           <NotificationIcon className="h-5 w-5" />
         </div>
 
-        <h2 className="text-[#262626] font-semibold my-1">
-          Location Deleted Permanently
+        <h2 className="text-[#262626] font-semibold my-2">
+          {title} Deleted Permanently
         </h2>
-        <p className="text-[#797979] my-1 text-sm pb-4">
-          This location and all associated data will be permanently removed.
+        <p className="text-[#797979] my-1 text-sm pb-6">
+          {title} and all associated data will be permanently removed.
           This action cannot be undone.
         </p>
       </div>

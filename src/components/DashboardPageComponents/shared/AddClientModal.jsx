@@ -1,71 +1,10 @@
 import { DatePicker, Modal, Select, Switch, Upload } from "antd"; // Import Upload
 import { CalenderIcon, DownArrowIcon, ForwardIcon, ImageIcon, SearchIcon, UpdateIcon } from "../../../assets/icons/icons";
-import { useState } from "react";
 // import ImgCrop from 'antd-img-crop'; // Consider adding ant-design-pro for image cropping if needed
 
 const { Option } = Select; // Destructure Option from Select
 
-const AddClientModal = ({ isModalOpen, setIsModalOpen }) => {
-  const [step, setStep] = useState(1);
-  const [fileList, setFileList] = useState([]); // State to hold the uploaded image file
-
-  const handleCancel = () => {
-    setIsModalOpen(false);
-    setStep(1); // Reset step when modal is closed
-    setFileList([]); // Clear uploaded image when modal is closed
-  };
-
-  const handleGenderChange = (value) => {
-    console.log(`selected gender: ${value}`);
-  }
-
-  const handleDateChange = (date, dateString) => {
-    console.log("Selected DOB:", dateString);
-  };
-
-  const handleCityChange = (value) => {
-    console.log("Selected city:", value);
-  };
-
-  const onSwitchChange = checked => {
-    console.log(`Mark as VIP Client: ${checked}`);
-  };
-
-  // Handler for image upload
-  const onImageChange = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
-    // You can also add logic here to upload the file to your backend
-    // For now, it just updates the state and logs the file.
-    if (newFileList.length > 0 && newFileList[0].status === 'done') {
-      console.log('Uploaded file:', newFileList[0].originFileObj);
-      // If you have an image URL after upload, you can store it in another state
-    }
-  };
-
-  // Before upload validation (optional)
-  const beforeUpload = (file) => {
-    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-    if (!isJpgOrPng) {
-      // message.error('You can only upload JPG/PNG file!'); // You might want to use Ant Design's message for feedback
-      alert('You can only upload JPG/PNG file!');
-    }
-    const isLt2M = file.size / 1024 / 1024 < 2;
-    if (!isLt2M) {
-      // message.error('Image must smaller than 2MB!');
-      alert('Image must smaller than 2MB!');
-    }
-    return isJpgOrPng && isLt2M;
-  };
-
-  // Custom upload request (optional, if you want to handle upload manually)
-  const customRequest = ({ file, onSuccess }) => {
-    setTimeout(() => {
-      onSuccess("ok"); // Simulate successful upload
-      // In a real application, you would send 'file' to your server here
-      // and call onSuccess or onError based on the server response.
-    }, 1000);
-  };
-
+const AddClientModal = ({ isModalOpen, setIsModalOpen, setStep, step, fileList, setFileList, handleGenderChange, handleDateChange, handleCityChange, onSwitchChange, onImageChange, beforeUpload, customRequest, handleCancel }) => {
 
   return (
     <Modal
@@ -74,7 +13,7 @@ const AddClientModal = ({ isModalOpen, setIsModalOpen }) => {
       open={isModalOpen}
       onCancel={handleCancel}
       footer={null}
-      bodyStyle={{ height: 600, display: 'flex', flexDirection: 'column' }}
+      bodyStyle={{  display: 'flex', flexDirection: 'column' }}
     >
       {
         step === 1 ?
@@ -99,7 +38,7 @@ const AddClientModal = ({ isModalOpen, setIsModalOpen }) => {
               </Upload>
               {/* </ImgCrop> */}
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-3 mt-3">
                 <fieldset className="">
                   <label htmlFor="firstName" className="block w-fit mb-1">First Name <span className="text-[#ED4245]">*</span></label>
                   <input
@@ -145,6 +84,7 @@ const AddClientModal = ({ isModalOpen, setIsModalOpen }) => {
                   placeholder="dd/mm/yyyy"
                   suffixIcon={<CalenderIcon />}
                   format="YYYY-MM-DD"
+                  showToday={false}
                 />
               </fieldset>
 

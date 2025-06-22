@@ -5,6 +5,7 @@ import { TbArrowBadgeDown } from "react-icons/tb";
 import { Drawer } from "antd";
 import BookingCheckoutCard from "./BookingCheckoutCard";
 import { X } from "lucide-react";
+import useResponsive from "../../hooks/useResponsive";
 
 export default function CheckoutCardForMobile({
   data,
@@ -12,9 +13,14 @@ export default function CheckoutCardForMobile({
   isDrawer = false,
   showDetails,
   setShowDetails,
+  disabled = false,
   ...props
 }) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const { lg } = useResponsive();
+
+  const subtotalAfterVat = data?.subtotal + data?.vat;
+  const total = subtotalAfterVat - data?.discountAmount;
 
   return (
     <div className="md:hidden bg-white p-4 shadow fixed bottom-0 w-full z-10">
@@ -49,9 +55,8 @@ export default function CheckoutCardForMobile({
         </div>
 
         <div className="self-end">
-          <Button
-            type="text"
-            className="w-full"
+          <button
+            className="text-sm font-normal flex items-center gap-1"
             onClick={() => {
               if (isDrawer) {
                 setIsDrawerOpen(true);
@@ -63,8 +68,8 @@ export default function CheckoutCardForMobile({
             }}
           >
             See detail{" "}
-            {showDetails ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
-          </Button>
+            {showDetails ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+          </button>
         </div>
       </div>
       <div className="border-b border-b-gray-200 my-3" />
@@ -73,66 +78,52 @@ export default function CheckoutCardForMobile({
         <>
           {/* Price details */}
           <div className="flex flex-col gap-[12px] w-full justify-center items-start">
-            {!!data.subtotal && (
-              <div className="flex justify-between items-start w-full">
-                <p className="self-stretch text-description text-sm font-normal leading-tight flex items-center gap-1">
-                  Subtotal{" "}
-                </p>
-                <p className="text-right text-black text-sm font-normal leading-tight">
-                  ₪ {data.subtotal?.toFixed(2)}
-                </p>
-              </div>
-            )}
-            {!!data.vat && (
-              <div className="flex justify-between items-start w-full">
-                <p className="self-stretch text-description text-sm font-normal leading-tight flex items-center gap-1">
-                  VAT <Info size={16} />
-                </p>
-                <p className="text-right text-black text-sm font-normal leading-tight">
-                  ₪ {data.vat?.toFixed(2)}
-                </p>
-              </div>
-            )}
+            <div className="flex justify-between items-start w-full">
+              <p className="self-stretch text-description text-sm font-normal leading-tight flex items-center gap-1">
+                Subtotal{" "}
+              </p>
+              <p className="text-right text-black text-sm font-normal leading-tight">
+                ₪ {data.subtotal?.toFixed(2) || 0}
+              </p>
+            </div>
 
-            {(!!data.subtotal || !!data.vat) && (
-              <div className="border-t border-dashed border-gray-200 w-full"></div>
-            )}
+            <div className="flex justify-between items-start w-full">
+              <p className="self-stretch text-description text-sm font-normal leading-tight flex items-center gap-1">
+                VAT <Info size={16} />
+              </p>
+              <p className="text-right text-black text-sm font-normal leading-tight">
+                ₪{data.vat?.toFixed(2) || 0}
+              </p>
+            </div>
 
-            {!!data.subtotalAfterVat && (
-              <div className="flex justify-between items-start w-full">
-                <p className="self-stretch text-description text-sm font-normal leading-tight">
-                  Subtotal (after VAT)
+            <div className="border-t border-dashed border-gray-200 w-full"></div>
+
+            <div className="flex justify-between items-start w-full">
+              <p className="self-stretch text-description text-sm font-normal leading-tight">
+                Subtotal (after VAT)
+              </p>
+              <p className="text-right text-black text-sm font-normal leading-tight">
+                ₪{subtotalAfterVat.toFixed(2) || 0.0}
+              </p>
+            </div>
+
+            <div className="flex justify-between items-start w-full">
+              <p className="self-stretch text-description text-sm font-normal leading-tight flex items-center gap-1">
+                Discount
+              </p>
+              <div className="flex gap-1 items-center">
+                <p className="text-violet-500 text-xs font-medium leading-none px-2 py-1 flex bg-[#ecebfc] w-max rounded items-center gap-1">
+                  <TbArrowBadgeDown size={16} /> {data?.discountPercent || 0.0}%
+                  OFF
                 </p>
-                <p className="text-right text-black text-sm font-normal leading-tight">
-                  ₪ {data.subtotalAfterVat?.toFixed(2)}
+                <p className="text-right text-red-500 text-sm font-normal leading-tight">
+                  -₪{data.discountAmount?.toFixed(2) || 0}
                 </p>
               </div>
-            )}
+            </div>
 
-            {(!!data.discountPercentage || !!data.discountAmount) && (
-              <div className="flex justify-between items-start w-full">
-                <p className="self-stretch text-description text-sm font-normal leading-tight flex items-center gap-1">
-                  Discount
-                </p>
-                <div className="flex gap-1 items-center">
-                  {data.discountPercentage && (
-                    <p className="text-violet-500 text-xs font-medium leading-none px-2 py-1 flex bg-[#ecebfc] w-max rounded items-center gap-1">
-                      <TbArrowBadgeDown size={16} /> {data.discountPercentage}%
-                      OFF
-                    </p>
-                  )}
-                  {data.discountAmount && (
-                    <p className="text-right text-red-500 text-sm font-normal leading-tight">
-                      -₪ {data.discountAmount?.toFixed(2)}
-                    </p>
-                  )}
-                </div>
-              </div>
-            )}
-            {(!!data.subtotalAfterVat || !!data.discountAmount) &&
-              !!data.total && (
-                <div className="h-[1px] w-full border-t border-[#E9EAEC]"></div>
-              )}
+            {/* Border */}
+            <div className="h-[1px] w-full border-t border-[#E9EAEC]"></div>
           </div>
         </>
       )}
@@ -157,6 +148,7 @@ export default function CheckoutCardForMobile({
               data={data}
               handleBookNow={handleBookNow}
               fromDrawer={true}
+              selectedStaff={props.selectedStaff}
             />
           </Drawer>
           <style>
@@ -169,22 +161,22 @@ export default function CheckoutCardForMobile({
         </>
       )}
 
-      {data.total && (
-        <div className="flex justify-between items-start w-full mt-4 mb-2">
-          <p className="w-full max-w-48 text-description text-sm font-semibold leading-tight">
-            Total
-          </p>
-          <p className="text-right text-violet-500 text-lg font-semibold leading-relaxed">
-            ₪ {data.total?.toFixed(2)}
-          </p>
-        </div>
-      )}
+      <div className="flex justify-between items-start w-full mt-4 mb-2">
+        <p className="w-full max-w-48 text-description text-sm font-semibold leading-tight">
+          Total
+        </p>
+        <p className="text-right text-violet-500 text-lg font-semibold leading-relaxed">
+          ₪ {total.toFixed(2) || 0.0}
+        </p>
+      </div>
 
       <Button
         color="default"
         variant="solid"
-        className="w-full my-2 bg-[#242528] text-white py-2 px-4 rounded-lg transition hover:bg-gray-800"
+        className="w-full text-white"
         onClick={handleBookNow}
+        size={lg ? "large" : "middle"}
+        disabled={disabled}
       >
         Continue
       </Button>

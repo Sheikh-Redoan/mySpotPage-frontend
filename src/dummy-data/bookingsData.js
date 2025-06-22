@@ -26,9 +26,9 @@ export const getPendingBookings = () => {
       totalDuration: "1h 45m",
       subtotal: "1220.00",
       tax: "0.00",
-      discount: "20%", // 20% discount
-      discountAmount: "244.00", // 20% of 1220.00
-      totalPrice: "976.00", // 1220.00 - 244.00
+      discount: "20%",
+      discountAmount: "244.00",
+      totalPrice: "976.00",
       status: "Completed",
       avatar: "E",
       notes: "Shop recommends booking a trim every 6-8 weeks",

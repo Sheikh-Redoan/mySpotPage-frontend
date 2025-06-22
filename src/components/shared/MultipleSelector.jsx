@@ -149,7 +149,8 @@ export default function MultipleSelector({ name, data, search = true }) {
       <Button
         type="default"
         onClick={showDrawer}
-        className="flex !justify-between items-center flex-1 max-md:w-full">
+        className="flex !justify-between items-center flex-1 max-md:w-full !rounded-md"
+        size="middle">
         <span>All Cities</span>
         <svg
           className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${

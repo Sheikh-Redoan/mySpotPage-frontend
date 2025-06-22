@@ -83,6 +83,7 @@ const businessStaticData = {
   reviewCount: "12.5K reviews",
   address: "15 Rothschild Boulevard, Tel Aviv-Yafo, Israel",
   subtotal: 20.0,
+  vat: 10.0,
   vatIncluded: true,
   discountPercentage: 10.0,
   discountAmount: 60.0,

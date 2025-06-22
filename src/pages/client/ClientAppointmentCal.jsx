@@ -29,58 +29,6 @@ export const INITIAL_EVENTS = [
   },
 ];
 
-export const storeData = {
-  storeName: "TCL Beauty Studio 01",
-  rating: "4.8",
-  reviewsCount: "12.5K reviews",
-  location: "15 Rothschild Boulevard, Tel Aviv-Yafo, Israel",
-  staffName: "John Doe",
-  appointmentDateTime: "06 Jan 2025, 11:00",
-  bookingNote:
-    "Hair is thick and slightly wavy, prefers a shoulder-length layered cut with light texture.",
-  services: [
-    {
-      id: 1,
-      image: confirm_product, // Using the dummy image for all services
-      name: "Classic Ombre",
-      options: "Smooth / Scalp treatment",
-      duration: "2h45m",
-      price: "₪70.00",
-    },
-    {
-      id: 2,
-      image: confirm_product,
-      name: "Reverse Ombre",
-      options: "Shadow Root",
-      duration: "3h30m",
-      price: "₪100.00",
-    },
-    {
-      id: 3,
-      image: confirm_product,
-      name: "Balayage with Toner",
-      options: "30m",
-      duration: "30m",
-      price: "₪100.00",
-    },
-    // Add more services here if needed to test "Show more"
-    // {
-    //   id: 4,
-    //   image: confirm_product,
-    //   name: "Hair Cut",
-    //   options: "Short Hair",
-    //   duration: "1h00m",
-    //   price: "₪50.00",
-    // },
-  ],
-  subtotal: "₪270.00",
-  vatIncluded: "(includes ₪48.60 VAT)",
-  discountPercentage: "20% OFF",
-  discountAmount: "-₪54.00",
-  total: "₪216.00",
-  paymentInstruction: "You will pay at the appointment location",
-};
-
 const businessStaticData = {
   studioName: "TCL Beauty Studio 01",
   label: "Beauty",
@@ -130,7 +78,7 @@ export default function ClientAppointmentCal() {
 
   return (
     <section className="bg-[#F9FAFC] lg:py-8 md:px-4">
-      <Container>
+      <Container className="max-md:pb-60">
         <Breadcrumb
           breadcrumbs={getBreadcrumbs(1, 0, [
             {
@@ -140,7 +88,7 @@ export default function ClientAppointmentCal() {
           ])}
         />
 
-        <div className="bg-white shadow-md rounded-lg max-lg:py-4 max-lg:px-2 lg:p-6 max-md:mb-58">
+        <div className="bg-white shadow-md rounded-lg max-lg:py-4 max-lg:px-2 lg:p-6">
           <Calender
             events={MOCK_EVENTS}
             resources={MOCK_RESOURCES}

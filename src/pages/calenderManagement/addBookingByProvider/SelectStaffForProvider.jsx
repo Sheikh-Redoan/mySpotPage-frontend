@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Breadcrumb from "../../../components/client/Breadcrumb";
-import ConfirmDetails from "../../../components/client/ConfirmDetails";
 import StaffCard from "../../../components/client/StaffCard";
 import { getBreadcrumbs } from "../../../lib/staticData";
 import { setSelectedStaff } from "../../../redux/features/staffSlice";

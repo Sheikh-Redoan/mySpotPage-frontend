@@ -15,17 +15,15 @@ const BookingCheckoutCard = ({
 }) => {
   const [showAllServices, setShowAllServices] = useState(false);
 
-  const subtotal = 100.0;
-  const subtotalAfterVat = subtotal + data?.vat;
-  const discountAmount = 0.0;
-  const total = subtotalAfterVat - discountAmount;
+  const subtotalAfterVat = data?.subtotal + data?.vat;
+  const total = subtotalAfterVat - data?.discountAmount;
 
   const displayedServices =
     data?.services && data?.services.length > 2 && !showAllServices
       ? data?.services.slice(0, 2)
       : data?.services;
 
-  const hasPricingInfo = subtotal || discountAmount || total;
+  const hasPricingInfo = data?.subtotal || data?.discountAmount || total;
 
   return (
     <div
@@ -43,7 +41,7 @@ const BookingCheckoutCard = ({
           <div className="flex items-center text-sm text-yellow-500 font-medium gap-1">
             <Star size={16} fill="currentColor" stroke="currentColor" />
             <span className="text-black">{data?.rating}</span>
-            <span className="text-gray-500 hover:underline text-sm cursor-pointer">
+            <span className="text-gray-500 hover:underline text-sm cursor-pointer underline">
               ({data.reviewCount})
             </span>
           </div>
@@ -63,13 +61,11 @@ const BookingCheckoutCard = ({
       </div>
 
       {/* Service Selection Status */}
-      {selected && selected.length > 0 && (
-        <div className="text-sm font-normal text-[#888888]">
-          {selected && selected.length > 0
-            ? `${selected.length} service selected`
-            : "No service selected."}
-        </div>
-      )}
+      <div className="text-sm font-normal text-[#888888] pt-2">
+        {selected && selected.length > 0
+          ? `${selected.length} service selected`
+          : "No service selected."}
+      </div>
 
       {/* Staff and Appointment Details Section - Renders only if any staff/appointment/note prop is provided */}
       {selected && selected.length > 0 && (
@@ -190,20 +186,20 @@ const BookingCheckoutCard = ({
       <div className="space-y-3 text-sm text-[#888888]">
         <div className="flex justify-between items-center">
           <span>Subtotal</span>
-          <span>₪ {subtotal.toFixed(2)}</span>
+          <span>₪{data?.subtotal.toFixed(2)}</span>
         </div>
         <div className="flex justify-between items-center">
           <span className="flex gap-1 items-center">
             VAT <Info size={16} />
           </span>
-          <span>₪ {data?.vat?.toFixed(2) || 0}</span>
+          <span>₪{data?.vat?.toFixed(2) || 0}</span>
         </div>
 
         <div className="border-t border-dashed border-gray-200"></div>
 
         <div className="flex justify-between items-center text-[#888888]">
           <span>Subtotal (after VAT)</span>
-          <span>₪ {subtotalAfterVat.toFixed(2) || 0}</span>
+          <span>₪{subtotalAfterVat.toFixed(2) || 0}</span>
         </div>
         <div className="flex justify-between items-center">
           <span>Discount</span>
@@ -214,7 +210,7 @@ const BookingCheckoutCard = ({
                 {data.discountPercent || 0}% OFF
               </span>
             </div>
-            <span className="text-red-500">-₪ {discountAmount.toFixed(2)}</span>
+            <span className="text-red-500">-₪{data?.discountAmount.toFixed(2)}</span>
           </div>
         </div>
         {/* Separator before Total */}
@@ -222,7 +218,7 @@ const BookingCheckoutCard = ({
         <div className="flex justify-between items-center text-sm font-semibold text-[#888888]">
           <span>Total</span>
           <span className="text-[#866BE7] text-[18px] text-semibold">
-            ₪ {data?.total.toFixed(2) || 0}
+            ₪{data?.total.toFixed(2) || 0}
           </span>
         </div>
       </div>
@@ -238,7 +234,7 @@ const BookingCheckoutCard = ({
       </Button>
 
       {/* Payment Note */}
-      <p className="text-xs font-normal text-center text-[#797979] mt-4">
+      <p className="text-xs font-normal text-center text-[#797979]">
         You will pay at the appointment location
       </p>
     </div>

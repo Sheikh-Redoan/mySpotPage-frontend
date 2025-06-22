@@ -77,9 +77,11 @@ import SelectStaffForProvider from "../pages/calenderManagement/addBookingByProv
 import ServicesPageForProvider from "../pages/calenderManagement/addBookingByProvider/ServicesPageForProvider";
 import ClientAppointmentCal from "../pages/client/ClientAppointmentCal";
 
+import ReviewContainer from "../components/shared/ReviewContainer";
 import ManagerPermissions from "../components/staff-settings/ManagerPermissions";
 import ReceptionistPermissions from "../components/staff-settings/ReceptionistPermissions";
 import Authentication from "../layout/Authentication";
+import AdminSubscriptionsPage from "../pages/admin/AdminSubscriptionsPage";
 import AllAppointment from "../pages/calenderManagement/AllAppointment";
 import BlacklistsOverview from "../pages/calenderManagement/BlacklistsOverview";
 import BookingsDetailsOfEachStatus from "../pages/calenderManagement/BookingsDetailsOfEachStatus";
@@ -94,8 +96,6 @@ import StaffInformationPage from "../pages/onboarding/StaffInformationPage";
 import StaffSecurityPage from "../pages/onboarding/StaffSecurityPage";
 import StaffServicesPage from "../pages/onboarding/StaffServicesPage";
 import StaffWorkingHoursPage from "../pages/onboarding/StaffWorkingHoursPage";
-import AdminSubscriptionsPage from "../pages/admin/AdminSubscriptionsPage";
-import ReviewContainer from "../components/shared/ReviewContainer";
 import AddNewServicePage from "../pages/seller/AddNewServicePage";
 
 export const routes = createBrowserRouter([
@@ -116,7 +116,7 @@ export const routes = createBrowserRouter([
       },
       {
         path: "review",
-        element: <ReviewContainer />
+        element: <ReviewContainer />,
       },
 
       // Client-specific booking flow (can be accessed by authenticated clients)

@@ -1,8 +1,8 @@
 import { Link } from "react-router";
 // eslint-disable-next-line no-unused-vars
+import { slideInFromLeft } from "@/animations/variants";
 import { motion } from "framer-motion";
 import { imageProvider } from "../../lib/imageProvider";
-import { slideInFromLeft } from "@/animations/variants";
 
 const SuccessNotifications = () => {
   return (
@@ -11,8 +11,7 @@ const SuccessNotifications = () => {
         variants={slideInFromLeft()}
         initial="hidden"
         animate="visible"
-        className=" max-w-[420px] min-h-[295px] bg-[#FFFFFF] rounded-md shadow-md mx-2 md:mx-0"
-      >
+        className=" max-w-[420px] min-h-[295px] bg-[#FFFFFF] rounded-md shadow-md mx-2 md:mx-0">
         <h1 className="text-[#242528] text-xl font-bold p-4 border-b border-b-gray-300">
           Notification
         </h1>
@@ -31,7 +30,7 @@ const SuccessNotifications = () => {
                 Previous
               </button>
             </Link>
-            <Link to={"/calendar"}>
+            <Link to={"/dashboard/calendar"}>
               <button className="px-[18px] py-[8px] bg-[#242528] text-[#fff] border font-medium rounded-lg hover:scale-95 transform transition-all duration-300 ease-in-out hover:bg-[#3a3a3a] hover:shadow-md">
                 Explore Now
               </button>

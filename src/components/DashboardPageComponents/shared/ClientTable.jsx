@@ -1,18 +1,19 @@
-import { useState, useRef, useEffect } from "react";
 import {
+  Button,
+  Checkbox,
   Input,
+  Modal,
   Pagination,
   Select,
+  Space,
   Table,
   Tooltip,
-  Checkbox,
-  Space,
-  Button,
 } from "antd";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router"; // Corrected import for Link
 import {
   DetailsIcon,
-  DownArrowIcon,
+  ErrorIcon2,
   FemaleIcon,
   FilterFilled,
   InfoCircleOutlined,
@@ -20,11 +21,10 @@ import {
   OthersIcon,
   SearchOutlined,
   VipIcon,
-  ErrorIcon2,
 } from "../../../assets/icons/icons";
-import { getClients, searchClients } from "../clientService";
+import MultipleSelector from "../../shared/MultipleSelector";
+import { getClients } from "../clientService";
 import CustomEmptyTable from "./CustomEmptyTable";
-import { Modal } from "antd";
 
 const { Option } = Select;
 
@@ -185,8 +185,7 @@ const ClientTable = ({ activeTabKey }) => {
       render: (text, record) => (
         <div className="flex items-center gap-2 w-40">
           <figure
-            className={`size-10 rounded-full flex items-center justify-center text-white bg-primary01 overflow-hidden`}
-          >
+            className={`size-10 rounded-full flex items-center justify-center text-white bg-primary01 overflow-hidden`}>
             {record.avatar}
           </figure>
           <span className="text-sm text-[#262626]">{text}</span>
@@ -208,7 +207,7 @@ const ClientTable = ({ activeTabKey }) => {
         confirm,
         clearFilters,
       }) => (
-        <div className="" style={{ padding: 8}}>
+        <div className="" style={{ padding: 8 }}>
           <Select
             mode="multiple"
             placeholder="Select Gender"
@@ -223,8 +222,7 @@ const ClientTable = ({ activeTabKey }) => {
               option.children.props.children[1]
                 .toLowerCase()
                 .includes(input.toLowerCase())
-            }
-          >
+            }>
             <Option value="Male">
               <span className="inline-flex items-center gap-1">
                 <MaleIcon /> Male
@@ -248,8 +246,7 @@ const ClientTable = ({ activeTabKey }) => {
                 handleGenderFilter([]);
                 confirm();
               }}
-              className="text-blue-500 text-sm"
-            >
+              className="text-blue-500 text-sm">
               Reset
             </a>
           </div>
@@ -291,8 +288,7 @@ const ClientTable = ({ activeTabKey }) => {
             <Tooltip
               placement="top"
               color="white"
-              title={"Pending Phone Confirmation"}
-            >
+              title={"Pending Phone Confirmation"}>
               <div className="px-2 py-1 inline-flex items-center gap-1 bg-[#FBD9DA] rounded-full text-[#ED4245] text-xs font-medium">
                 Unverified <InfoCircleOutlined className="size-4" />
               </div>
@@ -322,7 +318,7 @@ const ClientTable = ({ activeTabKey }) => {
         );
 
         return (
-          <div style={{ padding: 8}}>
+          <div style={{ padding: 8 }}>
             <Input
               ref={cityFilterSearchInputTableColumn}
               placeholder="Search"
@@ -367,8 +363,7 @@ const ClientTable = ({ activeTabKey }) => {
                 display: "flex",
                 justifyContent: "space-between",
                 marginTop: 12,
-              }}
-            >
+              }}>
               <Button
                 size="small"
                 onClick={() => {
@@ -376,8 +371,7 @@ const ClientTable = ({ activeTabKey }) => {
                   handleCityFilter(["All cities"]);
                   setCitySearchTermTableColumn("");
                   confirm();
-                }}
-              >
+                }}>
                 Reset
               </Button>
               <Button type="primary" size="small" onClick={() => confirm()}>
@@ -416,8 +410,7 @@ const ClientTable = ({ activeTabKey }) => {
               onClick={() => {
                 setSelectedClient(record);
                 setIsBlacklistModalOpen(true);
-              }}
-            >
+              }}>
               <InfoCircleOutlined className="size-5" />
             </button>
           </Tooltip>
@@ -447,80 +440,7 @@ const ClientTable = ({ activeTabKey }) => {
           />
         </div>
         <div className="w-[200px]">
-          <Select
-            value={
-              selectedCity.includes("All cities")
-                ? "All cities"
-                : selectedCity[0]
-            }
-            className="w-full"
-            suffixIcon={<DownArrowIcon />}
-            open={cityDropdownOpen}
-            onOpenChange={handleCityDropdownOpenChangeExternal}
-            popupRender={() => (
-              <div className="bg-white shadow-lg rounded-md p-2">
-                {/* Search input */}
-                <div className="mb-2">
-                  <Input
-                    ref={searchInputRefExternal}
-                    prefix={<SearchOutlined />}
-                    placeholder="Search"
-                    value={citySearchTermExternal}
-                    onChange={(e) => setCitySearchTermExternal(e.target.value)}
-                  />
-                </div>
-                {/* City list */}
-                <div className="max-h-60 overflow-y-auto">
-                  {filteredCitiesExternal.map((city) => (
-                    <div
-                      key={city}
-                      className={`p-2 cursor-pointer hover:bg-gray-100 ${
-                        selectedCity.includes(city) ? "bg-blue-50" : ""
-                      }`}
-                      onClick={() => {
-                        const newSelectedCity =
-                          selectedCity.includes("All cities") ||
-                          selectedCity.length === 0
-                            ? [city]
-                            : city === "All cities"
-                            ? ["All cities"]
-                            : selectedCity.includes(city)
-                            ? selectedCity.filter((val) => val !== city)
-                            : [
-                                ...selectedCity.filter(
-                                  (val) => val !== "All cities"
-                                ),
-                                city,
-                              ];
-
-                        handleCityFilter(
-                          newSelectedCity.length === 0
-                            ? ["All cities"]
-                            : newSelectedCity
-                        );
-                        setCityDropdownOpen(false);
-                      }}
-                    >
-                      {city}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          >
-            <Option
-              key="selected"
-              value={
-                selectedCity.includes("All cities")
-                  ? "All cities"
-                  : selectedCity[0]
-              }
-            >
-              {selectedCity.includes("All cities")
-                ? "All cities"
-                : selectedCity[0]}
-            </Option>
-          </Select>
+          <MultipleSelector data={filteredCitiesExternal} name="city" />
         </div>
       </div>
 
@@ -548,8 +468,7 @@ const ClientTable = ({ activeTabKey }) => {
             onChange={handlePageSizeChange}
             className="mx-2"
             popupMatchSelectWidth={false}
-            suffixIcon=""
-          >
+            suffixIcon="">
             <Option value={5}>5</Option>
             <Option value={10}>10</Option>
             <Option value={20}>20</Option>
@@ -575,8 +494,7 @@ const ClientTable = ({ activeTabKey }) => {
         open={isBlacklistModalOpen}
         onCancel={() => setIsBlacklistModalOpen(false)}
         footer={null}
-        width={420}
-      >
+        width={420}>
         <div className="mt-8">
           <div className="size-11 bg-[#FBD9DA] rounded-full flex items-center justify-center mx-auto mb-3">
             <ErrorIcon2 className="size-5" />
@@ -595,8 +513,7 @@ const ClientTable = ({ activeTabKey }) => {
             <button
               type="button"
               className="flex-1 cursor-pointer border border-[#242528] py-2 px-3 text-[#242528] rounded-lg"
-              onClick={() => setIsBlacklistModalOpen(false)}
-            >
+              onClick={() => setIsBlacklistModalOpen(false)}>
               Cancel
             </button>
             <button
@@ -607,8 +524,7 @@ const ClientTable = ({ activeTabKey }) => {
                 console.log(`Blacklisting client: ${selectedClient?.id}`);
                 setIsBlacklistModalOpen(false);
                 // You would then refresh your client data or update the local state
-              }}
-            >
+              }}>
               Yes, confirm
             </button>
           </div>

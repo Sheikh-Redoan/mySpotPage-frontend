@@ -73,7 +73,7 @@ const AddCard = () => {
             <hr className="text-[#E7E7E7] py-3" />
             <div className="">
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                <div className="p-2">
+                <div className="p-2 pb-36">
                   <div className="relative w-full">
                     <label className="block mb-2 text-[#3A3B3F]">
                       Card Number <span className="text-orange-600">*</span>

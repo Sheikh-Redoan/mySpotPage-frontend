@@ -166,12 +166,12 @@ const PendingBookings = () => {
           className: "cursor-pointer hover:bg-gray-50",
         })}
         className="w-full"
-        scroll={{ x: 1120 }}
+        scroll={{ x: 1220 }}
       />
 
       {/* Pagination */}
-      <div className="flex justify-between items-center mt-4">
-        <div>
+      <div className="flex justify-center md:justify-between items-center mt-4">
+        <div className="hidden md:block">
           <span className="text-sm text-gray-600">Show </span>
           <Select
             value={pageSize}

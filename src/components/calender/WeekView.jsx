@@ -13,6 +13,7 @@ export default function WeekView({
   events = [],
   selectTimeFromProvider,
   maxEventsPerMonthCell = 3,
+  solo = true, // If true, only show the current user's resources
 }) {
   const { xl } = useResponsive(); // Assuming useResponsive is defined elsewhere
   const today = dayjs(); // Get today's date for highlighting
@@ -71,13 +72,19 @@ export default function WeekView({
   const weekDays = getWeekDays(currentDate);
 
   return (
-    <div className="grid grid-cols-[100px_repeat(7,minmax(0,1fr))] lg:grid-cols-[120px_repeat(7,minmax(0,1fr))] border-gray-200 border-t-0">
+    <div
+      className={cn("grid border-gray-200 border-t-0", {
+        "grid-cols-[100px_repeat(7,minmax(0,1fr))] lg:grid-cols-[120px_repeat(7,minmax(0,1fr))] ":
+          !solo,
+        "grid-cols-[70px_repeat(7,minmax(0,1fr))] lg:grid-cols-[80px_repeat(7,minmax(0,1fr))]":
+          solo,
+      })}>
       {/* Top-left empty corner */}
       <div className="p-2" />
 
       {/* Day Headers */}
       {weekDays.map((day, index) => (
-        <div
+        <td
           key={index}
           className={cn(
             "p-2 text-center border-b border-gray-200 bg-primary01/10 space-y-2",
@@ -96,11 +103,12 @@ export default function WeekView({
             })}>
             {day.format("D").padStart(2, "0")}
           </div>
-        </div>
+        </td>
       ))}
 
       {/* Resource Rows and Event Cells */}
       {!selectTimeFromProvider &&
+        !solo &&
         resources.map((resource) => (
           <React.Fragment key={resource.id}>
             {/* Resource Name Column */}
@@ -141,6 +149,58 @@ export default function WeekView({
                     <Event key={event.id} event={event} />
                   ))}
                 </div>
+              );
+            })}
+          </React.Fragment>
+        ))}
+
+      {!selectTimeFromProvider &&
+        solo &&
+        timeSlots.map((slot) => (
+          <React.Fragment key={slot.format("HH:mm")}>
+            {/* Resource Name Column */}
+            {
+              <div className="p-2 flex flex-col items-center gap-2 justify-start">
+                <span className="text-xs text-gray-700">
+                  {slot.format("HH:mm")}
+                </span>
+              </div>
+            }
+
+            {/* Event Cells for each day */}
+            {weekDays.map((day, index) => {
+              // Filter events for the current resource and day
+              const isToday = day.isSame(today, "day");
+              const isCurrentMonth = day.isSame(currentDate, "month");
+              const service = getService(day, slot);
+
+              const dailyEvents = events
+                .filter((event) => dayjs(event.start).isSame(day, "day"))
+                .sort((a, b) => dayjs(a.start).diff(dayjs(b.start))); // Sort by time
+
+              const eventsToShow = dailyEvents.slice(0, maxEventsPerMonthCell);
+              const hiddenEventsCount =
+                dailyEvents.length - eventsToShow.length;
+
+              return (
+                <DayCell
+                  key={index}
+                  index={0}
+                  day={day}
+                  service={service}
+                  selectTimeFromProvider={selectTimeFromProvider}
+                  maxEventsPerMonthCell={maxEventsPerMonthCell}
+                  timeSlots={[slot]} // Pass only the current time slot
+                  isToday={isToday}
+                  isCurrentMonth={isCurrentMonth}
+                  hiddenEventsCount={hiddenEventsCount}
+                  events={eventsToShow}
+                  onTimeSelect={(selectedTime) => {
+                    console.log("Selected:", selectedTime);
+                    // Handle the selection
+                  }}
+                  weekView={true}
+                />
               );
             })}
           </React.Fragment>

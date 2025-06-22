@@ -15,6 +15,7 @@ import { Radio } from "antd";
 import TimePicker from "../components/calendarManagement/pendingBookings/TimePicker";
 import { Calendar } from "lucide-react";
 import TimeBasePricingCalender from "./seller/TimeBasePricingCalender";
+import DeleteLocationModal from "../components/modal/DeleteLocationModal";
 
 function TimePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -28,6 +29,7 @@ function TimePage() {
   const [openForFrequency, setOpenForFrequency] = useState(false)
   const [label, setLabel] = useState("Does not repeat");
   const [selectValue, setSelectvalue] = useState(label);
+  const [deleteLocationModalOpen, setDeleteLocationModalOpen] = useState(false);
 
   const [range, setRange] = useState([
     {
@@ -70,7 +72,11 @@ function TimePage() {
         <PlusIcon className="text-[#FFF]" />
         Set time-based
       </button>
-      <TimePageTable />
+      <TimePageTable
+        setIsModalOpen={setIsModalOpen}
+        setOpen={setOpen}
+        setDeleteLocationModalOpen={setDeleteLocationModalOpen}
+      />
 
 
 
@@ -87,6 +93,7 @@ function TimePage() {
           handleCancel={handleCancel}
         />) : (
         <>
+          {/* set time based Drawer */}
           <Drawer
             placement={"bottom"}
             closable={false}
@@ -96,13 +103,14 @@ function TimePage() {
                 <X size={24} className="text-description" />
               </Button>
             }
-            height="70%"
+            height="75%"
             onClose={() => setOpen(false)}
             open={open}
             className="rounded-t-xl"
+            bodyStyle={{ overflowY: 'auto', paddingBottom: 100 }}
           >
-            <div className="text-[#3A3B3F] flex flex-col justify-between h-full">
-              <div className="space-y-3 mt-4 px-3.5">
+            <div className="text-[#3A3B3F] flex flex-col justify-between h-full drawer-scroll-content">
+              <div className="space-y-3 mt-4 px-3.5 pb-36">
                 <div className="">
                   <fieldset className="mb-4">
                     <label htmlFor="date" className="block w-fit mb-1">
@@ -137,10 +145,10 @@ function TimePage() {
                         onClose={() => setOpenDateRange(false)}
                         className="rounded-t-xl"
                       >
-                        <div >
+                        <div className="pb-20">
                           <TimeBasePricingCalender />
                         </div>
-                        <div className="bg-white pt-5 pb-10 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] flex justify-center">
+                        <div className="bg-white pt-5 pb-10 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] flex justify-center fixed bottom-0 w-full z-50">
                           <button
                             onClick={() => {
                               setOpenDateRange(false)
@@ -173,30 +181,32 @@ function TimePage() {
                           <X size={24} className="text-description" />
                         </Button>
                       }
-                      height="33%"
+                      height="43%"
                       onClose={() => setOpenForFrequency(false)}
                       open={openForFrequency}
                       className="rounded-t-xl"
                     >
-                      <Radio.Group
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          gap: 10,
-                          padding: 20,
-                          fontSize: '14px'
-                        }}
-                        onChange={
-                          (e) => setLabel(e.target.value)
-                        }
-                        value={label}
-                        options={[
-                          { value: 'Does not repeat', label: 'Does not repeat' },
-                          { value: 'Every day', label: 'Every day' },
-                          { value: 'Every week on [weekday]', label: 'Every week on [weekday]' },
-                        ]}
-                      />
-                      <div className="bg-white pt-5 pb-10 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] flex justify-center">
+                      <div className="pb-36">
+                        <Radio.Group
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: 10,
+                            padding: 20,
+                            fontSize: '14px'
+                          }}
+                          onChange={
+                            (e) => setLabel(e.target.value)
+                          }
+                          value={label}
+                          options={[
+                            { value: 'Does not repeat', label: 'Does not repeat' },
+                            { value: 'Every day', label: 'Every day' },
+                            { value: 'Every week on [weekday]', label: 'Every week on [weekday]' },
+                          ]}
+                        />
+                      </div>
+                      <div className="bg-white pt-5 pb-10 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] flex justify-center fixed bottom-0 right-0 w-full ">
                         <button
                           onClick={() => {
                             setOpenForFrequency(false)
@@ -269,7 +279,7 @@ function TimePage() {
                 </fieldset>
               </div>
 
-              <div className="mt-6 mb-2 flex items-center justify-around py-7 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
+              <div className="mt-6 flex items-center justify-around py-7 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] fixed bottom-0 right-0 w-full bg-white">
                 <div className="flex items-center gap-2">
                   <img src={imageProvider.deleteIcon} alt="delete icon" />
                   <p className="text-[#ED4245] text-[15px] font-semibold mt-0.5 hover:scale-95 transform transition-all duration-300 ease-in-out">
@@ -296,6 +306,17 @@ function TimePage() {
         `}
           </style>
         </>
+      )}
+
+      {/* delete location modal */}
+      {deleteLocationModalOpen && (
+        <DeleteLocationModal
+          isOpen={deleteLocationModalOpen}
+          onClose={() => setDeleteLocationModalOpen(false)}
+          setDeleteLocationModalOpen={setDeleteLocationModalOpen}
+          onDeleteConfirm={() => setDeleteLocationModalOpen(false)}
+          title="This set time"
+        />
       )}
 
     </div>

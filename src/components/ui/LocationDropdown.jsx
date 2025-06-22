@@ -33,7 +33,7 @@ const LocationDropdown = ({
           type="default"
           className="w-full !flex !justify-between"
           onClick={() => setOpen(true)}>
-          select <ChevronDown />
+          <span>Select</span> <ChevronDown className="text-description"/>
         </Button>
         <Drawer
           placement={"bottom"}
@@ -89,7 +89,7 @@ const LocationDropdown = ({
               ))}
             </div>
 
-            <div className="fixed bottom-4 inset-x-0 px-5">
+            <div className="fixed bottom-4 inset-x-0 px-5 bg-white py-5 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
               <Button
                 type="primary"
                 size="large"

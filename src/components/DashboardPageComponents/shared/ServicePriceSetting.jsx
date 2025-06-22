@@ -183,29 +183,31 @@ const ServicePriceSetting = ({
                                                             <X size={24} className="text-description" />
                                                         </Button>
                                                     }
-                                                    height="30%"
+                                                    height="38%"
                                                     onClose={() => setOpen(false)}
                                                     open={open}
                                                     className="rounded-t-xl"
                                                 >
-                                                    <Radio.Group
-                                                        style={{
-                                                            display: "flex",
-                                                            flexDirection: "column",
-                                                            gap: 10,
-                                                            padding: 20,
-                                                            fontSize: '14px'
-                                                        }}
-                                                        onChange={
-                                                            (e) => setLabel(e.target.value)
-                                                        }
-                                                        value={label}
-                                                        options={[
-                                                            { value: 'Fixed price', label: 'Fixed price' },
-                                                            { value: 'Initial price base ', label: 'Initial price base ' },
-                                                        ]}
-                                                    />
-                                                    <div className="bg-white pt-5 pb-10 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] flex justify-center">
+                                                    <div className="pb-24">
+                                                        <Radio.Group
+                                                            style={{
+                                                                display: "flex",
+                                                                flexDirection: "column",
+                                                                gap: 10,
+                                                                padding: 20,
+                                                                fontSize: '14px'
+                                                            }}
+                                                            onChange={
+                                                                (e) => setLabel(e.target.value)
+                                                            }
+                                                            value={label}
+                                                            options={[
+                                                                { value: 'Fixed price', label: 'Fixed price' },
+                                                                { value: 'Initial price base ', label: 'Initial price base ' },
+                                                            ]}
+                                                        />
+                                                    </div>
+                                                    <div className="bg-white pt-5 pb-10 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] flex justify-center fixed bottom-0 w-full">
                                                         <button
                                                             onClick={() => {
                                                                 setOpen(false)
@@ -330,27 +332,29 @@ const ServicePriceSetting = ({
                                                                     <X size={24} className="text-description" />
                                                                 </Button>
                                                             }
-                                                            height="30%"
+                                                            height="38%"
                                                             onClose={() => setOpenForModal2(false)}
                                                             open={openForModal2}
                                                             className="rounded-t-xl"
                                                         >
-                                                            <Radio.Group
-                                                                style={{
-                                                                    display: "flex",
-                                                                    flexDirection: "column",
-                                                                    gap: 10,
-                                                                    padding: 20,
-                                                                    fontSize: "14px",
-                                                                }}
-                                                                onChange={(e) => setLabelForModal2(e.target.value)}
-                                                                value={labelForModal2}
-                                                                options={[
-                                                                    { value: "Fixed price", label: "Fixed price" },
-                                                                    { value: "Initial price base", label: "Initial price base" },
-                                                                ]}
-                                                            />
-                                                            <div className="bg-white pt-5 pb-10 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] flex justify-center">
+                                                            <div className="pb-24">
+                                                                <Radio.Group
+                                                                    style={{
+                                                                        display: "flex",
+                                                                        flexDirection: "column",
+                                                                        gap: 10,
+                                                                        padding: 20,
+                                                                        fontSize: "14px",
+                                                                    }}
+                                                                    onChange={(e) => setLabelForModal2(e.target.value)}
+                                                                    value={labelForModal2}
+                                                                    options={[
+                                                                        { value: "Fixed price", label: "Fixed price" },
+                                                                        { value: "Initial price base", label: "Initial price base" },
+                                                                    ]}
+                                                                />
+                                                            </div>
+                                                            <div className="bg-white pt-5 pb-10 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] flex justify-center fixed bottom-0 w-full">
                                                                 <button
                                                                     onClick={() => {
                                                                         if (indexForModal2 !== null) {

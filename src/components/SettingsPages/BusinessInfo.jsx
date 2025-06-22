@@ -241,26 +241,28 @@ const BusinessInfo = () => {
                     <X size={24} className="text-description" />
                   </Button>
                 }
-                height="38%"
+                // height="40%"
                 onClose={() => setOpen(false)}
                 open={open}
-                className="rounded-t-xl"
+                className="rounded-t-xl "
               >
-                <Radio.Group
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: 10,
-                    padding: 20,
-                    fontSize: '14px'
-                  }}
-                  onChange={
-                    (e) => setLabel(e.target.value)
-                  }
-                  value={label}
-                  options={businessOptions}
-                />
-                <div className="bg-white pt-5 pb-10 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] flex justify-center">
+                <div className="">
+                  <Radio.Group
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 10,
+                      padding: 20,
+                      fontSize: '14px'
+                    }}
+                    onChange={
+                      (e) => setLabel(e.target.value)
+                    }
+                    value={label}
+                    options={businessOptions}
+                  />
+                </div>
+                <div className="bg-white pt-5 pb-10 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] flex justify-center fixed bottom-0 w-full">
                   <button
                     onClick={() => {
                       setOpen(false)

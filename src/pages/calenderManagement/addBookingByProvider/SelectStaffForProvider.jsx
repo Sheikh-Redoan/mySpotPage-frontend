@@ -124,9 +124,6 @@ const SelectStaffForProvider = () => {
   const [staff, setStaff] = useState(staffData);
   const dispatch = useDispatch();
 
-  // log to the console of selected staff from redux store
-  console.log({selectedStaff});
-
   const handleSelect = (staffData) => {
     const updatedStaff = staff.map((item) => ({
       ...item,

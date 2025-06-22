@@ -148,6 +148,7 @@ export default function CheckoutCardForMobile({
               data={data}
               handleBookNow={handleBookNow}
               fromDrawer={true}
+              selectedStaff={props.selectedStaff}
             />
           </Drawer>
           <style>

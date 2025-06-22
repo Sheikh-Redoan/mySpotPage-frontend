@@ -10,6 +10,8 @@ import AppointmentActionsBtn from "../../../components/client/client-appointment
 import { getBreadcrumbs } from "../../../lib/staticData";
 import { useState } from "react";
 import { cn } from "../../../lib/utils";
+import { useSelector } from "react-redux";
+import confirm_product from "/src/assets/images/confirm.jpg";
 
 const businessStaticData = {
   studioName: "TCL Beauty Studio 01",
@@ -17,15 +19,42 @@ const businessStaticData = {
   rating: 4.8,
   reviewCount: "12.5K reviews",
   address: "15 Rothschild Boulevard, Tel Aviv-Yafo, Israel",
-  subtotal: 20.0,
+  subtotal: 80.0,
+  vat: 10.0,
   vatIncluded: true,
-  discountPercentage: 10.0,
+  discountPercent: 10.0,
   discountAmount: 60.0,
-  total: 90.0,
   paymentInstruction: "You will pay at the appointment location",
+  services: [
+    {
+      id: 1,
+      image: confirm_product,
+      name: "Classic Ombre",
+      options: "Smooth / Scalp treatment",
+      duration: "2h45m",
+      price: "₪70.00",
+    },
+    {
+      id: 2,
+      image: confirm_product,
+      name: "Reverse Ombre",
+      options: "Shadow Root",
+      duration: "3h30m",
+      price: "₪100.00",
+    },
+    {
+      id: 3,
+      image: confirm_product,
+      name: "Balayage with Toner",
+      options: "30m",
+      duration: "30m",
+      price: "₪100.00",
+    },
+  ],
 };
 
 export default function ClientAppointmentCalForProvider() {
+  const selectedStaff = useSelector(({ selectedStaff }) => selectedStaff);
   const [showDetails, setShowDetails] = useState(false);
   const navigate = useNavigate();
 
@@ -86,6 +115,8 @@ export default function ClientAppointmentCalForProvider() {
         handleBookNow={handleBookNow}
         showDetails={showDetails}
         setShowDetails={setShowDetails}
+        selectedStaff={selectedStaff}
+        isDrawer={true}
       />
     </section>
   );

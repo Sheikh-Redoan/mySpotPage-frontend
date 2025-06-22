@@ -16,6 +16,7 @@ import BookingCheckoutCard from "../../../components/addBookingByProvider/Bookin
 import { useNavigate } from "react-router";
 import CheckoutCardForMobile from "../../../components/addBookingByProvider/CheckoutCardForMobile";
 import { cn } from "../../../lib/utils";
+import confirm_product from "/src/assets/images/confirm.jpg";
 
 const staffData = [
   {
@@ -82,13 +83,38 @@ const businessStaticData = {
   rating: 4.8,
   reviewCount: "12.5K reviews",
   address: "15 Rothschild Boulevard, Tel Aviv-Yafo, Israel",
-  subtotal: 20.0,
+  subtotal: 80.0,
   vat: 10.0,
   vatIncluded: true,
-  discountPercentage: 10.0,
+  discountPercent: 10.0,
   discountAmount: 60.0,
-  total: 90.0,
   paymentInstruction: "You will pay at the appointment location",
+  services: [
+    {
+      id: 1,
+      image: confirm_product,
+      name: "Classic Ombre",
+      options: "Smooth / Scalp treatment",
+      duration: "2h45m",
+      price: "₪70.00",
+    },
+    {
+      id: 2,
+      image: confirm_product,
+      name: "Reverse Ombre",
+      options: "Shadow Root",
+      duration: "3h30m",
+      price: "₪100.00",
+    },
+    {
+      id: 3,
+      image: confirm_product,
+      name: "Balayage with Toner",
+      options: "30m",
+      duration: "30m",
+      price: "₪100.00",
+    },
+  ],
 };
 
 const SelectStaffForProvider = () => {
@@ -99,7 +125,7 @@ const SelectStaffForProvider = () => {
   const dispatch = useDispatch();
 
   // log to the console of selected staff from redux store
-  console.log(selectedStaff);
+  console.log({selectedStaff});
 
   const handleSelect = (staffData) => {
     const updatedStaff = staff.map((item) => ({
@@ -179,6 +205,7 @@ const SelectStaffForProvider = () => {
             <BookingCheckoutCard
               data={businessStaticData}
               handleBookNow={handleBookNow}
+              selectedStaff={selectedStaff}
             />
           </div>
         </div>
@@ -190,6 +217,8 @@ const SelectStaffForProvider = () => {
         handleBookNow={handleBookNow}
         showDetails={showDetails}
         setShowDetails={setShowDetails}
+        isDrawer={true}
+        selectedStaff={selectedStaff}
       />
     </section>
   );

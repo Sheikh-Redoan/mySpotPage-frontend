@@ -18,7 +18,6 @@ const theme = {
   cssVar: true,
   token: {
     colorPrimary: "#866be7",
-    borderRadius: "var(--border-radius)",
     fontFamily: '"Golos Text", sans-serif',
   },
   components: {

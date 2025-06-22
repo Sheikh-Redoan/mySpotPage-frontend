@@ -114,7 +114,7 @@ function MainLayout({ activeTab }) {
                 <li key={tab.id}>
                   <Tooltip
                     placement="right"
-                    title={isSidebarCollapsed && isDesktop ? tab.name : null}
+                    title={isSidebarCollapsed && isDesktop && tab.name}
                     color="white"
                     trigger="hover">
                     <NavLink

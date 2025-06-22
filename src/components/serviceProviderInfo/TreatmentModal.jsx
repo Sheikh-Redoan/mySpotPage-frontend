@@ -1,7 +1,7 @@
 import { Button, Modal, Radio } from "antd";
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link } from "react-router";
+import Translator from "../shared/Translator";
 
 const TreatmentModal = ({ open, onCancel, onContinue, services }) => {
   const [selectedServiceIndex, setSelectedServiceIndex] = useState(0);
@@ -60,12 +60,13 @@ const TreatmentModal = ({ open, onCancel, onContinue, services }) => {
           xl: "50%",
           xxl: "40%",
         }}
-        centered
-      >
+        centered>
         <div className="flex justify-between items-center p-2 md:p-4">
-          <h3 className="text-[16px] font-semibold text-[#262626]">Choose options</h3>
+          <h3 className="text-[16px] font-semibold text-[#262626]">
+            <Translator text={"Choose options"} />
+          </h3>
           <button onClick={onCancel}>
-            <X size={20}/>
+            <X size={20} />
           </button>
         </div>
         <hr className=" text-border max-md:mb-1" />
@@ -81,19 +82,17 @@ const TreatmentModal = ({ open, onCancel, onContinue, services }) => {
                     ? "bg-highlight01"
                     : "max-md:border max-md:border-gray-200"
                 }`}
-                onClick={() => setSelectedServiceIndex(index)}
-              >
+                onClick={() => setSelectedServiceIndex(index)}>
                 <div
                   className={`font-semibold ${
                     selectedServiceIndex === index
                       ? "text-primary01"
                       : "text-gray-800"
-                  }`}
-                >
-                  {service.title}
+                  }`}>
+                  <Translator text={service.title} />
                 </div>
                 <div className="text-sm text-description mt-1">
-                  {getSelectedTreatment(service.id)?.name}
+                  <Translator text={getSelectedTreatment(service.id)?.name} />
                 </div>
               </div>
             ))}
@@ -104,23 +103,25 @@ const TreatmentModal = ({ open, onCancel, onContinue, services }) => {
             <Radio.Group
               onChange={handleTreatmentChange}
               value={getSelectedTreatment(selectedService?.id)?.name}
-              className="w-full border-1 border-border rounded-lg"
-            >
+              className="w-full border-1 border-border rounded-lg">
               {selectedService?.treatments.map((treatment, index) => (
                 <div
                   key={index}
-                  className="flex flex-col md:flex-row md:items-center md:justify-between border-b border-dashed border-border px-3 max-md:py-3"
-                >
-                  <Radio value={treatment.name}>{treatment.name}</Radio>
+                  className="flex flex-col md:flex-row md:items-center md:justify-between border-b border-dashed border-border px-3 max-md:py-3">
+                  <Radio value={treatment.name}>
+                    <Translator text={treatment.name} />
+                  </Radio>
                   <div className="text-start md:w-[14%]">
                     <div className="flex flex-row md:flex-col items-center md:items-start gap-2 md:gap-0 text-sm md:py-3 ml-6 md:ml-0">
-                      <p className="text-description">{treatment?.duration}</p>
+                      <p className="text-description">
+                        <Translator text={treatment.duration} />
+                      </p>
                       <div>
                         <span className="font-semibold text-lg text-primary01">
                           &#8362;
                         </span>
                         <span className="text-primary01 font-semibold md:mt-2">
-                          {treatment?.price}
+                          <Translator text={treatment?.price} />
                         </span>
                       </div>
                     </div>
@@ -134,9 +135,8 @@ const TreatmentModal = ({ open, onCancel, onContinue, services }) => {
                 color="default"
                 variant="outlined"
                 className="w-full"
-                onClick={onCancel}
-              >
-                Cancel
+                onClick={onCancel}>
+                <Translator text={"Cancel"} />
               </Button>
 
               <Button
@@ -144,9 +144,8 @@ const TreatmentModal = ({ open, onCancel, onContinue, services }) => {
                 variant="solid"
                 disabled={!getSelectedTreatment(selectedService?.id)}
                 onClick={handleContinue}
-                className="w-full"
-              >
-                Continue
+                className="w-full">
+                <Translator text={"Continue"} />
               </Button>
             </div>
           </div>

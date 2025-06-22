@@ -1,7 +1,7 @@
 import { Button, Popover } from "antd";
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import languageIcon from "../../assets/icons/language.png";
-import Translate from "../shared/Translate";
+import Translator from "../shared/Translator";
 import LanguageSelLctDropdown from "./LanguageSelectDropdown";
 
 export default function LanguageSelectModal() {
@@ -25,9 +25,7 @@ export default function LanguageSelectModal() {
       <Button type="default" variant="outlined" className="!rounded-full">
         <img src={languageIcon} alt="language icon" className="w-4" />
         <span className="text-base text-primary01">
-          <Suspense fallback={<div>Loading...</div>}>
-            <Translate text={"Translate"} />
-          </Suspense>
+          <Translator text={"Translate"} />
         </span>
       </Button>
     </Popover>

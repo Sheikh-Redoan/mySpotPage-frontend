@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Breadcrumb from "../../../components/client/Breadcrumb";
-import ConfirmDetails from "../../../components/client/ConfirmDetails";
 import StaffCard from "../../../components/client/StaffCard";
 import { getBreadcrumbs } from "../../../lib/staticData";
 import { setSelectedStaff } from "../../../redux/features/staffSlice";
@@ -123,9 +122,6 @@ const SelectStaffForProvider = () => {
   const selectedStaff = useSelector(({ selectedStaff }) => selectedStaff);
   const [staff, setStaff] = useState(staffData);
   const dispatch = useDispatch();
-
-  // log to the console of selected staff from redux store
-  console.log({selectedStaff});
 
   const handleSelect = (staffData) => {
     const updatedStaff = staff.map((item) => ({

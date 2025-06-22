@@ -116,8 +116,7 @@ function MainLayout({ activeTab }) {
                     placement="right"
                     title={isSidebarCollapsed && isDesktop && tab.name}
                     color="white"
-                    trigger="hover"
-                    arrow={false}>
+                    trigger="hover">
                     <NavLink
                       to={tab.link}
                       end={tab?.end}

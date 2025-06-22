@@ -19,7 +19,6 @@ export const getPendingBookingsColumns = (
       title: "Scheduled Time",
       dataIndex: "scheduledTime",
       key: "scheduledTime",
-      width: 230,
       sorter: (a, b) => {
         const dateA = new Date(`${a.scheduledDate} ${a.scheduledTime}`);
         const dateB = new Date(`${b.scheduledDate} ${b.scheduledTime}`);
@@ -38,7 +37,6 @@ export const getPendingBookingsColumns = (
       title: "Client Information",
       dataIndex: "clientName",
       key: "clientInfo",
-      width: 230,
       sorter: (a, b) => a.clientName.localeCompare(b.clientName),
       render: (text, record) => (
         <div className="flex flex-col">

@@ -141,7 +141,7 @@ export default function DayViewAppointment({ currentDate, resources, events }) {
                     className={cn(
                       "bg-white border border-gray-200 text-gray-800 whitespace-nowrap overflow-hidden text-ellipsis h-48 max-h-[130px]",
                       {
-                        "sticky left-0 z-10 text-sm !border-0 !max-w-[120px]":
+                        "sticky left-0 z-10 text-sm !border-0 !max-w-[120px] text-center":
                           colIndex === 0,
                         "bg-white": colIndex > 0 && !isAppointment,
                         "hover:bg-gray-50 transition-colors duration-200":

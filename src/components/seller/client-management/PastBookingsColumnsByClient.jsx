@@ -47,7 +47,7 @@ export const getPastBookingsColumnsByClient = (
             serviceDetails.map((detail, index) => (
               <div key={index} className="flex flex-col gap-1">
                 <span className="text-[#262626] text-sm font-medium">
-                  {serviceDetails[0]?.name || "N/A"}
+                  {detail.name || "N/A"}
                 </span>
                 {
                   detail.tags.map(tag => (

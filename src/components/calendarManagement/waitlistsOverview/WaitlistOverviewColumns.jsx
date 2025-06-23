@@ -1,6 +1,8 @@
 import { Checkbox, Input, Tooltip } from "antd";
 import { CircleAlert, Trash2 } from "lucide-react";
 import { FilterFilled, SearchOutlined } from "../../../assets/icons/icons";
+import { ChevronUp } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 export const getWaitlistOverviewColumns = (
   selectedServiceFilters,
@@ -28,6 +30,26 @@ export const getWaitlistOverviewColumns = (
     dataIndex: "clientName",
     key: "clientInfo",
     sorter: (a, b) => a.clientName.localeCompare(b.clientName),
+    sortIcon: ({ sortOrder }) => {
+        return (
+          <div className="flex flex-col">
+            <ChevronUp
+              size={16}
+              strokeWidth={1.5}
+              className={
+                sortOrder === "ascend" ? "!text-white" : "text-gray-400"
+              }
+            />
+            <ChevronDown
+              size={16}
+              strokeWidth={1.5}
+              className={
+                sortOrder === "descend" ? "!text-white" : "text-gray-400"
+              }
+            />
+          </div>
+        );
+      },
     render: (text, record) => (
       <div className="flex gap-1">
         <span className="text-[#888] text-xs">{record.scheduledDate}</span>
@@ -40,6 +62,26 @@ export const getWaitlistOverviewColumns = (
     dataIndex: "clientName",
     key: "clientInfo",
     sorter: (a, b) => a.clientName.localeCompare(b.clientName),
+    sortIcon: ({ sortOrder }) => {
+        return (
+          <div className="flex flex-col">
+            <ChevronUp
+              size={16}
+              strokeWidth={1.5}
+              className={
+                sortOrder === "ascend" ? "!text-white" : "text-gray-400"
+              }
+            />
+            <ChevronDown
+              size={16}
+              strokeWidth={1.5}
+              className={
+                sortOrder === "descend" ? "!text-white" : "text-gray-400"
+              }
+            />
+          </div>
+        );
+      },
     render: (text, record) => (
       <div className="flex flex-col">
         <span className="text-[#262626] text-sm font-medium">{text}</span>
@@ -126,6 +168,26 @@ export const getWaitlistOverviewColumns = (
     dataIndex: "staffName",
     key: "staffName",
     sorter: (a, b) => a.staffName.localeCompare(b.staffName),
+    sortIcon: ({ sortOrder }) => {
+        return (
+          <div className="flex flex-col">
+            <ChevronUp
+              size={16}
+              strokeWidth={1.5}
+              className={
+                sortOrder === "ascend" ? "!text-white" : "text-gray-400"
+              }
+            />
+            <ChevronDown
+              size={16}
+              strokeWidth={1.5}
+              className={
+                sortOrder === "descend" ? "!text-white" : "text-gray-400"
+              }
+            />
+          </div>
+        );
+      },
     render: (text) => <span className="text-[#262626] text-sm">{text}</span>,
   },
   {
@@ -141,6 +203,26 @@ export const getWaitlistOverviewColumns = (
       };
       return parseDuration(a.totalDuration) - parseDuration(b.totalDuration);
     },
+    sortIcon: ({ sortOrder }) => {
+        return (
+          <div className="flex flex-col">
+            <ChevronUp
+              size={16}
+              strokeWidth={1.5}
+              className={
+                sortOrder === "ascend" ? "!text-white" : "text-gray-400"
+              }
+            />
+            <ChevronDown
+              size={16}
+              strokeWidth={1.5}
+              className={
+                sortOrder === "descend" ? "!text-white" : "text-gray-400"
+              }
+            />
+          </div>
+        );
+      },
     render: (text) => <span className="text-[#262626] text-sm">{text}</span>,
   },
   {
@@ -148,6 +230,26 @@ export const getWaitlistOverviewColumns = (
     dataIndex: "totalPrice",
     key: "totalPrice",
     sorter: (a, b) => parseFloat(a.totalPrice) - parseFloat(b.totalPrice),
+    sortIcon: ({ sortOrder }) => {
+        return (
+          <div className="flex flex-col">
+            <ChevronUp
+              size={16}
+              strokeWidth={1.5}
+              className={
+                sortOrder === "ascend" ? "!text-white" : "text-gray-400"
+              }
+            />
+            <ChevronDown
+              size={16}
+              strokeWidth={1.5}
+              className={
+                sortOrder === "descend" ? "!text-white" : "text-gray-400"
+              }
+            />
+          </div>
+        );
+      },
     render: (text) => <span className="text-[#262626] text-sm">₪{text}</span>,
   },
   {

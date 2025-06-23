@@ -1,0 +1,23 @@
+:root {
+  --primary-color: #866be7;
+  --selected-bg: #866be7;
+  --item-selected-color: #fff;
+  --border-radius: 6px;
+  --track-padding: 4px;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --border-radius: 4px;
+    --track-padding: 2px;
+    --selected-bg: rgba(134, 107, 231, 0.1);
+    --hover-bg: rgba(134, 107, 231, 0.1);
+    --item-selected-color: #000;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  :root {
+    --track-padding: 3px;
+  }
+}

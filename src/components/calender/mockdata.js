@@ -1,3 +1,14 @@
+import dayjs from "dayjs";
+
+// Helper function to create event dates within a week
+const createEventDate = (timeString, dayOffset = 0) => {
+  // Start with today and add any offset days (0-6 for a week)
+  const baseDate = dayjs().add(dayOffset, "day");
+  // Format as YYYY-MM-DD
+  const dateStr = baseDate.format("YYYY-MM-DD");
+  // Combine with the time string
+  return `${dateStr}T${timeString}`;
+};
 export const MOCK_RESOURCES = [
   {
     id: "pixel-nomad",
@@ -32,499 +43,180 @@ export const MOCK_RESOURCES = [
 ];
 
 export const MOCK_EVENTS = [
-  // Events for January 2025 (as in previous month view)
+  // Day 0 (Today)
   {
-    id: "m1",
+    id: "c1",
     resourceId: "pixel-nomad",
-    start: "2025-01-02T14:00:00",
-    title: "Emily",
+    start: createEventDate("09:00:00", 0),
+    title: "Jessica",
     status: "Confirmed",
+    vip: true,
   },
   {
-    id: "m2",
-    resourceId: "pixel-nomad",
-    start: "2025-01-02T16:00:00",
-    title: "Scarlett",
+    id: "c2",
+    resourceId: "code-voyager",
+    start: createEventDate("10:30:00", 0),
+    title: "Robert",
     status: "Completed",
   },
   {
-    id: "m3",
-    resourceId: "code-voyager",
-    start: "2025-01-03T14:00:00",
-    title: "Emily",
-    status: "Confirmed",
-  },
-  {
-    id: "m4",
-    resourceId: "code-voyager",
-    start: "2025-01-03T15:00:00",
-    title: "Alexander",
-    status: "Confirmed",
-  },
-  {
-    id: "m5",
+    id: "c3",
     resourceId: "echo-sage",
-    start: "2025-01-03T16:00:00",
-    title: "Scarlett",
-    status: "Completed",
-  },
-  {
-    id: "m6",
-    resourceId: "nebula-drift",
-    start: "2025-01-07T14:00:00",
-    title: "Emily",
-    status: "Confirmed",
-  },
-  {
-    id: "m7",
-    resourceId: "shadow-quill",
-    start: "2025-01-07T15:00:00",
-    title: "Alexander",
-    status: "Completed",
-  },
-  {
-    id: "m8",
-    resourceId: "anna-hilton",
-    start: "2025-01-07T16:00:00",
-    title: "Scarlett",
-    status: "Confirmed",
-  },
-  {
-    id: "m9",
-    resourceId: "pixel-nomad",
-    start: "2025-01-08T14:00:00",
-    title: "Emily",
-    status: "Confirmed",
-  },
-  {
-    id: "m10",
-    resourceId: "code-voyager",
-    start: "2025-01-08T15:00:00",
-    title: "Alexander",
-    status: "Completed",
-  },
-  {
-    id: "m11",
-    resourceId: "echo-sage",
-    start: "2025-01-08T16:00:00",
-    title: "Scarlett",
-    status: "Confirmed",
-  },
-  {
-    id: "m12",
-    resourceId: "nebula-drift",
-    start: "2025-01-17T14:00:00",
-    title: "Emily",
-    status: "Confirmed",
-  },
-  {
-    id: "m13",
-    resourceId: "shadow-quill",
-    start: "2025-01-17T15:00:00",
-    title: "Alexander",
-    status: "Completed",
-  },
-  {
-    id: "m14",
-    resourceId: "anna-hilton",
-    start: "2025-01-17T16:00:00",
-    title: "Scarlett",
-    status: "Confirmed",
-  },
-  {
-    id: "m15",
-    resourceId: "pixel-nomad",
-    start: "2025-01-18T14:00:00",
-    title: "Emily",
-    status: "Confirmed",
-  },
-  {
-    id: "m16",
-    resourceId: "code-voyager",
-    start: "2025-01-18T15:00:00",
-    title: "Alexander",
-    status: "Completed",
-  },
-  {
-    id: "m17",
-    resourceId: "echo-sage",
-    start: "2025-01-18T16:00:00",
-    title: "Scarlett",
-    status: "Confirmed",
-  },
-  {
-    id: "m18",
-    resourceId: "nebula-drift",
-    start: "2025-01-21T14:00:00",
-    title: "Emily",
-    status: "Confirmed",
-  },
-  {
-    id: "m19",
-    resourceId: "shadow-quill",
-    start: "2025-01-21T15:00:00",
-    title: "Alexander",
-    status: "Completed",
-  },
-  {
-    id: "m20",
-    resourceId: "anna-hilton",
-    start: "2025-01-21T16:00:00",
-    title: "Scarlett",
-    status: "Confirmed",
-  },
-  {
-    id: "m21",
-    resourceId: "pixel-nomad",
-    start: "2025-01-30T14:00:00",
-    title: "Emily",
-    status: "Confirmed",
-  },
-  {
-    id: "m22",
-    resourceId: "code-voyager",
-    start: "2025-01-30T15:00:00",
-    title: "Alexander",
-    status: "Completed",
-  },
-  {
-    id: "m23",
-    resourceId: "echo-sage",
-    start: "2025-01-30T16:00:00",
-    title: "Scarlett",
+    start: createEventDate("14:00:00", 0),
+    title: "Olivia",
     status: "Confirmed",
   },
 
-  // Events for Week View (June 2025, as in original resource timeline)
+  // Day 1
   {
-    id: "w1",
-    resourceId: "pixel-nomad",
-    start: "2025-06-02T14:00:00",
-    title: "Alexander",
+    id: "c4",
+    resourceId: "nebula-drift",
+    start: createEventDate("09:00:00", 1),
+    title: "William",
     status: "Confirmed",
+    vip: true,
   },
   {
-    id: "w2",
-    resourceId: "pixel-nomad",
-    start: "2025-06-02T15:00:00",
-    title: "Emily",
-    status: "Completed",
-  },
-  {
-    id: "w3",
-    resourceId: "code-voyager",
-    start: "2025-06-03T14:00:00",
-    title: "Scarlett",
-    status: "Confirmed",
-  },
-  {
-    id: "w4",
-    resourceId: "code-voyager",
-    start: "2025-06-03T14:00:00",
-    title: "Emily",
-    status: "Completed",
-  },
-  {
-    id: "w5",
-    resourceId: "code-voyager",
-    start: "2025-06-03T14:00:00",
-    title: "Michael",
-    status: "Confirmed",
-  },
-  {
-    id: "w6",
-    resourceId: "echo-sage",
-    start: "2025-06-03T14:00:00",
-    title: "Alexander",
-    status: "Completed",
-  },
-  {
-    id: "w7",
-    resourceId: "echo-sage",
-    start: "2025-06-03T14:00:00",
-    title: "Scarlett",
-    status: "Confirmed",
-  },
-  {
-    id: "w8",
-    resourceId: "pixel-nomad",
-    start: "2025-06-05T14:00:00",
-    title: "Scarlett",
-    status: "Confirmed",
-  },
-  {
-    id: "w9",
-    resourceId: "pixel-nomad",
-    start: "2025-06-05T14:00:00",
-    title: "Emily",
-    status: "Completed",
-  },
-  {
-    id: "w10",
-    resourceId: "pixel-nomad",
-    start: "2025-06-05T14:00:00",
-    title: "Thomas",
-    status: "Confirmed",
-  },
-  {
-    id: "w11",
-    resourceId: "pixel-nomad",
-    start: "2025-06-05T14:00:00",
-    title: "Alexander",
-    status: "Completed",
-  },
-  {
-    id: "w12",
-    resourceId: "code-voyager",
-    start: "2025-06-05T14:00:00",
-    title: "Alexander",
-    status: "Confirmed",
-  },
-  {
-    id: "w13",
-    resourceId: "echo-sage",
-    start: "2025-06-05T14:00:00",
-    title: "Alexander",
-    status: "Completed",
-  },
-  {
-    id: "w14",
-    resourceId: "echo-sage",
-    start: "2025-06-05T14:00:00",
-    title: "Scarlett",
-    status: "Confirmed",
-  },
-  {
-    id: "w15",
-    resourceId: "echo-sage",
-    start: "2025-06-05T14:00:00",
-    title: "Michael",
-    status: "Completed",
-  },
-  {
-    id: "w16",
-    resourceId: "echo-sage",
-    start: "2025-06-05T14:00:00",
-    title: "Emily",
-    status: "Confirmed",
-  },
-  {
-    id: "w17",
-    resourceId: "pixel-nomad",
-    start: "2025-06-06T14:00:00",
-    title: "Alexander",
-    status: "Completed",
-  },
-  {
-    id: "w18",
-    resourceId: "pixel-nomad",
-    start: "2025-06-06T14:00:00",
-    title: "Emily",
-    status: "Confirmed",
-  },
-  {
-    id: "w19",
-    resourceId: "pixel-nomad",
-    start: "2025-06-06T14:00:00",
-    title: "Thomas",
-    status: "Completed",
-  },
-  {
-    id: "w20",
-    resourceId: "pixel-nomad",
-    start: "2025-06-06T14:00:00",
-    title: "Michael",
-    status: "Confirmed",
-  },
-  {
-    id: "w21",
-    resourceId: "code-voyager",
-    start: "2025-06-06T14:00:00",
-    title: "Alexander",
-    status: "Completed",
-  },
-  {
-    id: "w22",
-    resourceId: "echo-sage",
-    start: "2025-06-06T14:00:00",
-    title: "Alexander",
-    status: "Confirmed",
-  },
-  {
-    id: "w23",
-    resourceId: "echo-sage",
-    start: "2025-06-06T14:00:00",
-    title: "Scarlett",
-    status: "Completed",
-  },
-  {
-    id: "w24",
-    resourceId: "echo-sage",
-    start: "2025-06-06T14:00:00",
-    title: "Michael",
-    status: "Confirmed",
-  },
-  {
-    id: "w25",
-    resourceId: "echo-sage",
-    start: "2025-06-06T14:00:00",
-    title: "Emily",
-    status: "Completed",
-  },
-  {
-    id: "w26",
-    resourceId: "pixel-nomad",
-    start: "2025-06-07T14:00:00",
-    title: "Michael",
-    status: "Confirmed",
-  },
-  {
-    id: "w27",
-    resourceId: "pixel-nomad",
-    start: "2025-06-07T14:00:00",
-    title: "Alexander",
-    status: "Completed",
-  },
-  {
-    id: "w28",
-    resourceId: "code-voyager",
-    start: "2025-06-07T14:00:00",
-    title: "Scarlett",
-    status: "Confirmed",
-  },
-  {
-    id: "w29",
-    resourceId: "echo-sage",
-    start: "2025-06-07T14:00:00",
-    title: "Alexander",
-    status: "Completed",
-  },
-  {
-    id: "w30",
-    resourceId: "echo-sage",
-    start: "2025-06-07T14:00:00",
-    title: "Scarlett",
-    status: "Confirmed",
-  },
-  {
-    id: "w31",
-    resourceId: "echo-sage",
-    start: "2025-06-07T14:00:00",
-    title: "Michael",
-    status: "Completed",
-  },
-  {
-    id: "w32",
-    resourceId: "echo-sage",
-    start: "2025-06-07T14:00:00",
-    title: "Emily",
-    status: "Confirmed",
-  },
-  {
-    id: "w33",
-    resourceId: "pixel-nomad",
-    start: "2025-06-08T14:00:00",
-    title: "Alexander",
-    status: "Completed",
-  },
-  {
-    id: "w34",
-    resourceId: "code-voyager",
-    start: "2025-06-08T14:00:00",
-    title: "Alexander",
-    status: "Confirmed",
-  },
-  {
-    id: "w35",
-    resourceId: "echo-sage",
-    start: "2025-06-08T14:00:00",
-    title: "Alexander",
-    status: "Completed",
-  },
-
-  // Events for Day View (January 6, 2025, as in last day view)
-  {
-    id: "d1",
-    resourceId: "code-voyager",
-    start: "2025-01-06T08:00:00",
+    id: "c5",
+    resourceId: "shadow-quill",
+    start: createEventDate("11:00:00", 1),
     title: "Sophia",
     status: "Completed",
   },
   {
-    id: "d2",
-    resourceId: "echo-sage",
-    start: "2025-01-06T08:00:00",
-    title: "Michael",
-    status: "Confirmed",
-  },
-  {
-    id: "d3",
+    id: "c6",
     resourceId: "anna-hilton",
-    start: "2025-01-06T08:00:00",
-    title: "Juliet",
+    start: createEventDate("15:30:00", 1),
+    title: "Noah",
     status: "Confirmed",
   },
+
+  // Day 2
   {
-    id: "d4",
+    id: "c7",
     resourceId: "pixel-nomad",
-    start: "2025-01-06T09:00:00",
-    title: "Morgan Blake",
-    status: "Completed",
-  },
-  {
-    id: "d5",
-    resourceId: "nebula-drift",
-    start: "2025-01-06T09:00:00",
+    start: createEventDate("10:00:00", 2),
     title: "Emma",
     status: "Completed",
+    vip: true,
   },
   {
-    id: "d6",
+    id: "c8",
+    resourceId: "code-voyager",
+    start: createEventDate("13:00:00", 2),
+    title: "Liam",
+    status: "Confirmed",
+  },
+  {
+    id: "c9",
+    resourceId: "echo-sage",
+    start: createEventDate("16:00:00", 2),
+    title: "Ava",
+    status: "Completed",
+  },
+
+  // Day 3
+  {
+    id: "c10",
+    resourceId: "nebula-drift",
+    start: createEventDate("09:30:00", 3),
+    title: "Isabella",
+    status: "Confirmed",
+    vip: true,
+  },
+  {
+    id: "c11",
     resourceId: "shadow-quill",
-    start: "2025-01-06T09:00:00",
-    title: "Scarlett",
+    start: createEventDate("11:30:00", 3),
+    title: "James",
     status: "Completed",
   },
   {
-    id: "d7",
+    id: "c12",
     resourceId: "anna-hilton",
-    start: "2025-01-06T10:00:00",
-    title: "Andrew",
-    status: "Completed",
+    start: createEventDate("14:00:00", 3),
+    title: "Charlotte",
+    status: "Confirmed",
+    vip: true,
   },
+
+  // Day 4
   {
-    id: "d8",
+    id: "c13",
     resourceId: "pixel-nomad",
-    start: "2025-01-06T11:00:00",
-    title: "Alexander",
+    start: createEventDate("09:00:00", 4),
+    title: "Benjamin",
+    status: "Confirmed",
+    vip: true,
+  },
+  {
+    id: "c14",
+    resourceId: "code-voyager",
+    start: createEventDate("13:30:00", 4),
+    title: "Mia",
+    status: "Completed",
+    vip: true,
+  },
+  {
+    id: "c15",
+    resourceId: "echo-sage",
+    start: createEventDate("16:30:00", 4),
+    title: "Elijah",
+    status: "Confirmed",
+  },
+
+  // Day 5
+  {
+    id: "c16",
+    resourceId: "nebula-drift",
+    start: createEventDate("10:00:00", 5),
+    title: "Amelia",
     status: "Completed",
   },
   {
-    id: "d9",
-    resourceId: "echo-sage",
-    start: "2025-01-06T11:00:00",
-    title: "Emily",
-    status: "Confirmed",
-  },
-  {
-    id: "d10",
+    id: "c17",
     resourceId: "shadow-quill",
-    start: "2025-01-06T11:00:00",
-    title: "Morgan Blake",
+    start: createEventDate("14:30:00", 5),
+    title: "Oliver",
+    status: "Confirmed",
+    vip: true,
+  },
+  {
+    id: "c18",
+    resourceId: "anna-hilton",
+    start: createEventDate("16:00:00", 5),
+    title: "Harper",
+    status: "Completed",
+  },
+
+  // Day 6
+  {
+    id: "c19",
+    resourceId: "pixel-nomad",
+    start: createEventDate("11:00:00", 6),
+    title: "Lucas",
     status: "Confirmed",
   },
   {
-    id: "d11",
+    id: "c20",
+    resourceId: "code-voyager",
+    start: createEventDate("15:00:00", 6),
+    title: "Evelyn",
+    status: "Completed",
+    vip: true,
+  },
+  {
+    id: "c21",
     resourceId: "echo-sage",
-    start: "2025-01-06T12:00:00",
-    title: "Thomas",
+    start: createEventDate("09:30:00", 6),
+    title: "Mason",
     status: "Confirmed",
   },
 ];
 
 export const specialDatesData = [
   {
-    date: "2025-06-01",
+    date: "2025-06-25",
     isBusy: true,
     timeSlots: [
       { time: "09:00", isBusy: true },
@@ -535,7 +227,7 @@ export const specialDatesData = [
     ],
   },
   {
-    date: "2025-06-02",
+    date: "2025-06-26",
     isBusy: true,
     timeSlots: [
       { time: "09:00", isBusy: true },
@@ -545,7 +237,7 @@ export const specialDatesData = [
     ],
   },
   {
-    date: "2025-06-06",
+    date: "2025-06-24",
     sale: "🔥 25% OFF",
     timeSlots: [
       { time: "09:00", isBusy: false, sale: "🔥 25% OFF" },
@@ -555,7 +247,7 @@ export const specialDatesData = [
     ],
   },
   {
-    date: "2025-06-08",
+    date: "2025-07-01",
     isBusy: true,
     timeSlots: [
       { time: "09:00", isBusy: true },
@@ -565,7 +257,7 @@ export const specialDatesData = [
     ],
   },
   {
-    date: "2025-06-11",
+    date: "2025-07-02",
     isBusy: true,
     timeSlots: [
       { time: "09:00", isBusy: true },
@@ -575,7 +267,7 @@ export const specialDatesData = [
     ],
   },
   {
-    date: "2025-06-14",
+    date: "2025-07-03",
 
     timeSlots: [
       { time: "09:00", isBusy: false, sale: "🔥 25% OFF" },
@@ -585,21 +277,20 @@ export const specialDatesData = [
     ],
   },
   {
-    date: "2025-06-15",
-
-    isBusy: true,
+    date: "2025-07-04",
+    isBusy: false,
     timeSlots: [
-      { time: "09:00", isBusy: true, sale: "🔥 10% OFF" },
+      { time: "09:00", isBusy: false, sale: "🔥 10% OFF" },
       { time: "10:00", isBusy: false, sale: "🔥 10% OFF" },
       { time: "14:00", isBusy: true },
       { time: "15:00", isBusy: true },
     ],
   },
   {
-    date: "2025-06-16",
-    isBusy: true,
+    date: "2025-07-05",
+    isBusy: false,
     timeSlots: [
-      { time: "09:00", isBusy: true },
+      { time: "09:00", isBusy: false },
       { time: "10:00", isBusy: true },
       { time: "14:00", isBusy: true },
       { time: "15:00", isBusy: true },
@@ -616,7 +307,7 @@ export const specialDatesData = [
     ],
   },
   {
-    date: "2025-06-22",
+    date: "2025-06-28",
     isBusy: true,
     timeSlots: [
       { time: "09:00", isBusy: true },
@@ -626,7 +317,7 @@ export const specialDatesData = [
     ],
   },
   {
-    date: "2025-06-23",
+    date: "2025-06-27",
     isBusy: true,
     timeSlots: [
       { time: "09:00", isBusy: true },

@@ -88,10 +88,10 @@ export default function DayCell({
     if (dayView || weekView) {
       return (
         <div className="flex flex-col h-full w-full">
-          <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center justify-between gap-2 max-md:justify-center max-md:my-auto">
             <div className="flex items-start gap-2">
               {currentTimeSlot?.sale && (
-                <span className="text-xs text-primary01 bg-[#F5F4FE] px-2 py-1 rounded-full font-medium border border-[#C3BCF6]">
+                <span className="text-xs text-primary01 bg-[#F5F4FE] px-2 py-1 rounded-full font-medium border border-[#C3BCF6] max-md:border-0 max-md:bg-transparent">
                   {currentTimeSlot.sale}
                 </span>
               )}
@@ -105,7 +105,7 @@ export default function DayCell({
     return (
       <div
         className={cn(
-          "text-sm mb-1 text-start flex items-start justify-start gap-2",
+          "text-sm mb-1 text-start flex items-start justify-start gap-2 flex-wrap max-md:justify-center",
           !isCurrentMonth ? "text-gray-400" : "text-gray-800",
           {
             "flex-col": !selectTimeFromProvider,
@@ -118,57 +118,40 @@ export default function DayCell({
           })}>
           <span
             className={cn({
-              "max-md:bg-primary01 w-8 h-8 max-md:text-white max-md:grid place-items-center rounded-full":
+              "max-md:bg-primary01 w-8 h-8 max-md:text-white max-md:grid place-items-center rounded-full text-sm -mt-1":
                 !selectTimeFromProvider && isToday,
             })}>
-            {day.format("D")}
+            {day.format("DD")}
           </span>
 
           {!selectTimeFromProvider && isToday && (
-            <span className="text-xs text-primary01 border border-primary01 px-3 py-1 rounded-full font-medium ml-2 max-md:hidden">
+            <span className="text-sm text-primary01 border border-gray-300 px-3 py-1 rounded-full ml-2 max-md:hidden">
               Today
             </span>
           )}
         </span>
 
         {service?.sale && currentTimeSlot?.availableTimeSlots?.length > 0 && (
-          <span className="text-xs text-primary01 bg-[#F5F4FE] px-2 py-1 rounded-full font-medium border border-[#C3BCF6]">
+          <span className="text-xs text-primary01 bg-[#F5F4FE] px-2 py-1 rounded-full font-medium lg:border border-[#C3BCF6] text-wrap max-md:bg-transparent">
             {service.sale}
           </span>
         )}
 
-        <div className="max-lg:hidden">
-          {!selectTimeFromProvider && events.length > 0 && (
-            <div className="flex flex-col items-start">
-              {events.slice(0, maxEventsPerMonthCell).map((event) => (
-                <Event key={event.id} event={event} isMobile={false} />
-              ))}
-              {events.length > maxEventsPerMonthCell && (
-                <MoreEvents
-                  events={events}
-                  maxEventsPerMonthCell={maxEventsPerMonthCell}
-                />
-              )}
-            </div>
-          )}
-        </div>
+        {/* <div className="max-lg:hidden"> */}
 
-        {/* Mobile */}
-        <div className="lg:hidden">
-          {!selectTimeFromProvider && events.length > 0 && (
-            <div className="flex flex-col items-start">
-              {events.slice(0, maxEventsPerMonthCell).map((event) => (
-                <Event key={event.id} event={event} isMobile={true} />
-              ))}
-              {events.length > maxEventsPerMonthCell && (
-                <MoreEvents
-                  events={events}
-                  maxEventsPerMonthCell={maxEventsPerMonthCell}
-                />
-              )}
-            </div>
-          )}
-        </div>
+        {!selectTimeFromProvider && events.length > 0 && (
+          <div className="flex flex-col items-start">
+            {events.slice(0, maxEventsPerMonthCell).map((event) => (
+              <Event key={event.id} event={event} />
+            ))}
+            {events.length > maxEventsPerMonthCell && (
+              <MoreEvents
+                events={events}
+                maxEventsPerMonthCell={maxEventsPerMonthCell}
+              />
+            )}
+          </div>
+        )}
       </div>
     );
   };
@@ -181,7 +164,7 @@ export default function DayCell({
         disabled={currentTimeSlot?.isBusy || isPastDay()}
         onClick={selectTimeFromProvider ? () => setIsOpen(true) : null}
         className={cn(
-          "border-b border-r border-gray-200 relative overflow-hidden",
+          "border-b border-r border-l border-gray-200 relative overflow-hidden",
           "cursor-pointer transition-colors duration-200",
           dayView ? "w-full p-0" : "p-2",
           {
@@ -197,7 +180,10 @@ export default function DayCell({
             ),
           }
         )}>
-        <div className={cn("relative z-10 h-full", dayView ? "p-4" : "")}>
+        <div
+          className={cn("relative z-10 h-full", {
+            "p-4": dayView,
+          })}>
           {renderContent()}
         </div>
       </Element>

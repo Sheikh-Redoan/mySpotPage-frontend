@@ -1,46 +1,56 @@
-import React from "react";
-// Importing icons from react-icons
-import { FaCheckCircle, FaStar } from "react-icons/fa"; // Keep FaStar for custom star rendering
+import { FaCheckCircle, FaStar } from "react-icons/fa";
 import { PiStorefrontLight, PiInfo, PiFireLight } from "react-icons/pi";
-import { IoLocationOutline } from "react-icons/io5"; // Keep for location icon in ConfirmDetails if needed later, but we'll use CiMap here
-import { CiCalendar } from "react-icons/ci";
 import { GoDotFill } from "react-icons/go";
-import { CiMap } from "react-icons/ci"; // Using CiMap for the map icon as per your original structure
 
-// Importing the ConfirmDetails component
-import ConfirmDetails from "../../components/client/ConfirmDetails"; // Adjust path as per your project structure
-
-// Dummy image import for services. In a real application, these would be dynamic.
 import confirm_product from "../../assets/images/confirm.jpg";
-import { SplitIcon } from "lucide-react"; // Only SplitIcon is used from lucide-react
+import { SplitIcon } from "lucide-react";
+import BookingCheckoutCard from "../../components/addBookingByProvider/BookingCheckoutCard";
+import { useSelector } from "react-redux";
+
+const businessStaticData = {
+  studioName: "TCL Beauty Studio 01",
+  label: "Beauty",
+  rating: 4.8,
+  reviewCount: "12.5K reviews",
+  address: "15 Rothschild Boulevard, Tel Aviv-Yafo, Israel",
+  subtotal: 80.0,
+  vat: 10.0,
+  vatText: "includes ₪49.50 VAT",
+  discountPercent: 10.0,
+  discountAmount: 60.0,
+  paymentInstruction: "You will pay at the appointment location",
+  selectedTime: "06 Jan 2025, 11:00",
+  note: "Hair is thick and slightly wavy, prefers a shoulder-length layered cut with light texture.",
+  services: [
+    {
+      id: 1,
+      image: confirm_product,
+      name: "Classic Ombre",
+      options: "Smooth / Scalp treatment",
+      duration: "2h45m",
+      price: "₪70.00",
+    },
+    {
+      id: 2,
+      image: confirm_product,
+      name: "Reverse Ombre",
+      options: "Shadow Root",
+      duration: "3h30m",
+      price: "₪100.00",
+    },
+    {
+      id: 3,
+      image: confirm_product,
+      name: "Balayage with Toner",
+      options: "30m",
+      duration: "30m",
+      price: "₪100.00",
+    },
+  ],
+};
 
 const ConfirmBooking = () => {
-  const bookingData = {
-    thankYouMessage: "Thank You for Your Booking!",
-    confirmationText:
-      "Your booking is confirmed! You’ve successfully booked an appointment at TCL Beauty Studio 01. See you soon!",
-    paymentRequirementTitle: "Payment Requirement",
-    paymentInstruction: "You will pay at the appointment location",
-    storeName: "TCL Beauty Studio 01",
-    rating: "4.8", // This will be used to render stars directly in ConfirmBooking
-    reviewsCount: "2.5K", // Changed to 2.5K as per image for consistency
-    location: "15 Rothschild Boulevard, Tel Aviv-Yafo, Israel", // Location is still part of bookingData
-    staffName: "John Doe",
-    appointmentDateTime: "06 Jan 2025, 11:00",
-    bookingNote:
-      "Hair is thick and slightly wavy, prefers a shoulder-length layered cut with light texture.",
-    services: [
-      { id: 1, image: confirm_product, name: "Classic Ombre", options: "Smooth / Scalp treatment", duration: "2h45m", price: "₪70.00" },
-      { id: 2, image: confirm_product, name: "Reverse Ombre", options: "Shadow Root", duration: "3h30m", price: "₪100.00" },
-      { id: 3, image: confirm_product, name: "Balayage with Toner", options: "30m", duration: "30m", price: "₪100.00" },
-    ],
-    subtotal: "₪270.00",
-    vatIncluded: "(includes ₪48.60 VAT)",
-    discountPercentage: "20% OFF",
-    discountAmount: "-₪54.00",
-    total: "₪216.00",
-  };
-
+  const selectedStaff = useSelector(({ selectedStaff }) => selectedStaff);
   // Helper function to render dynamic stars based on the rating string
   const renderStars = (currentRatingString) => {
     const numericRating = parseFloat(currentRatingString);
@@ -62,13 +72,20 @@ const ConfirmBooking = () => {
       } else if (i === fullStars && partialStarFraction > 0) {
         // Partial star using a layering technique
         stars.push(
-          <div key={`star-partial-${i}`} className="relative inline-block w-4 h-4"> {/* Adjust w-4 h-4 for icon size */}
-            <FaStar className="text-gray-300 absolute top-0 left-0 text-sm" /> {/* Background empty star */}
+          <div
+            key={`star-partial-${i}`}
+            className="relative inline-block w-4 h-4"
+          >
+            {" "}
+            {/* Adjust w-4 h-4 for icon size */}
+            <FaStar className="text-gray-300 absolute top-0 left-0 text-sm" />{" "}
+            {/* Background empty star */}
             <div
               className="absolute top-0 left-0 overflow-hidden"
               style={{ width: `${partialStarFraction * 100}%` }}
             >
-              <FaStar className="text-[#FFD056] text-sm" /> {/* Foreground filled star */}
+              <FaStar className="text-[#FFD056] text-sm" />{" "}
+              {/* Foreground filled star */}
             </div>
           </div>
         );
@@ -81,7 +98,6 @@ const ConfirmBooking = () => {
     }
     return stars;
   };
-
 
   return (
     <div className="self-stretch px-4 py-5 bg-gray-50 flex flex-col items-center gap-10 lg:px-16">
@@ -155,7 +171,10 @@ const ConfirmBooking = () => {
                 <span>Baber shop</span> <GoDotFill className="opacity-[.4]" />{" "}
                 <span>26 Bedfordbury</span>
               </p>
-              <a href="#" className="justify-center text-violet-600 text-xs font-normal   underline leading-none">
+              <a
+                href="#"
+                className="justify-center text-violet-600 text-xs font-normal   underline leading-none"
+              >
                 View larger map
               </a>
             </div>
@@ -163,25 +182,21 @@ const ConfirmBooking = () => {
             {/* Get Direction button */}
             <div className="flex flex-col justify-center items-center">
               <SplitIcon className="text-violet-600" />
-              <a href="#" className="justify-center text-violet-600 text-sm font-semibold   underline leading-tight">
+              <a
+                href="#"
+                className="justify-center text-violet-600 text-sm font-semibold   underline leading-tight"
+              >
                 Get Direction
               </a>
             </div>
           </div>
           <div className="self-stretch h-0 outline outline-offset-[-0.50px] outline-gray-200"></div>
 
-          {/* ConfirmDetails for staff, appointment, services, and pricing */}
-          <ConfirmDetails
-            className="w-full"
-            staffName={bookingData.staffName}
-            appointmentDateTime={bookingData.appointmentDateTime}
-            bookingNote={bookingData.bookingNote}
-            services={bookingData.services}
-            subtotal={bookingData.subtotal}
-            vatIncluded={bookingData.vatIncluded}
-            discountPercentage={bookingData.discountPercentage}
-            discountAmount={bookingData.discountAmount}
-            total={bookingData.total}
+          <BookingCheckoutCard
+            data={businessStaticData}
+            fromDrawer={true}
+            selectedStaff={selectedStaff}
+            fromCofirmation={true}
           />
         </div>
       </div>
@@ -190,3 +205,50 @@ const ConfirmBooking = () => {
 };
 
 export default ConfirmBooking;
+
+const bookingData = {
+  thankYouMessage: "Thank You for Your Booking!",
+  confirmationText:
+    "Your booking is confirmed! You’ve successfully booked an appointment at TCL Beauty Studio 01. See you soon!",
+  paymentRequirementTitle: "Payment Requirement",
+  paymentInstruction: "You will pay at the appointment location",
+  storeName: "TCL Beauty Studio 01",
+  rating: "4.8", // This will be used to render stars directly in ConfirmBooking
+  reviewsCount: "2.5K", // Changed to 2.5K as per image for consistency
+  location: "15 Rothschild Boulevard, Tel Aviv-Yafo, Israel", // Location is still part of bookingData
+  staffName: "John Doe",
+  appointmentDateTime: "06 Jan 2025, 11:00",
+  bookingNote:
+    "Hair is thick and slightly wavy, prefers a shoulder-length layered cut with light texture.",
+  services: [
+    {
+      id: 1,
+      image: confirm_product,
+      name: "Classic Ombre",
+      options: "Smooth / Scalp treatment",
+      duration: "2h45m",
+      price: "₪70.00",
+    },
+    {
+      id: 2,
+      image: confirm_product,
+      name: "Reverse Ombre",
+      options: "Shadow Root",
+      duration: "3h30m",
+      price: "₪100.00",
+    },
+    {
+      id: 3,
+      image: confirm_product,
+      name: "Balayage with Toner",
+      options: "30m",
+      duration: "30m",
+      price: "₪100.00",
+    },
+  ],
+  subtotal: "₪270.00",
+  vatIncluded: "(includes ₪48.60 VAT)",
+  discountPercentage: "20% OFF",
+  discountAmount: "-₪54.00",
+  total: "₪216.00",
+};

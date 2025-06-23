@@ -90,9 +90,9 @@ const ProfileBasicInformation = () => {
 
           nameParam
             ? {
-              name: nameParam.split("-").join(" "),
-              link: `/admin/account-management/${nameParam}`,
-            }
+                name: nameParam.split("-").join(" "),
+                link: `/admin/account-management/${nameParam}`,
+              }
             : false,
 
           {
@@ -104,7 +104,7 @@ const ProfileBasicInformation = () => {
         ])}
       />
       <div className="bg-white h-[94%] rounded-xl p-4 font-golos">
-        <form onSubmit={handleSubmit(onSubmit)} >
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-14 md:mb-0">
             {/* Avatar Section */}
             <div className="mb-6 flex flex-col md:flex-row md:gap-36 items-start">
@@ -187,8 +187,9 @@ const ProfileBasicInformation = () => {
 
                 {/* Rotating icon */}
                 <ChevronDown
-                  className={`absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500 w-6 h-6 transform transition-transform duration-400 ease-in-out ${isSelectOpen ? "rotate-180" : "rotate-360"
-                    }`}
+                  className={`absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-gray-500 w-6 h-6 transform transition-transform duration-400 ease-in-out ${
+                    isSelectOpen ? "rotate-180" : "rotate-360"
+                  }`}
                 />
               </div>
             </div>

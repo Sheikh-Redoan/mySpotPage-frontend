@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import ProviderCheckoutCard from "../../../components/addBookingByProvider/ProviderCheckoutCard";
 import Breadcrumb from "../../../components/client/Breadcrumb";
 import ServicesList from "../../../components/serviceProviderInfo/ServicesList";
 import TreatmentModal from "../../../components/serviceProviderInfo/TreatmentModal";
 import { getBreadcrumbs } from "../../../lib/staticData";
+import { cn } from "../../../lib/utils";
+import CheckoutCardForMobile from "../../../components/addBookingByProvider/CheckoutCardForMobile";
+import BookingCheckoutCard from "../../../components/addBookingByProvider/BookingCheckoutCard";
+import confirm_product from "/src/assets/images/confirm.jpg";
 
 const businessStaticData = {
   studioName: "TCL Beauty Studio 01",
@@ -12,9 +15,17 @@ const businessStaticData = {
   rating: 4.8,
   reviewCount: "12.5K reviews",
   address: "15 Rothschild Boulevard, Tel Aviv-Yafo, Israel",
+  subtotal: 0.00,
+  vatIncluded: true,
+  discountPercent: 20,
+  discountAmount: 0.00,
+  total: 0.00,
+  vat: 0.00,
+  paymentInstruction: "You will pay at the appointment location",
 };
 
 const ServicesPageForProvider = () => {
+  const [showDetails, setShowDetails] = useState(false);
   const navigate = useNavigate();
   const [selected, setSelected] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
@@ -24,8 +35,8 @@ const ServicesPageForProvider = () => {
   };
 
   return (
-    <>
-      <div className="py-4">
+    <section>
+      <div className="max-md:px-3 max-md:py-2">
         <Breadcrumb
           breadcrumbs={getBreadcrumbs(0, 3, [
             {
@@ -51,31 +62,52 @@ const ServicesPageForProvider = () => {
           ])}
         />
         <div className="flex flex-col md:flex-row gap-4 justify-between items-start">
-          <div className="p-5 rounded-xl bg-[#FFFFFF] shadow-md space-y-3 flex-1 w-full md:w-auto">
+          <div
+            className={cn(
+              "max-md:mb-54 p-5 rounded-xl bg-[#FFFFFF] shadow-md space-y-3 flex-1 w-full md:w-auto",
+              {
+                "max-md:mb-94": showDetails,
+              }
+            )}
+          >
             <ServicesList
               selected={selected}
               setSelected={setSelected}
               label="Select Services"
             />
           </div>
-          <ProviderCheckoutCard
-            businessData={businessStaticData}
-            handleBookNow={handleBookNow}
-            selected={selected}
-            to="/dashboard/add-booking-by-provider/select-staff"
-          />
+
+          <div className="max-md:hidden">
+            <BookingCheckoutCard
+              data={businessStaticData}
+              handleBookNow={handleBookNow}
+              selected={selected}
+              disabled={selected.length === 0}
+            />
+          </div>
         </div>
       </div>
 
+      {/* Mobile View */}
+      <CheckoutCardForMobile
+        data={businessStaticData}
+        handleBookNow={handleBookNow}
+        showDetails={showDetails}
+        setShowDetails={setShowDetails}
+        disabled={selected.length === 0}
+      />
+
+      {/* Modal After Select Services */}
       <TreatmentModal
         open={modalOpen}
         onCancel={() => setModalOpen(false)}
-        onContinue={() => {
-          navigate("/add-booking-by-provider/select-staff");
+        onContinue={(selectedData) => {
+          console.log({selectedData})
+          navigate("/dashboard/add-booking-by-provider/select-staff");
         }}
         services={selected}
       />
-    </>
+    </section>
   );
 };
 

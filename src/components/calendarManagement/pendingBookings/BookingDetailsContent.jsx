@@ -53,7 +53,8 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
                 fontSize: "20px",
                 fontWeight: "bold",
               }}
-              shape="circle">
+              shape="circle"
+            >
               {booking?.avatar}
             </Avatar>
           </div>
@@ -61,7 +62,8 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
           <div className="flex items-center gap-2 max-md:hidden">
             <Link
               to={"#"}
-              className="text-[#3E70DD] underline decoration-1 decoration-Boulder-400 text-[20px] font-medium">
+              className="text-[#3E70DD] underline decoration-1 decoration-Boulder-400 text-[20px] font-medium"
+            >
               {booking?.clientName}
             </Link>
             <div className="w-5 h-5 rounded-full bg-[#FFB743] flex items-center justify-center">
@@ -74,7 +76,8 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
             <div className="flex items-center gap-2">
               <Link
                 to={"#"}
-                className="text-[#3E70DD] underline decoration-1 decoration-Boulder-400 text-[20px] font-medium">
+                className="text-[#3E70DD] underline decoration-1 decoration-Boulder-400 text-[20px] font-medium"
+              >
                 {booking?.clientName}
               </Link>
               <div className="w-5 h-5 rounded-full bg-[#FFB743] flex items-center justify-center">
@@ -138,7 +141,8 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
                   <Button
                     color="danger"
                     variant="text"
-                    className="flex items-center">
+                    className="flex items-center"
+                  >
                     <CircleAlert className="size-5" />
                     Add to blacklist
                   </Button>
@@ -148,7 +152,8 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
 
             <button
               onClick={() => setShowMore(!showMore)}
-              className="flex items-center gap-1 text-[#888888] text-sm font-normal mt-2">
+              className="flex items-center gap-1 text-[#888888] text-sm font-normal mt-2"
+            >
               {showMore ? "Show less" : "Show more"}{" "}
               {showMore ? (
                 <ChevronUp className="size-5" />
@@ -249,13 +254,17 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
 
           <div className="flex items-center gap-2">
             {/* Time Picker */}
-            <TimePicker scheduledTime={booking?.scheduledTime} />
+            <div className="max-md:hidden">
+              <TimePicker scheduledTime={booking?.scheduledTime} />
+            </div>
 
             {/* Mobile Screen Time Picker */}
-            <TimePicker
-              isMobile={true}
-              scheduledTime={booking?.scheduledTime}
-            />
+            <div className="md:hidden">
+              <TimePicker
+                isMobile={true}
+                scheduledTime={booking?.scheduledTime}
+              />
+            </div>
 
             <div
               className={`px-3 py-2 bg-[#FFFFFF] rounded-lg text-sm font-medium ${
@@ -270,7 +279,8 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
                   : booking?.status === "No Show"
                   ? "text-[#82868E]"
                   : ""
-              }`}>
+              }`}
+            >
               {booking?.status}
             </div>
           </div>
@@ -283,7 +293,8 @@ const BookingDetailsContent = ({ selectedDate, setSelectedDate, booking }) => {
 
             <Button
               onClick={() => navigate("/dashboard/service-menu")}
-              className="flex items-center gap-2 bg-[#FFFFFF] px-2 py-3 border-[1px] border-[#744CDB] rounded-lg">
+              className="flex items-center gap-2 bg-[#FFFFFF] px-2 py-3 border-[1px] border-[#744CDB] rounded-lg"
+            >
               <Plus size={18} color="#744CDB" />
               <span className="text-[#744CDB] text-sm font-normal">
                 Add service

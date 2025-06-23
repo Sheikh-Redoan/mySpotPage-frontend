@@ -14,38 +14,37 @@ import RepeatClientChart from "./RepeatClientChart";
 
 function SalesChart() {
   const data = [
-    { name: "", pv: 0 },
-    { name: "1/2/2025", pv: 23 },
-    { name: "2/2/2025", pv: 12 },
-    { name: "3/2/2025", pv: 37 },
-    { name: "4/2/2025", pv: 5 },
-    { name: "5/2/2025", pv: 19 },
-    { name: "6/2/2025", pv: 9 },
-    { name: "7/2/2025", pv: 34 },
-    { name: "8/2/2025", pv: 3 },
-    { name: "9/2/2025", pv: 28 },
-    { name: "10/2/2025", pv: 18 },
-    { name: "11/2/2025", pv: 32 },
-    { name: "12/2/2025", pv: 6 },
-    { name: "13/2/2025", pv: 15 },
-    { name: "14/2/2025", pv: 11 },
-    { name: "15/2/2025", pv: 36 },
-    { name: "16/2/2025", pv: 8 },
-    { name: "17/2/2025", pv: 1 },
-    { name: "18/2/2025", pv: 39 },
-    { name: "19/2/2025", pv: 14 },
-    { name: "20/2/2025", pv: 25 },
-    { name: "21/2/2025", pv: 31 },
-    { name: "22/2/2025", pv: 4 },
-    { name: "23/2/2025", pv: 20 },
-    { name: "24/2/2025", pv: 30 },
-    { name: "25/2/2025", pv: 2 },
-    { name: "26/2/2025", pv: 17 },
-    { name: "27/2/2025", pv: 26 },
-    { name: "28/2/2025", pv: 38 }
+    { name: "1/2/25", pv: 23 },
+    { name: "2/2/25", pv: 12 },
+    { name: "3/2/25", pv: 37 },
+    { name: "4/2/25", pv: 5 },
+    { name: "5/2/25", pv: 19 },
+    { name: "6/2/25", pv: 9 },
+    { name: "7/2/25", pv: 34 },
+    { name: "8/2/25", pv: 3 },
+    { name: "9/2/25", pv: 28 },
+    { name: "10/2/25", pv: 18 },
+    { name: "11/2/25", pv: 32 },
+    { name: "12/2/25", pv: 6 },
+    { name: "13/2/25", pv: 15 },
+    { name: "14/2/25", pv: 11 },
+    { name: "15/2/25", pv: 36 },
+    { name: "16/2/25", pv: 8 },
+    { name: "17/2/25", pv: 1 },
+    { name: "18/2/25", pv: 39 },
+    { name: "19/2/25", pv: 14 },
+    { name: "20/2/25", pv: 25 },
+    { name: "21/2/25", pv: 31 },
+    { name: "22/2/25", pv: 4 },
+    { name: "23/2/25", pv: 20 },
+    { name: "24/2/25", pv: 30 },
+    { name: "25/2/25", pv: 2 },
+    { name: "26/2/25", pv: 17 },
+    { name: "27/2/25", pv: 26 },
+    { name: "28/2/25", pv: 38 }
   ];
 
-   const totalSales = data.reduce((sum, item) => sum + item.pv, 0);
+  const totalSales = data.reduce((sum, item) => sum + item.pv, 0);
 
 
 
@@ -86,12 +85,23 @@ function SalesChart() {
     { value: "Double Process Color", label: "Double Process Color" },
   ];
 
-  const CustomTooltip = ({ active, payload, label }) => {
+  const CustomTooltip = ({ active, payload, label, coordinate }) => {
     if (active && payload && payload.length) {
+      const { x, y } = coordinate;
       return (
         <div
-          className="flex items-center gap-1 text-sm"
-          style={{ backgroundColor: 'whitesmoke', padding: 10, borderRadius: 10 }}>
+          className="flex items-center gap-1 text-sm w-48"
+          style={{
+            position: 'absolute',
+            transform: `translate(${x - 100}px, ${y - 0}px)`,
+            background: 'white',
+            border: '1px solid #ccc',
+            padding: '10px',
+            pointerEvents: 'none',
+            zIndex: 10,
+            borderRadius: "10px"
+          }}
+        >
           <p>{label}</p>
           <p>-</p>
           <div className="flex gap-1 items-center">
@@ -105,9 +115,9 @@ function SalesChart() {
   };
 
   return (
-    <div className="bg-white gap-8 divide-x divide-gray-200 rounded-xl flex w-full h-full p-6 inset-shadow-sm max-lg:flex-col">
-      <div className="w-full lg:w-9/12 pr-8 chart-1 flex flex-col ">
-        <div className="">
+    <div className="bg-white gap-4 divide-x divide-gray-200 rounded-xl md:pb-6 flex w-full h-full inset-shadow-sm max-lg:flex-col">
+      <div className="w-full lg:w-9/12 chart-1 flex flex-col pr-4">
+        <div className="pl-4 pt-4">
           <div className="px-0 pt-0 pb-4 w-full flex flex-wrap justify-between gap-4">
             <div className="flex items-start gap-4">
               <img
@@ -140,7 +150,7 @@ function SalesChart() {
               />
               <Select
                 className="font-golos font-medium flex-1 md:flex-2"
-                defaultValue="Services"
+                defaultValue="All Services"
                 style={{ width: 250 }}
                 onChange={handleChange}
                 options={services}
@@ -176,17 +186,13 @@ function SalesChart() {
           </div>
         </div>
 
-        <div className="w-full chart-1 overflow-x-auto">
-          <ResponsiveContainer width={2500} height={380}>
+        <div className="w-full chart-1 overflow-x-auto mt-5">
+          <ResponsiveContainer width={2100} height={380}>
             <BarChart
-              width={1500}
-              height={380}
+
               data={data}
               margin={{
                 top: 5,
-                right: 30,
-                left: 0,
-                bottom: 0,
               }}
               barSize={30}
             >
@@ -194,13 +200,14 @@ function SalesChart() {
               <XAxis
                 dataKey="name"
                 scale="point"
-                padding={{ left: 10, right: 10 }}
+                padding={{ left: 30, right: 30 }}
                 interval={0}
                 height={60}
                 tickMargin={10}
                 tick={{
                   angle: 0,
                   textAnchor: 'middle',
+                  fill: '#888888'
                 }}
                 tickLine={false}
               />
@@ -208,6 +215,9 @@ function SalesChart() {
                 domain={[0, 40]}
                 ticks={[5, 10, 15, 20, 25, 30, 35, 40]}
                 allowDataOverflow={true}
+                axisLine={false}
+                tickLine={false}
+                tick={{ fill: '#b0b0b0' }}
               />
               <Tooltip content={<CustomTooltip />} />
               <Bar dataKey="pv" fill="#FC8B23" />
@@ -215,7 +225,7 @@ function SalesChart() {
           </ResponsiveContainer>
         </div>
       </div>
-      <div className="w-full lg:w-3/12 ">
+      <div className="w-full lg:w-3/12 p-4 md:p-0 md:pr-3 md:pt-4">
         <h3 className="font-semibold pb-4">Repeat Clients</h3>
         <RepeatClientChart />
       </div>

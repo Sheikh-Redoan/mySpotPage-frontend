@@ -30,7 +30,9 @@ export const MobileServiceSetupContent = ({
   setSelectedDistrict,
   selectedCities,
   setOpenCitySelectionModal,
-  cityOptions
+  cityOptions,
+  drowar,
+  handleCityChange
 }) => {
   const [paymentOpen, setPaymentOpen] = useState(true);
   const [serviceModalOpen, setServiceModalOpen] = useState(true);
@@ -58,15 +60,7 @@ export const MobileServiceSetupContent = ({
 
   return (
     <>
-      <div className="flex justify-between items-center p-3 shadow">
-        <p className="text-lg font-semibold">Mobile service setup</p>
-        <buttn className="hover:scale-105" onClick={onClose}>
-          <X />
-        </buttn>
-      </div>
-
-      <hr className="pt-4 text-[#E5E7E8]" />
-      <div className="py-6 px-6 flex-1 overflow-y-auto">
+      <div className={`py-6 px-6 flex-1 overflow-y-auto ${drowar && "pb-28"}`}>
         {/* Toggle */}
         <div className="flex items-center justify-between gap-3">
           <div className="flex items-center gap-1.5 md:gap-3">
@@ -254,7 +248,7 @@ export const MobileServiceSetupContent = ({
                                         <X
                                           onClick={() => handleCityChange(city)}
                                           size={16}
-                                          className="text-[#C3BCF6] hover:scale-110 hover:font-medium"
+                                          className="text-[#C3BCF6] hover:scale-110 hover:font-medium cursor-pointer"
                                         />
                                       </div>
                                     )
@@ -514,20 +508,29 @@ export const MobileServiceSetupContent = ({
           </AnimatePresence>
         </div>
       </div>
-      <div className="flex justify-end items-center gap-6 p-6">
-        <button
-          onClick={() => setMobileModalOpen(false)}
-          className="text-[#242528] hover:scale-95 transform transition-all ease-in-out duration-300 hidden md:block"
-        >
-          Cancel
-        </button>
-        <button
-          onClick={() => setMobileModalOpen(false)}
-          className="bg-[#242528] text-[#FFF]  py-2 px-3 rounded-lg  hover:scale-95 transform transition-all ease-in-out duration-300 w-full md:w-fit"
-        >
-          Save
-        </button>
-      </div>
+      {drowar ?
+        <div className="bg-white pt-5 pb-10 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] flex justify-center fixed bottom-0 w-full">
+          <button
+            onClick={() => setMobileModalOpen(false)}
+            className="bg-[#242528] text-[#FFF]  py-2 px-3 rounded-lg  hover:scale-95 transform transition-all ease-in-out duration-300 w-[95%]"
+          >
+            Save
+          </button>
+        </div>
+        : <div className="flex justify-end items-center gap-6 p-6 ">
+          <button
+            onClick={() => setMobileModalOpen(false)}
+            className="text-[#242528] hover:scale-95 transform transition-all ease-in-out duration-300 hidden md:block"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={() => setMobileModalOpen(false)}
+            className="bg-[#242528] text-[#FFF]  py-2 px-3 rounded-lg  hover:scale-95 transform transition-all ease-in-out duration-300 w-full md:w-fit"
+          >
+            Save
+          </button>
+        </div>}
     </>
   );
 };

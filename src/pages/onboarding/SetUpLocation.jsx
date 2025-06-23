@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { imageProvider } from "../../lib/imageProvider";
+import { useState } from "react";
 import { Link } from "react-router";
+import { imageProvider } from "../../lib/imageProvider";
 // eslint-disable-next-line no-unused-vars
-import { motion } from "framer-motion";
 import { slideInFromLeft, slideInFromRight } from "@/animations/variants";
+import { motion } from "framer-motion";
 
 const SetUpLocation = () => {
   const [selected, setSelected] = useState("solo");
@@ -22,18 +22,17 @@ const SetUpLocation = () => {
           <p className=" mb-4 text-[#262626]">
             Is this a solo business or do others manage bookings too?
           </p>
-          <div className="flex flex-col sm:flex-row  items-center gap-4">
+          <div className="flex flex-row  items-center gap-4">
             <motion.div
               variants={slideInFromLeft()}
               initial="hidden"
               animate="visible"
               onClick={() => setSelected("solo")}
-              className={`cursor-pointer flex flex-col justify-center items-center h-[150px] w-[235px] border rounded-xl hover:bg-[#efedfc]  ${
+              className={`cursor-pointer flex flex-col justify-center items-center flex-1 h-[150px] lg:w-[235px] border rounded-xl hover:bg-[#efedfc]  ${
                 selected === "solo"
                   ? "bg-[#F5F4FE] border-[#866BE7]"
                   : "border-[#E7E7E7]"
-              }`}
-            >
+              }`}>
               <img
                 src={
                   selected === "solo"
@@ -51,12 +50,11 @@ const SetUpLocation = () => {
               initial="hidden"
               animate="visible"
               onClick={() => setSelected("team")}
-              className={`cursor-pointer flex flex-col justify-center items-center h-[150px] w-[235px] border rounded-xl hover:bg-[#efedfc] ${
+              className={`cursor-pointer flex flex-col justify-center items-center flex-1 h-[150px] lg:w-[235px] border rounded-xl hover:bg-[#efedfc] ${
                 selected === "team"
                   ? "bg-[#F5F4FE] border-[#866BE7]"
                   : "border-[#E7E7E7]"
-              }`}
-            >
+              }`}>
               <img
                 src={
                   selected === "team"
@@ -79,8 +77,7 @@ const SetUpLocation = () => {
                 selected === "solo"
                   ? "/onboard/setup-services1"
                   : "/onboard/setup-teamservices1"
-              }
-            >
+              }>
               <button className="px-[18px] py-[8px] bg-[#242528] text-[#fff] border font-medium rounded-lg hover:scale-95 transition-all duration-300 ease-in-out hover:bg-[#3a3a3a] hover:shadow-md">
                 Confirm
               </button>
@@ -101,8 +98,7 @@ const SetUpLocation = () => {
             selected === "solo"
               ? "/onboard/setup-services1"
               : "/onboard/setup-teamservices1"
-          }
-        >
+          }>
           <button className="w-full px-[18px] py-[8px] bg-[#242528] text-[#fff] border font-medium rounded-lg hover:scale-95 transition-all duration-300 ease-in-out hover:bg-[#3a3a3a] hover:shadow-md">
             Confirm
           </button>

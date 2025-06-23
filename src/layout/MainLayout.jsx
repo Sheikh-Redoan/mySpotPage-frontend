@@ -114,7 +114,7 @@ function MainLayout({ activeTab }) {
                 <li key={tab.id}>
                   <Tooltip
                     placement="right"
-                    title={isSidebarCollapsed && isDesktop ? tab.name : null}
+                    title={isSidebarCollapsed && isDesktop && tab.name}
                     color="white"
                     trigger="hover">
                     <NavLink
@@ -183,12 +183,13 @@ function MainLayout({ activeTab }) {
       {/* Main content area */}
       <main
         className={cn(
-          "flex-1 min-h-screen h-full bg-[#F9FAFC] transition-all duration-300",
+          "flex-1 min-h-screen h-full bg-white transition-all duration-300",
           isSidebarCollapsed ? "md:ml-[74px]" : "md:ml-64"
         )}>
         <TopNavbar
           activeTab={activeTab}
           onMenuClick={handleToggleMobileSidebar}
+          isMobileSidebarOpen={isMobileSidebarOpen}
         />
         <div className="pt-20 md:pt-0  pb-4">
           <Outlet />

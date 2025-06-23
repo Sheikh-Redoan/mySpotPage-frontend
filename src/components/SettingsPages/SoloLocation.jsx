@@ -110,6 +110,7 @@ const SoloLocation = () => {
           selectedCities ={selectedCities}
           setSelectedDistrict={setSelectedDistrict}
           setOpenCitySelectionModal={setOpenCitySelectionModal}
+          handleCityChange={handleCityChange}
         />
       )}
 
@@ -130,6 +131,7 @@ const SoloLocation = () => {
           onClose={() => setDeleteLocationModalOpen(false)}
           setDeleteLocationModalOpen={setDeleteLocationModalOpen}
           onDeleteConfirm={() => setDeleteLocationModalOpen(false)}
+          title="This location"
         />
       )}
     </div>

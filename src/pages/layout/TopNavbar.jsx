@@ -1,14 +1,17 @@
 // src/pages/layout/TopNavbar.jsx (Revised)
 import { Drawer, Popover } from "antd";
 import { ArrowLeft, Menu } from "lucide-react"; // Import Menu icon
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useLocation } from "react-router";
 import UserMenuPopUp from "../../components/admin/UserMenuPopUp";
+import Translate from "../../components/shared/Translate";
 import { imageProvider } from "../../lib/imageProvider";
 import { cn } from "../../lib/utils";
 import NotificationPopup from "./NotificationPopup";
+import { SquareX } from "lucide-react";
+import { motion } from 'framer-motion';
 
-function TopNavbar({ activeTab, onMenuClick }) {
+function TopNavbar({ activeTab, onMenuClick, isMobileSidebarOpen }) {
   const [open, setOpen] = useState(false);
   const [toggle, setToggle] = useState(true);
   const [isUserOpen, setIsUserOpen] = useState(false);
@@ -39,24 +42,38 @@ function TopNavbar({ activeTab, onMenuClick }) {
 
   return (
     <div className="flex justify-between border-b border-black/5 items-center px-6 py-0 bg-white z-50">
-            {/* Position TopNavbar based on screen size */}
-      <div className="fixed top-0 left-0 right-0 h-fit md:relative md:w-full flex justify-between items-center px-6 py-3 bg-white z-50">
-           
+      {/* Position TopNavbar based on screen size */}
+      <div className="fixed top-0 left-0 right-0 h-fit md:relative md:w-full flex justify-between items-center py-3 bg-white z-50">
+
         <div className="flex items-center gap-4">
-          {/* Hamburger icon for mobile, hidden on desktop */}       
+          {/* Hamburger icon for mobile, hidden on desktop */}
           <button
             onClick={onMenuClick}
             className="md:hidden p-2 rounded-full hover:bg-gray-100 transition-colors duration-200"
             aria-label="Open menu">
-                        <Menu size={24} className="text-gray-700" />
+            <motion.div
+              key={isMobileSidebarOpen ? 'x' : 'menu'}
+              initial={{ rotate: 0, opacity: 0 }}
+              animate={{ rotate: isMobileSidebarOpen ? 90 : -90, opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4, ease: 'easeInOut' }}
+            >
+              {isMobileSidebarOpen ? (
+                <SquareX size={24} className="text-gray-700 " />
+              ) : (
+                <Menu size={24} className="text-gray-700 rotate-90" />
+              )}
+            </motion.div>
           </button>
-           
+
           <h3 className="font-semibold text-lg capitalize  max-[700px]:text-[14px]">
-                        {tab ? tab : "Dashboard"}       
+            <Suspense fallback={<div>Loading translation...</div>}>
+              <Translate text={tab ? tab : "Dashboard"} />
+            </Suspense>
           </h3>
-             
+
         </div>
-               
+
         <div className="flex items-center gap-4">
           <button
             type="button"
@@ -84,7 +101,9 @@ function TopNavbar({ activeTab, onMenuClick }) {
             extra={
               <button type="button" onClick={onClose}>
                 <h4 className="text-black/60 text-sm underline cursor-pointer">
-                  Mark all as Read
+                  <Suspense fallback={<div>Loading translation...</div>}>
+                    <Translate text={"Mark all as Read"} />
+                  </Suspense>
                 </h4>
               </button>
             }
@@ -142,11 +161,11 @@ function TopNavbar({ activeTab, onMenuClick }) {
               />
             </button>
           </Popover>
-                   
+
         </div>
-             
+
       </div>
-         
+
     </div>
   );
 }

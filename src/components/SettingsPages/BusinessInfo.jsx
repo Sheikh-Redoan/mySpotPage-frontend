@@ -1,44 +1,64 @@
 import { useForm } from "react-hook-form";
 import { imageProvider } from "../../lib/imageProvider";
 import { CopyIcon } from "../../assets/icons/icons2";
-import { ConfigProvider } from "antd";
+import { Button, ConfigProvider } from "antd";
 import SearchableDropdown from "../ui/SearchableDropdown";
 import Dropdown from "../ui/Dropdown";
 import { useState } from "react";
 import { X } from "lucide-react";
 import ImageCropModal from "../modal/ImageCropModal";
+import useResponsive from "../../hooks/useResponsive";
+import { ChevronDown } from "lucide-react";
+import { Drawer } from "antd";
+import { Radio } from "antd";
+import ServiceClassificationDrawer from "../modal/ServiceClassificationDrawer";
 
 const serviceOptions = [
-  { value: "nails", label: "Nails" },
-  { value: "hair_barber", label: "Hair & Barber" },
-  { value: "makeup", label: "Makeup" },
-  { value: "lash_brow", label: "Lash & Brow" },
-  { value: "waxing", label: "Waxing" },
-  { value: "tanning", label: "Tanning" },
-  { value: "massage", label: "Massage" },
-  { value: "skincare", label: "Skincare" },
-  { value: "spa_wellness", label: "Spas & Wellness" },
-  { value: "fitness", label: "Fitness" },
-  { value: "tattoo_piercing", label: "Tattoo & Piercing" },
-  { value: "teeth_white", label: "Teeth White" },
-  { value: "holistic", label: "Holistic" },
+  { value: "Nails", label: "Nails" },
+  { value: "Hair & Barber", label: "Hair & Barber" },
+  { value: "Makeup", label: "Makeup" },
+  { value: "Lash & Brow", label: "Lash & Brow" },
+  { value: "Waxing", label: "Waxing" },
+  { value: "Tanning", label: "Tanning" },
+  { value: "Massage", label: "Massage" },
+  { value: "Skincare", label: "Skincare" },
+  { value: "Spas & Wellness", label: "Spas & Wellness" },
+  { value: "Fitness", label: "Fitness" },
+  { value: "Tattoo & Piercing", label: "Tattoo & Piercing" },
+  { value: "Teeth White", label: "Teeth White" },
+  { value: "Holistic", label: "Holistic" },
+  { value: "Body Contouring", label: "Body Contouring" },
+  { value: "Acupuncture", label: "Acupuncture" },
+  { value: "Hair Removal", label: "Hair Removal" },
+  { value: "Aromatherapy", label: "Aromatherapy" },
+  { value: "Cryotherapy", label: "Cryotherapy" },
+  { value: "IV Therapy", label: "IV Therapy" },
+  { value: "Facial Treatments", label: "Facial Treatments" },
+  { value: "Hydrafacial", label: "Hydrafacial" },
+  { value: "Scalp Treatments", label: "Scalp Treatments" },
+  { value: "Hair Extensions", label: "Hair Extensions" },
+  { value: "Beard Grooming", label: "Beard Grooming" },
+  { value: "Eyebrow Threading", label: "Eyebrow Threading" },
+  { value: "Makeup Lessons", label: "Makeup Lessons" },
+  { value: "Bridal Services", label: "Bridal Services" },
+  { value: "Reiki Healing", label: "Reiki Healing" }
 ];
 
 const businessOptions = [
   {
-    value: "exempt_business_(Osek Patur)",
+    value: "Exempt Business (Osek Patur)",
     label: "Exempt Business (Osek Patur)",
   },
   {
-    value: "licensed_business_(Osek Murshé)",
+    value: "Licensed Business (Osek Murshé)",
     label: "Licensed Business (Osek Murshé)",
   },
   {
-    value: "limited_company_(Ltd.)",
+    value: "Limited Company (Ltd.)",
     label: "Limited Company (Ltd.)",
   },
   {
-    value: "non_profit_organization",
+    value: "Non-Profit Organization",
     label: "Non-Profit Organization",
   },
 ];
@@ -48,6 +68,14 @@ const BusinessInfo = () => {
   const [croppedImage, setCroppedImage] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { register, handleSubmit } = useForm();
+  const { xs, sm, md, lg } = useResponsive()
+  const [open, setOpen] = useState(false);
+  const [label, setLabel] = useState("Exempt Business (Osek Patur)");
+  const [selectValue, setSelectvalue] = useState(label);
+
+  const [openForClassification, setOpenForClassification] = useState(false);
+  const [labelForClassification, setLabelForClassification] = useState("Nails");
+  const [selectValueForClassification, setSelectvalueForClassification] = useState(labelForClassification);
 
   const onSubmit = (data) => {
     console.log(data);
@@ -61,7 +89,7 @@ const BusinessInfo = () => {
     setCroppedImage(null);
   };
 
-const handleFileChange = (e) => {
+  const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       const imageURL = URL.createObjectURL(file);
@@ -88,7 +116,7 @@ const handleFileChange = (e) => {
           </button>
         </div>
         {/* Image Upload */}
-        <div className="mb-6">
+        <div className="my-6">
           <label className="block mb-2 text-[#888888]">
             Thumbnail <span className="text-orange-600">*</span>
           </label>
@@ -149,7 +177,7 @@ const handleFileChange = (e) => {
           </div>
 
           {/* Public URL  */}
-          <div className="flex-1 relative">
+          <div className="flex-1 relative mt-5 md:mt-0">
             <label className="block mb-2 text-[#888888]">
               Public URL <span className="text-orange-600">*</span>
             </label>
@@ -169,56 +197,104 @@ const handleFileChange = (e) => {
         {/* Business Type and Classification */}
         <div className="sm:flex gap-6 mb-6">
           {/* Business Type */}
-          <div className="flex-1 relative">
-            <label className="block mb-2 text-[#888888]">
-              Business Type <span className="text-orange-600">*</span>
-            </label>
-            <ConfigProvider
-              theme={{
-                token: {
-                  colorPrimary: "#8B5CF6",
-                  borderRadius: 8,
-                },
-                components: {
-                  Select: {
-                    controlHeight: 38,
+          {(lg || md) ? (
+            <div className="flex-1 relative">
+              <label className="block mb-2 text-[#888888]">
+                Business Type <span className="text-orange-600">*</span>
+              </label>
+              <ConfigProvider
+                theme={{
+                  token: {
+                    colorPrimary: "#8B5CF6",
+                    borderRadius: 8,
                   },
-                },
-              }}
-            >
-              <Dropdown
-                options={businessOptions}
-                placeholder="Select"
-                onChange={handleChange}
-              />
-            </ConfigProvider>
-          </div>
+                  components: {
+                    Select: {
+                      controlHeight: 38,
+                    },
+                  },
+                }}
+              >
+                <Dropdown
+                  options={businessOptions}
+                  placeholder="Select"
+                  onChange={handleChange}
+                />
+              </ConfigProvider>
+            </div>) : (
+            <>
+              <label className="block mb-2 text-[#888888]">
+                Business Type <span className="text-orange-600">*</span>
+              </label>
+              <Button
+                type="default"
+                className="w-full !flex !justify-between !py-5 !border !border-gray-300"
+                onClick={() => setOpen(true)}>
+                {selectValue} <ChevronDown className="text-description" />
+              </Button>
+              <Drawer
+                placement={"bottom"}
+                closable={false}
+                title="Business type"
+                extra={
+                  <Button type="text" onClick={() => setOpen(false)} className="!px-0">
+                    <X size={24} className="text-description" />
+                  </Button>
+                }
+                // height="40%"
+                onClose={() => setOpen(false)}
+                open={open}
+                className="rounded-t-xl "
+              >
+                <div className="">
+                  <Radio.Group
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 10,
+                      padding: 20,
+                      fontSize: '14px'
+                    }}
+                    onChange={
+                      (e) => setLabel(e.target.value)
+                    }
+                    value={label}
+                    options={businessOptions}
+                  />
+                </div>
+                <div className="bg-white pt-5 pb-10 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] flex justify-center fixed bottom-0 w-full">
+                  <button
+                    onClick={() => {
+                      setOpen(false)
+                      setSelectvalue(label)
+                    }}
+                    className="bg-black-button text-white w-[95%] flex justify-center py-2.5 rounded-md font-semibold">
+                    Apply
+                  </button>
+                </div>
+              </Drawer>
+              <style>
+                {`
+          .ant-drawer-body {
+            padding: 0 !important;
+          }
+        `}
+              </style>
+            </>
+          )}
 
-          {/* Business Classification */}
-          <div className="flex-1">
-            <label className="block mb-2 text-[#888888]">
-              Business Classification <span className="text-orange-600">*</span>
-            </label>
-            <ConfigProvider
-              theme={{
-                token: {
-                  colorPrimary: "#8B5CF6",
-                  borderRadius: 8,
-                },
-                components: {
-                  Select: {
-                    controlHeight: 38,
-                  },
-                },
-              }}
-            >
-              <SearchableDropdown
-                options={serviceOptions}
-                placeholder="Select"
-                searchPlaceholder="Search"
-                onChange={handleChange}
-              />
-            </ConfigProvider>
+          {/* Service Classification */}
+          <div className="flex-1 mt-5 md:mt-0">
+            <ServiceClassificationDrawer
+              openForClassification={openForClassification}
+              setOpenForClassification={setOpenForClassification}
+              setLabelForClassification={setLabelForClassification}
+              selectValueForClassification={selectValueForClassification}
+              setSelectvalueForClassification={setSelectvalueForClassification}
+              serviceOptions={serviceOptions}
+              labelForClassification={labelForClassification}
+              handleChange={handleChange}
+            />
           </div>
         </div>
 
@@ -239,7 +315,7 @@ const handleFileChange = (e) => {
           </div>
 
           {/* Registration Number */}
-          <div className="flex-1">
+          <div className="flex-1 mt-5 md:mt-0">
             <label className="block mb-2 text-[#888888]">
               Registration Number <span className="text-orange-600">*</span>
             </label>

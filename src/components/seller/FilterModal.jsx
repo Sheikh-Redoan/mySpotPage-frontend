@@ -1,5 +1,5 @@
 // src/components/seller/FilterModal.jsx
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { IoClose } from "react-icons/io5";
 import { CiSearch } from "react-icons/ci";
 import { FiChevronUp, FiChevronDown } from "react-icons/fi";
@@ -11,8 +11,6 @@ const FilterModal = ({
   onApplyFilters,
   currentFilters,
 }) => {
-  const modalRef = useRef(null);
-
   const [selectedRoles, setSelectedRoles] = useState(currentFilters.roles);
   const [serviceSearchTerm, setServiceSearchTerm] = useState(
     currentFilters.serviceSearchTerm
@@ -24,18 +22,6 @@ const FilterModal = ({
   const uniqueRoles = Array.from(
     new Set(allStaffData.flatMap((staff) => staff.roles))
   );
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
-        onClose();
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [onClose]);
 
   const handleAllRolesChange = () => {
     if (uniqueRoles.length > 0 && selectedRoles.length === uniqueRoles.length) {
@@ -69,10 +55,7 @@ const FilterModal = ({
   };
 
   return (
-    <div
-      ref={modalRef}
-      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 pb-3 bg-white rounded-xl shadow-[0px_6px_12px_0px_rgba(0,0,0,0.10)] border border-gray-200 flex flex-col justify-start items-start gap-3 z-50"
-    >
+    <div className="w-full pb-3 bg-white rounded-xl flex flex-col justify-start items-start gap-3">
       {/* Modal Header */}
       <div className="w-full px-4 py-3 border-b border-gray-100 flex justify-between items-center">
         <h2 className="flex-1 text-gray-950 text-lg font-semibold font-['Golos_Text'] leading-relaxed">
@@ -116,7 +99,7 @@ const FilterModal = ({
               </label>
               {uniqueRoles.map((role) => (
                 <label
-                  key={role} // Key for individual role checkboxes
+                  key={role}
                   className="self-stretch px-4 py-1 rounded inline-flex items-center gap-2 cursor-pointer hover:bg-gray-50"
                 >
                   {selectedRoles.includes(role) ? (

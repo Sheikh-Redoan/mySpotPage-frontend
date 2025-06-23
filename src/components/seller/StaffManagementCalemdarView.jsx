@@ -7,12 +7,12 @@ import { staffData } from "../../lib/staffData"; // Import staff data
 export default function StaffManagementCalemdarView() {
   return (
     <CustomStaffCalendar
-      appointmentsData={mockAppointments} 
-      staffData={staffData} 
-      initialView="week" 
+      appointmentsData={mockAppointments}
+      staffData={staffData}
+      initialView="week"
       showHeaderToolbar={true}
-      showStaffFilter={true} 
-      showViewToggle={false} 
+      showStaffFilter={true}
+      showViewToggle={false}
     />
   );
 }

@@ -148,17 +148,17 @@ const PendingBookingByClient = () => {
         columns={columns}
         pagination={false}
         rowKey="id"
-        className="w-full overflow-x-auto border border-border rounded-md"
+        className="w-full overflow-x-auto border border-border rounded-md "
         locale={{ emptyText: <CustomEmptyTable /> }}
         rowClassName={(record) =>
           searchQuery &&
-          (record.clientName
-            .toLowerCase()
-            .includes(searchQuery.toLowerCase()) ||
-            record.clientPhone
+            (record.clientName
               .toLowerCase()
               .includes(searchQuery.toLowerCase()) ||
-            record.staffName.toLowerCase().includes(searchQuery.toLowerCase()))
+              record.clientPhone
+                .toLowerCase()
+                .includes(searchQuery.toLowerCase()) ||
+              record.staffName.toLowerCase().includes(searchQuery.toLowerCase()))
             ? "bg-highlight01"
             : ""
         }
@@ -168,6 +168,7 @@ const PendingBookingByClient = () => {
           },
           className: "cursor-pointer hover:bg-gray-50",
         })}
+        scroll={{ x: 'max-content' }}
       />
 
       {/* Pagination */}
@@ -200,6 +201,7 @@ const PendingBookingByClient = () => {
           hideOnSinglePage={false}
         />
       </div>
+      <style>{`.ant-table-column-title{flex:none !important} .ant-table-filter-column{justify-content:flex-start !important;}`}</style>
     </div>
   );
 };

@@ -1,12 +1,11 @@
-import { FaCheckCircle, FaStar } from "react-icons/fa"; 
+import { FaCheckCircle, FaStar } from "react-icons/fa";
 import { PiStorefrontLight, PiInfo, PiFireLight } from "react-icons/pi";
 import { GoDotFill } from "react-icons/go";
 
-import ConfirmDetails from "../../components/client/ConfirmDetails";
-
 import confirm_product from "../../assets/images/confirm.jpg";
-import { SplitIcon } from "lucide-react"; 
+import { SplitIcon } from "lucide-react";
 import BookingCheckoutCard from "../../components/addBookingByProvider/BookingCheckoutCard";
+import { useSelector } from "react-redux";
 
 const businessStaticData = {
   studioName: "TCL Beauty Studio 01",
@@ -14,13 +13,14 @@ const businessStaticData = {
   rating: 4.8,
   reviewCount: "12.5K reviews",
   address: "15 Rothschild Boulevard, Tel Aviv-Yafo, Israel",
-  subtotal: 20.0,
-  vatIncluded: true,
+  subtotal: 80.0,
   vat: 10.0,
-  discountPercentage: 10.0,
+  vatIncluded: true,
+  discountPercent: 10.0,
   discountAmount: 60.0,
-  total: 90.0,
   paymentInstruction: "You will pay at the appointment location",
+  selectedTime: "06 Jan 2025, 11:00",
+  note: "Hair is thick and slightly wavy, prefers a shoulder-length layered cut with light texture.",
   services: [
     {
       id: 1,
@@ -50,6 +50,7 @@ const businessStaticData = {
 };
 
 const ConfirmBooking = () => {
+  const selectedStaff = useSelector(({ selectedStaff }) => selectedStaff);
   // Helper function to render dynamic stars based on the rating string
   const renderStars = (currentRatingString) => {
     const numericRating = parseFloat(currentRatingString);
@@ -191,20 +192,12 @@ const ConfirmBooking = () => {
           </div>
           <div className="self-stretch h-0 outline outline-offset-[-0.50px] outline-gray-200"></div>
 
-          {/* ConfirmDetails for staff, appointment, services, and pricing */}
-          {/* <ConfirmDetails
-            className="w-full"
-            staffName={bookingData.staffName}
-            appointmentDateTime={bookingData.appointmentDateTime}
-            bookingNote={bookingData.bookingNote}
-            services={bookingData.services}
-            subtotal={bookingData.subtotal}
-            vatIncluded={bookingData.vatIncluded}
-            discountPercentage={bookingData.discountPercentage}
-            discountAmount={bookingData.discountAmount}
-            total={bookingData.total}
-          /> */}
-          <BookingCheckoutCard data={businessStaticData} fromDrawer={true} />
+          <BookingCheckoutCard
+            data={businessStaticData}
+            fromDrawer={true}
+            selectedStaff={selectedStaff}
+            fromCofirmation={true}
+          />
         </div>
       </div>
     </div>
@@ -213,50 +206,49 @@ const ConfirmBooking = () => {
 
 export default ConfirmBooking;
 
-
 const bookingData = {
-    thankYouMessage: "Thank You for Your Booking!",
-    confirmationText:
-      "Your booking is confirmed! You’ve successfully booked an appointment at TCL Beauty Studio 01. See you soon!",
-    paymentRequirementTitle: "Payment Requirement",
-    paymentInstruction: "You will pay at the appointment location",
-    storeName: "TCL Beauty Studio 01",
-    rating: "4.8", // This will be used to render stars directly in ConfirmBooking
-    reviewsCount: "2.5K", // Changed to 2.5K as per image for consistency
-    location: "15 Rothschild Boulevard, Tel Aviv-Yafo, Israel", // Location is still part of bookingData
-    staffName: "John Doe",
-    appointmentDateTime: "06 Jan 2025, 11:00",
-    bookingNote:
-      "Hair is thick and slightly wavy, prefers a shoulder-length layered cut with light texture.",
-    services: [
-      {
-        id: 1,
-        image: confirm_product,
-        name: "Classic Ombre",
-        options: "Smooth / Scalp treatment",
-        duration: "2h45m",
-        price: "₪70.00",
-      },
-      {
-        id: 2,
-        image: confirm_product,
-        name: "Reverse Ombre",
-        options: "Shadow Root",
-        duration: "3h30m",
-        price: "₪100.00",
-      },
-      {
-        id: 3,
-        image: confirm_product,
-        name: "Balayage with Toner",
-        options: "30m",
-        duration: "30m",
-        price: "₪100.00",
-      },
-    ],
-    subtotal: "₪270.00",
-    vatIncluded: "(includes ₪48.60 VAT)",
-    discountPercentage: "20% OFF",
-    discountAmount: "-₪54.00",
-    total: "₪216.00",
-  };
+  thankYouMessage: "Thank You for Your Booking!",
+  confirmationText:
+    "Your booking is confirmed! You’ve successfully booked an appointment at TCL Beauty Studio 01. See you soon!",
+  paymentRequirementTitle: "Payment Requirement",
+  paymentInstruction: "You will pay at the appointment location",
+  storeName: "TCL Beauty Studio 01",
+  rating: "4.8", // This will be used to render stars directly in ConfirmBooking
+  reviewsCount: "2.5K", // Changed to 2.5K as per image for consistency
+  location: "15 Rothschild Boulevard, Tel Aviv-Yafo, Israel", // Location is still part of bookingData
+  staffName: "John Doe",
+  appointmentDateTime: "06 Jan 2025, 11:00",
+  bookingNote:
+    "Hair is thick and slightly wavy, prefers a shoulder-length layered cut with light texture.",
+  services: [
+    {
+      id: 1,
+      image: confirm_product,
+      name: "Classic Ombre",
+      options: "Smooth / Scalp treatment",
+      duration: "2h45m",
+      price: "₪70.00",
+    },
+    {
+      id: 2,
+      image: confirm_product,
+      name: "Reverse Ombre",
+      options: "Shadow Root",
+      duration: "3h30m",
+      price: "₪100.00",
+    },
+    {
+      id: 3,
+      image: confirm_product,
+      name: "Balayage with Toner",
+      options: "30m",
+      duration: "30m",
+      price: "₪100.00",
+    },
+  ],
+  subtotal: "₪270.00",
+  vatIncluded: "(includes ₪48.60 VAT)",
+  discountPercentage: "20% OFF",
+  discountAmount: "-₪54.00",
+  total: "₪216.00",
+};

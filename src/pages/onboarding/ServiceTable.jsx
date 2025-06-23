@@ -1,7 +1,7 @@
-import { useSelector } from "react-redux";
-import { imageProvider } from "../../lib/imageProvider";
 import { Plus } from "lucide-react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router";
+import { imageProvider } from "../../lib/imageProvider";
 
 const ServiceTable = () => {
   const serviceData = useSelector((state) => state.service);
@@ -20,22 +20,22 @@ const ServiceTable = () => {
           <table className="w-full min-w-[800px] text-left">
             <thead className="w-full bg-[#262626] text-[#FFFFFF]">
               <tr>
-                <th className="px-4 py-3 text-sm sm:text-base font-normal">
+                <th className="px-4 py-3 text-sm sm:text-base font-normal text-nowrap">
                   Thumbnail
                 </th>
-                <th className="px-4 py-3 text-sm sm:text-base font-normal">
+                <th className="px-4 py-3 text-sm sm:text-base font-normal text-nowrap">
                   Name/Available For
                 </th>
-                <th className="px-4 py-3 text-sm sm:text-base font-normal">
+                <th className="px-4 py-3 text-sm sm:text-base font-normal text-nowrap">
                   Description
                 </th>
-                <th className="px-4 py-3 text-sm sm:text-base font-normal">
+                <th className="px-4 py-3 text-sm sm:text-base font-normal text-nowrap">
                   Duration
                 </th>
-                <th className="px-4 py-3 text-sm sm:text-base font-normal">
+                <th className="px-4 py-3 text-sm sm:text-base font-normal text-nowrap">
                   Options
                 </th>
-                <th className="px-4 py-3 text-sm sm:text-base font-normal">
+                <th className="px-4 py-3 text-sm sm:text-base font-normal text-nowrap">
                   Action
                 </th>
               </tr>

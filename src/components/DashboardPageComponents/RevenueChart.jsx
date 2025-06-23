@@ -12,6 +12,7 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+
 function RevenueChart() {
   const data = [
     { name: "1/2/25", uv: 400, pv: 400, amt: 200 },
@@ -181,7 +182,8 @@ function RevenueChart() {
     const uvValue = payload[0].payload.uv;
 
     // Convert uv to percentage of maxUv
-    const uvPercent = (uvValue / maxUv) * 75;
+    const uvPercent = (uvValue / maxUv) * 80;
+    // const uvPercent = (uvValue / maxUv) * 75;
 
     // Calculate y2 as inverse percentage because y=0 is top of SVG
     const y2 = `${100 - uvPercent}%`;
@@ -247,7 +249,7 @@ function RevenueChart() {
               data={data}
               margin={{
                 top: 10,
-                right: 40,
+                right: 30,
                 left: 0,
                 bottom: 0,
               }}
@@ -270,12 +272,14 @@ function RevenueChart() {
                   fill: "#888888",
                 }}
                 tickLine={false}
-                padding={{ left: 5 }}
-                axisLine={true}
+                axisLine={{
+                  stroke: "#E7E7E7",
+                  strokeWidth: 1,
+                }}
               />
               <YAxis
                 ticks={[100, 200, 300, 400, 500, 600, 700, 800, 900]}
-                domain={[100, 900]}
+                domain={[0, 900]}
                 axisLine={false}
                 tickLine={false}
                 tick={{ fill: "#b0b0b0" }}
@@ -298,6 +302,7 @@ function RevenueChart() {
         </div>
       </div>
 
+      {/* Popular Services List */}
       <div className="w-full lg:w-3/12 md:pr-3 md:py-4 p-4 md:p-0">
         <h3 className="font-semibold pb-4">Most Popular Service</h3>
 

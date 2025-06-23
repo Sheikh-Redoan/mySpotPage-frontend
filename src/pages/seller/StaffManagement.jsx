@@ -9,9 +9,10 @@ import ConfirmInactivationModal from "../../components/seller/ConfirmInactivatio
 import StaffDetailModal from "../../components/seller/StaffDetailModal";
 import { staffData as initialStaffData } from "../../lib/staffData";
 import StaffManagementCalemdarView from "../../components/seller/StaffManagementCalemdarView";
+import FilterIcon from "../../components/seller/FilterIcon"; // Make sure this import is correct
+import FilterModal from "../../components/seller/FilterModal"; // Make sure this import is correct
 
 const StaffManagement = () => {
-  // ... all your existing state and functions remain the same
   const [activeTab, setActiveTab] = useState("Active Staff");
   const [allStaffData, setAllStaffData] = useState(initialStaffData);
   const [searchTerm, setSearchTerm] = useState("");
@@ -28,7 +29,10 @@ const StaffManagement = () => {
   const [showConfirmInactivationModal, setShowConfirmInactivationModal] = useState(false);
   const [staffToInactivate, setStaffToInactivate] = useState(null);
   const [showStaffDetailModal, setShowStaffDetailModal] = useState(false);
+  // State to control the visibility of the filter modal in the calendar view
+  const [showCalendarFilterModal, setShowCalendarFilterModal] = useState(false); 
 
+  // Updated filtering logic to handle calendar view
   const applyFilters = useCallback(() => {
     let currentFilteredStaff = allStaffData;
 
@@ -42,44 +46,43 @@ const StaffManagement = () => {
       );
     }
 
+    if (filters.roles.length > 0) {
+      currentFilteredStaff = currentFilteredStaff.filter((staff) =>
+        staff.roles.some((role) => filters.roles.includes(role))
+      );
+    } else {
+      currentFilteredStaff = [];
+    }
+
+    if (filters.serviceSearchTerm) {
+      const lowerCaseSearchTerm = filters.serviceSearchTerm.toLowerCase();
+      currentFilteredStaff = currentFilteredStaff.filter((staff) =>
+        staff.services.some((service) =>
+          service.toLowerCase().includes(lowerCaseSearchTerm)
+        )
+      );
+    }
+    
     if (activeTab !== "Calendar View") {
-      if (filters.roles.length > 0) {
-        currentFilteredStaff = currentFilteredStaff.filter((staff) =>
-          staff.roles.some((role) => filters.roles.includes(role))
-        );
-      } else if (filters.roles.length === 0) {
-        currentFilteredStaff = [];
-      }
-
-      if (filters.serviceSearchTerm) {
-        const lowerCaseSearchTerm = filters.serviceSearchTerm.toLowerCase();
-        currentFilteredStaff = currentFilteredStaff.filter((staff) =>
-          staff.services.some((service) =>
-            service.toLowerCase().includes(lowerCaseSearchTerm)
-          )
-        );
-      }
-
       currentFilteredStaff = currentFilteredStaff.filter((staff) =>
         staff.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
-    } else {
-        currentFilteredStaff = [];
     }
 
     setFilteredStaff(currentFilteredStaff);
 
-    if (
-      activeTab === "Calendar View" ||
-      (selectedStaff && !currentFilteredStaff.some((staff) => staff.id === selectedStaff.id))
-    ) {
+    if (activeTab === "Calendar View") {
       setSelectedStaff(null);
+    } else if (
+      selectedStaff &&
+      !currentFilteredStaff.some((staff) => staff.id === selectedStaff.id)
+    ) {
+      setSelectedStaff(currentFilteredStaff.length > 0 ? currentFilteredStaff[0] : null);
     } else if (!selectedStaff && currentFilteredStaff.length > 0) {
       setSelectedStaff(currentFilteredStaff[0]);
     }
-
-
   }, [searchTerm, activeTab, allStaffData, filters, selectedStaff]);
+
 
   useEffect(() => {
     applyFilters();
@@ -207,7 +210,6 @@ const StaffManagement = () => {
   return (
     <div className="min-h-screen p-5 font-['Golos_Text']">
       <div className="self-stretch bg-white p-5 rounded-lg flex flex-col justify-start items-start gap-4 max-[475px]:text-[12px] max-[475px]:p-1">
-        {/* ... Header, SearchBarAndFilter, and other components ... */}
         <Header activeTab={activeTab} onTabChange={handleTabChange} />
         {activeTab !== "Calendar View" && (
           <SearchBarAndFilter
@@ -219,9 +221,21 @@ const StaffManagement = () => {
             onAddStaff={handleAddStaff}
           />
         )}
+        {/* This block renders the calendar view and the filter button */}
         {activeTab === "Calendar View" ? (
-          <div className="self-stretch flex-1 overflow-hidden">
-            <StaffManagementCalemdarView />
+          <div className="self-stretch flex-1 overflow-hidden w-full">
+            <div className="flex items-center gap-4 mb-4">
+               <h2 className="text-lg font-semibold">All Staffs</h2>
+               <button
+                  onClick={() => setShowCalendarFilterModal(true)}
+                  className="p-2 rounded-lg border border-gray-300 hover:bg-gray-100 transition-colors"
+                  aria-label="Filter staff"
+                >
+                  <FilterIcon />
+                </button>
+            </div>
+            {/* The filtered staff list is passed to the calendar component here */}
+            <StaffManagementCalemdarView staff={filteredStaff} />
           </div>
         ) : (
           <div className="self-stretch flex-1 flex justify-start items-start gap-8 ">
@@ -251,7 +265,20 @@ const StaffManagement = () => {
         )}
       </div>
 
-      {/* ... Other modals ... */}
+      {/* This renders the filter modal when its state is true */}
+      {showCalendarFilterModal && (
+        <div className="fixed inset-0 bg-[#00000081] flex justify-center items-center z-50">
+            <div className="w-full max-w-sm">
+                <FilterModal
+                  onClose={() => setShowCalendarFilterModal(false)}
+                  allStaffData={allStaffData}
+                  onApplyFilters={handleApplyFilters}
+                  currentFilters={filters}
+                />
+            </div>
+        </div>
+      )}
+
       {showResolveBookingsModal && staffToInactivate && (
         <div className="fixed inset-0 bg-[#00000081] flex justify-center items-center z-40">
           <ResolveBookingsModal
@@ -277,9 +304,8 @@ const StaffManagement = () => {
         </div>
       )}
 
-      {/* Staff Detail Drawer */}
       <StaffDetailModal
-        open={showStaffDetailModal} // Changed from isVisible to open
+        open={showStaffDetailModal}
         staff={selectedStaff}
         onClose={() => setShowStaffDetailModal(false)}
         onSave={handleSaveStaffDetail}

@@ -170,6 +170,7 @@ const ConfirmedBookingByClient = () => {
           hideOnSinglePage={false}
         />
       </div>
+       <style>{`.ant-table-column-title{flex:none !important} .ant-table-filter-column{justify-content:flex-start !important;}`}</style>
     </div>
   );
 };

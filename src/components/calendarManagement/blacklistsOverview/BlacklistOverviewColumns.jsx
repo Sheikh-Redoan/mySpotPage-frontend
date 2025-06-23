@@ -1,4 +1,6 @@
 import { Tooltip } from "antd";
+import { ChevronDown } from "lucide-react";
+import { ChevronUp } from "lucide-react";
 import { Trash2 } from "lucide-react";
 
 export const getBlacklistOverviewColumns = () => [
@@ -44,6 +46,26 @@ export const getBlacklistOverviewColumns = () => [
     dataIndex: "banDate",
     key: "banDate",
     sorter: (a, b) => a.clientName.localeCompare(b.clientName),
+    sortIcon: ({ sortOrder }) => {
+        return (
+          <div className="flex flex-col">
+            <ChevronUp
+              size={16}
+              strokeWidth={1.5}
+              className={
+                sortOrder === "ascend" ? "!text-white" : "text-gray-400"
+              }
+            />
+            <ChevronDown
+              size={16}
+              strokeWidth={1.5}
+              className={
+                sortOrder === "descend" ? "!text-white" : "text-gray-400"
+              }
+            />
+          </div>
+        );
+      },
     render: (text, record) => (
       <div className="flex gap-1">
         <span className="text-[#888] text-xs">{record.scheduledDate}</span>

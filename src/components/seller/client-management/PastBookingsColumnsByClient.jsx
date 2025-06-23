@@ -3,6 +3,8 @@ import { MdCheckCircleOutline } from "react-icons/md";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { FilterFilled, SearchOutlined } from "../../../assets/icons/icons";
 import { ArrowUpRight } from "lucide-react";
+import { ChevronUp } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 export const getPastBookingsColumnsByClient = (
   navigate,
@@ -24,9 +26,36 @@ export const getPastBookingsColumnsByClient = (
       dataIndex: "scheduledTime",
       key: "scheduledTime",
       sorter: (a, b) => {
-        const dateA = new Date(`${a.scheduledDate} ${a.scheduledTime}`);
-        const dateB = new Date(`${b.scheduledDate} ${b.scheduledTime}`);
+        const parseDateTime = (dateStr, timeStr) => {
+          const [day, month, year] = dateStr.split('/');
+          const [hours, minutes] = timeStr.split(':');
+          return new Date(year, month - 1, day, hours, minutes);
+        };
+
+        const dateA = parseDateTime(a.scheduledDate, a.scheduledTime);
+        const dateB = parseDateTime(b.scheduledDate, b.scheduledTime);
+
         return dateA - dateB;
+      },
+      sortIcon: ({ sortOrder }) => {
+        return (
+          <div className="flex flex-col">
+            <ChevronUp
+              size={16}
+              strokeWidth={1.5}
+              className={
+                sortOrder === "ascend" ? "!text-white" : "text-gray-400"
+              }
+            />
+            <ChevronDown
+              size={16}
+              strokeWidth={1.5}
+              className={
+                sortOrder === "descend" ? "!text-white" : "text-gray-400"
+              }
+            />
+          </div>
+        );
       },
       render: (text, record) => (
         <div className="flex flex-col">
@@ -126,6 +155,26 @@ export const getPastBookingsColumnsByClient = (
       dataIndex: "staffName",
       key: "staffName",
       sorter: (a, b) => a.staffName.localeCompare(b.staffName),
+      sortIcon: ({ sortOrder }) => {
+        return (
+          <div className="flex flex-col">
+            <ChevronUp
+              size={16}
+              strokeWidth={1.5}
+              className={
+                sortOrder === "ascend" ? "!text-white" : "text-gray-400"
+              }
+            />
+            <ChevronDown
+              size={16}
+              strokeWidth={1.5}
+              className={
+                sortOrder === "descend" ? "!text-white" : "text-gray-400"
+              }
+            />
+          </div>
+        );
+      },
       render: (text) => <span className="text-[#262626] text-sm">{text}</span>,
     },
     {
@@ -141,6 +190,26 @@ export const getPastBookingsColumnsByClient = (
         };
         return parseDuration(a.totalDuration) - parseDuration(b.totalDuration);
       },
+      sortIcon: ({ sortOrder }) => {
+        return (
+          <div className="flex flex-col">
+            <ChevronUp
+              size={16}
+              strokeWidth={1.5}
+              className={
+                sortOrder === "ascend" ? "!text-white" : "text-gray-400"
+              }
+            />
+            <ChevronDown
+              size={16}
+              strokeWidth={1.5}
+              className={
+                sortOrder === "descend" ? "!text-white" : "text-gray-400"
+              }
+            />
+          </div>
+        );
+      },
       render: (text) => <span className="text-[#262626] text-sm">{text}</span>,
     },
     {
@@ -148,6 +217,26 @@ export const getPastBookingsColumnsByClient = (
       dataIndex: "totalPrice",
       key: "totalPrice",
       sorter: (a, b) => parseFloat(a.totalPrice) - parseFloat(b.totalPrice),
+      sortIcon: ({ sortOrder }) => {
+        return (
+          <div className="flex flex-col">
+            <ChevronUp
+              size={16}
+              strokeWidth={1.5}
+              className={
+                sortOrder === "ascend" ? "!text-white" : "text-gray-400"
+              }
+            />
+            <ChevronDown
+              size={16}
+              strokeWidth={1.5}
+              className={
+                sortOrder === "descend" ? "!text-white" : "text-gray-400"
+              }
+            />
+          </div>
+        );
+      },
       render: (text) => <span className="text-[#262626] text-sm">₪{text}</span>,
     },
     {

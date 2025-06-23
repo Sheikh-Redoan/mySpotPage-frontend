@@ -32,18 +32,18 @@ const ProfileSecurity = () => {
           [
             {
               name: nameParam ? "Account Management" : "My Profile",
-              link: nameParam ? "/account-management" : undefined,
+              link: nameParam ? "/admin/account-management" : undefined,
             },
             nameParam
               ? {
                   name: nameParam.split("-").join(" "),
-                  link: `/account-management/${nameParam}/basic-information`,
+                  link: `/admin/account-management/${nameParam}/basic-information`,
                 }
               : false, // this will be removed by .filter(Boolean)
             {
               name: "Security",
               link: nameParam
-                ? `/account-management/${nameParam}/security`
+                ? `/admin/account-management/${nameParam}/security`
                 : "/my-profile/security",
             },
           ] // removes `false`

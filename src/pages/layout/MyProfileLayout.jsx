@@ -7,8 +7,8 @@ const MyProfileLayout = ({ tabs = [] }) => {
   const currentPath = location.pathname;
 
   const profilePaths = [
-    "/profile-management/my-profile/basic-information",
-    "/profile-management/my-profile/security",
+    "/admin/profile-management/my-profile/basic-information",
+    "/admin/profile-management/my-profile/security",
   ];
 
   return (

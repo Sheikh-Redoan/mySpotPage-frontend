@@ -166,7 +166,7 @@ const PendingBookings = () => {
           className: "cursor-pointer hover:bg-gray-50",
         })}
         className="w-full"
-        scroll={{ x: 1220 }}
+        scroll={{ x: 'max-content' }}
       />
 
       {/* Pagination */}

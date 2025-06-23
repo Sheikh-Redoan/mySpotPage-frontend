@@ -30,8 +30,6 @@ export const getConfirmedBookingsColumnsByClient = (
         const dateA = parseDateTime(a.scheduledDate, a.scheduledTime);
         const dateB = parseDateTime(b.scheduledDate, b.scheduledTime);
 
-        console.log('a---->', dateA, 'b----> ', dateB);
-
         return dateA - dateB;
       },
       sortIcon: ({ sortOrder }) => {

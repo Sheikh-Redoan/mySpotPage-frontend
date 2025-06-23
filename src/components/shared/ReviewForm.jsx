@@ -43,8 +43,8 @@ const handleSubmit = () => {
   const isDisabled = rating === 0 || comment === "" || images.length === 0;
 
   return (
-    <div className="max-w-sm w-full mx-auto">
-      <div className="bg-white rounded-xl shadow-sm p-6 space-y-4 mt-4">
+    <div className="max-w-sm w-full mx-auto px-3 pb-36">
+      <div className="bg-white rounded-xl shadow-sm p-6 space-y-4 mt-4 ">
         <div className="text-center">
           <div className="text-3xl mb-1">😄</div>
           <h2 className="font-semibold text-lg">How was your experience?</h2>

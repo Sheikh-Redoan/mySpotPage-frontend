@@ -94,7 +94,7 @@ const AddStaffModal = ({ onClose, onAddStaff, allStaffData }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-[#0000007c] flex justify-center items-center z-40 max-[700px]:items-end">
+    <div className="fixed inset-0 bg-[#0000007c] flex justify-center items-center z-51 max-[700px]:items-end">
       <div
         ref={modalRef}
         className="relative w-[600px] max-h-[700px] bg-white rounded-lg flex flex-col justify-start items-start shadow-xl"

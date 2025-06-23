@@ -1,5 +1,6 @@
-import { Tag } from "antd";
+import { Button, Checkbox, Flex, Tag } from "antd";
 import { ChevronDown, ChevronUp, ListFilter } from "lucide-react";
+import { useState } from "react";
 import { Mastercard, Visa } from "react-payment-logos/dist/flat";
 import { useParams } from "react-router";
 import Breadcrumb from "../../components/client/Breadcrumb";
@@ -10,6 +11,138 @@ import { cn } from "../../lib/utils";
 
 export default function AdminSubscriptionsPage() {
   const { name } = useParams();
+  const [plans, setPlans] = useState([]);
+
+  const columns = [
+    {
+      title: "Billing Time",
+      dataIndex: "time",
+      sorter: (a, b) => a.time.localeCompare(b.time),
+      sortIcon: sortIcons,
+      render: (_, row) => (
+        <div>
+          <div>{row.time}</div>
+          <div className="text-xs text-gray-500">{row.date}</div>
+        </div>
+      ),
+    },
+    {
+      title: "Plan Name / Duration",
+      dataIndex: "plan",
+      filters: [
+        { text: "Radiance", value: "Radiance" },
+        { text: "Bloom", value: "Bloom" },
+        { text: "Glow", value: "Glow" },
+        { text: "Spark", value: "Spark" },
+      ],
+      onFilter: (value, record) => record.plan.includes(value),
+      filterIcon: (filtered) => (
+        <ListFilter
+          size={20}
+          strokeWidth={1}
+          className={`text-gray-400 ${filtered ? "text-blue-500" : ""}`}
+        />
+      ),
+      filterDropdown: ({ setSelectedKeys, confirm, clearFilters }) => (
+        <div className="p-4 space-y-4 min-w-[200px]">
+          <h3 className="font-semibold mb-2">Select</h3>
+          <Checkbox.Group
+            className="flex flex-col gap-3 w-full"
+            options={[
+              { label: "Radiance", value: "Radiance" },
+              { label: "Bloom", value: "Bloom" },
+              { label: "Glow", value: "Glow" },
+              { label: "Spark", value: "Spark" },
+            ]}
+            value={plans}
+            onChange={(values) => {
+              setPlans(values);
+            }}
+            vertical
+          />
+          <Flex gap={4} justifyContent="between" className="!mt-4">
+            <Button
+              size="large"
+              onClick={() => {
+                clearFilters();
+                setSelectedKeys([]);
+                setPlans([]);
+              }}>
+              Reset
+            </Button>
+            <Button
+              type="primary"
+              className="!bg-black "
+              size="large"
+              onClick={() => {
+                confirm();
+                setSelectedKeys(plans);
+              }}>
+              Apply
+            </Button>
+          </Flex>
+        </div>
+      ),
+      render: (_, row) => (
+        <div>
+          <div className="font-semibold">{row.plan}</div>
+          <div className="text-xs text-gray-500">{row.duration}</div>
+        </div>
+      ),
+    },
+    {
+      title: "Payment Method",
+      dataIndex: "method",
+      render: (_, row) => (
+        <div className="flex items-center gap-1">
+          <span className="font-semibold">
+            {iconMap[row.method.toLowerCase()]}
+          </span>
+          <span className="text-sm">{row.maskedCard}</span>
+        </div>
+      ),
+    },
+    {
+      title: "Amount",
+      dataIndex: "amount",
+      sorter: (a, b) => {
+        const getNum = (val) => parseFloat(val.replace(/[^\d.]/g, "")) || 0;
+        return getNum(a.amount) - getNum(b.amount);
+      },
+      sortIcon: sortIcons,
+    },
+
+    {
+      title: "Plan Status",
+      dataIndex: "status",
+      filters: [
+        { text: "Active", value: "Active" },
+        { text: "Expired", value: "Expired" },
+        { text: "Cancelled", value: "Cancelled" },
+        { text: "Refunded", value: "Refunded" },
+      ],
+      onFilter: (value, record) => record.status === value,
+      filterIcon: (filtered) => (
+        <ListFilter
+          size={20}
+          strokeWidth={1}
+          className={`text-gray-400 ${filtered ? "text-blue-500" : ""}`}
+        />
+      ),
+      render: (status) => (
+        <Tag color={statusColors[status] || "default"}>{status}</Tag>
+      ),
+    },
+    {
+      title: "Action",
+      dataIndex: "action",
+      render: (text) => (
+        <span className="text-blue-600 cursor-pointer hover:underline">
+          {text}
+        </span>
+      ),
+    },
+  ];
 
   return (
     <section>
@@ -136,97 +269,6 @@ function sortIcons({ sortOrder }) {
     </span>
   );
 }
-
-const columns = [
-  {
-    title: "Billing Time",
-    dataIndex: "time",
-    sorter: (a, b) => a.time.localeCompare(b.time),
-    sortIcon: sortIcons,
-    render: (_, row) => (
-      <div>
-        <div>{row.time}</div>
-        <div className="text-xs text-gray-500">{row.date}</div>
-      </div>
-    ),
-  },
-  {
-    title: "Plan Name / Duration",
-    dataIndex: "plan",
-    filters: [
-      { text: "Radiance", value: "Radiance" },
-      { text: "Bloom", value: "Bloom" },
-      { text: "Glow", value: "Glow" },
-      { text: "Spark", value: "Spark" },
-    ],
-    onFilter: (value, record) => record.plan.includes(value),
-    filterIcon: (filtered) => (
-      <ListFilter
-        size={20}
-        strokeWidth={1}
-        className={`text-gray-400 ${filtered ? "text-blue-500" : ""}`}
-      />
-    ),
-    render: (_, row) => (
-      <div>
-        <div className="font-semibold">{row.plan}</div>
-        <div className="text-xs text-gray-500">{row.duration}</div>
-      </div>
-    ),
-  },
-  {
-    title: "Payment Method",
-    dataIndex: "method",
-    render: (_, row) => (
-      <div className="flex items-center gap-1">
-        <span className="font-semibold">
-          {iconMap[row.method.toLowerCase()]}
-        </span>
-        <span className="text-sm">{row.maskedCard}</span>
-      </div>
-    ),
-  },
-  {
-    title: "Amount",
-    dataIndex: "amount",
-    sorter: (a, b) => {
-      const getNum = (val) => parseFloat(val.replace(/[^\d.]/g, "")) || 0;
-      return getNum(a.amount) - getNum(b.amount);
-    },
-    sortIcon: sortIcons,
-  },
-
-  {
-    title: "Plan Status",
-    dataIndex: "status",
-    filters: [
-      { text: "Active", value: "Active" },
-      { text: "Expired", value: "Expired" },
-      { text: "Cancelled", value: "Cancelled" },
-      { text: "Refunded", value: "Refunded" },
-    ],
-    onFilter: (value, record) => record.status === value,
-    filterIcon: (filtered) => (
-      <ListFilter
-        size={20}
-        strokeWidth={1}
-        className={`text-gray-400 ${filtered ? "text-blue-500" : ""}`}
-      />
-    ),
-    render: (status) => (
-      <Tag color={statusColors[status] || "default"}>{status}</Tag>
-    ),
-  },
-  {
-    title: "Action",
-    dataIndex: "action",
-    render: (text) => (
-      <span className="text-blue-600 cursor-pointer hover:underline">
-        {text}
-      </span>
-    ),
-  },
-];
 
 const statusColors = {
   Active: "green",

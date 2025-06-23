@@ -312,6 +312,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   display: flex !important;
   align-items: center !important;
 }
+.admin-cetegory .ant-select-selector{
+  background:transparent  !important;
+  border: 0 !important;
+}
 
 .custom-select .ant-select-selection-item {
   display: flex !important;
@@ -362,3 +366,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .vertical-stripes-bg {
   opacity: 0.7;
 }
+
+/* User management pagination css */
+.ant-pagination-item-active{
+  background-color: #262626 !important;
+  border-color: #262626 !important;
+}
+.ant-pagination-item-active a{
+  color: #fff !important;
+}
+
+

@@ -212,6 +212,7 @@ const TimePageTable = ({ setIsModalOpen, setOpen, setDeleteLocationModalOpen }) 
           pagination={false}
           scroll={{ x: 1200 }}
           className="custom-ant-table"
+          showSorterTooltip={false}
         />
       </div>
       <div className="flex justify-center md:justify-between items-center mt-4 ">

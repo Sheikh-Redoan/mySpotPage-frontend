@@ -167,6 +167,7 @@ const PendingBookings = () => {
         })}
         className="w-full"
         scroll={{ x: 'max-content' }}
+        showSorterTooltip={false}
       />
 
       {/* Pagination */}

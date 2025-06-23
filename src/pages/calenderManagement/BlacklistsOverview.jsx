@@ -91,6 +91,7 @@ const BlacklistsOverview = () => {
             ? "bg-highlight01"
             : ""
         }
+        showSorterTooltip={false}
       />
 
       {/* Pagination */}

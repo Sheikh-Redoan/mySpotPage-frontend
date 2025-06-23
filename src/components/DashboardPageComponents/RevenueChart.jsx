@@ -67,7 +67,10 @@ function RevenueChart() {
   const services = [
     { value: "Classic Ombre", label: "Classic Ombre" },
     { value: "Reverse Ombre", label: "Reverse Ombre" },
-    { value: "Smoothing Keratin Treatment", label: "Smoothing Keratin Treatment" },
+    {
+      value: "Smoothing Keratin Treatment",
+      label: "Smoothing Keratin Treatment",
+    },
     { value: "Balayage with Toner", label: "Balayage with Toner" },
     { value: "Balayage & Root Shadow", label: "Balayage & Root Shadow" },
     { value: "Full Highlights", label: "Full Highlights" },
@@ -145,14 +148,18 @@ function RevenueChart() {
     },
   ];
 
-
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
         <div
           className="flex items-center gap-2 text-sm"
-          style={{ backgroundColor: 'white', padding: 10, borderRadius: "10px", border: "1px solid #ccc" }}
-          >
+          style={{
+            backgroundColor: "white",
+            padding: 10,
+            borderRadius: "10px",
+            border: "1px solid #ccc",
+          }}
+        >
           <p>{label}</p>
           <p>-</p>
           <div className="flex items-center">
@@ -169,7 +176,7 @@ function RevenueChart() {
     const { x } = points[1]; // x position for line
 
     // Find max uv value in data
-    const maxUv = Math.max(...data.map(d => d.uv));
+    const maxUv = Math.max(...data.map((d) => d.uv));
 
     const uvValue = payload[0].payload.uv;
 
@@ -191,7 +198,6 @@ function RevenueChart() {
       />
     );
   };
-
 
   return (
     <div className="bg-white gap-4 divide-x divide-gray-200 rounded-2xl flex flex-col lg:flex-row w-full h-full inset-shadow-sm">
@@ -235,61 +241,61 @@ function RevenueChart() {
             </div>
           </div>
         </div>
-          <div className="w-full chart-1 overflow-x-auto">
-            <ResponsiveContainer width={2000} height={400}>
-              <AreaChart
-                data={data}
-                margin={{
-                  top: 10,
-                  right: 40,
-                  left: 0,
-                  bottom: 0,
-                }}>
-                <defs>
-                  <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#2D9C74" stopOpacity={1.2} />
-                    <stop offset="95%" stopColor="#9DCCBC" stopOpacity={0.2} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="0.3" vertical={false} />
-                <XAxis dataKey="name"
-                  interval={0}
-                  height={60}
-                  tickMargin={15}
-                  tick={{
-                    angle: 0,
-                    textAnchor: 'middle',
-                    fill: '#888888',
-                  }}
-                  tickLine={false}
-                  padding={{ left: 5 }}
-                  axisLine={true}
-                />
-                <YAxis ticks={[100, 200, 300, 400, 500, 600, 700, 800, 900]}
+        <div className="w-full chart-1 overflow-x-auto">
+          <ResponsiveContainer width={2000} height={400}>
+            <AreaChart
+              data={data}
+              margin={{
+                top: 10,
+                right: 40,
+                left: 0,
+                bottom: 0,
+              }}
+            >
+              <defs>
+                <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="5%" stopColor="#2D9C74" stopOpacity={1.2} />
+                  <stop offset="95%" stopColor="#9DCCBC" stopOpacity={0.2} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid strokeDasharray="0.3" vertical={false} />
+              <XAxis
+                dataKey="name"
+                interval={0}
+                height={60}
+                tickMargin={15}
+                tick={{
+                  angle: 0,
+                  textAnchor: "middle",
+                  fill: "#888888",
+                }}
+                tickLine={false}
+                padding={{ left: 5 }}
+                axisLine={true}
+              />
+              <YAxis
+                ticks={[100, 200, 300, 400, 500, 600, 700, 800, 900]}
                 domain={[100, 900]}
-                  axisLine={false}
-                  tickLine={false}
-                  tick={{ fill: '#b0b0b0' }}
-                />
-                <Tooltip
-                  content={<CustomTooltip />}
-                  cursor={<CustomCursor />}
-                />
-                <Area
-                  type="monotone"
-                  dataKey="uv"
-                  stroke="#1E7D5D"
-                  fill="url(#colorUv)"
-                  activeDot={{
-                    r: 6,
-                    stroke: "#1E7D5D",
-                    strokeWidth: 1,
-                    fill: "#1E7D5D",
-                  }}
-                />
-              </AreaChart>
-            </ResponsiveContainer>
-          </div>
+                axisLine={false}
+                tickLine={false}
+                tick={{ fill: "#b0b0b0" }}
+              />
+              <Tooltip content={<CustomTooltip />} cursor={<CustomCursor />} />
+              <Area
+                type="monotone"
+                dataKey="uv"
+                stroke="#1E7D5D"
+                fill="url(#colorUv)"
+                activeDot={{
+                  r: 6,
+                  stroke: "#1E7D5D",
+                  strokeWidth: 1,
+                  fill: "#1E7D5D",
+                }}
+              />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
       </div>
 
       <div className="w-full lg:w-3/12 md:pr-3 md:py-4 p-4 md:p-0">
@@ -305,26 +311,34 @@ function RevenueChart() {
             </div>
 
             <div className="pt-5 space-y-3 overflow-y-auto pr-2 chart-1 max-h-[420px] divide-y divide-gray-200 ">
-              {
-                topServices.map((topService, idx) => {
-                  return (
-                    <div className="flex items-center pb-2 justify-between">
-                      <div className="flex  gap-2 flex-1">
-                        <h4 className={` ${(topService.rank === (1)) && "bg-primary02 text-white"} ${(topService.rank === (2) || topService.rank === (3)) ? "bg-[#8ebdad] text-white" : "bg-[#f6f6f6]"} w-5 mt-1 text-sm text-description  flex justify-center items-center h-5 rounded-full`}>
-                          {topService.rank}
-                        </h4>
-                        <div>
-                          <h4>{topService.service}</h4>
-                          <h4 className="text-description text-sm">{topService.bookings} bookings</h4>
-                        </div>
-                      </div>
+              {topServices.map((topService, idx) => {
+                return (
+                  <div className="flex items-center pb-2 justify-between">
+                    <div className="flex  gap-2 flex-1">
+                      <h4
+                        className={` ${
+                          topService.rank === 1 && "bg-primary02 text-white"
+                        } ${
+                          topService.rank === 2 || topService.rank === 3
+                            ? "bg-[#8ebdad] text-white"
+                            : "bg-[#f6f6f6]"
+                        } w-5 mt-1 text-sm text-description  flex justify-center items-center h-5 rounded-full`}
+                      >
+                        {topService.rank}
+                      </h4>
                       <div>
-                        <h4 className="font-medium ">₪ {topService.revenue}</h4>
+                        <h4>{topService.service}</h4>
+                        <h4 className="text-description text-sm">
+                          {topService.bookings} bookings
+                        </h4>
                       </div>
                     </div>
-                  )
-                })
-              }
+                    <div>
+                      <h4 className="font-medium ">₪ {topService.revenue}</h4>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -334,4 +348,3 @@ function RevenueChart() {
 }
 
 export default RevenueChart;
-

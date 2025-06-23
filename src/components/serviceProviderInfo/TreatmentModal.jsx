@@ -10,7 +10,7 @@ const TreatmentModal = ({ open, onCancel, onContinue, services }) => {
 
   const selectedService = services[selectedServiceIndex];
 
-  const {lg} = useResponsive();
+  const { lg } = useResponsive();
 
   // Set default treatment for all services on modal open
   useEffect(() => {
@@ -75,68 +75,70 @@ const TreatmentModal = ({ open, onCancel, onContinue, services }) => {
         </div>
         <hr className=" text-border max-md:mb-1" />
 
-        <div className="md:grid grid-cols-6 font-golos p-3 md:p-4 ">
-          {/* Sidebar */}
-          <div className="flex flex-row md:flex-col max-md:gap-2 col-span-2 border-r border-border pr-4 overflow-x-auto md:overflow-x-visible whitespace-nowrap md:whitespace-normal">
-            {services.map((service, index) => (
-              <div
-                key={service.id}
-                className={`p-4 rounded-lg cursor-pointer mb-2 shrink-0 md:shrink  ${
-                  selectedServiceIndex === index
-                    ? "bg-highlight01"
-                    : "max-md:border max-md:border-gray-200"
-                }`}
-                onClick={() => setSelectedServiceIndex(index)}
-              >
+        <div className="overflow-y-auto max-h-[70vh]">
+          <div className="md:grid grid-cols-6 font-golos p-3 md:p-4 ">
+            {/* Sidebar */}
+            <div className="flex flex-row md:flex-col max-md:gap-2 col-span-2 border-r border-border pr-4 overflow-x-auto md:overflow-x-visible whitespace-nowrap md:whitespace-normal">
+              {services.map((service, index) => (
                 <div
-                  className={`font-semibold ${
+                  key={service.id}
+                  className={`p-4 rounded-lg cursor-pointer mb-2 shrink-0 md:shrink  ${
                     selectedServiceIndex === index
-                      ? "text-primary01"
-                      : "text-gray-800"
+                      ? "bg-highlight01"
+                      : "max-md:border max-md:border-gray-200"
                   }`}
+                  onClick={() => setSelectedServiceIndex(index)}
                 >
-                  <Translator text={service.title} />
-                </div>
-                <div className="text-sm text-description mt-1">
-                  <Translator text={getSelectedTreatment(service.id)?.name} />
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* Treatments */}
-          <div className="col-span-4 pl-0 md:pl-4 max-md:mt-3">
-            <Radio.Group
-              onChange={handleTreatmentChange}
-              value={getSelectedTreatment(selectedService?.id)?.name}
-              className="w-full border border-[#E7E7E7] rounded-xl p-4"
-            >
-              {selectedService?.treatments.map((treatment, index) => (
-                <div
-                  key={index}
-                  className="flex flex-col md:flex-row md:items-center md:justify-between px-3 max-md:py-3 mx-3 border-b border-dashed border-[#E7E7E7] last:border-0"
-                >
-                  <Radio value={treatment.name}>
-                    <Translator text={treatment.name} />
-                  </Radio>
-                  <div className="text-start md:w-[14%]">
-                    <div className="flex flex-row md:flex-col items-center md:items-start gap-2 md:gap-0 text-sm md:py-3 ml-6 md:ml-0">
-                      <p className="text-description">
-                        <Translator text={treatment.duration} />
-                      </p>
-                      <div>
-                        <span className="font-semibold text-lg text-primary01">
-                          &#8362;
-                        </span>
-                        <span className="text-primary01 font-semibold md:mt-2">
-                          <Translator text={treatment?.price} />
-                        </span>
-                      </div>
-                    </div>
+                  <div
+                    className={`font-semibold ${
+                      selectedServiceIndex === index
+                        ? "text-primary01"
+                        : "text-gray-800"
+                    }`}
+                  >
+                    <Translator text={service.title} />
+                  </div>
+                  <div className="text-sm text-description mt-1">
+                    <Translator text={getSelectedTreatment(service.id)?.name} />
                   </div>
                 </div>
               ))}
-            </Radio.Group>
+            </div>
+
+            {/* Treatments */}
+            <div className="col-span-4 pl-0 md:pl-4 max-md:mt-3">
+              <Radio.Group
+                onChange={handleTreatmentChange}
+                value={getSelectedTreatment(selectedService?.id)?.name}
+                className="w-full border border-[#E7E7E7] rounded-xl p-4"
+              >
+                {selectedService?.treatments.map((treatment, index) => (
+                  <div
+                    key={index}
+                    className="flex flex-col md:flex-row md:items-center md:justify-between px-3 max-md:py-3 mx-3 border-b border-dashed border-[#E7E7E7] last:border-0"
+                  >
+                    <Radio value={treatment.name}>
+                      <Translator text={treatment.name} />
+                    </Radio>
+                    <div className="text-start md:w-[14%]">
+                      <div className="flex flex-row md:flex-col items-center md:items-start gap-2 md:gap-0 text-sm md:py-3 ml-6 md:ml-0">
+                        <p className="text-description">
+                          <Translator text={treatment.duration} />
+                        </p>
+                        <div>
+                          <span className="font-semibold text-lg text-primary01">
+                            &#8362;
+                          </span>
+                          <span className="text-primary01 font-semibold md:mt-2">
+                            <Translator text={treatment?.price} />
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </Radio.Group>
+            </div>
           </div>
         </div>
 

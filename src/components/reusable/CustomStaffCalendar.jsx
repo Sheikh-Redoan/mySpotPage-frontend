@@ -10,9 +10,6 @@ import { staffData as allStaffData } from "../../lib/staffData";
 
 // Import view components
 import StaffCalendarWeekView from "../calendarManagement/StaffCalendarWeekView";
-// You'll create MonthView and DayView similarly, or keep them simple for now
-// import StaffCalendarMonthView from "./StaffCalendarMonthView";
-// import StaffCalendarDayView from "./StaffCalendarDayView";
 
 dayjs.extend(weekday);
 
@@ -359,7 +356,6 @@ export default function CustomStaffCalendar({
                     </Button>
                   </Dropdown>
                 )}
-
                 {showViewToggle && (
                   <div className="flex border border-gray-200 rounded-lg">
                     <button

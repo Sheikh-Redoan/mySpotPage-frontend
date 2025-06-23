@@ -103,7 +103,6 @@ const StaffCalendarWeekView = ({
                       0,
                       dailyAppointments.length - 3
                     );
-
                     return (
                       <div
                         key={`${staff.id}-${dateStr}`}

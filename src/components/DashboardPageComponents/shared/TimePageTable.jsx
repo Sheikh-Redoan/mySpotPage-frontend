@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Pagination, Select, Table } from "antd";
 import { imageProvider } from "../../../lib/imageProvider";
+import { ChevronUp } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 
 // Data
@@ -86,12 +88,37 @@ const TimePageTable = ({ setIsModalOpen, setOpen, setDeleteLocationModalOpen }) 
       }),
       width: 250,
       sorter: (a, b) => {
-        const toMinutes = (t) => {
-          const [h, m] = (t || "00:00").split(":").map(Number);
-          return h * 60 + m;
+        const parseStartDate = (dateStr) => {
+          const match = dateStr.match(/\d{2}\/\d{2}\/\d{2}/);
+          if (!match) return new Date(9999, 0, 1); // push "on Wednesday" etc. to bottom
+          const [day, month, year] = match[0].split('/');
+          return new Date(`20${year}`, month - 1, day);
         };
 
-        return toMinutes(a.time) - toMinutes(b.time);
+        const dateA = parseStartDate(a.date);
+        const dateB = parseStartDate(b.date);
+
+        return dateA - dateB;
+      },
+      sortIcon: ({ sortOrder }) => {
+        return (
+          <div className="flex flex-col">
+            <ChevronUp
+              size={16}
+              strokeWidth={1.5}
+              className={
+                sortOrder === "ascend" ? "!text-white" : "text-gray-400"
+              }
+            />
+            <ChevronDown
+              size={16}
+              strokeWidth={1.5}
+              className={
+                sortOrder === "descend" ? "!text-white" : "text-gray-400"
+              }
+            />
+          </div>
+        );
       },
       defaultSortOrder: "descend",
       render: (_, record, index) => {
@@ -154,11 +181,11 @@ const TimePageTable = ({ setIsModalOpen, setOpen, setDeleteLocationModalOpen }) 
             }}
             className="cursor-pointer"
           />
-          <img 
-          src={imageProvider.deleteIcon} 
-          alt="icon"
-          onClick={()=> setDeleteLocationModalOpen(true)}
-          className="cursor-pointer"
+          <img
+            src={imageProvider.deleteIcon}
+            alt="icon"
+            onClick={() => setDeleteLocationModalOpen(true)}
+            className="cursor-pointer"
           />
         </div>
       ),
@@ -185,6 +212,7 @@ const TimePageTable = ({ setIsModalOpen, setOpen, setDeleteLocationModalOpen }) 
           pagination={false}
           scroll={{ x: 1200 }}
           className="custom-ant-table"
+          showSorterTooltip={false}
         />
       </div>
       <div className="flex justify-center md:justify-between items-center mt-4 ">
@@ -216,7 +244,7 @@ const TimePageTable = ({ setIsModalOpen, setOpen, setDeleteLocationModalOpen }) 
         />
       </div>
 
-      
+      <style>{`.ant-table-column-title{flex:none !important} .ant-table-filter-column{justify-content:flex-start !important;}`}</style>
     </>
   );
 };

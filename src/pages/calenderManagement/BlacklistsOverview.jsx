@@ -91,6 +91,7 @@ const BlacklistsOverview = () => {
             ? "bg-highlight01"
             : ""
         }
+        showSorterTooltip={false}
       />
 
       {/* Pagination */}
@@ -123,6 +124,7 @@ const BlacklistsOverview = () => {
           hideOnSinglePage={false}
         />
       </div>
+      <style>{`.ant-table-column-title{flex:none !important} .ant-table-filter-column{justify-content:flex-start !important;}`}</style>
     </div>
   );
 };

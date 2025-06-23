@@ -44,8 +44,6 @@ import ProfileSecurity from "../pages/admin/ProfileSecurity";
 import UserManagement from "../pages/admin/UserManagement";
 import ConfirmBooking from "../pages/client/ConfirmBooking";
 import ConfirmPage from "../pages/client/ConfirmPage";
-import ConfirmPending from "../pages/client/ConfirmPending";
-import ConfirmStaff from "../pages/client/ConfirmStaff";
 import EnterAddress from "../pages/client/EnterAddress";
 import SelectStaff from "../pages/client/SelectStaff";
 import OurWorkDetails from "../pages/client/ServiceProviderInfo/OurWorkDetails";
@@ -150,14 +148,6 @@ export const routes = createBrowserRouter([
           {
             path: "confirm",
             element: <ConfirmPage />,
-          },
-          {
-            path: "confirm-staff",
-            element: <ConfirmStaff />,
-          },
-          {
-            path: "confirmation-pending",
-            element: <ConfirmPending />,
           },
           {
             path: "confirmation",

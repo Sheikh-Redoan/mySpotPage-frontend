@@ -86,7 +86,7 @@ export default function Calender({
       />
       <div
         className={cn(
-          "lg:rounded-xl overflow-hidden border-gray-200 border-collapse w-full",
+          "rounded-xl overflow-hidden border-gray-200 border-collapse w-full",
           {
             "border-r": view === "day",
             "border border-t-0 border-l-0 border-b-0": view === "week",
@@ -112,6 +112,7 @@ export default function Calender({
             events={events}
             weekView
             selectTimeFromProvider={selectTimeFromProvider}
+            solo={solo}
           />
         )}
 

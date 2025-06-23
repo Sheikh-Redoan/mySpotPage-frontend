@@ -216,7 +216,7 @@ export const MOCK_EVENTS = [
 
 export const specialDatesData = [
   {
-    date: "2025-06-01",
+    date: "2025-06-25",
     isBusy: true,
     timeSlots: [
       { time: "09:00", isBusy: true },
@@ -227,7 +227,7 @@ export const specialDatesData = [
     ],
   },
   {
-    date: "2025-06-02",
+    date: "2025-06-26",
     isBusy: true,
     timeSlots: [
       { time: "09:00", isBusy: true },
@@ -237,7 +237,7 @@ export const specialDatesData = [
     ],
   },
   {
-    date: "2025-06-06",
+    date: "2025-06-24",
     sale: "🔥 25% OFF",
     timeSlots: [
       { time: "09:00", isBusy: false, sale: "🔥 25% OFF" },
@@ -247,7 +247,7 @@ export const specialDatesData = [
     ],
   },
   {
-    date: "2025-06-08",
+    date: "2025-07-01",
     isBusy: true,
     timeSlots: [
       { time: "09:00", isBusy: true },
@@ -257,7 +257,7 @@ export const specialDatesData = [
     ],
   },
   {
-    date: "2025-06-11",
+    date: "2025-07-02",
     isBusy: true,
     timeSlots: [
       { time: "09:00", isBusy: true },
@@ -267,7 +267,7 @@ export const specialDatesData = [
     ],
   },
   {
-    date: "2025-06-14",
+    date: "2025-07-03",
 
     timeSlots: [
       { time: "09:00", isBusy: false, sale: "🔥 25% OFF" },
@@ -277,21 +277,20 @@ export const specialDatesData = [
     ],
   },
   {
-    date: "2025-06-15",
-
-    isBusy: true,
+    date: "2025-07-04",
+    isBusy: false,
     timeSlots: [
-      { time: "09:00", isBusy: true, sale: "🔥 10% OFF" },
+      { time: "09:00", isBusy: false, sale: "🔥 10% OFF" },
       { time: "10:00", isBusy: false, sale: "🔥 10% OFF" },
       { time: "14:00", isBusy: true },
       { time: "15:00", isBusy: true },
     ],
   },
   {
-    date: "2025-06-16",
-    isBusy: true,
+    date: "2025-07-05",
+    isBusy: false,
     timeSlots: [
-      { time: "09:00", isBusy: true },
+      { time: "09:00", isBusy: false },
       { time: "10:00", isBusy: true },
       { time: "14:00", isBusy: true },
       { time: "15:00", isBusy: true },
@@ -308,7 +307,7 @@ export const specialDatesData = [
     ],
   },
   {
-    date: "2025-06-22",
+    date: "2025-06-28",
     isBusy: true,
     timeSlots: [
       { time: "09:00", isBusy: true },
@@ -318,7 +317,7 @@ export const specialDatesData = [
     ],
   },
   {
-    date: "2025-06-23",
+    date: "2025-06-27",
     isBusy: true,
     timeSlots: [
       { time: "09:00", isBusy: true },

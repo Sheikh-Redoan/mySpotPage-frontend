@@ -166,7 +166,8 @@ const PendingBookings = () => {
           className: "cursor-pointer hover:bg-gray-50",
         })}
         className="w-full"
-        scroll={{ x: 1220 }}
+        scroll={{ x: 'max-content' }}
+        showSorterTooltip={false}
       />
 
       {/* Pagination */}
@@ -198,6 +199,7 @@ const PendingBookings = () => {
           hideOnSinglePage={false}
         />
       </div>
+      <style>{`.ant-table-column-title{flex:none !important} .ant-table-filter-column{justify-content:flex-start !important;}`}</style>
     </div>
   );
 };

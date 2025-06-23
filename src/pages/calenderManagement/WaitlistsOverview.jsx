@@ -131,7 +131,8 @@ const WaitlistsOverview = () => {
             : ""
         }
         className="w-full"
-        scroll={{ x: 1120 }}
+        scroll={{ x: 'max-content' }}
+        showSorterTooltip={false}
       />
 
       {/* Pagination */}
@@ -164,6 +165,7 @@ const WaitlistsOverview = () => {
           hideOnSinglePage={false}
         />
       </div>
+      <style>{`.ant-table-column-title{flex:none !important} .ant-table-filter-column{justify-content:flex-start !important;}`}</style>
     </div>
   );
 };

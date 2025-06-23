@@ -79,7 +79,7 @@ const AddStaffFormContent = ({ form, onFinish, onClose, allStaffData }) => {
           <Form.Item
             label={<FormLabel label="Job title" required />}
             name="jobTitle"
-            rules={[{ required: true, message: "Job title is required." }]}
+            rules={[{ required: true, message: "Job title is required."}]}
           >
             <Input placeholder="Title" className="custom-input" />
           </Form.Item>
@@ -89,7 +89,7 @@ const AddStaffFormContent = ({ form, onFinish, onClose, allStaffData }) => {
       {/* Footer with Action Buttons */}
       <div className="flex-shrink-0 px-6 py-4 border-t border-gray-200 flex justify-end items-center gap-3">
         <Button onClick={onClose} className="btn-secondary">Cancel</Button>
-        <Button type="primary" htmlType="submit" className="btn-primary">Send SMS</Button>
+        <Button type="primary" htmlType="submit" className="btn-primary !bg-black">Send SMS</Button>
       </div>
     </Form>
   );

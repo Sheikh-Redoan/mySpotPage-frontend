@@ -2,6 +2,8 @@ import { Tooltip, Input, Checkbox } from "antd";
 import { MdCheckCircleOutline } from "react-icons/md";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { FilterFilled, SearchOutlined } from "../../../assets/icons/icons";
+import { ChevronUp } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 export const getPendingBookingsColumnsByClient = (
   handleApproveBooking,
@@ -20,9 +22,36 @@ export const getPendingBookingsColumnsByClient = (
       dataIndex: "scheduledTime",
       key: "scheduledTime",
       sorter: (a, b) => {
-        const dateA = new Date(`${a.scheduledDate} ${a.scheduledTime}`);
-        const dateB = new Date(`${b.scheduledDate} ${b.scheduledTime}`);
+        const parseDateTime = (dateStr, timeStr) => {
+          const [day, month, year] = dateStr.split('/');
+          const [hours, minutes] = timeStr.split(':');
+          return new Date(year, month - 1, day, hours, minutes);
+        };
+
+        const dateA = parseDateTime(a.scheduledDate, a.scheduledTime);
+        const dateB = parseDateTime(b.scheduledDate, b.scheduledTime);
+
         return dateA - dateB;
+      },
+      sortIcon: ({ sortOrder }) => {
+        return (
+          <div className="flex flex-col">
+            <ChevronUp
+              size={16}
+              strokeWidth={1.5}
+              className={
+                sortOrder === "ascend" ? "!text-white" : "text-gray-400"
+              }
+            />
+            <ChevronDown
+              size={16}
+              strokeWidth={1.5}
+              className={
+                sortOrder === "descend" ? "!text-white" : "text-gray-400"
+              }
+            />
+          </div>
+        );
       },
       render: (text, record) => (
         <div className="flex flex-col">
@@ -122,6 +151,26 @@ export const getPendingBookingsColumnsByClient = (
       dataIndex: "staffName",
       key: "staffName",
       sorter: (a, b) => a.staffName.localeCompare(b.staffName),
+      sortIcon: ({ sortOrder }) => {
+        return (
+          <div className="flex flex-col">
+            <ChevronUp
+              size={16}
+              strokeWidth={1.5}
+              className={
+                sortOrder === "ascend" ? "!text-white" : "text-gray-400"
+              }
+            />
+            <ChevronDown
+              size={16}
+              strokeWidth={1.5}
+              className={
+                sortOrder === "descend" ? "!text-white" : "text-gray-400"
+              }
+            />
+          </div>
+        );
+      },
       render: (text) => <span className="text-[#262626] text-sm">{text}</span>,
     },
     {
@@ -137,6 +186,26 @@ export const getPendingBookingsColumnsByClient = (
         };
         return parseDuration(a.totalDuration) - parseDuration(b.totalDuration);
       },
+      sortIcon: ({ sortOrder }) => {
+        return (
+          <div className="flex flex-col">
+            <ChevronUp
+              size={16}
+              strokeWidth={1.5}
+              className={
+                sortOrder === "ascend" ? "!text-white" : "text-gray-400"
+              }
+            />
+            <ChevronDown
+              size={16}
+              strokeWidth={1.5}
+              className={
+                sortOrder === "descend" ? "!text-white" : "text-gray-400"
+              }
+            />
+          </div>
+        );
+      },
       render: (text) => <span className="text-[#262626] text-sm">{text}</span>,
     },
     {
@@ -144,6 +213,26 @@ export const getPendingBookingsColumnsByClient = (
       dataIndex: "totalPrice",
       key: "totalPrice",
       sorter: (a, b) => parseFloat(a.totalPrice) - parseFloat(b.totalPrice),
+      sortIcon: ({ sortOrder }) => {
+        return (
+          <div className="flex flex-col">
+            <ChevronUp
+              size={16}
+              strokeWidth={1.5}
+              className={
+                sortOrder === "ascend" ? "!text-white" : "text-gray-400"
+              }
+            />
+            <ChevronDown
+              size={16}
+              strokeWidth={1.5}
+              className={
+                sortOrder === "descend" ? "!text-white" : "text-gray-400"
+              }
+            />
+          </div>
+        );
+      },
       render: (text) => <span className="text-[#262626] text-sm">₪{text}</span>,
     },
     {
@@ -153,16 +242,16 @@ export const getPendingBookingsColumnsByClient = (
       render: (text) => (
         <div
           className={`rounded-full text-center px-2 py-1 ${text === "Pending"
-              ? "bg-[#FFF4EA] text-[#FC8B23]"
-              : text === "Confirmed"
-                ? "text-[#3E70DD] bg-[#E6F3FF]"
-                : text === "Completed"
-                  ? "bg-[#E3FAE6] text-[#21C66E]"
-                  : text === "Cancelled"
-                    ? "bg-[#FFEFEF] text-[#ED4245]"
-                    : text === "No Show"
-                      ? "bg-[#E7E7E7] text-[#82868E]"
-                      : ""
+            ? "bg-[#FFF4EA] text-[#FC8B23]"
+            : text === "Confirmed"
+              ? "text-[#3E70DD] bg-[#E6F3FF]"
+              : text === "Completed"
+                ? "bg-[#E3FAE6] text-[#21C66E]"
+                : text === "Cancelled"
+                  ? "bg-[#FFEFEF] text-[#ED4245]"
+                  : text === "No Show"
+                    ? "bg-[#E7E7E7] text-[#82868E]"
+                    : ""
             }`}
         >
           <span className="text-xs">{text}</span>

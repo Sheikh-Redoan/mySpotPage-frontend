@@ -8,8 +8,8 @@ import OurWork from "../../../components/serviceProviderInfo/OurWork";
 import ServicesList from "../../../components/serviceProviderInfo/ServicesList";
 import TestimonialsSection from "../../../components/serviceProviderInfo/TestimonialsSection";
 import TreatmentModal from "../../../components/serviceProviderInfo/TreatmentModal";
+import Translator from "../../../components/shared/Translator";
 import { selectUser } from "../../../redux/features/userSlice";
-import { use } from "react";
 
 const businessData = {
   studioName: "TCL Beauty Studio 01",
@@ -61,25 +61,26 @@ const ServiceProviderInfo = () => {
         <div className="flex-1">
           <ServicesList selected={selected} setSelected={setSelected} />
           <div className="my-12 font-golos ">
-            <h2 className="text-2xl font-semibold mb-4">About Us</h2>
+            <h2 className="text-2xl font-semibold mb-4">
+              <Translator text={"About Us"} />
+            </h2>
             <p className="text-description text-sm md:text-base">
-              At TCL Beauty Studio 01, we’re passionate about delivering
-              exceptional hair services with a personalized touch. Founded in
-              2020, our mission is to help every client feel confident and
-              beautiful through expert styling and innovative techniques. What
-              sets us apart? Our commitment to high-quality products, skilled
-              professionals, and a welcoming atmosphere. Whether you visit our
-              salon or book a home service, we ensure a top-tier experience
-              tailored just for you.
+              <Translator
+                text={
+                  "At TCL Beauty Studio 01, we’re passionate about delivering exceptional hair services with a personalized touch. Founded in 2020, our mission is to help every client feel confident andbeautiful through expert styling and innovative techniques. What sets us apart? Our commitment to high-quality products, skilled professionals, and a welcoming atmosphere. Whether you visit our salon or book a home service, we ensure a top-tier experience tailored just for you."
+                }
+              />
             </p>
           </div>
           <div className="w-full ">
             <div className="flex justify-between items-center font-golos mb-4">
-              <h2 className="text-2xl font-semibold mb-4">Our Work</h2>
+              <h2 className="text-2xl font-semibold mb-4">
+                <Translator text={"Our Work"} />
+              </h2>
               <Link
                 to="/our-work"
                 className="text-base font-semibold rounded text-white bg-primary01 px-4 py-2">
-                View All
+                <Translator text={"View All"} />
               </Link>
             </div>
             <OurWork />
@@ -109,16 +110,16 @@ const ServiceProviderInfo = () => {
             ? `${selected.length} service selected`
             : "0 service selected"}
         </div>
-          <button
-            className={`bg-gray-900 text-white py-2 px-8 rounded-lg transition ${
-              selected.length === 0
-                ? "opacity-50 cursor-not-allowed"
-                : "hover:bg-gray-800"
-            }`}
-            disabled={selected.length === 0}
-            onClick={handleBookNow}>
-            Book now
-          </button>
+        <button
+          className={`bg-gray-900 text-white py-2 px-8 rounded-lg transition ${
+            selected.length === 0
+              ? "opacity-50 cursor-not-allowed"
+              : "hover:bg-gray-800"
+          }`}
+          disabled={selected.length === 0}
+          onClick={handleBookNow}>
+          <Translator text={"Book now"} />
+        </button>
       </div>
 
       {/* modal for booking confirmation */}

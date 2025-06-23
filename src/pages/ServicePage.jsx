@@ -23,9 +23,6 @@ function ServicePage() {
   const { xs, sm, md, lg } = useResponsive();
   const [open, setOpen] = useState(false);
 
-  // console.log( "label---->",beforeAfter)
-  // console.log( "value---->",selectedOption)
-
   const handleSearch = (value) => {
     console.log(value);
   };

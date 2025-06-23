@@ -19,11 +19,12 @@ const businessStaticData = {
   rating: 4.8,
   reviewCount: "12.5K reviews",
   address: "15 Rothschild Boulevard, Tel Aviv-Yafo, Israel",
-  subtotal: 20.0,
+  subtotal: 0.00,
+  vat: 0.00,
   vatIncluded: true,
-  discountPercentage: 10.0,
-  discountAmount: 60.0,
-  total: 90.0,
+  discountPercent: 20.00,
+  discountAmount: 0.00,
+  total: 0.00,
   paymentInstruction: "You will pay at the appointment location",
 };
 
@@ -75,7 +76,7 @@ const ClientInfoFormPage = () => {
             className={cn(
               "p-5 rounded-xl bg-[#FFFFFF] shadow space-y-3 flex-1 w-full md:w-auto max-md:mb-56",
               {
-                "max-md:mb-80": showDetails,
+                "max-md:mb-94": showDetails,
               }
             )}
           >
@@ -136,7 +137,7 @@ const ClientInfoFormPage = () => {
                           message: "Please input the phone number!",
                         },
                         {
-                          pattern: /^[0-9]{10,15}$/,
+                          // pattern: /^[0-9]{10,15}$/,
                           message: "Please enter a valid phone number!",
                         },
                       ]}

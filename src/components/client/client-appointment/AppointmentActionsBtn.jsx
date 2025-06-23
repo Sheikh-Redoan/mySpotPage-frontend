@@ -2,9 +2,11 @@ import { Button } from "antd";
 import { useState } from "react";
 import { Link } from "react-router";
 import WaitingListModal from "./WaitingListModal";
+import useResponsive from "../../../hooks/useResponsive";
 
 const AppointmentActionsBtn = ({ to = "/service-provider-info/confirm" }) => {
   const [isWaitlistModalOpen, setIsWaitlistModalOpen] = useState(false);
+  const {lg} = useResponsive();
 
   const handleOpenWaitlistModal = () => {
     setIsWaitlistModalOpen(true);
@@ -26,7 +28,11 @@ const AppointmentActionsBtn = ({ to = "/service-provider-info/confirm" }) => {
           </button>
         </p>
         <Link to={to} className="max-md:hidden">
-          <Button type="default" className="!bg-black !text-white">
+          <Button 
+          type="default" 
+          className="!bg-black !text-white"
+          size={lg ? "large" : "middle"}
+          >
             Continue
           </Button>
         </Link>

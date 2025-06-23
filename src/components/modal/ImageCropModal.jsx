@@ -54,7 +54,7 @@ const ImageCropModal = ({
 
         {/* Avatar Editor */}
         <div
-          className="flex justify-center items-center py-2"
+          className="flex justify-center items-center py-2 max-w-[700px]:overflow-x-hidden max-w-[700px]:overflow-y-auto"
           onWheel={handleWheel}
         >
           <AvatarEditor

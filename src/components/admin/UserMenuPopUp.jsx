@@ -1,11 +1,10 @@
 import { CircleUserRound } from "lucide-react";
-import { Suspense } from "react";
 import { FiLogOut } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router";
 import { imageProvider } from "../../lib/imageProvider";
 import { clearUser } from "../../redux/features/userSlice";
-import Translate from "../shared/Translate";
+import Translator from "../shared/Translator";
 
 const UserMenuPopUp = ({ handlePopup }) => {
   const dispatch = useDispatch();
@@ -17,9 +16,7 @@ const UserMenuPopUp = ({ handlePopup }) => {
         <Link to="/my-profile/basic-information">
           <li className="flex items-center gap-2 text-gray-700 cursor-pointer">
             <CircleUserRound size={20} strokeWidth={1.75} />
-            <Suspense fallback={<div>Loading...</div>}>
-              <Translate className="text-sm">My Profile</Translate>
-            </Suspense>
+            <Translator text={"My Profile"} />
           </li>
         </Link>
         <li className="flex items-center gap-2 text-gray-700 cursor-pointer">
@@ -28,17 +25,14 @@ const UserMenuPopUp = ({ handlePopup }) => {
             alt="English"
             className="size-6 rounded-full"
           />
-          <Suspense fallback={<div>Loading...</div>}>
-            <Translate text={"English"} />
-          </Suspense>
+
+          <Translator text={"English"} />
         </li>
         <li
           className="flex items-center gap-2 text-red-500 cursor-pointer"
           onClick={() => dispatch(clearUser())}>
           <FiLogOut className="text-lg" />
-          <Suspense fallback={<div>Loading...</div>}>
-            <Translate className="text-sm">Logout</Translate>
-          </Suspense>
+          <Translator text={"Logout"} />
         </li>
       </ul>
     </div>

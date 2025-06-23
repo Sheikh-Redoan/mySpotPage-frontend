@@ -11,7 +11,6 @@
   --color-testimonial-avatar: #3f8bac;
   --color-black-button: #242528;
 
-
   /* Extended color palette */
   --color-violet-50: #f5f3ff;
   --color-violet-500: #8b5cf6;
@@ -166,9 +165,6 @@
   padding: 3px 10px;
 }
 
-
-
-
 /* Ensure calendars are full-width on mobile */
 @media (max-width: 767px) {
   /* Target the RangePicker dropdown */
@@ -316,6 +312,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   display: flex !important;
   align-items: center !important;
 }
+.admin-cetegory .ant-select-selector{
+  background:transparent  !important;
+  border: 0 !important;
+}
 
 .custom-select .ant-select-selection-item {
   display: flex !important;
@@ -366,3 +366,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .vertical-stripes-bg {
   opacity: 0.7;
 }
+
+/* User management pagination css */
+.ant-pagination-item-active{
+  background-color: #262626 !important;
+  border-color: #262626 !important;
+}
+.ant-pagination-item-active a{
+  color: #fff !important;
+}
+
+

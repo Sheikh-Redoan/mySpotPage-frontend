@@ -137,6 +137,7 @@ const ConfirmedBookingByClient = () => {
           onClick: () => navigate(`/dashboard/calendar/bookings-details/${record.id}`),
           className: "cursor-pointer hover:bg-gray-50",
         })}
+        scroll={{ x: 'max-content' }}
       />
 
       {/* Pagination */}

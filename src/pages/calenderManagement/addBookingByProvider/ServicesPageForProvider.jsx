@@ -15,38 +15,13 @@ const businessStaticData = {
   rating: 4.8,
   reviewCount: "12.5K reviews",
   address: "15 Rothschild Boulevard, Tel Aviv-Yafo, Israel",
-  subtotal: 20.0,
+  subtotal: 0.00,
   vatIncluded: true,
-  discountPercentage: 10.0,
-  discountAmount: 60.0,
-  total: 90.0,
+  discountPercent: 20,
+  discountAmount: 0.00,
+  total: 0.00,
+  vat: 0.00,
   paymentInstruction: "You will pay at the appointment location",
-  services: [
-      {
-        id: 1,
-        image: confirm_product,
-        name: "Classic Ombre",
-        options: "Smooth / Scalp treatment",
-        duration: "2h45m",
-        price: "₪70.00",
-      },
-      {
-        id: 2,
-        image: confirm_product,
-        name: "Reverse Ombre",
-        options: "Shadow Root",
-        duration: "3h30m",
-        price: "₪100.00",
-      },
-      {
-        id: 3,
-        image: confirm_product,
-        name: "Balayage with Toner",
-        options: "30m",
-        duration: "30m",
-        price: "₪100.00",
-      },
-    ],
 };
 
 const ServicesPageForProvider = () => {
@@ -91,7 +66,7 @@ const ServicesPageForProvider = () => {
             className={cn(
               "max-md:mb-54 p-5 rounded-xl bg-[#FFFFFF] shadow-md space-y-3 flex-1 w-full md:w-auto",
               {
-                "max-md:mb-76": showDetails,
+                "max-md:mb-94": showDetails,
               }
             )}
           >
@@ -107,6 +82,7 @@ const ServicesPageForProvider = () => {
               data={businessStaticData}
               handleBookNow={handleBookNow}
               selected={selected}
+              disabled={selected.length === 0}
             />
           </div>
         </div>
@@ -118,6 +94,7 @@ const ServicesPageForProvider = () => {
         handleBookNow={handleBookNow}
         showDetails={showDetails}
         setShowDetails={setShowDetails}
+        disabled={selected.length === 0}
       />
 
       {/* Modal After Select Services */}

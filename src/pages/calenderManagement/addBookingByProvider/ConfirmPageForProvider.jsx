@@ -1,11 +1,11 @@
 import { PiStorefrontLight } from "react-icons/pi";
 import Breadcrumb from "../../../components/client/Breadcrumb";
-import ConfirmDetails from "../../../components/client/ConfirmDetails";
 import { getBreadcrumbs } from "../../../lib/staticData";
-import confirm_product from "/src/assets/images/confirm.jpg";
 import BookingCheckoutCard from "../../../components/addBookingByProvider/BookingCheckoutCard";
 import { useNavigate } from "react-router";
 import CheckoutCardForMobile from "../../../components/addBookingByProvider/CheckoutCardForMobile";
+import { useSelector } from "react-redux";
+import confirm_product from "/src/assets/images/confirm.jpg";
 
 const businessStaticData = {
   studioName: "TCL Beauty Studio 01",
@@ -13,12 +13,14 @@ const businessStaticData = {
   rating: 4.8,
   reviewCount: "12.5K reviews",
   address: "15 Rothschild Boulevard, Tel Aviv-Yafo, Israel",
-  subtotal: 20.0,
+  subtotal: 80.0,
+  vat: 10.0,
   vatIncluded: true,
-  discountPercentage: 10.0,
+  discountPercent: 10.0,
   discountAmount: 60.0,
-  total: 90.0,
   paymentInstruction: "You will pay at the appointment location",
+  selectedTime: "06 Jan 2025, 11:00",
+  note: "Hair is thick and slightly wavy, prefers a shoulder-length layered cut with light texture.",
   services: [
     {
       id: 1,
@@ -49,6 +51,7 @@ const businessStaticData = {
 
 const ConfirmPageForProvider = () => {
   const navigate = useNavigate();
+  const selectedStaff = useSelector(({ selectedStaff }) => selectedStaff);
 
   const handleBookNow = () => {
     navigate("/dashboard/add-booking-by-provider/confirmation");
@@ -109,6 +112,7 @@ const ConfirmPageForProvider = () => {
             <BookingCheckoutCard
               data={businessStaticData}
               handleBookNow={handleBookNow}
+              selectedStaff={selectedStaff}
             />
           </div>
         </div>
@@ -119,6 +123,7 @@ const ConfirmPageForProvider = () => {
         data={businessStaticData}
         handleBookNow={handleBookNow}
         isDrawer={true}
+        selectedStaff={selectedStaff}
       />
     </section>
   );

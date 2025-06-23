@@ -18,11 +18,11 @@ export default function UserManagement() {
         <div className="relative w-[300px]">
           <Search name="search" placeholder="Search by name, or phone number" />
         </div>
-        <div className="w-[200px]">
+        <div className="w-[200px] admin-cetegory border border-gray-100 bg-white rounded-xl flex justify-center items-center">
           <Filter
             name="city"
             data={categories}
-            defaultValue="All cities"
+            defaultValue="All categories"
             search={true}
           />
         </div>
@@ -35,8 +35,9 @@ export default function UserManagement() {
             onOpenChange={handlePopup}
             arrow={false}
             content={<UserFilter closePopup={handlePopup} />}>
-            <button className="cursor-pointer">
+            <button className="cursor-pointer flex items-center gap-2 py-2 px-3 border border-gray-100 bg-white rounded-xl">
               <ListFilter size={20} className="text-gray-400" />
+              Filter
             </button>
           </Popover>
         </div>

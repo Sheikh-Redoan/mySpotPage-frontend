@@ -6,102 +6,105 @@ import { CiCalendar } from "react-icons/ci";
 import { FaChevronDown, FaChevronUp, FaRegUserCircle } from "react-icons/fa";
 import { TbArrowBadgeDown } from "react-icons/tb";
 import { cn } from "../../lib/utils";
+import useResponsive from "../../hooks/useResponsive";
+import { PiInfo } from "react-icons/pi";
 
-const BookingCheckoutCard = ({ 
-  data, 
-  selected, 
-  handleBookNow, 
-  fromDrawer=false 
+const BookingCheckoutCard = ({
+  data,
+  selected,
+  handleBookNow,
+  fromDrawer = false,
+  disabled = false,
+  selectedStaff = {},
+  fromCofirmation = false,
+  ...props
 }) => {
-  const [showAllServices, setShowAllServices] = useState(false);
+  console.log("services data", data?.services);
 
-  const subtotal = 0.0;
-  const subtotalAfterVat = subtotal + data?.vat;
-  const discountAmount = 0.0;
-  const total = subtotalAfterVat - discountAmount;
+  const [showAllServices, setShowAllServices] = useState(false);
+  const { lg } = useResponsive();
+
+  const subtotalAfterVat = data?.subtotal + data?.vat;
+  const total = subtotalAfterVat - data?.discountAmount;
 
   const displayedServices =
     data?.services && data?.services.length > 2 && !showAllServices
       ? data?.services.slice(0, 2)
       : data?.services;
 
-  const hasPricingInfo = subtotal || discountAmount || total;
+  const hasPricingInfo = data?.subtotal || data?.discountAmount || total;
 
   return (
     <div
       className={cn(
         "w-full max-w-sm p-4 rounded-xl shadow-sm space-y-3 bg-[#FFFFFF] mx-auto",
-        { "bg-none rounded-none shadow-none p-2": fromDrawer }
+        { "bg-none rounded-none shadow-none px-1 py-0 max-w-none": fromDrawer }
       )}
     >
-      <div className="space-y-2">
-        <h2 className="text-lg font-semibold mb-3 text-[#262626]">
-          {data.studioName}
-        </h2>
-        <div className="flex items-center gap-2 mb-3">
-          {/* Rating and Reviews */}
-          <div className="flex items-center text-sm text-yellow-500 font-medium gap-1">
-            <Star size={16} fill="currentColor" stroke="currentColor" />
-            <span className="text-black">{data?.rating}</span>
-            <span className="text-gray-500 hover:underline text-sm cursor-pointer">
-              ({data.reviewCount})
-            </span>
+      {!fromCofirmation && (
+        <div className="space-y-2">
+          <h2 className="text-lg font-semibold mb-3 text-[#262626]">
+            {data.studioName}
+          </h2>
+          <div className="flex items-center gap-2 mb-3">
+            {/* Rating and Reviews */}
+            <div className="flex items-center text-sm text-yellow-500 font-medium gap-1">
+              <Star size={16} fill="currentColor" stroke="currentColor" />
+              <span className="text-black">{data?.rating}</span>
+              <span className="text-gray-500 hover:underline text-sm cursor-pointer underline">
+                ({data.reviewCount})
+              </span>
+            </div>
+          </div>
+          {/* Address */}
+          <div className="flex items-center gap-2 text-sm text-[#262626]">
+            <MapPin size={16} />
+            <a
+              href={`https://maps.google.com/?q=$${data?.address}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:underline text-sm font-medium"
+            >
+              {data?.address}
+            </a>
           </div>
         </div>
-        {/* Address */}
-        <div className="flex items-center gap-2 text-sm text-[#262626]">
-          <MapPin size={16} />
-          <a
-            href={`https://maps.google.com/?q=$${data?.address}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:underline text-sm font-medium"
-          >
-            {data?.address}
-          </a>
-        </div>
-      </div>
+      )}
 
-      {/* Service Selection Status */}
-      <div className="text-sm font-normal text-[#888888]">
-        {selected && selected.length > 0
-          ? `${selected.length} service selected`
-          : "No service selected."}
-      </div>
+      {/* Service Selection Status, selected staff, selected time and note. Renders only if selected staff is provided */}
+      {selectedStaff?.name ? (
+        <>
+          <div className="flex items-center gap-2 text-sm text-[#262626] pt-2">
+            <FaRegUserCircle size={16} /> Staff -
+            <span>{selectedStaff?.name}</span>
+          </div>
 
-      {/* Staff and Appointment Details Section - Renders only if any staff/appointment/note prop is provided */}
-      {selected && selected.length > 0 && (
-        <div className="flex flex-col gap-2 w-full">
-          {data?.staffName && (
-            <div className="flex gap-2 items-start justify-start">
-              <FaRegUserCircle className="text-black text-[20px] flex-shrink-0" />
-              <p className="self-stretch text-neutral-800 text-sm font-normal leading-tight">
-                Staff - {data?.staffName}
-              </p>
+          {data?.selectedTime && (
+            <div className="flex items-center gap-2 text-sm text-[#262626]">
+              <CiCalendar size={16} />
+              <span>{data?.selectedTime}</span>
             </div>
           )}
-          {data?.appointmentDateTime && (
-            <div className="flex gap-2 items-start justify-start">
-              <CiCalendar className="text-black text-[20px] flex-shrink-0" />
-              <p className="self-stretch text-neutral-800 text-sm font-normal leading-tight">
-                {data?.appointmentDateTime}
-              </p>
+
+          {data?.note && (
+            <div className="bg-[#FAFAFA] p-3 rounded-lg text-sm text-[#242528]">
+              <span>
+                {" "}
+                <b>Note:</b> {data?.note}
+              </span>
             </div>
           )}
-          {data?.bookingNote && (
-            <div className="self-stretch p-3 bg-neutral-50 rounded-lg inline-flex justify-center items-center">
-              <div className="flex-1 justify-start">
-                <span className="text-neutral-800 text-sm font-semibold leading-tight">
-                  Note:{" "}
-                </span>
-                <span className="text-neutral-800 text-sm font-normal leading-tight">
-                  {data?.bookingNote}
-                </span>
-              </div>
-            </div>
-          )}
+        </>
+      ) : (
+        <div className="text-sm font-normal text-[#888888] pt-2">
+          {selected && selected.length > 0
+            ? `${selected.length} service selected`
+            : "No service selected."}
         </div>
       )}
+
+      {/* Dashed Line */}
+      <div className="border-b border-dashed border-gray-200" />
 
       {/* Services Section - Renders only if services array is provided and not empty */}
       {data?.services && data?.services.length > 0 && (
@@ -160,15 +163,15 @@ const BookingCheckoutCard = ({
           {data?.services.length > 2 && ( // Only show button if there are more than 2 services
             <button
               onClick={() => setShowAllServices(!showAllServices)}
-              className="text-sm font-normal font-['Golos_Text'] leading-tight text-description flex items-center justify-center gap-2 cursor-pointer w-full"
+              className="text-sm font-normal font-['Golos_Text'] leading-tight text-description flex items-center justify-start gap-2 cursor-pointer w-full"
             >
               {showAllServices ? (
                 <>
-                  Show less <FaChevronUp />
+                  Show less <FaChevronUp size={14} />
                 </>
               ) : (
                 <>
-                  Show more <FaChevronDown />
+                  Show more <FaChevronDown size={14} />
                 </>
               )}
             </button>
@@ -181,28 +184,60 @@ const BookingCheckoutCard = ({
         <div className="w-full border-t border-dashed border-gray-300"></div>
       )}
 
-      {/* Separator */}
-      <div className="border-t border-dashed border-gray-200"></div>
-
       {/* Pricing Details */}
       <div className="space-y-3 text-sm text-[#888888]">
-        <div className="flex justify-between items-center">
-          <span>Subtotal</span>
-          <span>₪ {subtotal.toFixed(2)}</span>
-        </div>
-        <div className="flex justify-between items-center">
-          <span className="flex gap-1 items-center">
-            VAT <Info size={16} />
-          </span>
-          <span>₪ {data?.vat?.toFixed(2) || 0}</span>
-        </div>
+        {/* Render Travel Fee or Subtotal */}
+        {data?.travelFee ? (
+          <>
+            <div className="flex justify-between items-center">
+              <span className="flex gap-1 items-center">Travel Fee</span>
+              <span>₪{data?.travelFee?.toFixed(2) || 0.0}</span>
+            </div>
+            <div className="border-t border-dashed border-gray-200"></div>
+          </>
+        ) : data?.vatText ? (
+          ""
+        ) : (
+          <>
+            <div className="flex justify-between items-center">
+              <span>Subtotal</span>
+              <span>₪{data?.subtotal.toFixed(2)}</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="flex gap-1 items-center">
+                VAT <Info size={16} />
+              </span>
+              <span>₪{data?.vat?.toFixed(2) || 0}</span>
+            </div>
 
-        <div className="border-t border-dashed border-gray-200"></div>
+            <div className="border-t border-dashed border-gray-200"></div>
+          </>
+        )}
 
-        <div className="flex justify-between items-center text-[#888888]">
-          <span>Subtotal (after VAT)</span>
-          <span>₪ {subtotalAfterVat.toFixed(2)}</span>
-        </div>
+        {/* Render Subtotal and vat text (if applicable) */}
+        {data?.vatText ? (
+          <div className="flex justify-between items-center text-[#888888]">
+            <p className="flex items-center">
+              Subtotal <PiInfo className="text-gray-500" />
+            </p>
+            <div className="space-y-1">
+              <p className="text-right text-black text-sm font-normal leading-tight">
+                {data?.subtotal.toFixed(2) || 0.0}
+              </p>
+              <p className="text-description text-xs font-normal  text-right leading-none">
+                ({data?.vatText})
+              </p>
+            </div>
+          </div>
+        ) : (
+          <div className="flex justify-between items-center text-[#888888]">
+            <p>Subtotal(after VAT)</p>
+            <div>
+              <span>₪{subtotalAfterVat.toFixed(2) || 0.0}</span>
+            </div>
+          </div>
+        )}
+
         <div className="flex justify-between items-center">
           <span>Discount</span>
           <div className="flex items-center gap-2">
@@ -212,33 +247,39 @@ const BookingCheckoutCard = ({
                 {data.discountPercent || 0}% OFF
               </span>
             </div>
-            <span className="text-red-500">-₪ {discountAmount.toFixed(2)}</span>
+            <span className="text-red-500">
+              -₪{data?.discountAmount.toFixed(2)}
+            </span>
           </div>
         </div>
         {/* Separator before Total */}
-        <div className="border-t border-dashed border-gray-200 pt-3"></div>
+        <div className="border-t border-gray-200 pt-3"></div>
+
         <div className="flex justify-between items-center text-sm font-semibold text-[#888888]">
           <span>Total</span>
           <span className="text-[#866BE7] text-[18px] text-semibold">
-            ₪ {total.toFixed(2)}
+            ₪{total.toFixed(2) || 0}
           </span>
         </div>
       </div>
 
-      {/* Continue Button */}
-      <Button
-        color="default"
-        variant="solid"
-        onClick={handleBookNow}
-        className="w-full"
-      >
-        Continue
-      </Button>
-
-      {/* Payment Note */}
-      <p className="text-xs font-normal text-center text-[#797979] mt-4">
-        You will pay at the appointment location
-      </p>
+      {!fromCofirmation && (
+        <>
+          <Button
+            color="default"
+            variant="solid"
+            onClick={handleBookNow}
+            className="w-full"
+            size={lg ? "large" : "middle"}
+            disabled={disabled}
+          >
+            Continue
+          </Button>
+          <p className="text-xs font-normal text-center text-[#797979]">
+            You will pay at the appointment location
+          </p>
+        </>
+      )}
     </div>
   );
 };

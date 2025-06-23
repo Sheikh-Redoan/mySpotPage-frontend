@@ -6,7 +6,7 @@ export default function RoleCard({ user }) {
   const { name, role, phone, joinedDate } = user;
   return (
     <Link
-      to={`/account-management/${user.name
+      to={`/admin/account-management/${user.name
         .split(" ")
         .join("-")
         .toLowerCase()}/basic-information`}>

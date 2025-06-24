@@ -225,7 +225,6 @@ const StaffManagement = () => {
         {activeTab === "Calendar View" ? (
           <div className="self-stretch flex-1 overflow-hidden w-full">
             <div className="flex items-center gap-4 mb-4">
-               <h2 className="text-lg font-semibold">All Staffs</h2>
                <button
                   onClick={() => setShowCalendarFilterModal(true)}
                   className="p-2 rounded-lg border border-gray-300 hover:bg-gray-100 transition-colors"
@@ -265,19 +264,7 @@ const StaffManagement = () => {
         )}
       </div>
 
-      {/* This renders the filter modal when its state is true */}
-      {showCalendarFilterModal && (
-        <div className="fixed inset-0 bg-[#00000081] flex justify-center items-center z-50">
-            <div className="w-full max-w-sm">
-                <FilterModal
-                  onClose={() => setShowCalendarFilterModal(false)}
-                  allStaffData={allStaffData}
-                  onApplyFilters={handleApplyFilters}
-                  currentFilters={filters}
-                />
-            </div>
-        </div>
-      )}
+      
 
       {showResolveBookingsModal && staffToInactivate && (
         <div className="fixed inset-0 bg-[#00000081] flex justify-center items-center z-40">

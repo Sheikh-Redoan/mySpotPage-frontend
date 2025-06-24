@@ -134,7 +134,7 @@ const StaffServicesPage = () => {
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row justify-end items-center gap-3 mt-8">
+            <div className="flex flex-row justify-end items-center gap-3 mt-8">
               <Button type="default" onClick={handlePrevious} className="btn-secondary w-full sm:w-auto">
                 Previous
               </Button>

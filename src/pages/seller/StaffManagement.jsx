@@ -9,8 +9,6 @@ import ConfirmInactivationModal from "../../components/seller/ConfirmInactivatio
 import StaffDetailModal from "../../components/seller/StaffDetailModal";
 import { staffData as initialStaffData } from "../../lib/staffData";
 import StaffManagementCalemdarView from "../../components/seller/StaffManagementCalemdarView";
-import FilterIcon from "../../components/seller/FilterIcon"; // Make sure this import is correct
-import FilterModal from "../../components/seller/FilterModal"; // Make sure this import is correct
 
 const StaffManagement = () => {
   const [activeTab, setActiveTab] = useState("Active Staff");
@@ -25,14 +23,13 @@ const StaffManagement = () => {
   });
   const [selectedStaff, setSelectedStaff] = useState(null);
 
-  const [showResolveBookingsModal, setShowResolveBookingsModal] = useState(false);
-  const [showConfirmInactivationModal, setShowConfirmInactivationModal] = useState(false);
+  const [showResolveBookingsModal, setShowResolveBookingsModal] =
+    useState(false);
+  const [showConfirmInactivationModal, setShowConfirmInactivationModal] =
+    useState(false);
   const [staffToInactivate, setStaffToInactivate] = useState(null);
   const [showStaffDetailModal, setShowStaffDetailModal] = useState(false);
-  // State to control the visibility of the filter modal in the calendar view
-  const [showCalendarFilterModal, setShowCalendarFilterModal] = useState(false); 
 
-  // Updated filtering logic to handle calendar view
   const applyFilters = useCallback(() => {
     let currentFilteredStaff = allStaffData;
 
@@ -62,7 +59,7 @@ const StaffManagement = () => {
         )
       );
     }
-    
+
     if (activeTab !== "Calendar View") {
       currentFilteredStaff = currentFilteredStaff.filter((staff) =>
         staff.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -77,19 +74,24 @@ const StaffManagement = () => {
       selectedStaff &&
       !currentFilteredStaff.some((staff) => staff.id === selectedStaff.id)
     ) {
-      setSelectedStaff(currentFilteredStaff.length > 0 ? currentFilteredStaff[0] : null);
+      setSelectedStaff(
+        currentFilteredStaff.length > 0 ? currentFilteredStaff[0] : null
+      );
     } else if (!selectedStaff && currentFilteredStaff.length > 0) {
       setSelectedStaff(currentFilteredStaff[0]);
     }
   }, [searchTerm, activeTab, allStaffData, filters, selectedStaff]);
-
 
   useEffect(() => {
     applyFilters();
   }, [applyFilters]);
 
   useEffect(() => {
-    if (filteredStaff.length > 0 && !selectedStaff && activeTab !== "Calendar View") {
+    if (
+      filteredStaff.length > 0 &&
+      !selectedStaff &&
+      activeTab !== "Calendar View"
+    ) {
       const ava = filteredStaff.find((staff) => staff.name === "Ava Thompson");
       if (ava) {
         setSelectedStaff(ava);
@@ -121,31 +123,33 @@ const StaffManagement = () => {
     setSelectedStaff(staff);
   }, []);
 
-  const handleToggleStatus = useCallback((staffId) => {
-    const staff = allStaffData.find((s) => s.id === staffId);
-    if (!staff) return;
+  const handleToggleStatus = useCallback(
+    (staffId) => {
+      const staff = allStaffData.find((s) => s.id === staffId);
+      if (!staff) return;
 
-    if (staff.status === "Offline") {
-      setAllStaffData((prevStaffData) =>
-        prevStaffData.map((s) =>
-          s.id === staffId ? { ...s, status: "Online" } : s
-        )
-      );
-      setSelectedStaff((prevSelected) =>
-        prevSelected && prevSelected.id === staffId
-          ? { ...prevSelected, status: "Online" }
-          : prevSelected
-      );
-    } else {
-      setStaffToInactivate(staff);
-      if (staff.hasUpcomingBookings) {
-        setShowResolveBookingsModal(true);
+      if (staff.status === "Offline") {
+        setAllStaffData((prevStaffData) =>
+          prevStaffData.map((s) =>
+            s.id === staffId ? { ...s, status: "Online" } : s
+          )
+        );
+        setSelectedStaff((prevSelected) =>
+          prevSelected && prevSelected.id === staffId
+            ? { ...prevSelected, status: "Online" }
+            : prevSelected
+        );
       } else {
-        setShowConfirmInactivationModal(true);
+        setStaffToInactivate(staff);
+        if (staff.hasUpcomingBookings) {
+          setShowResolveBookingsModal(true);
+        } else {
+          setShowConfirmInactivationModal(true);
+        }
       }
-    }
-  }, [allStaffData]);
-
+    },
+    [allStaffData]
+  );
 
   const confirmInactivation = useCallback(() => {
     if (staffToInactivate) {
@@ -165,37 +169,44 @@ const StaffManagement = () => {
   }, [staffToInactivate]);
 
   const handleReassignOrCancelClick = useCallback(() => {
-    console.log("Navigating to booking reassignment/cancellation for:", staffToInactivate.name);
+    console.log(
+      "Navigating to booking reassignment/cancellation for:",
+      staffToInactivate.name
+    );
     setShowResolveBookingsModal(false);
   }, [staffToInactivate]);
 
-  const handleRemoveStaff = useCallback((staffId) => {
-    if (window.confirm("Are you sure you want to remove this staff member?")) {
-      setAllStaffData((prevStaffData) =>
-        prevStaffData.filter((staff) => staff.id !== staffId)
-      );
-      setSelectedStaff((prevSelected) =>
-        prevSelected && prevSelected.id === staffId ? null : prevSelected
-      );
-      if (selectedStaff && selectedStaff.id === staffId) {
-        setShowStaffDetailModal(false);
+  const handleRemoveStaff = useCallback(
+    (staffId) => {
+      if (window.confirm("Are you sure you want to remove this staff member?")) {
+        setAllStaffData((prevStaffData) =>
+          prevStaffData.filter((staff) => staff.id !== staffId)
+        );
+        setSelectedStaff((prevSelected) =>
+          prevSelected && prevSelected.id === staffId ? null : prevSelected
+        );
+        if (selectedStaff && selectedStaff.id === staffId) {
+          setShowStaffDetailModal(false);
+        }
       }
-    }
-  }, [selectedStaff]);
+    },
+    [selectedStaff]
+  );
 
-  const handleEditStaff = useCallback((staffId) => {
-    const staffToEdit = allStaffData.find(s => s.id === staffId);
-    if (staffToEdit) {
-      setSelectedStaff(staffToEdit);
-      setShowStaffDetailModal(true);
-    }
-  }, [allStaffData]);
+  const handleEditStaff = useCallback(
+    (staffId) => {
+      const staffToEdit = allStaffData.find((s) => s.id === staffId);
+      if (staffToEdit) {
+        setSelectedStaff(staffToEdit);
+        setShowStaffDetailModal(true);
+      }
+    },
+    [allStaffData]
+  );
 
   const handleSaveStaffDetail = useCallback((updatedStaff) => {
     setAllStaffData((prevStaffData) =>
-      prevStaffData.map((s) =>
-        s.id === updatedStaff.id ? updatedStaff : s
-      )
+      prevStaffData.map((s) => (s.id === updatedStaff.id ? updatedStaff : s))
     );
     setSelectedStaff(updatedStaff);
     setShowStaffDetailModal(false);
@@ -221,20 +232,14 @@ const StaffManagement = () => {
             onAddStaff={handleAddStaff}
           />
         )}
-        {/* This block renders the calendar view and the filter button */}
         {activeTab === "Calendar View" ? (
           <div className="self-stretch flex-1 overflow-hidden w-full">
-            <div className="flex items-center gap-4 mb-4">
-               <button
-                  onClick={() => setShowCalendarFilterModal(true)}
-                  className="p-2 rounded-lg border border-gray-300 hover:bg-gray-100 transition-colors"
-                  aria-label="Filter staff"
-                >
-                  <FilterIcon />
-                </button>
-            </div>
-            {/* The filtered staff list is passed to the calendar component here */}
-            <StaffManagementCalemdarView staff={filteredStaff} />
+            <StaffManagementCalemdarView
+              staff={filteredStaff}
+              allStaffData={allStaffData}
+              onApplyFilters={handleApplyFilters}
+              currentFilters={filters}
+            />
           </div>
         ) : (
           <div className="self-stretch flex-1 flex justify-start items-start gap-8 ">
@@ -263,8 +268,6 @@ const StaffManagement = () => {
           </div>
         )}
       </div>
-
-      
 
       {showResolveBookingsModal && staffToInactivate && (
         <div className="fixed inset-0 bg-[#00000081] flex justify-center items-center z-40">

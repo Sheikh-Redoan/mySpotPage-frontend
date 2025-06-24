@@ -55,7 +55,7 @@ const FilterModal = ({
   };
 
   return (
-    <div className="w-full pb-3 bg-white rounded-xl flex flex-col justify-start items-start gap-3">
+    <div className="w-full pb-3 bg-white rounded-xl flex flex-col justify-start items-start gap-3 min-[700px]:max-w-[400px]">
       {/* Modal Header */}
       <div className="w-full px-4 py-3 border-b border-gray-100 flex justify-between items-center">
         <h2 className="flex-1 text-gray-950 text-lg font-semibold font-['Golos_Text'] leading-relaxed">

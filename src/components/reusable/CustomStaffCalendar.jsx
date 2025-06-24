@@ -158,14 +158,7 @@ export default function CustomStaffCalendar({
             </div>
 
             <div className="flex items-center gap-4">
-              {/* Main Filter Button */}
-              <button
-                onClick={() => setIsFilterVisible(true)}
-                className="flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-200 bg-white text-zinc-700 text-sm font-normal focus:!border-[#866BE7] focus:!shadow-none hover:!border-[#866BE7]"
-              >
-                <FilterIcon />
-                Filter
-              </button>
+              
 
               {/* Staff Dropdown Filter */}
               {showStaffFilter && (
@@ -180,6 +173,15 @@ export default function CustomStaffCalendar({
                 </Dropdown>
               )}
               {/* View Toggle Buttons Removed */}
+
+              {/* Main Filter Button */}
+              <button
+                onClick={() => setIsFilterVisible(true)}
+                className="flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-200 bg-white text-zinc-700 text-sm font-normal focus:!border-[#866BE7] focus:!shadow-none hover:!border-[#866BE7]"
+              >
+                <FilterIcon />
+                Filter
+              </button>
             </div>
           </div>
         )}

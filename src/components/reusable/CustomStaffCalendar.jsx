@@ -174,7 +174,7 @@ export default function CustomStaffCalendar({
                   trigger={["click"]}
                   placement="bottomRight"
                 >
-                  <Button className="flex items-center gap-2 !px-3 !py-5 !rounded-lg border border-gray-200 bg-white text-zinc-700 text-sm font-normal focus:!border-[#866BE7] focus:!shadow-none hover:!border-[#866BE7]">
+                  <Button className="flex items-center gap-2 !px-3 !py-5 !rounded-lg border border-gray-200 bg-white text-zinc-700 text-sm font-normal focus:!border-[#866BE7] focus:!shadow-none hover:!border-[#866BE7] !min-w-[200px] !justify-between">
                     All staffs <ChevronDown size={16} />
                   </Button>
                 </Dropdown>

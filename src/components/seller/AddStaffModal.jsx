@@ -36,7 +36,7 @@ const RoleSelectorInDrawer = ({ value = [], onChange }) => {
             <IoClose size={24} className="text-description" />
           </Button>
         }
-        height="50%"
+        height="40%"
         onClose={closeDrawer}
         open={isRoleDrawerVisible}
         className="rounded-t-xl"
@@ -55,13 +55,15 @@ const RoleSelectorInDrawer = ({ value = [], onChange }) => {
             ))}
           </div>
         </Checkbox.Group>
-        <Button
+        <div className="shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] mt-12 w-full max-[800]:fixed left-0 px-[20px]">
+          <Button
           type="primary"
           onClick={closeDrawer}
           className="btn-primary !bg-black w-full mt-6"
         >
           Confirm Selection
         </Button>
+        </div>
       </Drawer>
     </>
   );
@@ -127,7 +129,7 @@ const AddStaffFormContent = ({ form, onClose, allStaffData }) => {
         </div>
       </div>
 
-      <div className="flex-shrink-0 px-6 py-4 border-t border-gray-200 flex justify-end items-center gap-3 bg-white shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] fixed bottom-0 right-0 w-full">
+      <div className="flex-shrink-0 px-6 py-4 border-t border-gray-200 flex justify-end items-center gap-3 bg-white max-[768px]:shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] max-[768px]:fixed bottom-0 right-0 w-full">
         <Button onClick={onClose} className="btn-secondary">Cancel</Button>
         <Button type="primary" htmlType="submit" className="btn-primary !bg-black">Send SMS</Button>
       </div>

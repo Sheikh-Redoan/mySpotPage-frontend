@@ -6,6 +6,7 @@ import confirm_product from "../../assets/images/confirm.jpg";
 import { SplitIcon } from "lucide-react";
 import BookingCheckoutCard from "../../components/addBookingByProvider/BookingCheckoutCard";
 import { useSelector } from "react-redux";
+import ConfirmBookingIcon from "../../assets/icons/ConfirmBookingIcon.png"
 
 const businessStaticData = {
   studioName: "TCL Beauty Studio 01",
@@ -15,7 +16,7 @@ const businessStaticData = {
   address: "15 Rothschild Boulevard, Tel Aviv-Yafo, Israel",
   subtotal: 80.0,
   vat: 10.0,
-  vatIncluded: true,
+  vatText: "includes ₪49.50 VAT",
   discountPercent: 10.0,
   discountAmount: 60.0,
   paymentInstruction: "You will pay at the appointment location",
@@ -105,7 +106,7 @@ const ConfirmBooking = () => {
         {/* Thank You Message Section */}
         <div className="self-stretch flex flex-col justify-start items-center gap-4">
           <div className="w-12 h-12 relative flex z-[1] items-center justify-center rounded-full bg-green-500">
-            <FaCheckCircle className="text-white text-3xl" />
+            <img src={ConfirmBookingIcon} className="text-white text-3xl" />
           </div>
           <div className="self-stretch flex flex-col justify-start items-center gap-3">
             <h1 className="text-Boulder-950 text-3xl font-semibold   leading-10 text-center">

@@ -7,6 +7,7 @@ import { FaChevronDown, FaChevronUp, FaRegUserCircle } from "react-icons/fa";
 import { TbArrowBadgeDown } from "react-icons/tb";
 import { cn } from "../../lib/utils";
 import useResponsive from "../../hooks/useResponsive";
+import { PiInfo } from "react-icons/pi";
 
 const BookingCheckoutCard = ({
   data,
@@ -185,23 +186,58 @@ const BookingCheckoutCard = ({
 
       {/* Pricing Details */}
       <div className="space-y-3 text-sm text-[#888888]">
-        <div className="flex justify-between items-center">
-          <span>Subtotal</span>
-          <span>₪{data?.subtotal.toFixed(2)}</span>
-        </div>
-        <div className="flex justify-between items-center">
-          <span className="flex gap-1 items-center">
-            VAT <Info size={16} />
-          </span>
-          <span>₪{data?.vat?.toFixed(2) || 0}</span>
-        </div>
+        {/* Render Travel Fee or Subtotal */}
+        {data?.travelFee ? (
+          <>
+            <div className="flex justify-between items-center">
+              <span className="flex gap-1 items-center">Travel Fee</span>
+              <span>₪{data?.travelFee?.toFixed(2) || 0.0}</span>
+            </div>
+            <div className="border-t border-dashed border-gray-200"></div>
+          </>
+        ) : data?.vatText ? (
+          ""
+        ) : (
+          <>
+            <div className="flex justify-between items-center">
+              <span>Subtotal</span>
+              <span>₪{data?.subtotal.toFixed(2)}</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="flex gap-1 items-center">
+                VAT <Info size={16} />
+              </span>
+              <span>₪{data?.vat?.toFixed(2) || 0}</span>
+            </div>
 
-        <div className="border-t border-dashed border-gray-200"></div>
+            <div className="border-t border-dashed border-gray-200"></div>
+          </>
+        )}
 
-        <div className="flex justify-between items-center text-[#888888]">
-          <span>Subtotal (after VAT)</span>
-          <span>₪{subtotalAfterVat.toFixed(2) || 0}</span>
-        </div>
+        {/* Render Subtotal and vat text (if applicable) */}
+        {data?.vatText ? (
+          <div className="flex justify-between items-center text-[#888888]">
+            <p className="flex items-center">
+              Subtotal <PiInfo className="text-gray-500" />
+            </p>
+            <div className="space-y-1">
+              <p className="text-right text-black text-sm font-normal leading-tight">
+                {data?.subtotal.toFixed(2) || 0.0}
+              </p>
+              <p className="text-description text-xs font-normal  text-right leading-none">
+                ({data?.vatText})
+              </p>
+            </div>
+          </div>
+        ) : (
+          <div className="flex justify-between items-center text-[#888888]">
+            <p>Subtotal(after VAT)</p>
+            <div>
+              <span>₪{subtotalAfterVat.toFixed(2) || 0.0}</span>
+            </div>
+          </div>
+        )}
+
         <div className="flex justify-between items-center">
           <span>Discount</span>
           <div className="flex items-center gap-2">

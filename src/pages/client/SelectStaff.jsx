@@ -28,9 +28,9 @@ const businessStaticData = {
   address: "15 Rothschild Boulevard, Tel Aviv-Yafo, Israel",
   subtotal: 80.0,
   vat: 10.0,
-  vatIncluded: true,
   discountPercent: 10.0,
   discountAmount: 60.0,
+  vatText: "includes ₪49.50 VAT",
   paymentInstruction: "You will pay at the appointment location",
   services: [
     {

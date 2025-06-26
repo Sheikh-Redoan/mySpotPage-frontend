@@ -1,4 +1,6 @@
 import { Table } from "antd";
+import { ChevronDown } from "lucide-react";
+import { ChevronUp } from "lucide-react";
 import { Mastercard, Visa } from "react-payment-logos/dist/flat";
 
 const iconMap = {
@@ -102,6 +104,26 @@ const BillingHistoryTableByProvider = () => {
         };
         return toMinutes(a.time) - toMinutes(b.time);
       },
+      sortIcon: ({ sortOrder }) => {
+        return (
+          <div className="flex flex-col">
+            <ChevronUp
+              size={16}
+              strokeWidth={1.5}
+              className={
+                sortOrder === "ascend" ? "!text-white" : "text-gray-400"
+              }
+            />
+            <ChevronDown
+              size={16}
+              strokeWidth={1.5}
+              className={
+                sortOrder === "descend" ? "!text-white" : "text-gray-400"
+              }
+            />
+          </div>
+        );
+      },
       defaultSortOrder: "descend",
     },
     {
@@ -127,6 +149,26 @@ const BillingHistoryTableByProvider = () => {
       dataIndex: "amount",
       key: "amount",
       sorter: (a, b) => parseFloat(a.amount) - parseFloat(b.amount),
+      sortIcon: ({ sortOrder }) => {
+        return (
+          <div className="flex flex-col">
+            <ChevronUp
+              size={16}
+              strokeWidth={1.5}
+              className={
+                sortOrder === "ascend" ? "!text-white" : "text-gray-400"
+              }
+            />
+            <ChevronDown
+              size={16}
+              strokeWidth={1.5}
+              className={
+                sortOrder === "descend" ? "!text-white" : "text-gray-400"
+              }
+            />
+          </div>
+        );
+      },
       render: (text) => <span className="">₪{text}</span>,
     },
     {
@@ -152,9 +194,11 @@ const BillingHistoryTableByProvider = () => {
         columns={columns}
         dataSource={data}
         pagination={{ pageSize: 5 }}
-        scroll={{ x: 1000 }}
+        scroll={{ x: 'max-content' }}
         className="custom-ant-table"
+        showSorterTooltip={false}
       />
+      <style>{`.ant-table-column-title{flex:none !important} .ant-table-filter-column{justify-content:flex-start !important;}`}</style>
     </div>
   );
 };

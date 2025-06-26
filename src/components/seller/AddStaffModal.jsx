@@ -1,243 +1,174 @@
-// src/components/seller/AddStaffModal.jsx
-import React, { useState, useEffect, useRef, useMemo } from "react";
-import { IoClose } from "react-icons/io5"; // Close icon
-import { FiChevronDown, FiChevronUp } from "react-icons/fi"; // Chevron icons
-import { FaSquareCheck, FaRegSquare } from "react-icons/fa6"; // Checkbox icons
-import { useNavigate } from "react-router"; // Import useNavigate
+import React, { useState } from "react";
+import { useNavigate } from "react-router";
+import { Form, Input, Select, Button, Modal, Drawer, message, Checkbox, Radio } from "antd";
+import { IoClose, IoChevronDown } from "react-icons/io5";
+import { PlusIcon } from "lucide-react";
+import useResponsive from "../../hooks/useResponsive";
 
-const AddStaffModal = ({ onClose, onAddStaff, allStaffData }) => {
-  const modalRef = useRef(null);
-  const roleDropdownRef = useRef(null);
-  const navigate = useNavigate(); // Initialize useNavigate
+const availableRoles = ["Owner / Manager", "Employee", "Receptionist"];
 
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [selectedRoles, setSelectedRoles] = useState([]);
-  const [jobTitle, setJobTitle] = useState("");
-  const [showRoleDropdown, setShowRoleDropdown] = useState(false);
+const RoleSelectorInDrawer = ({ value = [], onChange }) => {
+  const [isRoleDrawerVisible, setIsRoleDrawerVisible] = useState(false);
 
-  const availableRoles = useMemo(() => {
-    return ["Owner / Manager", "Employee", "Receptionist"];
-  }, []);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
-        onClose();
-      }
-    };
-
-    const handleRoleDropdownClickOutside = (event) => {
-      if (
-        roleDropdownRef.current &&
-        !roleDropdownRef.current.contains(event.target) &&
-        !event.target.closest(".role-select-input")
-      ) {
-        setShowRoleDropdown(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    document.addEventListener("mousedown", handleRoleDropdownClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      document.removeEventListener("mousedown", handleRoleDropdownClickOutside);
-    };
-  }, [onClose]);
-
-  const handleRoleChange = (role) => {
-    setSelectedRoles((prevSelected) => {
-      if (prevSelected.includes(role)) {
-        return prevSelected.filter((r) => r !== role);
-      } else {
-        if (prevSelected.length < 2) {
-          return [...prevSelected, role];
-        } else {
-          alert("You can select a maximum of two roles.");
-          return prevSelected;
-        }
-      }
-    });
+  const openDrawer = (e) => {
+    e.stopPropagation();
+    setIsRoleDrawerVisible(true);
   };
+  const closeDrawer = () => setIsRoleDrawerVisible(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!phoneNumber || selectedRoles.length === 0 || !jobTitle) {
-      alert("Please fill in all required fields.");
-      return;
-    }
+  return (
+    <>
+      <div
+        onClick={openDrawer}
+        className="ant-input custom-input !text-primary01 cursor-pointer border p-1 rounded-[5px] border-[#7c787871] flex items-center justify-between"
+        style={{ height: 'auto', minHeight: '38px' }}
+      >
+        {value.length > 0 ? value.join(', ') : <span className="text-gray-400/80 ">Select roles</span>}
+        <IoChevronDown className="text-description" />
+      </div>
+      
+      <Drawer
+        placement="bottom"
+        closable={false}
+        title="Select Roles"
+        extra={
+          <Button type="text" onClick={closeDrawer} className="!px-0">
+            <IoClose size={24} className="text-description" />
+          </Button>
+        }
+        height="40%"
+        onClose={closeDrawer}
+        open={isRoleDrawerVisible}
+        className="rounded-t-xl"
+        bodyStyle={{ padding: '24px' }}
+      >
+        <Checkbox.Group
+          style={{ width: '100%' }}
+          value={value}
+          onChange={onChange}
+        >
+          <div className="flex flex-col gap-4">
+            {availableRoles.map(role => (
+              <Checkbox key={role} value={role} className="text-base">
+                {role}
+              </Checkbox>
+            ))}
+          </div>
+        </Checkbox.Group>
+        <div className="shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] mt-12 w-full max-[800]:fixed left-0 px-[20px]">
+          <Button
+          type="primary"
+          onClick={closeDrawer}
+          className="btn-primary !bg-black w-full mt-6"
+        >
+          Confirm Selection
+        </Button>
+        </div>
+      </Drawer>
+    </>
+  );
+};
 
-    // --- Simulate SMS sending and redirection for new staff onboarding ---
-    // In a real application, you would:
-    // 1. Make an API call to your backend to create a pending staff entry
-    //    and trigger an SMS sending (with an OTP and a unique link).
-    // 2. The backend would store the staff's initial details (phone, roles, job title)
-    //    and associate them with a temporary token/OTP.
-    // 3. This admin UI would then typically show a success message or redirect to
-    //    an "invitation sent" page.
+const AddStaffFormContent = ({ form, onClose, allStaffData }) => {
+  const navigate = useNavigate();
+  const { md } = useResponsive();
 
-    const tempStaffName = `Staff ${allStaffData.length + 1}`; // For demo purposes
-
-    console.log("Simulating SMS send for new staff:", {
-      phoneNumber,
-      roles: selectedRoles,
-      jobTitle,
-    });
-    alert(`SMS with onboarding link sent to ${phoneNumber}! New staff can use OTP '123456'.`);
-
-    onClose(); // Close the add staff modal
-
-    // Redirect to the new standalone OTP verification page, passing necessary state
-    navigate("/onboard/verify-staff-otp", { // Changed path here
-      state: { phoneNumber, roles: selectedRoles, jobTitle, staffName: tempStaffName },
+  const handleFormFinish = (values) => {
+    const tempStaffName = `Staff ${allStaffData.length + 1}`;
+    message.success(`SMS with onboarding link sent to ${values.phoneNumber}!`);
+    onClose();
+    navigate("/onboard/verify-staff-otp", {
+      state: { ...values, staffName: tempStaffName },
     });
   };
 
   return (
-    <div className="fixed inset-0 bg-[#0000007c] flex justify-center items-center z-51 max-[700px]:items-end">
-      <div
-        ref={modalRef}
-        className="relative w-[600px] max-h-[700px] bg-white rounded-lg flex flex-col justify-start items-start shadow-xl"
-      >
-        {/* Header */}
-        <div className="self-stretch px-6 py-4 flex justify-between items-center border-b border-gray-200">
-          <h2 className="text-neutral-800 text-lg font-semibold font-['Golos_Text'] leading-relaxed">
-            Add staff
-          </h2>
-          <button onClick={onClose} className="text-zinc-600 hover:text-zinc-800">
-            <IoClose size={24} />
-          </button>
-        </div>
-
-        {/* Form Content */}
-        <form onSubmit={handleSubmit} className="self-stretch px-6 py-4 flex flex-col justify-start items-start gap-4 overflow-y-auto">
-          {/* Phone Number */}
-          <div className="self-stretch flex flex-col justify-start items-start gap-1">
-            <label className="rounded-xl inline-flex justify-start items-start gap-1">
-              <span className="text-neutral-700 text-sm font-normal font-['Golos_Text'] leading-tight">
-                Phone number
-              </span>
-              <span className="text-red-500 text-sm font-normal font-['Golos_Text'] leading-tight">*</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Phone"
-              className="self-stretch h-10 px-3 py-2 rounded-lg border border-gray-200 focus:outline-none focus:border-violet-500 text-gray-700 text-sm font-normal font-['Golos_Text'] leading-tight"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              required
-            />
-          </div>
-
-          {/* Role Multi-select */}
-          <div className="self-stretch flex flex-col justify-start items-start gap-1 relative">
-            <label className="rounded-xl inline-flex justify-start items-start gap-1">
-              <span className="text-neutral-700 text-sm font-normal font-['Golos_Text'] leading-tight">
-                Role
-              </span>
-              <span className="text-red-500 text-sm font-normal font-['Golos_Text'] leading-tight">*</span>
-            </label>
-            <div
-              className="role-select-input self-stretch h-10 px-3 py-2 rounded-lg border border-gray-200 inline-flex justify-between items-center gap-2 cursor-pointer hover:border-gray-300 focus-within:border-violet-500"
-              onClick={() => setShowRoleDropdown(!showRoleDropdown)}
-            >
-              <div className="flex-1 flex flex-wrap items-center gap-2 overflow-hidden pr-2">
-                {selectedRoles.length > 0 ? (
-                  selectedRoles.map((role) => (
-                    <span
-                      key={role}
-                      className="px-2 py-1 bg-violet-50 rounded text-violet-500 text-xs font-medium font-['Golos_Text'] leading-none whitespace-nowrap"
-                    >
-                      {role}
-                    </span>
-                  ))
-                ) : (
-                  <span className="text-zinc-400 text-sm font-normal font-['Golos_Text'] leading-tight">
-                    Select
-                  </span>
-                )}
-              </div>
-              {showRoleDropdown ? (
-                <FiChevronUp className="w-5 h-5 text-zinc-400" />
-              ) : (
-                <FiChevronDown className="w-5 h-5 text-zinc-400" />
-              )}
-            </div>
-
-            {showRoleDropdown && (
-              <div
-                ref={roleDropdownRef}
-                className="absolute top-[calc(100%+8px)] left-0 w-full p-2 bg-white rounded-lg shadow-lg border border-gray-200 z-20"
-              >
-                {availableRoles.length > 0 ? (
-                  availableRoles.map((role) => (
-                    <label
-                      key={role}
-                      className="self-stretch h-8 px-2 py-1 rounded flex items-center gap-2 cursor-pointer hover:bg-violet-50 transition-colors duration-150"
-                    >
-                      {selectedRoles.includes(role) ? (
-                        <FaSquareCheck className="w-5 h-5 text-violet-500" />
-                      ) : (
-                        <FaRegSquare className="w-5 h-5 text-neutral-300" />
-                      )}
-                      <input
-                        type="checkbox"
-                        className="hidden" // Hide native checkbox
-                        checked={selectedRoles.includes(role)}
-                        onChange={() => handleRoleChange(role)}
-                      />
-                      <span className="flex-1 text-neutral-800 text-sm font-normal font-['Golos_Text'] leading-tight">
-                        {role}
-                      </span>
-                    </label>
-                  ))
-                ) : (
-                  <p className="text-gray-500 text-sm px-2 py-1">No roles available.</p>
-                )}
-              </div>
-            )}
-          </div>
-
-          {/* Job Title */}
-          <div className="self-stretch flex flex-col justify-start items-start gap-1">
-            <label className="rounded-xl inline-flex justify-start items-start gap-1">
-              <span className="text-neutral-700 text-sm font-normal font-['Golos_Text'] leading-tight">
-                Job title
-              </span>
-              <span className="text-red-500 text-sm font-normal font-['Golos_Text'] leading-tight">*</span>
-            </label>
-            <input
-              type="text"
-              placeholder="Title"
-              className="self-stretch h-10 px-3 py-2 rounded-lg border border-gray-200 focus:outline-none focus:border-violet-500 text-gray-700 text-sm font-normal font-['Golos_Text'] leading-tight"
-              value={jobTitle}
-              onChange={(e) => setJobTitle(e.target.value)}
-              required
-            />
-          </div>
-
-          {/* Spacer to push buttons to bottom in scrollable content */}
-          <div className="flex-grow"></div>
-
-          {/* Action Buttons */}
-          <div className="self-stretch px-6 py-4 border-t border-gray-200 flex justify-end items-center gap-3 mt-auto max-[700px]:p-0 max-[700px]:m-0 max-[700px]:w-full">
-            <button
-              type="button"
-              onClick={onClose}
-              className="w-20 py-0.5 flex justify-center items-center gap-1 text-neutral-800 text-sm font-semibold font-['Golos_Text'] leading-tight hover:bg-gray-100 rounded transition-colors duration-200 max-[700px]:none max-[700px]:hidden"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="h-10 px-3 py-2 bg-neutral-800 rounded-lg flex justify-center items-center gap-2 hover:bg-gray-700 transition-colors duration-200 text-white text-sm font-semibold font-['Golos_Text'] leading-tight max-[700px]:w-full"
-            >
-              Send SMS
-            </button>
-          </div>
-        </form>
+    <Form form={form} layout="vertical" onFinish={handleFormFinish} className="flex flex-col h-full">
+      <div className="flex-shrink-0 px-6 py-4 flex justify-between items-center border-b border-gray-200">
+        <h2 className="text-neutral-800 text-lg font-semibold">Add staff</h2>
+        <Button type="text" onClick={onClose} className="!px-0">
+          <IoClose size={24} className="text-description" />
+        </Button>
       </div>
-    </div>
+
+      <div className="px-6 py-4 flex-grow overflow-y-auto">
+        <div className="space-y-4">
+          <Form.Item 
+            label={<span className="text-neutral-700 text-sm">Phone number <span className="text-red-500">*</span></span>} 
+            name="phoneNumber" 
+            rules={[{ required: true, message: "Phone number is required." }]}
+          >
+            <Input placeholder="Phone" className="custom-input" />
+          </Form.Item>
+
+          <Form.Item 
+            label={<span className="text-neutral-700 text-sm">Role <span className="text-red-500">*</span></span>} 
+            name="roles" 
+            rules={[{ required: true, message: "Please select at least one role." }]}
+          >
+            {md ? (
+              <Select
+                mode="multiple"
+                placeholder="Select"
+                className="custom-input !text-primary01"
+                options={availableRoles.map(role => ({ label: role, value: role }))}
+                suffixIcon={<IoChevronDown className="text-description" />}
+              />
+            ) : (
+              <RoleSelectorInDrawer />
+            )}
+          </Form.Item>
+
+          <Form.Item 
+            label={<span className="text-neutral-700 text-sm">Job title <span className="text-red-500">*</span></span>} 
+            name="jobTitle" 
+            rules={[{ required: true, message: "Job title is required." }]}
+          >
+            <Input placeholder="Title" className="custom-input" />
+          </Form.Item>
+        </div>
+      </div>
+
+      <div className="flex-shrink-0 px-6 py-4 border-t border-gray-200 flex justify-end items-center gap-3 bg-white max-[768px]:shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] max-[768px]:fixed bottom-0 right-0 w-full">
+        <Button onClick={onClose} className="btn-secondary">Cancel</Button>
+        <Button type="primary" htmlType="submit" className="btn-primary !bg-black">Send SMS</Button>
+      </div>
+    </Form>
+  );
+};
+
+const AddStaffModal = ({ onClose, allStaffData }) => {
+  const [form] = Form.useForm();
+  const { md } = useResponsive();
+
+  if (!md) {
+    return (
+      <Drawer
+        placement="bottom"
+        closable={false}
+        height="75%"
+        onClose={onClose}
+        open={true}
+        className="rounded-t-xl"
+        bodyStyle={{ padding: 0, overflow: 'hidden' }}
+      >
+        <AddStaffFormContent form={form} onClose={onClose} allStaffData={allStaffData} />
+      </Drawer>
+    );
+  }
+
+  return (
+    <Modal
+      open={true}
+      onCancel={onClose}
+      footer={null}
+      centered
+      width={600}
+      closable={false}
+      styles={{ body: { padding: 0, maxHeight: '80vh' } }}
+    >
+      <AddStaffFormContent form={form} onClose={onClose} allStaffData={allStaffData} />
+    </Modal>
   );
 };
 

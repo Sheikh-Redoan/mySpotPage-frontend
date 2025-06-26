@@ -72,6 +72,7 @@ const PastBookingsByClient = () => {
 
     // Apply status filters
     if (
+      Array.isArray(currentStatusFilters) &&
       currentStatusFilters.length > 0 &&
       !currentStatusFilters.includes("All Status")
     ) {
@@ -145,8 +146,8 @@ const PastBookingsByClient = () => {
         return ["All Status"];
       } else {
         const newSelected = prev.includes(status)
-          ? prev.filter((s) => s !== status) 
-          : [...prev, status]; 
+          ? prev.filter((s) => s !== status)
+          : [...prev, status];
 
         if (newSelected.includes("All Status") && newSelected.length > 1) {
           return newSelected.filter((s) => s !== "All Status");
@@ -213,13 +214,13 @@ const PastBookingsByClient = () => {
         locale={{ emptyText: <CustomEmptyTable /> }}
         rowClassName={(record) =>
           searchQuery &&
-          (record.clientName
-            .toLowerCase()
-            .includes(searchQuery.toLowerCase()) ||
-            record.clientPhone
+            (record.clientName
               .toLowerCase()
               .includes(searchQuery.toLowerCase()) ||
-            record.staffName.toLowerCase().includes(searchQuery.toLowerCase()))
+              record.clientPhone
+                .toLowerCase()
+                .includes(searchQuery.toLowerCase()) ||
+              record.staffName.toLowerCase().includes(searchQuery.toLowerCase()))
             ? "bg-highlight01"
             : ""
         }
@@ -261,6 +262,7 @@ const PastBookingsByClient = () => {
           hideOnSinglePage={false}
         />
       </div>
+      <style>{`.ant-table-column-title{flex:none !important} .ant-table-filter-column{justify-content:flex-start !important;}`}</style>
     </div>
   );
 };

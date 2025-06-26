@@ -55,13 +55,14 @@ import {
 } from "../pages/layout/subSidebarObj";
 import ServiceTable from "../pages/onboarding/ServiceTable";
 import SetUpLocation from "../pages/onboarding/SetUpLocation";
+import SetUpService from "../pages/onboarding/SetUpService";
 import SuccessNotifications from "../pages/onboarding/SuccessNotifications";
 import SetupLocationServices1 from "../pages/onboarding/solo/SetupLocationServices1";
 import SetupLocationServices2 from "../pages/onboarding/solo/SetupLocationServices2";
 import SetupTeamLocationServices1 from "../pages/onboarding/team/SetupTeamLocationServices1";
 import SetupTeamLocationServices2 from "../pages/onboarding/team/SetupTeamLocationServices2";
 import StaffManagement from "../pages/seller/StaffManagement";
-
+ 
 import AccountManagement from "../pages/admin/AccountManagement";
 import MenuCategory from "../pages/admin/MenuCategory";
 import ServiceClassification from "../pages/admin/ServiceClassification";
@@ -73,7 +74,7 @@ import ConfirmPageForProvider from "../pages/calenderManagement/addBookingByProv
 import SelectStaffForProvider from "../pages/calenderManagement/addBookingByProvider/SelectStaffForProvider";
 import ServicesPageForProvider from "../pages/calenderManagement/addBookingByProvider/ServicesPageForProvider";
 import ClientAppointmentCal from "../pages/client/ClientAppointmentCal";
-
+ 
 import ReviewContainer from "../components/shared/ReviewContainer";
 import ManagerPermissions from "../components/staff-settings/ManagerPermissions";
 import ReceptionistPermissions from "../components/staff-settings/ReceptionistPermissions";
@@ -94,7 +95,7 @@ import StaffSecurityPage from "../pages/onboarding/StaffSecurityPage";
 import StaffServicesPage from "../pages/onboarding/StaffServicesPage";
 import StaffWorkingHoursPage from "../pages/onboarding/StaffWorkingHoursPage";
 import AddNewServicePage from "../pages/seller/AddNewServicePage";
-
+ 
 export const routes = createBrowserRouter([
   // Public Routes (Accessible to everyone)
   {
@@ -115,7 +116,7 @@ export const routes = createBrowserRouter([
         path: "review",
         element: <ReviewContainer />,
       },
-
+ 
       // Client-specific booking flow (can be accessed by authenticated clients)
       {
         path: "service-provider-info",
@@ -156,7 +157,7 @@ export const routes = createBrowserRouter([
       },
     ],
   },
-
+ 
   // Authentication/Onboarding Routes (Generally public, but some steps might be restricted)
   {
     path: "/auth",
@@ -175,7 +176,7 @@ export const routes = createBrowserRouter([
       { path: "signup-successfull", element: <SignupSuccessfull /> },
     ],
   },
-
+ 
   // Individual auth pages outside the /auth nested route
   { path: "/signin", element: <Signin /> },
   { path: "/forgot-password", element: <ForgotPassword /> },
@@ -186,7 +187,7 @@ export const routes = createBrowserRouter([
   { path: "/signup-verify-number", element: <SignupVerifyNumber /> },
   { path: "/setup-signup", element: <SetupSignup /> },
   { path: "/signup-successfull", element: <SignupSuccessfull /> },
-
+ 
   // Onboarding Routes (Protected after initial setup, generally for new sellers/staff)
   {
     path: "/onboard",
@@ -208,7 +209,7 @@ export const routes = createBrowserRouter([
       { path: "setup-services2", element: <SetupLocationServices2 /> },
       { path: "setup-teamservices1", element: <SetupTeamLocationServices1 /> },
       { path: "setup-teamservices2", element: <SetupTeamLocationServices2 /> },
-      { path: "service", element: <AddNewServicePage /> },
+      { path: "service", element: <SetUpService /> },
       { path: "service-table", element: <ServiceTable /> },
       { path: "verify-staff-otp", element: <OTPVerificationPage /> },
       { path: "staff-info", element: <StaffInformationPage /> },
@@ -217,7 +218,7 @@ export const routes = createBrowserRouter([
       { path: "security-settings", element: <StaffSecurityPage /> },
     ],
   },
-
+ 
   // General Success/Subscription Pages (Can be accessed after certain actions, might need protection)
   { path: "/success-notification", element: <SuccessNotifications /> },
   { path: "/upgrade-plan", element: <Upgradeplan /> }, // Consider if this needs ProtectedRoute
@@ -226,7 +227,7 @@ export const routes = createBrowserRouter([
   { path: "/success-downgrade", element: <SuccessDowngrade /> },
   { path: "/cancel-subscription", element: <CancelSubscription /> },
   { path: "/add-card", element: <AddCard /> },
-
+ 
   // Seller/Provider Dashboard Routes (Protected by SellerRoute)
   {
     path: "/dashboard", // This is the seller's main dashboard
@@ -315,7 +316,7 @@ export const routes = createBrowserRouter([
           },
         ],
       },
-
+ 
       {
         path: "settings",
         element: <MyProfileLayout tabs={settingsNavItems} />,
@@ -334,7 +335,7 @@ export const routes = createBrowserRouter([
       { path: "settings/add-card", element: <AddCard /> },
     ],
   },
-
+ 
   // Admin Dashboard Routes (Protected by AdminRoute)
   {
     path: "/admin", // This is the base path for admin sections
@@ -439,7 +440,7 @@ export const routes = createBrowserRouter([
       },
     ],
   },
-
+ 
   // User Profile Management (Accessible by all authenticated users, potentially with different views)
   {
     path: "my-profile",
@@ -482,7 +483,7 @@ export const routes = createBrowserRouter([
     path: "/forbidden",
     element: <ForbiddenPage />,
   },
-
+ 
   // Catch-all for 404
   {
     path: "*",

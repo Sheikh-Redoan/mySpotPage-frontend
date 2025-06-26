@@ -55,7 +55,6 @@ import {
 } from "../pages/layout/subSidebarObj";
 import ServiceTable from "../pages/onboarding/ServiceTable";
 import SetUpLocation from "../pages/onboarding/SetUpLocation";
-import SetUpService from "../pages/onboarding/SetUpService";
 import SuccessNotifications from "../pages/onboarding/SuccessNotifications";
 import SetupLocationServices1 from "../pages/onboarding/solo/SetupLocationServices1";
 import SetupLocationServices2 from "../pages/onboarding/solo/SetupLocationServices2";
@@ -209,7 +208,7 @@ export const routes = createBrowserRouter([
       { path: "setup-services2", element: <SetupLocationServices2 /> },
       { path: "setup-teamservices1", element: <SetupTeamLocationServices1 /> },
       { path: "setup-teamservices2", element: <SetupTeamLocationServices2 /> },
-      { path: "service", element: <SetUpService /> },
+      { path: "service", element: <AddNewServicePage /> },
       { path: "service-table", element: <ServiceTable /> },
       { path: "verify-staff-otp", element: <OTPVerificationPage /> },
       { path: "staff-info", element: <StaffInformationPage /> },

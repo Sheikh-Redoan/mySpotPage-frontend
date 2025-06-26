@@ -1,8 +1,9 @@
+
 import { Button, Space } from "antd";
 import { ArrowLeft } from "lucide-react";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate, useSearchParams } from "react-router";
+import { Link, useLocation, useNavigate, useSearchParams } from "react-router";
 import ServiceBasicDetails from "../../components/DashboardPageComponents/shared/ServiceBasicDetails";
 import ServiceBeforeAfterImageUpload from "../../components/DashboardPageComponents/shared/ServiceBeforeAfterImageUpload";
 import ServiceImageUpload from "../../components/DashboardPageComponents/shared/ServiceImageUpload";
@@ -10,254 +11,272 @@ import ServicePriceSetting from "../../components/DashboardPageComponents/shared
 import ImageCropModal from "../../components/modal/ImageCropModal";
 
 const AddNewServicePage = ({ publishedBtn = false }) => {
-    const navigate = useNavigate();
-    const [searchParams] = useSearchParams();
-    const serviceId = searchParams.get("serviceId");
+  const navigate = useNavigate();
+  const location = useLocation();
+  const beforeAfter = "Before & After";
+  // const beforeAfter = location.state?.beforeAfter;
+  const [searchParams] = useSearchParams();
+  const serviceId = searchParams.get("serviceId");
 
-    const [uploadType] = useState("Only Outcome"); // Or "Before & After" based on logic
+  const [activeKey, setActiveKey] = useState(["1"]);
+  const [isStepComplete, setIsStepComplete] = useState(false);
+  const { register, handleSubmit, trigger, control } = useForm({
+    mode: "onChange",
+  });
 
-    const [activeKey, setActiveKey] = useState(["1"]);
-    const [isStepComplete, setIsStepComplete] = useState(false);
-    const { register, handleSubmit, trigger, control, formState: { errors } } = useForm({
-        mode: "onChange",
-    });
+  const [thumbnailName, setThumbnailName] = useState("");
+  const [priceModal1, setPriceModal1] = useState(false);
+  const [priceModal2, setPriceModal2] = useState(false);
 
-    // State for image cropping
-    const [thumbnailName, setThumbnailName] = useState("");
-    const [thumbnailImage, setThumbnailImage] = useState(null); // Original image
-    const [croppedThumbnail, setCroppedThumbnail] = useState(null); // Cropped image
+  const [thumbnailImage, setThumbnailImage] = useState(null);
+  const [croppedImage, setCroppedImage] = useState(null);
 
-    const [workImages, setWorkImages] = useState([]);
-    const [croppedWorkImages, setCroppedWorkImages] = useState([]);
+  const [workImages, setWorkImages] = useState([]); // raw images
+  const [workCroppedImages, setWorkCroppedImages] = useState([]); // cropped versions
 
-    const [imagePairs, setImagePairs] = useState([{ before: null, after: null }]);
-    const [originalImagePairs, setOriginalImagePairs] = useState([{ before: null, after: null }]);
-    
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [imageToCrop, setImageToCrop] = useState(null);
-    const [croppingTarget, setCroppingTarget] = useState({ type: null, index: null, position: null });
+  const [currentCropIndex, setCurrentCropIndex] = useState(null);
 
-    // Refs for hidden file inputs
-    const thumbnailInputRef = useRef(null);
-    const workImageInputRef = useRef(null);
-    const beforeAfterInputRef = useRef(null);
+  const fileInputRef = useRef();
 
-    // Main form submission logic
-    const onSubmit = (data) => {
-        const finalData = {
-            ...data,
-            thumbnail: croppedThumbnail,
-            workImages: croppedWorkImages,
-            beforeAfterImages: imagePairs,
-        };
-        console.log("Form Submitted Successfully:", finalData);
-        // On success, navigate to the next step
-        navigate("/onboard/service-table");
+  const [hoursCount, setHoursCount] = useState(0);
+  const [minuteCount, setMinuteCount] = useState(0);
+  const [priceModalList, setPriceModalList] = useState([
+    { id: 1, name: "", hour: 0, minute: 0, priceType: "", amount: "" },
+  ]);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [croppingTarget, setCroppingTarget] = useState(null); // "basicDetails" or "workImage"
+
+  // befor after pair
+  const [imagePairs, setImagePairs] = useState([{ before: null, after: null }]);
+
+  const handleButtonClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const imageURL = URL.createObjectURL(file);
+      setThumbnailImage(imageURL);
+      setThumbnailName(file.name);
+      setCroppingTarget("basicDetails"); // open modal for basic image
+      setIsModalOpen(true);
+    }
+  };
+
+  const handleWorkFileChange = (e) => {
+    const files = Array.from(e.target.files);
+    const newImages = files.slice(0, 10 - workImages.length); // max 10
+    const newImageUrls = newImages.map((file) => URL.createObjectURL(file));
+
+    setWorkImages([...workImages, ...newImageUrls]);
+    setWorkCroppedImages([...workCroppedImages, ...newImageUrls]); // initially same
+  };
+
+  const handleCropFinish = (croppedDataUrl) => {
+    if (croppingTarget === "basicDetails") {
+      setCroppedImage(croppedDataUrl);
+    } else if (croppingTarget === "workImage" && currentCropIndex !== null) {
+      const updated = [...workCroppedImages];
+      updated[currentCropIndex] = croppedDataUrl;
+      setWorkCroppedImages(updated);
+    }
+    setIsModalOpen(false);
+  };
+
+  const handleRemoveImage = () => {
+    setThumbnailImage(null);
+    setCroppedImage(null);
+    setThumbnailName("");
+  };
+
+  const handleWorkRemoveImage = (index) => {
+    const updatedImages = workImages.filter((_, i) => i !== index);
+    const updatedCropped = workCroppedImages.filter((_, i) => i !== index);
+    setWorkImages(updatedImages);
+    setWorkCroppedImages(updatedCropped);
+  };
+
+  const handleCollapseChange = async (key) => {
+    if (!key.includes("1")) {
+      const isValid = await trigger([
+        "serviceName",
+        "description",
+        "availableFor",
+      ]);
+
+      const allFilled = isValid && (croppedImage || thumbnailImage);
+
+      setIsStepComplete(allFilled);
+
+      if (!allFilled) return;
+    }
+    setActiveKey(key);
+  };
+
+  const priceCheckboxChange1 = (e) => {
+    setPriceModal1(e.target.checked);
+  };
+  const priceCheckboxChange2 = (e) => {
+    setPriceModal2(e.target.checked);
+  };
+
+  // befor after logic
+  const onAddPair = () => {
+    if (imagePairs.length < 5) {
+      setImagePairs([...imagePairs, { before: null, after: null }]);
+    }
+  };
+
+  const onImageChange = (index, type, event) => {
+    const file = event.target?.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const updatedPairs = [...imagePairs];
+      updatedPairs[index][type] = reader.result;
+      setImagePairs(updatedPairs);
     };
+    reader.readAsDataURL(file);
+  };
 
-    // --- CROP FINISH HANDLER ---
-    const handleCropFinish = (croppedDataUrl) => {
-        const { type, index, position } = croppingTarget;
+  const onRemoveImage = (index, type) => {
+    const updatedPairs = [...imagePairs];
+    updatedPairs[index][type] = null;
+    setImagePairs(updatedPairs);
+  };
 
-        if (type === "basicDetails") {
-            setCroppedThumbnail(croppedDataUrl);
-        } else if (type === "workImage") {
-            const updated = [...croppedWorkImages];
-            updated[index] = croppedDataUrl;
-            setCroppedWorkImages(updated);
-        } else if (type === "beforeAfter") {
-            const updatedPairs = [...imagePairs];
-            updatedPairs[index][position] = croppedDataUrl;
-            setImagePairs(updatedPairs);
-        }
+  const openCropModal = (index, type) => {
+    setCroppingTarget({ index, type });
+    setIsModalOpen(true);
+  };
 
-        setIsModalOpen(false);
-        setImageToCrop(null);
-    };
-    
-    // --- GENERIC FILE HANDLER & CROP INITIATOR ---
-    const initiateCrop = (file, target) => {
-        if (!file) return;
-        const imageURL = URL.createObjectURL(file);
-        
-        // Set the target for the crop result
-        setCroppingTarget(target);
-        // Set the image for the modal
-        setImageToCrop(imageURL);
-        // Open the modal
-        setIsModalOpen(true);
-    };
-
-    const onThumbnailChange = (e) => {
-        const file = e.target.files[0];
-        setThumbnailName(file.name);
-        setThumbnailImage(URL.createObjectURL(file)); // Save original for re-cropping
-        initiateCrop(file, { type: 'basicDetails' });
-    };
-
-    const onWorkImageChange = (e) => {
-        if (workImages.length >= 10) return;
-        const file = e.target.files[0];
-        const newIndex = workImages.length;
-        setWorkImages([...workImages, URL.createObjectURL(file)]);
-        setCroppedWorkImages([...croppedWorkImages, null]);
-        initiateCrop(file, { type: 'workImage', index: newIndex });
-    };
-    
-    const onBeforeAfterChange = (e) => {
-        const file = e.target.files[0];
-        const { index, position } = croppingTarget; // Get target from state
-        
-        const updatedOriginals = [...originalImagePairs];
-        if(!updatedOriginals[index]) updatedOriginals[index] = { before: null, after: null };
-        updatedOriginals[index][position] = URL.createObjectURL(file);
-        setOriginalImagePairs(updatedOriginals);
-
-        initiateCrop(file, { type: 'beforeAfter', index, position });
-    };
-
-    // Trigger for before/after upload
-    const handleInitiateBeforeAfterUpload = (index, position) => {
-        setCroppingTarget({ type: 'beforeAfter', index, position });
-        beforeAfterInputRef.current.click();
-    };
-
-
-    // --- REMOVE & RE-CROP HANDLERS ---
-    const handleRemoveThumbnail = () => {
-        setThumbnailImage(null);
-        setCroppedThumbnail(null);
-        setThumbnailName("");
-    };
-
-    const handleRemoveWorkImage = (index) => {
-        setWorkImages(workImages.filter((_, i) => i !== index));
-        setCroppedWorkImages(croppedWorkImages.filter((_, i) => i !== index));
-    };
-
-    const onRemoveBeforeAfterImage = (index, type) => {
-        const updatedPairs = [...imagePairs];
-        updatedPairs[index][type] = null;
-        setImagePairs(updatedPairs);
-    };
-
-    const openRecropModal = (type, index, position = null) => {
-        const target = { type, index, position };
-        setCroppingTarget(target);
-        if (type === 'basicDetails') setImageToCrop(thumbnailImage);
-        else if (type === 'workImage') setImageToCrop(workImages[index]);
-        else if (type === 'beforeAfter') setImageToCrop(originalImagePairs[index][position]);
-        setIsModalOpen(true);
-    };
-    
-    const onAddPair = () => {
-        if (imagePairs.length < 5) {
-            setImagePairs([...imagePairs, { before: null, after: null }]);
-            setOriginalImagePairs([...originalImagePairs, { before: null, after: null }]);
-        }
-    };
-
-    const handleCollapseChange = async (key) => {
-        if (activeKey.includes("1") && !key.includes("1")) {
-            const isValid = await trigger(["serviceName", "description", "availableFor"]);
-            if (isValid && croppedThumbnail) {
-                setIsStepComplete(true);
-                setActiveKey(key);
-            } else {
-                setIsStepComplete(false);
-            }
-        } else {
-            setActiveKey(key);
-        }
-    };
-
-    return (
-        <div className="w-full p-4 md:p-5">
-            <input type="file" ref={thumbnailInputRef} onChange={onThumbnailChange} className="hidden" accept="image/*" />
-            <input type="file" ref={workImageInputRef} onChange={onWorkImageChange} className="hidden" accept="image/*" />
-            <input type="file" ref={beforeAfterInputRef} onChange={onBeforeAfterChange} className="hidden" accept="image/*" />
-
-            {publishedBtn && (
-                <div className="flex justify-between items-center">
-                    <div onClick={() => navigate(-1)} className="flex items-center gap-1.5 cursor-pointer">
-                        <ArrowLeft size={18} />
-                        <p className="text-[#242528] text-lg font-semibold ml-1">{serviceId ? "Update" : "New"} Service</p>
-                    </div>
-                    <Button type="primary" disabled>Publish</Button>
-                </div>
-            )}
-
-            {/* The form now wraps everything and uses the correct onSubmit */}
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="mb-20 md:mb-0">
-                    <Space direction="vertical" className="w-full my-4 space-y-6">
-                        <ServiceBasicDetails
-                            activeKey={activeKey}
-                            handleCollapseChange={handleCollapseChange}
-                            isStepComplete={isStepComplete}
-                            image={croppedThumbnail}
-                            thumbnailName={thumbnailName}
-                            handleFileChange={() => thumbnailInputRef.current.click()}
-                            register={register}
-                            control={control}
-                            errors={errors} // Pass errors down for display
-                            handleRemoveImage={handleRemoveThumbnail}
-                            setIsModalOpen={() => openRecropModal('basicDetails')}
-                        />
-
-                        <ServicePriceSetting
-                            // Pass props
-                        />
-
-                        {uploadType === "Only Outcome" ? (
-                            <ServiceImageUpload
-                                workCroppedImages={croppedWorkImages}
-                                handleWorkRemoveImage={handleRemoveWorkImage}
-                                handleButtonClick={() => workImageInputRef.current.click()}
-                                onCropImage={(index) => openRecropModal('workImage', index)}
-                            />
-                        ) : (
-                            <ServiceBeforeAfterImageUpload
-                                imagePairs={imagePairs}
-                                onAddPair={onAddPair}
-                                onInitiateUpload={handleInitiateBeforeAfterUpload}
-                                onRemoveImage={onRemoveBeforeAfterImage}
-                                onCropImage={(index, position) => openRecropModal('beforeAfter', index, position)}
-                            />
-                        )}
-                    </Space>
-                </div>
-
-                <ImageCropModal
-                    isOpen={isModalOpen}
-                    onClose={() => setIsModalOpen(false)}
-                    image={imageToCrop}
-                    onCropFinish={handleCropFinish}
-                />
-
-                {!publishedBtn && (
-                    <div className="sm:w-auto flex items-center justify-end gap-4 my-6 mx-2 sm:mx-5">
-                        <Link to={-1} className="w-full sm:w-auto">
-                            <button type="button" className="w-full sm:w-auto px-[18px] py-[8px] border font-medium border-[#242528] rounded-lg">
-                                Previous
-                            </button>
-                        </Link>
-                        {/* This button now correctly submits the form */}
-                        <button type="submit" className="w-full sm:w-auto px-[18px] py-[8px] bg-[#242528] text-[#fff] border font-medium rounded-lg">
-                            Continue
-                        </button>
-                    </div>
-                )}
-                 {publishedBtn && (
-                    <div className="flex md:hidden fixed bottom-0 left-0 right-0 bg-white p-5">
-                        <button type="submit" className="text-white font-semibold bg-gray-900 py-2.5 w-full rounded-lg">
-                            Publish
-                        </button>
-                    </div>
-                )}
-            </form>
+  return (
+    <div className="w-full p-4 md:p-5">
+      {publishedBtn && (
+        <div className="flex justify-between items-center">
+          <div
+            onClick={() => navigate(-1)}
+            className="flex items-center gap-1.5 cursor-pointer">
+            <ArrowLeft size={18} />
+            <p className="text-[#242528] text-lg font-semibold ml-1">
+              {serviceId ? "Update" : "New"} Service
+            </p>
+          </div>
+          <Button color="default" variant="solid" disabled>
+            Publish
+          </Button>
         </div>
-    );
+      )}
+      <div className="mb-20 md:mb-0">
+        <Space direction="vertical" className="w-full my-4 space-y-6">
+          <ServiceBasicDetails
+            activeKey={activeKey}
+            handleCollapseChange={handleCollapseChange}
+            isStepComplete={isStepComplete}
+            handleSubmit={handleSubmit}
+            onSubmit={onSubmit}
+            image={croppedImage || thumbnailImage}
+            thumbnailName={thumbnailName}
+            handleFileChange={handleFileChange}
+            register={register}
+            control={control}
+            croppedImage={croppedImage}
+            handleRemoveImage={handleRemoveImage}
+            setIsModalOpen={() => {
+              setCroppingTarget("basicDetails");
+              setIsModalOpen(true);
+            }}
+          />
+
+          <ServicePriceSetting
+            priceModal2={priceModal2}
+            priceModal1={priceModal1}
+            setMinuteCount={setMinuteCount}
+            minuteCount={minuteCount}
+            hoursCount={hoursCount}
+            setHoursCount={setHoursCount}
+            priceCheckboxChange1={priceCheckboxChange1}
+            priceCheckboxChange2={priceCheckboxChange2}
+            priceModalList={priceModalList}
+            setPriceModalList={setPriceModalList}
+          />
+
+          {beforeAfter === "Before & After" && (
+            <ServiceBeforeAfterImageUpload
+              imagePairs={imagePairs}
+              onAddPair={onAddPair}
+              onChangeImage={onImageChange}
+              onRemoveImage={onRemoveImage}
+              onCropImage={(index, position) =>
+                setCroppingTarget({ type: "beforeAfter", index, position })
+              }
+            />
+          )}
+
+          {beforeAfter === "Only Outcome" && (
+            <ServiceImageUpload
+              workImages={workImages}
+              workCroppedImages={workCroppedImages}
+              handleWorkRemoveImage={handleWorkRemoveImage}
+              handleWorkFileChange={handleWorkFileChange}
+              handleButtonClick={handleButtonClick}
+              setIsModalOpen={(index) => {
+                setCroppingTarget("workImage");
+                setCurrentCropIndex(index);
+                setIsModalOpen(true);
+              }}
+              fileInputRef={fileInputRef}
+              setCurrentCropIndex={setCurrentCropIndex}
+            />
+          )}
+        </Space>
+      </div>
+
+      {/* Single modal for cropping both basic and work images */}
+      <ImageCropModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        image={
+          croppingTarget === "basicDetails"
+            ? croppedImage || thumbnailImage
+            : workImages[currentCropIndex]
+        }
+        onCropFinish={handleCropFinish}
+      />
+
+      {!publishedBtn && (
+        <div className="sm:w-auto flex items-center justify-end gap-4 my-6 mx-2 sm:mx-5">
+          <Link to={-1} className="w-full sm:w-auto">
+            <button className="w-full sm:w-auto px-[18px] py-[8px] border font-medium border-[#242528] rounded-lg hover:scale-95 transform transition-all duration-300 ease-in-out hover:bg-[#f3f3f3] hover:shadow-md">
+              Previous
+            </button>
+          </Link>
+          <Link to={"/onboard/service-table"} className="w-full sm:w-auto">
+            <button className="w-full sm:w-auto px-[18px] py-[8px] bg-[#242528] text-[#fff] border font-medium rounded-lg hover:scale-95 transition-all duration-300 ease-in-out hover:bg-[#3a3a3a] hover:shadow-md">
+              Continue
+            </button>
+          </Link>
+        </div>
+      )}
+
+      <div className="flex justify-between items-center md:hidden fixed bottom-0 left-0 right-0 bg-white pb-10 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] p-5 z-50">
+        <button
+          type="button"
+          className=" md:hidden text-white font-semibold bg-gray-900 py-2.5 w-full rounded-lg cursor-pointer hover:scale-95 transform transition-all duration-300 ease-in-out">
+          Publish
+        </button>
+      </div>
+    </div>
+  );
 };
 
 export default AddNewServicePage;
+
+

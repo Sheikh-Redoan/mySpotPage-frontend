@@ -8,7 +8,7 @@ import { GoChevronRight } from "react-icons/go";
 import { IoCameraOutline } from "react-icons/io5";
 import { LuCalendarDays } from "react-icons/lu";
 // import { LoadingOutlined } from '@ant-design/icons';
-
+import Gallary from "../../assets/icons/Gallary.png"
 
 const StaffInformationPage = () => {
   const [form] = Form.useForm();
@@ -76,8 +76,8 @@ const StaffInformationPage = () => {
   };
 
   const uploadButton = (
-    <button style={{ border: 0, background: 'none' }} type="button">
-      {loading ? "<LoadingOutlined />" : <IoCameraOutline size={24} className="text-gray-400" />}
+    <button style={{ border: 0, background: 'none', display:'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', }} type="button">
+      {loading ? "<LoadingOutlined />" : <img src={Gallary} className="text-gray-400" />}
       <div style={{ marginTop: 8, color: '#8c8c8c' }}>Upload</div>
     </button>
   );
@@ -163,7 +163,7 @@ const StaffInformationPage = () => {
             </div>
             
             <div className="flex justify-end pt-8">
-              <Button type="primary" htmlType="submit" className="btn-primary">
+              <Button type="primary" htmlType="submit" className="btn-primary !bg-black">
                 Continue
               </Button>
             </div>

@@ -57,7 +57,7 @@ const SearchBarAndFilter = ({
         {isMobile ? (
           <>
             <Button
-              className="w-24 h-10"
+              className="w-24 h-10 !p-5 rounded-2xl"
               icon={<FiFilter />}
               onClick={handleFilterToggle}
             >

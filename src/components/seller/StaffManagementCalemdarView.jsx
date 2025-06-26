@@ -1,18 +1,24 @@
-import CustomStaffCalendar from "../../components/reusable/CustomStaffCalendar"; // Ensure this import path is correct for CustomStaffCalendar
-import {
-  mockAppointments, // Use mockAppointments for calendar data
-} from "../../lib/mockAppointments"; // Adjust path if needed
-import { staffData } from "../../lib/staffData"; // Import staff data
+// src/components/seller/StaffManagementCalemdarView.jsx
+import CustomStaffCalendar from "../../components/reusable/CustomStaffCalendar";
+import { mockAppointments } from "../../lib/mockAppointments";
 
-export default function StaffManagementCalemdarView() {
+export default function StaffManagementCalemdarView({
+  staff,
+  allStaffData,
+  onApplyFilters,
+  currentFilters,
+}) {
   return (
     <CustomStaffCalendar
       appointmentsData={mockAppointments}
-      staffData={staffData}
+      staffData={staff} // This is the filtered staff to display
+      allStaffForFilter={allStaffData} // This is the complete staff list for the filter modal
+      onApplyFilters={onApplyFilters}
+      currentFilters={currentFilters}
       initialView="week"
       showHeaderToolbar={true}
       showStaffFilter={true}
-      showViewToggle={false}
+      showViewToggle={true}
     />
   );
 }

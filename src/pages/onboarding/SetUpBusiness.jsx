@@ -1,34 +1,55 @@
-import { imageProvider } from "../../lib/imageProvider";
-
-import { ChevronDown } from "lucide-react";
 import { useForm } from "react-hook-form";
+import { imageProvider } from "../../lib/imageProvider";
+import { ChevronDown, X } from "lucide-react";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router";
+import ImageCropModal from "../../components/modal/ImageCropModal"; // Make sure this path is correct
 
 const SetUpBusiness = () => {
   const {
     register,
     handleSubmit,
+    setValue, // Use setValue to update form state
     formState: { isValid },
   } = useForm({ mode: "onChange" });
 
-  const [thumbnail, setThumbnail] = useState(null);
-  const [thumbnailName, setThumbnailName] = useState("");
+  // State for image cropping
+  const [image, setImage] = useState(null); // Holds the original image for the cropper
+  const [croppedImage, setCroppedImage] = useState(null); // Holds the final cropped image
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const formRef = useRef(null);
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    const formData = { ...data, thumbnail };
+    // Include the cropped image in the final form data
+    const formData = { ...data, thumbnail: croppedImage };
     console.log(formData);
     navigate("setup-location");
   };
 
-  const handleImageChange = (e) => {
+  const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setThumbnail(file);
-      setThumbnailName(file.name);
+      // Create a URL for the selected file and open the crop modal
+      const imageURL = URL.createObjectURL(file);
+      setImage(imageURL);
+      setIsModalOpen(true);
     }
+  };
+
+  const handleCropFinish = (croppedImgDataUrl) => {
+    // Set the cropped image, update the form value, and close the modal
+    setCroppedImage(croppedImgDataUrl);
+    setValue("thumbnail", croppedImgDataUrl, { shouldValidate: true }); // Set hidden form value
+    setIsModalOpen(false);
+  };
+
+  const handleRemoveImage = () => {
+    // Clear all image states
+    setImage(null);
+    setCroppedImage(null);
+    setValue("thumbnail", null, { shouldValidate: true }); // Clear hidden form value
   };
 
   const handleExternalSubmit = () => {
@@ -36,6 +57,7 @@ const SetUpBusiness = () => {
       formRef.current.requestSubmit();
     }
   };
+
   return (
     <div className="px-2 py-[20px] lg:px-[20px] lg:py-[30px] xl:p-[40px]">
       <p className="text-[#866BE7] mb-2 font-medium">Step 1 of 3</p>
@@ -45,6 +67,7 @@ const SetUpBusiness = () => {
       <p className="text-[#888888] pb-2.5">
         Tell us a bit about your business so we can personalize your experience.
       </p>
+
       <form
         ref={formRef}
         onSubmit={handleSubmit(onSubmit)}
@@ -56,25 +79,43 @@ const SetUpBusiness = () => {
             Thumbnail <span className="text-orange-600">*</span>
           </label>
           <div className="mb-6 flex">
-            <label
-              htmlFor="thumbnail"
-              className="w-full max-w-md flex flex-col items-center justify-center border-2 border-dashed border-gray-400 p-8 rounded-lg cursor-pointer hover:border-[#866BE7] transition-all text-center"
-            >
-              <div className="flex flex-col items-center">
-                <img src={imageProvider.imageUploader} alt="Image" />
-                <p className="text-gray-600 text-lg font-semibold underline my-2">
-                  {thumbnailName || "Upload Image"}
-                </p>
-                <p className="text-sm text-gray-500">JPEG, PNG up to 50MB</p>
+            {!croppedImage ? (
+              <label
+                htmlFor="thumbnail"
+                className="w-full max-w-md flex flex-col items-center justify-center border-2 border-dashed border-gray-400 p-8 rounded-lg cursor-pointer hover:border-[#866BE7] transition-all text-center"
+              >
+                <div className="flex flex-col items-center">
+                  <img src={imageProvider.imageUploader} alt="Upload Icon" />
+                  <p className="text-gray-600 text-lg font-semibold underline my-2">
+                    Upload Image
+                  </p>
+                  <p className="text-sm text-gray-500">JPEG, PNG up to 50MB</p>
+                </div>
+                <input
+                  id="thumbnail"
+                  type="file"
+                  accept="image/jpeg, image/png"
+                  className="hidden"
+                  onChange={handleFileChange}
+                />
+              </label>
+            ) : (
+              <div className="relative w-full max-w-md">
+                <img
+                  src={croppedImage}
+                  alt="Cropped Thumbnail"
+                  className="w-full h-[180px] rounded-lg object-cover cursor-pointer"
+                  onClick={() => setIsModalOpen(true)} // Re-open cropper
+                />
+                <button
+                  type="button"
+                  onClick={handleRemoveImage}
+                  className="absolute -top-2 -right-2 bg-white border border-gray-300 rounded-full p-1 group hover:bg-[#866BE7] hover:border-[#866BE7]"
+                >
+                  <X className="w-5 h-5 text-[#866BE7] group-hover:text-white" />
+                </button>
               </div>
-              <input
-                id="thumbnail"
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={handleImageChange}
-              />
-            </label>
+            )}
           </div>
         </div>
 
@@ -114,7 +155,7 @@ const SetUpBusiness = () => {
           </div>
 
           {/* Business Classification */}
-          <div className="flex-1 relative">
+          <div className="flex-1 relative mt-5 sm:mt-0">
             <label className="block mb-2 text-[#888888]">
               Business Classification <span className="text-orange-600">*</span>
             </label>
@@ -151,13 +192,13 @@ const SetUpBusiness = () => {
           </div>
 
           {/* Registration Number */}
-          <div className="flex-1">
+          <div className="flex-1 mt-5 sm:mt-0">
             <label className="block mb-2 text-[#888888]">
               Registration Number <span className="text-orange-600">*</span>
             </label>
             <input
               type="text"
-              {...register("registerNumber")}
+              {...register("registerNumber", { required: true })}
               className="block text-sm w-full border border-gray-300 rounded-md p-2"
               placeholder="Number"
               required
@@ -173,11 +214,15 @@ const SetUpBusiness = () => {
           <textarea
             {...register("aboutUs", { required: true })}
             className="block text-sm w-full border border-gray-300 rounded-md p-2 h-40"
-            placeholder="Shot intruductions"
+            placeholder="Short introductions"
             required
           />
         </div>
+        {/* Hidden input to hold the cropped image value for form validation */}
+        <input type="hidden" {...register("thumbnail", { required: true })} />
       </form>
+
+      {/* Continue Button */}
       <div className="mt-8 sm:my-6 w-full px-5 text-right">
         <button
           disabled={!isValid}
@@ -185,12 +230,20 @@ const SetUpBusiness = () => {
           className={`w-full md:w-auto block md:inline-block text-center md:text-right px-[14px] py-[10px] rounded-lg transition-all duration-300 ease-in-out ${
             isValid
               ? "text-white bg-[#242528] hover:bg-[#1c1d1f] hover:shadow-lg"
-              : "text-[#82868E] bg-[#E5E7E8] hover:bg-[#cccfd1] cursor-not-allowed"
+              : "text-[#82868E] bg-[#E5E7E8] cursor-not-allowed"
           }`}
         >
           Continue
         </button>
       </div>
+
+      {/* Modal for Cropping */}
+      <ImageCropModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        image={image}
+        onCropFinish={handleCropFinish}
+      />
     </div>
   );
 };

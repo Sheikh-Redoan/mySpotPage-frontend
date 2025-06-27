@@ -187,7 +187,6 @@ export const routes = createBrowserRouter([
   { path: "/setup-signup", element: <SetupSignup /> },
   { path: "/signup-successfull", element: <SignupSuccessfull /> },
 
-  // Onboarding Routes (Protected after initial setup, generally for new sellers/staff)
   {
     path: "/onboard",
     element: (

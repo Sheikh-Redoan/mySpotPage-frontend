@@ -1,4 +1,3 @@
-
 import { Button, Space } from "antd";
 import { ArrowLeft } from "lucide-react";
 import { useRef, useState } from "react";
@@ -13,8 +12,7 @@ import ImageCropModal from "../../components/modal/ImageCropModal";
 const AddNewServicePage = ({ publishedBtn = false }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const beforeAfter = "Before & After";
-  // const beforeAfter = location.state?.beforeAfter;
+  const { beforeAfter } = location.state || {};
   const [searchParams] = useSearchParams();
   const serviceId = searchParams.get("serviceId");
 
@@ -30,10 +28,10 @@ const AddNewServicePage = ({ publishedBtn = false }) => {
 
   const [thumbnailImage, setThumbnailImage] = useState(null);
   const [croppedImage, setCroppedImage] = useState(null);
+  const [imageToCrop, setImageToCrop] = useState(null);
 
-  const [workImages, setWorkImages] = useState([]); // raw images
-  const [workCroppedImages, setWorkCroppedImages] = useState([]); // cropped versions
-
+  const [workImages, setWorkImages] = useState([]);
+  const [workCroppedImages, setWorkCroppedImages] = useState([]);
   const [currentCropIndex, setCurrentCropIndex] = useState(null);
 
   const fileInputRef = useRef();
@@ -45,9 +43,8 @@ const AddNewServicePage = ({ publishedBtn = false }) => {
   ]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [croppingTarget, setCroppingTarget] = useState(null); // "basicDetails" or "workImage"
+  const [croppingTarget, setCroppingTarget] = useState(null);
 
-  // befor after pair
   const [imagePairs, setImagePairs] = useState([{ before: null, after: null }]);
 
   const handleButtonClick = () => {
@@ -64,29 +61,38 @@ const AddNewServicePage = ({ publishedBtn = false }) => {
       const imageURL = URL.createObjectURL(file);
       setThumbnailImage(imageURL);
       setThumbnailName(file.name);
-      setCroppingTarget("basicDetails"); // open modal for basic image
+      setCroppingTarget("basicDetails");
       setIsModalOpen(true);
     }
   };
 
   const handleWorkFileChange = (e) => {
-    const files = Array.from(e.target.files);
-    const newImages = files.slice(0, 10 - workImages.length); // max 10
-    const newImageUrls = newImages.map((file) => URL.createObjectURL(file));
-
-    setWorkImages([...workImages, ...newImageUrls]);
-    setWorkCroppedImages([...workCroppedImages, ...newImageUrls]); // initially same
+    const file = e.target.files[0];
+    if (file) {
+      const imageURL = URL.createObjectURL(file);
+      setCroppingTarget("workImage");
+      setImageToCrop(imageURL);
+      setIsModalOpen(true);
+    }
   };
 
   const handleCropFinish = (croppedDataUrl) => {
     if (croppingTarget === "basicDetails") {
       setCroppedImage(croppedDataUrl);
-    } else if (croppingTarget === "workImage" && currentCropIndex !== null) {
-      const updated = [...workCroppedImages];
-      updated[currentCropIndex] = croppedDataUrl;
-      setWorkCroppedImages(updated);
+    } else if (croppingTarget === "workImage") {
+      if (currentCropIndex !== null) {
+        const updatedCropped = [...workCroppedImages];
+        updatedCropped[currentCropIndex] = croppedDataUrl;
+        setWorkCroppedImages(updatedCropped);
+      } else {
+        setWorkImages([...workImages, imageToCrop]);
+        setWorkCroppedImages([...workCroppedImages, croppedDataUrl]);
+      }
     }
     setIsModalOpen(false);
+    setCurrentCropIndex(null);
+    setCroppingTarget(null);
+    setImageToCrop(null);
   };
 
   const handleRemoveImage = () => {
@@ -95,11 +101,11 @@ const AddNewServicePage = ({ publishedBtn = false }) => {
     setThumbnailName("");
   };
 
-  const handleWorkRemoveImage = (index) => {
-    const updatedImages = workImages.filter((_, i) => i !== index);
-    const updatedCropped = workCroppedImages.filter((_, i) => i !== index);
-    setWorkImages(updatedImages);
-    setWorkCroppedImages(updatedCropped);
+  const handleWorkRemoveImage = (indexToRemove) => {
+    setWorkImages((prev) => prev.filter((_, i) => i !== indexToRemove));
+    setWorkCroppedImages((prev) =>
+      prev.filter((_, i) => i !== indexToRemove)
+    );
   };
 
   const handleCollapseChange = async (key) => {
@@ -109,24 +115,16 @@ const AddNewServicePage = ({ publishedBtn = false }) => {
         "description",
         "availableFor",
       ]);
-
       const allFilled = isValid && (croppedImage || thumbnailImage);
-
       setIsStepComplete(allFilled);
-
       if (!allFilled) return;
     }
     setActiveKey(key);
   };
 
-  const priceCheckboxChange1 = (e) => {
-    setPriceModal1(e.target.checked);
-  };
-  const priceCheckboxChange2 = (e) => {
-    setPriceModal2(e.target.checked);
-  };
+  const priceCheckboxChange1 = (e) => setPriceModal1(e.target.checked);
+  const priceCheckboxChange2 = (e) => setPriceModal2(e.target.checked);
 
-  // befor after logic
   const onAddPair = () => {
     if (imagePairs.length < 5) {
       setImagePairs([...imagePairs, { before: null, after: null }]);
@@ -152,9 +150,14 @@ const AddNewServicePage = ({ publishedBtn = false }) => {
     setImagePairs(updatedPairs);
   };
 
-  const openCropModal = (index, type) => {
-    setCroppingTarget({ index, type });
-    setIsModalOpen(true);
+  const getCroppingImage = () => {
+    if (croppingTarget === "basicDetails") return thumbnailImage;
+    if (croppingTarget === "workImage") {
+      return currentCropIndex !== null
+        ? workImages[currentCropIndex]
+        : imageToCrop;
+    }
+    return null;
   };
 
   return (
@@ -163,7 +166,8 @@ const AddNewServicePage = ({ publishedBtn = false }) => {
         <div className="flex justify-between items-center">
           <div
             onClick={() => navigate(-1)}
-            className="flex items-center gap-1.5 cursor-pointer">
+            className="flex items-center gap-1.5 cursor-pointer"
+          >
             <ArrowLeft size={18} />
             <p className="text-[#242528] text-lg font-semibold ml-1">
               {serviceId ? "Update" : "New"} Service
@@ -214,9 +218,10 @@ const AddNewServicePage = ({ publishedBtn = false }) => {
               onAddPair={onAddPair}
               onChangeImage={onImageChange}
               onRemoveImage={onRemoveImage}
-              onCropImage={(index, position) =>
-                setCroppingTarget({ type: "beforeAfter", index, position })
-              }
+              onCropImage={(index, position) => {
+                setCroppingTarget({ type: "beforeAfter", index, position });
+                setIsModalOpen(true);
+              }}
             />
           )}
 
@@ -227,27 +232,21 @@ const AddNewServicePage = ({ publishedBtn = false }) => {
               handleWorkRemoveImage={handleWorkRemoveImage}
               handleWorkFileChange={handleWorkFileChange}
               handleButtonClick={handleButtonClick}
-              setIsModalOpen={(index) => {
+              fileInputRef={fileInputRef}
+              onImageClick={(index) => {
                 setCroppingTarget("workImage");
                 setCurrentCropIndex(index);
                 setIsModalOpen(true);
               }}
-              fileInputRef={fileInputRef}
-              setCurrentCropIndex={setCurrentCropIndex}
             />
           )}
         </Space>
       </div>
 
-      {/* Single modal for cropping both basic and work images */}
       <ImageCropModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        image={
-          croppingTarget === "basicDetails"
-            ? croppedImage || thumbnailImage
-            : workImages[currentCropIndex]
-        }
+        image={getCroppingImage()}
         onCropFinish={handleCropFinish}
       />
 
@@ -269,7 +268,8 @@ const AddNewServicePage = ({ publishedBtn = false }) => {
       <div className="flex justify-between items-center md:hidden fixed bottom-0 left-0 right-0 bg-white pb-10 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] p-5 z-50">
         <button
           type="button"
-          className=" md:hidden text-white font-semibold bg-gray-900 py-2.5 w-full rounded-lg cursor-pointer hover:scale-95 transform transition-all duration-300 ease-in-out">
+          className="md:hidden text-white font-semibold bg-gray-900 py-2.5 w-full rounded-lg cursor-pointer hover:scale-95 transform transition-all duration-300 ease-in-out"
+        >
           Publish
         </button>
       </div>
@@ -278,5 +278,3 @@ const AddNewServicePage = ({ publishedBtn = false }) => {
 };
 
 export default AddNewServicePage;
-
-

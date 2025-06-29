@@ -94,6 +94,7 @@ import StaffSecurityPage from "../pages/onboarding/StaffSecurityPage";
 import StaffServicesPage from "../pages/onboarding/StaffServicesPage";
 import StaffWorkingHoursPage from "../pages/onboarding/StaffWorkingHoursPage";
 import AddNewServicePage from "../pages/seller/AddNewServicePage";
+import BookingDetails from "../components/shared/BookingDetails";
 
 export const routes = createBrowserRouter([
   // Public Routes (Accessible to everyone)
@@ -114,6 +115,10 @@ export const routes = createBrowserRouter([
       {
         path: "review",
         element: <ReviewContainer />,
+      },
+      {
+        path: "booking-details",
+        element: <BookingDetails />,
       },
 
       // Client-specific booking flow (can be accessed by authenticated clients)

@@ -12,7 +12,7 @@ const serviceSlice = createSlice({
   initialState,
   reducers: {
     setServiceData: (state, action) => {
-      return { ...state, ...action.payload };
+      return action.payload;
     },
     clearServiceData: () => initialState,
   },

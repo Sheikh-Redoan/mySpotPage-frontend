@@ -119,8 +119,9 @@ const businessStaticData = {
 const SelectStaffForProvider = () => {
   const [showDetails, setShowDetails] = useState(false);
   const navigate = useNavigate();
-  const selectedStaff = useSelector(({ selectedStaff }) => selectedStaff);
   const [staff, setStaff] = useState(staffData);
+
+  const selectedStaff = useSelector(({ selectedStaff }) => selectedStaff);
   const dispatch = useDispatch();
 
   const handleSelect = (staffData) => {

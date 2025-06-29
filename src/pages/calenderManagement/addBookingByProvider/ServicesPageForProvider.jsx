@@ -8,6 +8,8 @@ import { cn } from "../../../lib/utils";
 import CheckoutCardForMobile from "../../../components/addBookingByProvider/CheckoutCardForMobile";
 import BookingCheckoutCard from "../../../components/addBookingByProvider/BookingCheckoutCard";
 import confirm_product from "/src/assets/images/confirm.jpg";
+import { useDispatch } from "react-redux";
+import { setServiceData } from "../../../redux/features/serviceSlice";
 
 const businessStaticData = {
   studioName: "TCL Beauty Studio 01",
@@ -15,12 +17,12 @@ const businessStaticData = {
   rating: 4.8,
   reviewCount: "12.5K reviews",
   address: "15 Rothschild Boulevard, Tel Aviv-Yafo, Israel",
-  subtotal: 0.00,
+  subtotal: 0.0,
   vatIncluded: true,
   discountPercent: 20,
-  discountAmount: 0.00,
-  total: 0.00,
-  vat: 0.00,
+  discountAmount: 0.0,
+  total: 0.0,
+  vat: 0.0,
   paymentInstruction: "You will pay at the appointment location",
 };
 
@@ -29,8 +31,11 @@ const ServicesPageForProvider = () => {
   const navigate = useNavigate();
   const [selected, setSelected] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const dispatch = useDispatch();
 
   const handleBookNow = () => {
+    console.log("selected", selected);
+    dispatch(setServiceData(selected));
     setModalOpen(true);
   };
 
@@ -102,7 +107,7 @@ const ServicesPageForProvider = () => {
         open={modalOpen}
         onCancel={() => setModalOpen(false)}
         onContinue={(selectedData) => {
-          console.log({selectedData})
+          console.log({ selectedData });
           navigate("/dashboard/add-booking-by-provider/select-staff");
         }}
         services={selected}

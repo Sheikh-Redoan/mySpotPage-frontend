@@ -216,10 +216,10 @@ export const MOCK_EVENTS = [
 
 export const specialDatesData = [
   {
-    date: "2025-06-25",
-    isBusy: true,
+    date: "2025-07-07",
+    isBusy: false,
     timeSlots: [
-      { time: "09:00", isBusy: true },
+      { time: "09:00", isBusy: false },
       { time: "10:00", isBusy: true },
       { time: "11:00", isBusy: false },
       { time: "14:00", isBusy: true },
@@ -227,23 +227,13 @@ export const specialDatesData = [
     ],
   },
   {
-    date: "2025-06-26",
-    isBusy: true,
+    date: "2025-07-06",
+    isBusy: false,
     timeSlots: [
-      { time: "09:00", isBusy: true },
+      { time: "09:00", isBusy: false },
       { time: "10:00", isBusy: false, sale: "🔥 15% OFF" },
       { time: "14:00", isBusy: true },
       { time: "15:00", isBusy: true },
-    ],
-  },
-  {
-    date: "2025-06-24",
-    sale: "🔥 25% OFF",
-    timeSlots: [
-      { time: "09:00", isBusy: false, sale: "🔥 25% OFF" },
-      { time: "10:00", isBusy: false, sale: "🔥 25% OFF" },
-      { time: "14:00", isBusy: false, sale: "🔥 25% OFF" },
-      { time: "15:00", isBusy: false, sale: "🔥 25% OFF" },
     ],
   },
   {
@@ -270,9 +260,9 @@ export const specialDatesData = [
     date: "2025-07-03",
 
     timeSlots: [
-      { time: "09:00", isBusy: false, sale: "🔥 25% OFF" },
+      { time: "09:00", isBusy: false },
       { time: "10:00", isBusy: false, sale: "🔥 25% OFF" },
-      { time: "14:00", isBusy: false, sale: "🔥 25% OFF" },
+      { time: "14:00", isBusy: false },
       { time: "15:00", isBusy: false, sale: "🔥 25% OFF" },
     ],
   },
@@ -291,16 +281,6 @@ export const specialDatesData = [
     isBusy: false,
     timeSlots: [
       { time: "09:00", isBusy: false },
-      { time: "10:00", isBusy: true },
-      { time: "14:00", isBusy: true },
-      { time: "15:00", isBusy: true },
-    ],
-  },
-  {
-    date: "2025-06-17",
-    isBusy: true,
-    timeSlots: [
-      { time: "09:00", isBusy: true },
       { time: "10:00", isBusy: true },
       { time: "14:00", isBusy: true },
       { time: "15:00", isBusy: true },

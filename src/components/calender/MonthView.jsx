@@ -1,6 +1,8 @@
 import dayjs from "dayjs";
 import "dayjs/locale/en";
 import DayCell from "./DayCell";
+import { useDispatch } from "react-redux";
+import { setTimeSelection } from "../../redux/features/selectTimeSlice";
 
 export default function MonthView({
   currentDate,
@@ -11,6 +13,7 @@ export default function MonthView({
   selectTimeFromProvider,
   resources = [],
 }) {
+  const dispatch = useDispatch();
   const daysInGrid = getDaysInMonthGrid(currentDate);
   const today = dayjs();
 
@@ -37,7 +40,8 @@ export default function MonthView({
       {dayNames.map((name, index) => (
         <div
           key={index}
-          className="p-3 text-center border-b border-gray-200 bg-primary01/10 text-sm font-medium text-primary01 uppercase">
+          className="p-3 text-center border-b border-gray-200 bg-primary01/10 text-sm font-medium text-primary01 uppercase"
+        >
           {name}
         </div>
       ))}
@@ -63,7 +67,8 @@ export default function MonthView({
             isToday={isToday}
             isCurrentMonth={isCurrentMonth}
             onTimeSelect={(selectedTime) => {
-              console.log("Selected:", selectedTime);
+              dispatch(setTimeSelection(selectedTime));
+              console.log("Selected time slot:", selectedTime);
             }}
           />
         );

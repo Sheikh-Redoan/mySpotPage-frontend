@@ -34,7 +34,6 @@ const ServicesPageForProvider = () => {
   const dispatch = useDispatch();
 
   const handleBookNow = () => {
-    console.log("selected", selected);
     dispatch(setServiceData(selected));
     setModalOpen(true);
   };

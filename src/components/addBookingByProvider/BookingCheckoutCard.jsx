@@ -10,6 +10,23 @@ import useResponsive from "../../hooks/useResponsive";
 import { PiInfo } from "react-icons/pi";
 import { useSelector } from "react-redux";
 
+function formatDateTime(isoString) {
+  const date = new Date(isoString);
+  const options = {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  };
+  // Remove seconds and use local time
+  return date
+    .toLocaleString("en-GB", options)
+    .replace(",", "")
+    .replace(/(\d{2}:\d{2}).*/, "$1");
+}
+
 const BookingCheckoutCard = ({
   data,
   selected,
@@ -21,7 +38,8 @@ const BookingCheckoutCard = ({
   ...props
 }) => {
   const selectedServices = useSelector(({ service }) => service);
-  console.log("selectedServices", selectedServices);
+  const selectedTimeSlot = useSelector(({ selectTime }) => selectTime);
+  console.log({ selectedTimeSlot });
 
   const [showAllServices, setShowAllServices] = useState(false);
   const { lg } = useResponsive();
@@ -81,10 +99,10 @@ const BookingCheckoutCard = ({
             <span>{selectedStaff?.name}</span>
           </div>
 
-          {data?.selectedTime && (
+          {selectedTimeSlot && (
             <div className="flex items-center gap-2 text-sm text-[#262626]">
               <CiCalendar size={16} />
-              <span>{data?.selectedTime}</span>
+              <span>{formatDateTime(selectedTimeSlot?.fullDateTime)}</span>
             </div>
           )}
 
@@ -179,7 +197,7 @@ const BookingCheckoutCard = ({
       )}
 
       {/* Separator Line (renders if services are present, AND pricing info is present) */}
-      {data?.services && data?.services.length > 0 && hasPricingInfo && (
+      {selectedServices && selectedServices.length > 0 && hasPricingInfo && (
         <div className="w-full border-t border-dashed border-gray-300"></div>
       )}
 

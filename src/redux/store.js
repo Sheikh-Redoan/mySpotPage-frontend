@@ -1,16 +1,30 @@
 import { configureStore } from "@reduxjs/toolkit";
-import serviceReducer from "../redux/features/serviceSlice";
-import selectedStaffReducer from "../redux/features/staffSlice";
-import selectTimeSliceReducer from "../redux/features/selectTimeSlice";
+import { apiSlice } from "./api/apiSlice";
+import authReducer from "./features/auth/authSlice";
 import languageReducer from "./features/languageSlice";
-import userReducer from "./features/userSlice";
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
+const persistConfig = {
+  key: 'auth',
+  storage,
+};
+
+const persistedReducer = persistReducer(persistConfig, authReducer);
 
 export const store = configureStore({
   reducer: {
-    service: serviceReducer,
-    selectedStaff: selectedStaffReducer,
-    user: userReducer,
+    [apiSlice.reducerPath]: apiSlice.reducer,
+    auth: persistedReducer,
     language: languageReducer,
-    selectTime: selectTimeSliceReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        // Ignore these action types
+        ignoredActions: ['persist/PERSIST'],
+      },
+    }).concat(apiSlice.middleware),
 });
+
+export const persistor = persistStore(store);

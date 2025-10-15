@@ -486,8 +486,6 @@ export const routes = createBrowserRouter([
     path: "/forbidden",
     element: <ForbiddenPage />,
   },
-
-  // Catch-all for 404
   {
     path: "*",
     element: <ErrorPage />,

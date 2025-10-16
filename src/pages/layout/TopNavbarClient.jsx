@@ -11,6 +11,8 @@ import Container from "../client/Container";
 export default function TopNavbarClient() {
   const [isUserOpen, setIsUserOpen] = useState(false);
   const user = useSelector(selectUser);
+  console.log(user);
+  
   const handlePopup = () => {
     setIsUserOpen(!isUserOpen);
   };

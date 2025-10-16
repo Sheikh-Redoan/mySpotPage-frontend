@@ -4,10 +4,9 @@ import { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
-// Import from 'react-router-dom', not 'react-router'
-import { Link, useNavigate } from "react-router"; 
+import { Link, useNavigate, useSearchParams } from "react-router";
 import { setTokens } from "../../redux/features/auth/authSlice";
-import { useLoginMutation } from "../../redux/features/auth/authApi";
+import { useLoginMutation, useClientSignInMutation } from "../../redux/features/auth/authApi";
 
 const Signin = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -15,54 +14,83 @@ const Signin = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [login, { isLoading }] = useLoginMutation();
+  const [login, { isLoading: isSellerLoading }] = useLoginMutation();
+  const [clientSignIn, { isLoading: isClientLoading }] = useClientSignInMutation();
+  const [searchParams] = useSearchParams();
+  const isClientLogin = searchParams.get("type") === "client";
 
-  // The problematic useEffect causing the loop has been removed.
+  const isLoading = isClientLogin ? isClientLoading : isSellerLoading;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
     const phone = e.target.phone.value;
-    const password = e.target.password.value;
 
-    if (!phone || !password) {
-      setError("Please fill in all required fields.");
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("number", phone);
-    formData.append("password", password);
-
-    try {
-      // 1. Attempt to log in to get tokens.
-      const tokenData = await login(formData).unwrap();
-      
-      // Validate the server response.
-      if (!tokenData?.access_token || !tokenData?.refresh_token) {
-        throw new Error("Invalid token response from server");
+    if (isClientLogin) {
+      // Client login - send OTP
+      if (!phone) {
+        setError("Please enter your phone number.");
+        return;
       }
 
-      // 2. If successful, dispatch tokens to Redux (which saves to local storage).
-      dispatch(
-        setTokens({
-          accessToken: tokenData.access_token,
-          refreshToken: tokenData.refresh_token,
-        })
-      );
-      // 3. Navigate to the dashboard. This now happens reliably after a successful login.
-      console.log("Login successful! Redirecting to dashboard...");
-      navigate("/dashboard", { replace: true });
-    } catch (err) {
-      // This block runs if the API call fails.
-      console.error("Login failed:", err);
-      setError(
-        err.data?.message || 
-        err.data?.detail || 
-        err.message ||
-        "Invalid credentials. Please try again."
-      );
+      const formData = new FormData();
+      formData.append("number", phone);
+
+      try {
+        await clientSignIn(formData).unwrap();
+        // Navigate to OTP verification page with phone number
+        navigate("/verify-number", { 
+          state: { 
+            number: phone, 
+            type: "client" 
+          } 
+        });
+      } catch (err) {
+        console.error("Client sign-in failed:", err);
+        setError(
+          err.data?.message ||
+            err.data?.detail ||
+            "Failed to send OTP. Please try again."
+        );
+      }
+    } else {
+      // Seller login - direct login with password
+      const password = e.target.password.value;
+
+      if (!phone || !password) {
+        setError("Please fill in all required fields.");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("number", phone);
+      formData.append("password", password);
+
+      try {
+        const tokenData = await login(formData).unwrap();
+
+        if (!tokenData?.access_token || !tokenData?.refresh_token) {
+          throw new Error("Invalid token response from server");
+        }
+
+        dispatch(
+          setTokens({
+            accessToken: tokenData.access_token,
+            refreshToken: tokenData.refresh_token,
+          })
+        );
+        console.log("Login successful! Redirecting to dashboard...");
+        navigate("/dashboard", { replace: true });
+      } catch (err) {
+        console.error("Login failed:", err);
+        setError(
+          err.data?.message ||
+            err.data?.detail ||
+            err.message ||
+            "Invalid credentials. Please try again."
+        );
+      }
     }
   };
 
@@ -86,9 +114,11 @@ const Signin = () => {
             <Link className="hidden sm:block" to={"/auth"}>
               <ArrowLeft size={24} />
             </Link>
-            <h2 className="text-[20px] font-semibold text-center w-full">Sign in</h2>
+            <h2 className="text-[20px] font-semibold text-center w-full">
+              {isClientLogin ? "Enter Your Number" : "Sign in"}
+            </h2>
           </div>
-          
+
           {error && (
             <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md text-sm text-center mb-4">
               {error}
@@ -111,50 +141,57 @@ const Signin = () => {
             />
           </div>
 
-          {/* Password Input with Eye Icon */}
-          <div className="mb-4">
-            <label htmlFor="password" className="block text-gray-700 font-medium mb-1">
-              Password <span className="text-orange-600">*</span>
-            </label>
-            <div className="relative">
-              <input
-                id="password"
-                name="password"
-                type={showPassword ? "text" : "password"}
-                placeholder="Your password"
-                className="w-full px-4 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#744CDB] text-sm"
-                required
-                disabled={isLoading}
-              />
-              <span
-                className="absolute right-3 top-3 text-gray-500 cursor-pointer"
-                onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? <FaEyeSlash /> : <FaEye />}
-              </span>
-            </div>
-          </div>
+          {!isClientLogin && (
+            <>
+              {/* Password Input with Eye Icon */}
+              <div className="mb-4">
+                <label
+                  htmlFor="password"
+                  className="block text-gray-700 font-medium mb-1"
+                >
+                  Password <span className="text-orange-600">*</span>
+                </label>
+                <div className="relative">
+                  <input
+                    id="password"
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Your password"
+                    className="w-full px-4 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#744CDB] text-sm"
+                    required
+                    disabled={isLoading}
+                  />
+                  <span
+                    className="absolute right-3 top-3 text-gray-500 cursor-pointer"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  </span>
+                </div>
+              </div>
 
-          {/* Remember Me & Forgot Password */}
-          <div className="flex items-center justify-between mb-6 text-sm">
-            <label className="flex items-center gap-2 text-gray-700">
-              <input 
-                type="checkbox" 
-                className="accent-[#744CDB]"
-                disabled={isLoading}
-              />
-              Remember me
-            </label>
-            <Link to={"/auth/forgot-password"}>
-              <button 
-                type="button" 
-                className="text-[#744CDB] font-medium hover:underline disabled:opacity-50"
-                disabled={isLoading}
-              >
-                Forgot Password?
-              </button>
-            </Link>
-          </div>
+              {/* Remember Me & Forgot Password */}
+              <div className="flex items-center justify-between mb-6 text-sm">
+                <label className="flex items-center gap-2 text-gray-700">
+                  <input
+                    type="checkbox"
+                    className="accent-[#744CDB]"
+                    disabled={isLoading}
+                  />
+                  Remember me
+                </label>
+                <Link to={"/auth/forgot-password"}>
+                  <button
+                    type="button"
+                    className="text-[#744CDB] font-medium hover:underline disabled:opacity-50"
+                    disabled={isLoading}
+                  >
+                    Forgot Password?
+                  </button>
+                </Link>
+              </div>
+            </>
+          )}
 
           {/* Signin Button */}
           <button
@@ -162,7 +199,11 @@ const Signin = () => {
             className="w-full bg-[#744CDB] text-white py-2 rounded-md hover:bg-[#633CDB] hover:scale-x-95 transition-all transform duration-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-x-100"
             disabled={isLoading}
           >
-            {isLoading ? "Signing in..." : "Sign in"}
+            {isLoading
+              ? "Loading..."
+              : isClientLogin
+              ? "Continue"
+              : "Sign in"}
           </button>
 
           {/* Signup Navigation */}

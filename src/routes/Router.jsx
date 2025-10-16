@@ -97,10 +97,9 @@ import AddNewServicePage from "../pages/seller/AddNewServicePage";
 import BookingDetails from "../components/shared/BookingDetails";
 
 export const routes = createBrowserRouter([
-  // Public Routes (Accessible to everyone)
   {
     path: "/",
-    element: <ClientLayout />, // Assuming this is the layout for public/client-facing pages
+    element: <ClientLayout />,
     errorElement: <ErrorPage />,
     hydrateFallbackElement: <div>Loading...</div>,
     children: [

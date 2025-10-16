@@ -24,12 +24,12 @@ const LoginNotificationModal = ({ open, onCancel }) => {
           <Translator text="Before we get started, let’s set things up so we can offer you the best experience." />
         </p>
         <div className="flex items-center gap-3 w-full mt-2">
-          <Link to="/signin" className="flex-1">
+          <Link to="/signin/?type=client" className="flex-1">
             <Button type="default" className="w-full" size="large">
               <Translator text="Sign In" />
             </Button>
           </Link>
-          <Link to="/signup" className="flex-1">
+          <Link to="/signup?type=client" className="flex-1">
             <Button
               type="default"
               className="!bg-black !text-white w-full"

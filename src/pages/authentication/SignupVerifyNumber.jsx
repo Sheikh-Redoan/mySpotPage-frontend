@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { authAPI } from "@/utils/api"; // This import will now work
 import { setTokens, setUser } from "@/redux/features/auth/authSlice";
+import { useVerifyClientOtpMutation } from "../../redux/features/auth/authApi";
 
 const SignupVerifyNumber = () => {
   const [otp, setOtp] = useState("");
@@ -13,6 +14,7 @@ const SignupVerifyNumber = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
+  const [verifyClientOtp] = useVerifyClientOtpMutation()
 
   const { number, type } = location.state || {};
 
@@ -36,8 +38,9 @@ const SignupVerifyNumber = () => {
     formData.append("number", number);
 
     try {
-      const response = await authAPI.verifyOtp(formData);
-
+      const response = await verifyClientOtp(formData);
+      console.log(response);
+      
       if (response.data && response.data.token) {
         dispatch(setTokens({
           accessToken: response.data.token.access,
@@ -48,7 +51,6 @@ const SignupVerifyNumber = () => {
         }
       }
       else {
-        setError("Invalid response from server. Please try again.");
         navigate(`/setup-signup?type=${type || 'client'}`);
       }
     } catch (err) {

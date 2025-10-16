@@ -3,11 +3,11 @@ import { motion } from "framer-motion";
 import { slideInFromLeft } from "@/animations/variants";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router";
-import axios from "axios";
-import { useSelector } from "react-redux"; // To get the token from redux store
+import { useAccountUpdateMutation } from "@/redux/features/auth/authApi";
 
 const SetupSignup = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [formData, setFormData] = useState({
     first_name: "",
@@ -21,7 +21,8 @@ const SetupSignup = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
-  const { token } = useSelector((state) => state.auth); // Assuming token is in auth slice
+  
+  const [accountUpdate, { isLoading }] = useAccountUpdateMutation();
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
@@ -44,38 +45,75 @@ const SetupSignup = () => {
     e.preventDefault();
     setError("");
 
-    if (!isClient && formData.password !== formData.confirm_password) {
-      setError("Passwords do not match");
+    // Validation
+    if (!formData.first_name.trim() || !formData.last_name.trim()) {
+      setError("First name and last name are required");
       return;
     }
 
-    const data = new FormData();
-    data.append("first_name", formData.first_name);
-    data.append("last_name", formData.last_name);
-    data.append("date_of_birth", formData.date_of_birth);
-    data.append("sex", formData.sex);
+    if (!formData.sex) {
+      setError("Please select your sex");
+      return;
+    }
+
+    if (!formData.date_of_birth) {
+      setError("Date of birth is required");
+      return;
+    }
+
+    // Password validation for sellers only
     if (!isClient) {
-      data.append("password", formData.password);
+      if (!formData.password) {
+        setError("Password is required");
+        return;
+      }
+
+      if (formData.password.length < 4) {
+        setError("Password must be at least 4 characters long");
+        return;
+      }
+
+      if (formData.password !== formData.confirm_password) {
+        setError("Passwords do not match");
+        return;
+      }
+    }
+
+    // Prepare JSON data
+    const data = {
+      first_name: formData.first_name.trim(),
+      last_name: formData.last_name.trim(),
+      date_of_birth: formData.date_of_birth,
+      sex: formData.sex,
+    };
+    
+    // Only add password for sellers
+    if (!isClient) {
+      data.password = formData.password;
     }
 
     try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/auth/account/",
-        data,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      if (response.status === 200) {
-        navigate("/signup-successfull");
+      await accountUpdate(data).unwrap();
+      
+      // Navigate based on user type
+      if (isClient) {
+        // Client goes to success page then home
+        navigate("/signup-successfull", { 
+          state: { userType: "client" } 
+        });
+      } else {
+        // Seller goes to success page then onboarding
+        navigate("/signup-successfull", { 
+          state: { userType: "seller" } 
+        });
       }
     } catch (err) {
-      setError("Failed to update account. Please try again.");
-      console.error(err);
+      console.error("Account update failed:", err);
+      setError(
+        err.data?.message ||
+          err.data?.detail ||
+          "Failed to update account. Please try again."
+      );
     }
   };
 
@@ -92,11 +130,15 @@ const SetupSignup = () => {
           Set up Account
         </h2>
 
-        {error && <p className="text-red-500 text-center mb-4">{error}</p>}
+        {error && (
+          <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-md text-sm text-center mb-4">
+            {error}
+          </div>
+        )}
 
         {/* First and Last Name */}
         <div className="sm:flex gap-4 mb-4">
-          <div className="w-full sm:w-1/2">
+          <div className="w-full sm:w-1/2 mb-4 sm:mb-0">
             <label className="block text-gray-700 font-medium mb-1">
               First Name <span className="text-orange-600">*</span>
             </label>
@@ -108,6 +150,7 @@ const SetupSignup = () => {
               onChange={handleChange}
               className="w-full px-4 py-2.5 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-[#744CDB] text-sm"
               required
+              disabled={isLoading}
             />
           </div>
           <div className="w-full sm:w-1/2">
@@ -122,6 +165,7 @@ const SetupSignup = () => {
               onChange={handleChange}
               className="w-full px-4 py-2.5 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#744CDB] text-sm"
               required
+              disabled={isLoading}
             />
           </div>
         </div>
@@ -137,8 +181,9 @@ const SetupSignup = () => {
               name="date_of_birth"
               value={formData.date_of_birth}
               onChange={handleChange}
-              className="w-full px-4 py-2.5 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-[#744CDB]"
+              className="w-full px-4 py-2.5 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-[#744CDB] text-sm"
               required
+              disabled={isLoading}
             />
           </div>
         </div>
@@ -158,6 +203,7 @@ const SetupSignup = () => {
                 onChange={handleRadioChange}
                 className="accent-[#744CDB]"
                 required
+                disabled={isLoading}
               />
               Male
             </label>
@@ -169,6 +215,7 @@ const SetupSignup = () => {
                 checked={formData.sex === "F"}
                 onChange={handleRadioChange}
                 className="accent-[#744CDB]"
+                disabled={isLoading}
               />
               Female
             </label>
@@ -180,13 +227,14 @@ const SetupSignup = () => {
                 checked={formData.sex === "O"}
                 onChange={handleRadioChange}
                 className="accent-[#744CDB]"
+                disabled={isLoading}
               />
               Other
             </label>
           </div>
         </div>
 
-        {/* Password */}
+        {/* Password - Only for Sellers */}
         {!isClient && (
           <>
             <div className="mb-5">
@@ -206,6 +254,8 @@ const SetupSignup = () => {
                   onChange={handleChange}
                   className="w-full px-4 py-2.5 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-[#744CDB] text-sm"
                   required
+                  disabled={isLoading}
+                  minLength={4}
                 />
                 <span
                   className="absolute right-3 top-3 text-gray-400 cursor-pointer"
@@ -226,18 +276,20 @@ const SetupSignup = () => {
                 <input
                   id="confirm_password"
                   name="confirm_password"
-                  type={showPassword ? "text" : "password"}
+                  type={showConfirmPassword ? "text" : "password"}
                   placeholder="Re-enter your password"
                   value={formData.confirm_password}
                   onChange={handleChange}
                   className="w-full px-4 py-2.5 border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-[#744CDB] text-sm"
                   required
+                  disabled={isLoading}
+                  minLength={4}
                 />
                 <span
                   className="absolute right-3 top-3 text-gray-400 cursor-pointer"
-                  onClick={() => setShowPassword(!showPassword)}
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 >
-                  {showPassword ? <FaEyeSlash /> : <FaEye />}
+                  {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
                 </span>
               </div>
             </div>
@@ -246,7 +298,12 @@ const SetupSignup = () => {
 
         {/* Terms and Conditions */}
         <div className="flex items-start gap-2 text-sm mb-6">
-          <input type="checkbox" className="mt-1 accent-[#744CDB]" required />
+          <input 
+            type="checkbox" 
+            className="mt-1 accent-[#744CDB]" 
+            required 
+            disabled={isLoading}
+          />
           <label className="text-gray-700">
             I agree to the{" "}
             <span className="text-[#744CDB] font-medium cursor-pointer">
@@ -263,9 +320,10 @@ const SetupSignup = () => {
         {/* Submit Button */}
         <button
           type="submit"
-          className="w-full bg-[#744CDB] text-white py-2 rounded-md hover:bg-[#633CDB] hover:scale-x-95 transition-all transform duration-200 text-sm"
+          className="w-full bg-[#744CDB] text-white py-2 rounded-md hover:bg-[#633CDB] hover:scale-x-95 transition-all transform duration-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-x-100"
+          disabled={isLoading}
         >
-          Sign up
+          {isLoading ? "Setting up..." : "Sign up"}
         </button>
 
         {/* Signin Navigation */}

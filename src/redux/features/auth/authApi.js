@@ -10,6 +10,19 @@ export const authApi = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(
+            setTokens({
+              accessToken: data.access_token,
+              refreshToken: data.refresh_token,
+            })
+          );
+        } catch (error) {
+          console.error("Failed to login:", error);
+        }
+      },
     }),
 
     // Client sign-in (sends OTP)
@@ -31,8 +44,6 @@ export const authApi = apiSlice.injectEndpoints({
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          console.log("OTP verification response:", data);
-          
           if (data.access_token && data.refresh_token) {
             dispatch(
               setTokens({
@@ -59,6 +70,25 @@ export const authApi = apiSlice.injectEndpoints({
       }),
     }),
 
+    // Account update (for completing profile setup)
+    accountUpdate: builder.mutation({
+      query: (data) => ({
+        url: "/auth/account/",
+        method: "POST",
+        body: data, // RTK Query will automatically stringify JSON and set Content-Type
+      }),
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          if (data.user) {
+            dispatch(setUser({ user: data.user }));
+          }
+        } catch (error) {
+          console.error("Failed to update account:", error);
+        }
+      },
+    }),
+
     // Get user info
     getMe: builder.query({
       query: () => "/business-information/",
@@ -79,5 +109,6 @@ export const {
   useClientSignInMutation,
   useVerifyClientOtpMutation,
   useResendOtpMutation,
+  useAccountUpdateMutation,
   useLazyGetMeQuery,
 } = authApi;

@@ -41,9 +41,9 @@ const SetupSignup = () => {
     setFormData({ ...formData, sex: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError("");
 
     // Validation
     if (!formData.first_name.trim() || !formData.last_name.trim()) {
@@ -80,42 +80,34 @@ const SetupSignup = () => {
     }
 
     // Prepare JSON data
-    const data = {
-      first_name: formData.first_name.trim(),
-      last_name: formData.last_name.trim(),
-      date_of_birth: formData.date_of_birth,
-      sex: formData.sex,
-    };
-    
-    // Only add password for sellers
-    if (!isClient) {
-      data.password = formData.password;
-    }
-
-    try {
-      await accountUpdate(data).unwrap();
-      
-      // Navigate based on user type
-      if (isClient) {
-        // Client goes to success page then home
-        navigate("/signup-successfull", { 
-          state: { userType: "client" } 
-        });
-      } else {
-        // Seller goes to success page then onboarding
-        navigate("/signup-successfull", { 
-          state: { userType: "seller" } 
-        });
-      }
-    } catch (err) {
-      console.error("Account update failed:", err);
-      setError(
-        err.data?.message ||
-          err.data?.detail ||
-          "Failed to update account. Please try again."
-      );
-    }
+  const data = {
+    first_name: formData.first_name.trim(),
+    last_name: formData.last_name.trim(),
+    date_of_birth: formData.date_of_birth,
+    sex: formData.sex,
   };
+    
+  // Only add password for sellers
+  if (!isClient) {
+    data.password = formData.password;
+  }
+
+  try {
+    await accountUpdate(data).unwrap();
+    
+    // ✅ KEY FIX: Pass user type to success page
+    navigate("/signup-successfull", { 
+      state: { type: isClient ? "client" : "seller" } 
+    });
+  } catch (err) {
+    console.error("Account update failed:", err);
+    setError(
+      err.data?.message ||
+        err.data?.detail ||
+        "Failed to update account. Please try again."
+    );
+  }
+};
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 font-golos">

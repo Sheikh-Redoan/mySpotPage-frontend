@@ -40,11 +40,11 @@ const Signin = () => {
       try {
         await clientSignIn(formData).unwrap();
         // Navigate to OTP verification page with phone number
-        navigate("/verify-number", { 
-          state: { 
-            number: phone, 
-            type: "client" 
-          } 
+        navigate("/verify-number", {
+          state: {
+            number: phone,
+            type: "client"
+          }
         });
       } catch (err) {
         console.error("Client sign-in failed:", err);

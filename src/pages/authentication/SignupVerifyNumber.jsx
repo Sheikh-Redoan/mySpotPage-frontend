@@ -12,9 +12,8 @@ const SignupVerifyNumber = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const location = useLocation();
-  const [verifyClientOtp] = useVerifyClientOtpMutation()
+  const [verifyClientOtp] = useVerifyClientOtpMutation();
 
   const { number, type } = location.state || {};
 
@@ -42,6 +41,7 @@ const SignupVerifyNumber = () => {
       console.log(response);
       
       if (response.data && response.data.token) {
+        // User already exists, log them in
         dispatch(setTokens({
           accessToken: response.data.token.access,
           refreshToken: response.data.token.refresh,
@@ -49,9 +49,13 @@ const SignupVerifyNumber = () => {
         if (response.data.user) {
           dispatch(setUser({ user: response.data.user }));
         }
-      }
-      else {
-        navigate(`/setup-signup?type=${type || 'client'}`);
+        // Redirect based on user type
+        navigate(type === 'client' ? '/' : '/dashboard');
+      } else {
+        // ✅ KEY FIX: Pass type to setup page with state
+        navigate(`/setup-signup?type=${type || 'client'}`, {
+          state: { number, type: type || 'client' }
+        });
       }
     } catch (err) {
       setError("Failed to verify OTP. Please check the code and try again.");

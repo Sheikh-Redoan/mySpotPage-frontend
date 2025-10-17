@@ -1,15 +1,23 @@
 import { slideInFromRight } from "@/animations/variants";
-// eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import React from "react";
 import icon from "../../assets/icons/icon.jpg";
-import { Link } from "react-router";
+import { Link, useLocation } from "react-router";
 import { ArrowLeft } from "lucide-react";
 
 const SignupSuccessfull = () => {
+  const location = useLocation();
+  
+  // Get user type from location state (passed from SetupSignup)
+  const userType = location.state?.type || "seller";
+  const isClient = userType === "client";
+
+  // ✅ KEY FIX: Dynamically set the sign-in path based on user type
+  const signInPath = isClient ? "/signin?type=client" : "/signin";
+
   return (
-    <div className="flex justify-center font-golos items-center min-h-screen bg-gray-100 ">
-      <motion.form
+    <div className="flex justify-center font-golos items-center min-h-screen bg-gray-100">
+      <motion.div
         variants={slideInFromRight()}
         initial="hidden"
         animate="visible"
@@ -19,22 +27,22 @@ const SignupSuccessfull = () => {
           <img src={icon} alt="icon" className="my-2" />
         </div>
         <div className="text-center">
-          <h3 className=" text-2xl font-semibold my-4">
+          <h3 className="text-2xl font-semibold my-4">
             Welcome to My Spot Page!
           </h3>
           <p className="text-[#797979] my-3">
-            Your account has been created successfully! Let’s offer the best
-            services today!
+            Your {isClient ? 'client' : 'seller'} account has been created successfully! 
+            Let's offer the best services today!
           </p>
 
           <Link
-            to={"/signin"}
+            to={signInPath} // ✅ Uses dynamic path based on user type
             className="flex justify-center items-center gap-1 mt-4 font-medium text-sm text-[#744CDB]"
           >
             <ArrowLeft size={18} /> Back to Sign in
           </Link>
         </div>
-      </motion.form>
+      </motion.div>
     </div>
   );
 };

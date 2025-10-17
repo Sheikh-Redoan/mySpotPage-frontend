@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { slideInFromLeft } from "@/animations/variants";
-import { Link, useNavigate, useLocation } from "react-router";
+import { Link, useNavigate, useLocation } from "react-router"; // Use react-router-dom
 import axios from "axios";
 
 const Signup = () => {
@@ -12,7 +12,7 @@ const Signup = () => {
   const location = useLocation();
 
   const searchParams = new URLSearchParams(location.search);
-  const type = searchParams.get("type") || "client"; // Default to client type
+  const type = searchParams.get("type") || "seller"; // Default to seller type
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,13 +25,17 @@ const Signup = () => {
 
     const formData = new FormData();
     formData.append("number", number);
+    if (type === 'client') {
+      formData.append("user_type", "client");
+    }
+
 
     setIsLoading(true);
 
     try {
       // Use import.meta.env for Vite environment variables
       const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000/api";
-      
+
       // Call the API to request the OTP for the entered number
       const response = await axios.post(`${baseUrl}/auth/signup/`, formData, {
         headers: {
@@ -45,13 +49,13 @@ const Signup = () => {
       navigate("/signup-verify-number", { state: { number, type } });
     } catch (err) {
       console.error("Signup error:", err);
-      
+
       // Better error handling
       if (err.response) {
         // Server responded with error
         setError(
-          err.response.data?.message || 
-          err.response.data?.detail || 
+          err.response.data?.message ||
+          err.response.data?.detail ||
           err.response.data?.number?.[0] ||
           "Failed to send OTP. Please try again."
         );
@@ -113,10 +117,10 @@ const Signup = () => {
         >
           {isLoading ? "Sending OTP..." : "Continue"}
         </button>
-        
+
         <p className="text-center mt-4 text-sm text-gray-600">
           Already have an account?{" "}
-          <Link to={"/signin"}>
+          <Link to={type === 'client' ? "/signin?type=client" : "/signin"}>
             <span className="text-[#744CDB] font-medium hover:underline">
               Sign in
             </span>

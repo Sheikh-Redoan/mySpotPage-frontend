@@ -1,13 +1,14 @@
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router";
 import { selectUser } from "../../redux/features/userSlice";
+import { useGetMeQuery, useLazyGetMeQuery } from "../../redux/features/auth/authApi";
 
 export default function SellerRoute({ children }) {
-  const user = useSelector(selectUser);
+  const {data} = useGetMeQuery();
+  console.log(data.profile.role);
 
-  if (user && user.role.includes("seller")) {
+  if (data?.profile && data?.profile?.role.includes("seller")) {
     return children;
   }
-  // User is authenticated but not a seller, redirect
   return <Navigate to="/forbidden" replace />;
 }

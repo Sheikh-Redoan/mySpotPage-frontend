@@ -19,6 +19,8 @@ export const authApi = apiSlice.injectEndpoints({
               refreshToken: data.refresh_token,
             })
           );
+
+          await dispatch(authApi.endpoints.getMe.initiate(null));
         } catch (error) {
           console.error("Failed to login:", error);
         }
@@ -91,7 +93,14 @@ export const authApi = apiSlice.injectEndpoints({
 
     // Get user info
     getMe: builder.query({
-      query: () => "/business-information/",
+      //
+      // BEFORE (The Problem):
+      // query: () => "/business-information/",
+      //
+      // AFTER (The Fix):
+      // Point to the account endpoint from your Postman collection
+      query: () => "/auth/view-account/",
+      //
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
@@ -111,4 +120,5 @@ export const {
   useResendOtpMutation,
   useAccountUpdateMutation,
   useLazyGetMeQuery,
+  useGetMeQuery
 } = authApi;

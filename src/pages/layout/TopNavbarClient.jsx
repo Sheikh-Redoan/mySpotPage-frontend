@@ -7,12 +7,15 @@ import UserMenuPopUp from "../../components/admin/UserMenuPopUp";
 import LanguageSelectModal from "../../components/modal/LanguageSelectModal";
 import { selectUser } from "../../redux/features/userSlice";
 import Container from "../client/Container";
+import { useGetMeQuery } from "../../redux/features/auth/authApi";
 
 export default function TopNavbarClient() {
   const [isUserOpen, setIsUserOpen] = useState(false);
-  const user = useSelector(selectUser);
-  console.log(user);
-  
+
+  const { data } = useGetMeQuery();
+  console.log(data?.profile);
+  const user = data?.profile;
+
   const handlePopup = () => {
     setIsUserOpen(!isUserOpen);
   };
@@ -38,7 +41,8 @@ export default function TopNavbarClient() {
                 open={isUserOpen}
                 onOpenChange={handlePopup}
                 arrow={false}
-                content={<UserMenuPopUp handlePopup={handlePopup} />}>
+                content={<UserMenuPopUp handlePopup={handlePopup} />}
+              >
                 <button className="cursor-pointer">
                   <img
                     className="w-10 h-10 rounded-full bg-white"

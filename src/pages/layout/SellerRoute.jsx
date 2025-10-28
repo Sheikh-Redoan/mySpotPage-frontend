@@ -5,7 +5,6 @@ import { useGetMeQuery, useLazyGetMeQuery } from "../../redux/features/auth/auth
 
 export default function SellerRoute({ children }) {
   const {data} = useGetMeQuery();
-  console.log(data.profile.role);
 
   if (data?.profile && data?.profile?.role.includes("seller")) {
     return children;

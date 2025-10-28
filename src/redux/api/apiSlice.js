@@ -14,5 +14,18 @@ export const apiSlice = createApi({
       return headers;
     },
   }),
-  endpoints: (builder) => ({}),
+  tagTypes: ["Service"], 
+  endpoints: (builder) => ({
+    createService: builder.mutation({
+      query: (serviceFormData) => ({
+        url: "/api/services/create/",
+        method: "POST",
+        body: serviceFormData,
+      }),
+      invalidatesTags: ["Service"], 
+    }),
+  }),
 });
+
+// Export the auto-generated hook
+export const { useCreateServiceMutation } = apiSlice;

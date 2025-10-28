@@ -38,8 +38,6 @@ const Signin = () => {
     const phone = e.target.phone.value;
 
     if (isClientLogin) {
-      // --- CLIENT LOGIN FLOW (OTP) ---
-      // This logic is untouched as it's for OTP verification, not immediate login.
       if (!phone) {
         setError("Please enter your phone number.");
         return;

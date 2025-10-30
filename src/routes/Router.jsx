@@ -119,8 +119,6 @@ export const routes = createBrowserRouter([
         path: "booking-details",
         element: <BookingDetails />,
       },
-
-      // Client-specific booking flow (can be accessed by authenticated clients)
       {
         path: "service-provider-info",
         element: (
@@ -196,7 +194,6 @@ export const routes = createBrowserRouter([
     element: (
       <ProtectedRoute>
         <OnboardLayout />
-        {/* Assuming OnboardLayout handles overall onboarding UI */}
       </ProtectedRoute>
     ),
     errorElement: <ErrorPage />,
@@ -237,7 +234,6 @@ export const routes = createBrowserRouter([
       <ProtectedRoute>
         <SellerRoute>
           <MainLayout />
-          {/* MainLayout for seller dashboard */}
         </SellerRoute>
       </ProtectedRoute>
     ),

@@ -10,6 +10,7 @@ import { cn } from "../lib/utils";
 import TopNavbar from "../pages/layout/TopNavbar";
 import { selectUser } from "../redux/features/userSlice";
 import "../styles/antdCustom.css";
+import { useGetMeQuery } from "../redux/features/auth/authApi";
 
 function MainLayout({ activeTab }) {
   // State for desktop sidebar collapse/expand
@@ -18,8 +19,15 @@ function MainLayout({ activeTab }) {
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 768);
 
-  const user = useSelector(selectUser);
+    const { data } = useGetMeQuery();
+    console.log(data?.profile);
+    const user = data?.profile;
+ 
+
   const location = useLocation();
+
+
+
 
   // Effect to handle window resize
   useEffect(() => {

@@ -6,21 +6,31 @@ import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate, useSearchParams } from "react-router";
 import { setTokens } from "../../redux/features/auth/authSlice";
-import { useLoginMutation, useClientSignInMutation } from "../../redux/features/auth/authApi";
+import {
+  useLoginMutation,
+  useClientSignInMutation,
+  useGetMeQuery,
+  authApi,
+  useLazyGetMeQuery,
+} from "../../redux/features/auth/authApi";
+import { useCurrentUser } from "../../hooks/useCurrentUser";
 
 const Signin = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
+  const [getme] = useLazyGetMeQuery();
+
+  const navigate = useNavigate();
   const [login, { isLoading: isSellerLoading }] = useLoginMutation();
-  const [clientSignIn, { isLoading: isClientLoading }] = useClientSignInMutation();
+  const [clientSignIn, { isLoading: isClientLoading }] =
+    useClientSignInMutation();
   const [searchParams] = useSearchParams();
   const isClientLogin = searchParams.get("type") === "client";
-
   const isLoading = isClientLogin ? isClientLoading : isSellerLoading;
 
+  // const currentUser = useCurrentUser();
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -28,7 +38,6 @@ const Signin = () => {
     const phone = e.target.phone.value;
 
     if (isClientLogin) {
-      // Client login - send OTP
       if (!phone) {
         setError("Please enter your phone number.");
         return;
@@ -43,8 +52,8 @@ const Signin = () => {
         navigate("/verify-number", {
           state: {
             number: phone,
-            type: "client"
-          }
+            type: "client",
+          },
         });
       } catch (err) {
         console.error("Client sign-in failed:", err);
@@ -55,7 +64,8 @@ const Signin = () => {
         );
       }
     } else {
-      // Seller login - direct login with password
+      // --- SELLER/ADMIN LOGIN FLOW (Password) ---
+      // This block is modified for role-based redirection.
       const password = e.target.password.value;
 
       if (!phone || !password) {
@@ -68,20 +78,31 @@ const Signin = () => {
       formData.append("password", password);
 
       try {
-        const tokenData = await login(formData).unwrap();
+        // 1. Call login and capture the response
+        // This response contains the user object, as defined in your authApi.js onQueryStarted
+        const loginResponse = await login(formData).unwrap();
 
-        if (!tokenData?.access_token || !tokenData?.refresh_token) {
-          throw new Error("Invalid token response from server");
+        // 2. Extract the user's role from the response
+        // Based on your API spec, the role is at 'data.user.role'
+        const role = loginResponse?.user?.role;
+
+        // 3. Implement role-based redirection
+        console.log(`Login successful! Role: ${role}. Redirecting...`);
+
+        const user = await getme().unwrap();
+
+        console.log(user?.profile?.role);
+
+        if (user?.profile?.role === "seller") {
+          return navigate("/dashboard"); 
         }
-
-        dispatch(
-          setTokens({
-            accessToken: tokenData.access_token,
-            refreshToken: tokenData.refresh_token,
-          })
-        );
-        console.log("Login successful! Redirecting to dashboard...");
-        navigate("/dashboard", { replace: true });
+         if (user?.profile?.role === "admin") {
+          return navigate("/admin/user-management"); 
+        }
+         if (user?.profile?.role === "client") {
+          console.warn("Unknown or missing role, redirecting to default dashboard.");
+          return navigate("/");
+        }
       } catch (err) {
         console.error("Login failed:", err);
         setError(
@@ -95,9 +116,13 @@ const Signin = () => {
   };
 
   return (
+    // --- YOUR EXISTING UI (UNCHANGED) ---
     <div className="bg-gray-100 font-golos">
       <div className="sm:hidden flex items-center gap-2 px-4 pt-6">
-        <Link to="/auth" className="flex items-center text-[#0f0528] font-medium hover:underline">
+        <Link
+          to="/auth"
+          className="flex items-center text-[#0f0528] font-medium hover:underline"
+        >
           <ArrowLeft size={20} />
           <span className="ml-2">Back</span>
         </Link>
@@ -127,7 +152,10 @@ const Signin = () => {
 
           {/* Phone Number Input */}
           <div className="mb-4">
-            <label htmlFor="phone" className="block text-gray-700 font-medium mb-1">
+            <label
+              htmlFor="phone"
+              className="block text-gray-700 font-medium mb-1"
+            >
               Phone Number <span className="text-orange-600">*</span>
             </label>
             <input
@@ -199,11 +227,7 @@ const Signin = () => {
             className="w-full bg-[#744CDB] text-white py-2 rounded-md hover:bg-[#633CDB] hover:scale-x-95 transition-all transform duration-200 text-sm disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-x-100"
             disabled={isLoading}
           >
-            {isLoading
-              ? "Loading..."
-              : isClientLogin
-              ? "Continue"
-              : "Sign in"}
+            {isLoading ? "Loading..." : isClientLogin ? "Continue" : "Sign in"}
           </button>
 
           {/* Signup Navigation */}

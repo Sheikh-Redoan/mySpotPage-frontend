@@ -6,11 +6,26 @@ export const apiSlice = createApi({
     baseUrl: import.meta.env.VITE_API_BASE_URL,
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.accessToken;
+      console.log(token);
+      
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
       }
       return headers;
     },
   }),
-  endpoints: (builder) => ({}),
+  tagTypes: ["Service"], 
+  endpoints: (builder) => ({
+    createService: builder.mutation({
+      query: (serviceFormData) => ({
+        url: "/api/services/create/",
+        method: "POST",
+        body: serviceFormData,
+      }),
+      invalidatesTags: ["Service"], 
+    }),
+  }),
 });
+
+// Export the auto-generated hook
+export const { useCreateServiceMutation } = apiSlice;

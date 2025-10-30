@@ -56,7 +56,8 @@ const EventModal = ({ isOpen, onClose, onSubmit, selectedDate, timeSlots }) => {
       </h4>
 
       <div className="max-h-[600px] overflow-y-auto py-2 space-y-2">
-        {timeSlots &&
+        {console.log({ timeSlots })}
+        {timeSlots && timeSlots.length ? (
           timeSlots.map((slot) => (
             <div
               key={slot.time}
@@ -74,7 +75,10 @@ const EventModal = ({ isOpen, onClose, onSubmit, selectedDate, timeSlots }) => {
                 </span>
               )}
             </div>
-          ))}
+          ))
+        ) : (
+          <div className="text-center py-4">No available time slots</div>
+        )}
       </div>
 
       <div className="flex justify-end px-6 py-4">
@@ -89,6 +93,7 @@ const EventModal = ({ isOpen, onClose, onSubmit, selectedDate, timeSlots }) => {
           type="primary"
           onClick={handleSubmit}
           className="!px-3 !py-2 !bg-[#242528] !text-white !rounded-md !ml-1"
+          disabled={!timeSlots || timeSlots.length === 0}
         >
           Continue
         </Button>

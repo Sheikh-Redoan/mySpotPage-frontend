@@ -1,37 +1,41 @@
+import { Check, Upload, X } from "lucide-react";
 import React from "react";
 import { Collapse } from "antd";
+
 const { Panel } = Collapse;
-import { Upload, X } from "lucide-react";
-import { Check } from "lucide-react";
 
 const ServiceImageUpload = ({
-  handleWorkRemoveImage,
   workImages,
+  workCroppedImages,
+  handleWorkRemoveImage,
   handleWorkFileChange,
   handleButtonClick,
-  setIsModalOpen, // now expects a function that receives index (number)
   fileInputRef,
-  workCroppedImages,
-  setCurrentCropIndex,
+  onImageClick, // Function to re-open the cropper
 }) => {
   return (
     <div className="mb-10">
-      <Collapse expandIconPosition="end" className="custom-collapse" bordered={false}>
+      <Collapse
+        expandIconPosition="end"
+        className="custom-collapse"
+        bordered={false}
+      >
         <Panel
           key="3"
           header={
             <div className="flex items-center gap-x-3">
               <div
-                className={`w-10 h-10 flex justify-center items-center border rounded-full font-bold transition-all duration-200 ${workImages.length > 0
-                  ? "bg-[#262626] text-white "
-                  : "border p-4 text-[#262626]"
-                  }`}
+                className={`w-10 h-10 flex justify-center items-center border rounded-full font-bold transition-all duration-200 ${
+                  workCroppedImages.length > 0
+                    ? "bg-[#262626] text-white"
+                    : "border p-4 text-[#262626]"
+                }`}
               >
-                {
-                  workImages.length > 0
-                    ? <Check className="w-6 h-6" />
-                    : "3"
-                }
+                {workCroppedImages.length > 0 ? (
+                  <Check className="w-6 h-6" />
+                ) : (
+                  "3"
+                )}
               </div>
               <span className="text-[#262626] font-semibold text-base md:text-xl">
                 Upload Image Of Your Work
@@ -50,7 +54,7 @@ const ServiceImageUpload = ({
               You can upload up to 10 images to showcase your best work.
             </h2>
 
-            {workImages.length < 10 && (
+            {workCroppedImages.length < 10 && (
               <button
                 className="w-[188px] px-3 py-2 rounded-lg flex items-center border border-[#E7E7E7] gap-3 hover:shadow-sm transition"
                 onClick={handleButtonClick}
@@ -60,31 +64,27 @@ const ServiceImageUpload = ({
                 <p className="font-medium text-[#262626]">Upload Your Image</p>
                 <input
                   ref={fileInputRef}
-                  id="thumbnail"
+                  id="work-images-input"
                   type="file"
                   accept="image/*"
-                  multiple
                   className="hidden"
                   onChange={handleWorkFileChange}
                 />
               </button>
             )}
 
-            {workImages.length > 0 && (
+            {workCroppedImages.length > 0 && (
               <div className="mt-4 pb-8 overflow-x-auto">
                 <div className="flex gap-3 min-w-max sm:min-w-full">
-                  {workImages.map((img, index) => (
+                  {workCroppedImages.map((img, index) => (
                     <div
                       key={index}
                       className="relative w-[150px] h-[150px] rounded-lg overflow-hidden border border-gray-200 shrink-0"
                     >
                       <img
-                        src={workCroppedImages?.[index] || img}
-                        alt={`Uploaded ${index}`}
-                        onClick={() => {
-                          setCurrentCropIndex(index);
-                          setIsModalOpen(index);
-                        }}
+                        src={img}
+                        alt={`Uploaded ${index + 1}`}
+                        onClick={() => onImageClick(index)} // Allow re-cropping
                         className="w-full h-full object-cover cursor-pointer"
                       />
                       <button

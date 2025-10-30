@@ -5,5 +5,7 @@ import {
 } from "../../components/calender/mockdata";
 
 export default function AllAppointment() {
-  return <Calender events={MOCK_EVENTS} resources={MOCK_RESOURCES} />;
+  return (
+    <Calender events={MOCK_EVENTS} resources={MOCK_RESOURCES} solo={false} />
+  );
 }

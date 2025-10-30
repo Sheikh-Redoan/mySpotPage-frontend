@@ -8,6 +8,24 @@ import { TbArrowBadgeDown } from "react-icons/tb";
 import { cn } from "../../lib/utils";
 import useResponsive from "../../hooks/useResponsive";
 import { PiInfo } from "react-icons/pi";
+import { useSelector } from "react-redux";
+
+function formatDateTime(isoString) {
+  const date = new Date(isoString);
+  const options = {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  };
+  // Remove seconds and use local time
+  return date
+    .toLocaleString("en-GB", options)
+    .replace(",", "")
+    .replace(/(\d{2}:\d{2}).*/, "$1");
+}
 
 const BookingCheckoutCard = ({
   data,
@@ -19,7 +37,9 @@ const BookingCheckoutCard = ({
   fromCofirmation = false,
   ...props
 }) => {
-  console.log("services data", data?.services);
+  const selectedServices = useSelector(({ service }) => service);
+  const selectedTimeSlot = useSelector(({ selectTime }) => selectTime);
+  console.log({ selectedTimeSlot });
 
   const [showAllServices, setShowAllServices] = useState(false);
   const { lg } = useResponsive();
@@ -28,9 +48,9 @@ const BookingCheckoutCard = ({
   const total = subtotalAfterVat - data?.discountAmount;
 
   const displayedServices =
-    data?.services && data?.services.length > 2 && !showAllServices
-      ? data?.services.slice(0, 2)
-      : data?.services;
+    selectedServices && selectedServices.length > 2 && !showAllServices
+      ? selectedServices.slice(0, 2)
+      : selectedServices;
 
   const hasPricingInfo = data?.subtotal || data?.discountAmount || total;
 
@@ -79,10 +99,10 @@ const BookingCheckoutCard = ({
             <span>{selectedStaff?.name}</span>
           </div>
 
-          {data?.selectedTime && (
+          {selectedTimeSlot && (
             <div className="flex items-center gap-2 text-sm text-[#262626]">
               <CiCalendar size={16} />
-              <span>{data?.selectedTime}</span>
+              <span>{formatDateTime(selectedTimeSlot?.fullDateTime)}</span>
             </div>
           )}
 
@@ -107,60 +127,57 @@ const BookingCheckoutCard = ({
       <div className="border-b border-dashed border-gray-200" />
 
       {/* Services Section - Renders only if services array is provided and not empty */}
-      {data?.services && data?.services.length > 0 && (
+      {selectedServices && selectedServices.length > 0 && (
         <div className="flex flex-col gap-[12px] w-full justify-center items-start">
           <h3 className="self-stretch text-description text-sm font-semibold leading-tight">
-            Services ({data?.services.length})
+            Services ({selectedServices.length})
           </h3>
-          {displayedServices.map((service) => (
-            <div
-              key={service.id}
-              className="flex justify-start items-start gap-[12px] w-full"
-            >
-              <img
-                src={
-                  service.image ||
-                  "https://placehold.co/80x80/cccccc/333333?text=No+Image"
-                }
-                alt={service.name || "Service image"}
-                className="w-20 h-20 relative rounded-lg object-cover"
-                onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src =
-                    "https://placehold.co/80x80/cccccc/333333?text=No+Image";
-                }}
-              />
-              <div className="w-full flex flex-col">
-                {service.name && (
+          {displayedServices &&
+            displayedServices.map((service) => (
+              <div
+                key={service?.id}
+                className="flex justify-start items-start gap-[12px] w-full"
+              >
+                <img
+                  src={
+                    service?.image ||
+                    "https://placehold.co/80x80/cccccc/333333?text=No+Image"
+                  }
+                  alt={service.name || "Service image"}
+                  className="w-20 h-20 relative rounded-lg object-cover"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src =
+                      "https://placehold.co/80x80/cccccc/333333?text=No+Image";
+                  }}
+                />
+                <div className="w-full flex flex-col">
                   <h3 className="self-stretch text-Boulder-950 text-sm font-medium leading-tight">
-                    {service.name}
+                    {service?.title}
                   </h3>
-                )}
-                {service.options && (
                   <p className="text-violet-500 text-xs font-normal w-max leading-none px-[8px] py-[4px] border border-violet-500 my-[8px] rounded-[20px]">
-                    {service.options}
+                    Smooth / Scalp treatment
                   </p>
-                )}
-                {(service.duration || service.price) && (
-                  <div className="w-full flex justify-between items-center">
-                    {service.duration && (
-                      <p className="text-description text-sm font-normal leading-tight">
-                        {service.duration}
-                      </p>
-                    )}
-                    {service.price && (
-                      <p className="text-Boulder-950 text-sm font-normal leading-tight">
-                        {service.price}
-                      </p>
-                    )}
-                  </div>
-                )}
+                  {(service.duration || service.price) && (
+                    <div className="w-full flex justify-between items-center">
+                      {service.duration && (
+                        <p className="text-description text-sm font-normal leading-tight">
+                          {service.duration}
+                        </p>
+                      )}
+                      {service.price && (
+                        <p className="text-Boulder-950 text-sm font-normal leading-tight">
+                          {service.price}
+                        </p>
+                      )}
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
 
           {/* Show less/Show more button */}
-          {data?.services.length > 2 && ( // Only show button if there are more than 2 services
+          {selectedServices.length > 2 && ( // Only show button if there are more than 2 services
             <button
               onClick={() => setShowAllServices(!showAllServices)}
               className="text-sm font-normal font-['Golos_Text'] leading-tight text-description flex items-center justify-start gap-2 cursor-pointer w-full"
@@ -180,7 +197,7 @@ const BookingCheckoutCard = ({
       )}
 
       {/* Separator Line (renders if services are present, AND pricing info is present) */}
-      {data?.services && data?.services.length > 0 && hasPricingInfo && (
+      {selectedServices && selectedServices.length > 0 && hasPricingInfo && (
         <div className="w-full border-t border-dashed border-gray-300"></div>
       )}
 

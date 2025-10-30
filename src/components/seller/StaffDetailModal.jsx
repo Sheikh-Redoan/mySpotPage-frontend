@@ -267,7 +267,7 @@ const StaffDetailModal = ({ staff, open, onClose, onSave, onRemove }) => {
                       showUploadList={false}
                       customRequest={({ onSuccess }) => onSuccess("ok")}
                       onChange={handleProfileImageChange}
-                      className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-200 px-2 py-1 left-0 top-0 absolute bg-white/30 rounded-[100px] outline outline-1 outline-offset-[-1px] outline-white/10 backdrop-blur-[6px] inline-flex justify-center items-center"
+                      className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-200 px-2 py-1 left-0 top-0 bg-white/30 rounded-[100px] outline-1 outline-offset-[-1px] outline-white/10 backdrop-blur-[6px] inline-flex justify-center items-center"
                     >
                       <div className="w-full h-full bg-black/50 flex flex-col justify-center items-center px-2 py-1 text-white text-xs font-semibold leading-none">
                         Change

@@ -131,7 +131,6 @@ const BasicInfo = () => {
               </p>
             </div>
           )}
-
           <div className="grid grid-cols-2 gap-3">
             <fieldset className="">
               <label htmlFor="firstName" className="block w-fit mb-1">

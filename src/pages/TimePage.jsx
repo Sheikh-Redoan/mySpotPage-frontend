@@ -78,8 +78,6 @@ function TimePage() {
         setDeleteLocationModalOpen={setDeleteLocationModalOpen}
       />
 
-
-
       {(lg || md) ? (
         <TimeBasedModal
           isModalOpen={isModalOpen}

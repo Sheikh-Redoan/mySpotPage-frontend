@@ -55,7 +55,6 @@ import {
 } from "../pages/layout/subSidebarObj";
 import ServiceTable from "../pages/onboarding/ServiceTable";
 import SetUpLocation from "../pages/onboarding/SetUpLocation";
-import SetUpService from "../pages/onboarding/SetUpService";
 import SuccessNotifications from "../pages/onboarding/SuccessNotifications";
 import SetupLocationServices1 from "../pages/onboarding/solo/SetupLocationServices1";
 import SetupLocationServices2 from "../pages/onboarding/solo/SetupLocationServices2";
@@ -95,12 +94,12 @@ import StaffSecurityPage from "../pages/onboarding/StaffSecurityPage";
 import StaffServicesPage from "../pages/onboarding/StaffServicesPage";
 import StaffWorkingHoursPage from "../pages/onboarding/StaffWorkingHoursPage";
 import AddNewServicePage from "../pages/seller/AddNewServicePage";
+import BookingDetails from "../components/shared/BookingDetails";
 
 export const routes = createBrowserRouter([
-  // Public Routes (Accessible to everyone)
   {
     path: "/",
-    element: <ClientLayout />, // Assuming this is the layout for public/client-facing pages
+    element: <ClientLayout />,
     errorElement: <ErrorPage />,
     hydrateFallbackElement: <div>Loading...</div>,
     children: [
@@ -115,6 +114,10 @@ export const routes = createBrowserRouter([
       {
         path: "review",
         element: <ReviewContainer />,
+      },
+      {
+        path: "booking-details",
+        element: <BookingDetails />,
       },
 
       // Client-specific booking flow (can be accessed by authenticated clients)
@@ -188,7 +191,6 @@ export const routes = createBrowserRouter([
   { path: "/setup-signup", element: <SetupSignup /> },
   { path: "/signup-successfull", element: <SignupSuccessfull /> },
 
-  // Onboarding Routes (Protected after initial setup, generally for new sellers/staff)
   {
     path: "/onboard",
     element: (
@@ -209,7 +211,7 @@ export const routes = createBrowserRouter([
       { path: "setup-services2", element: <SetupLocationServices2 /> },
       { path: "setup-teamservices1", element: <SetupTeamLocationServices1 /> },
       { path: "setup-teamservices2", element: <SetupTeamLocationServices2 /> },
-      { path: "service", element: <SetUpService /> },
+      { path: "service", element: <AddNewServicePage /> },
       { path: "service-table", element: <ServiceTable /> },
       { path: "verify-staff-otp", element: <OTPVerificationPage /> },
       { path: "staff-info", element: <StaffInformationPage /> },
@@ -483,8 +485,6 @@ export const routes = createBrowserRouter([
     path: "/forbidden",
     element: <ForbiddenPage />,
   },
-
-  // Catch-all for 404
   {
     path: "*",
     element: <ErrorPage />,

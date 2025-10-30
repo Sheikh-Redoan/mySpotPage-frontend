@@ -88,39 +88,14 @@ const businessStaticData = {
   discountPercent: 10.0,
   discountAmount: 60.0,
   paymentInstruction: "You will pay at the appointment location",
-  services: [
-    {
-      id: 1,
-      image: confirm_product,
-      name: "Classic Ombre",
-      options: "Smooth / Scalp treatment",
-      duration: "2h45m",
-      price: "₪70.00",
-    },
-    {
-      id: 2,
-      image: confirm_product,
-      name: "Reverse Ombre",
-      options: "Shadow Root",
-      duration: "3h30m",
-      price: "₪100.00",
-    },
-    {
-      id: 3,
-      image: confirm_product,
-      name: "Balayage with Toner",
-      options: "30m",
-      duration: "30m",
-      price: "₪100.00",
-    },
-  ],
 };
 
 const SelectStaffForProvider = () => {
   const [showDetails, setShowDetails] = useState(false);
   const navigate = useNavigate();
-  const selectedStaff = useSelector(({ selectedStaff }) => selectedStaff);
   const [staff, setStaff] = useState(staffData);
+
+  const selectedStaff = useSelector(({ selectedStaff }) => selectedStaff);
   const dispatch = useDispatch();
 
   const handleSelect = (staffData) => {

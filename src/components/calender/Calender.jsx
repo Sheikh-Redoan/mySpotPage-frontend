@@ -38,21 +38,21 @@ export default function Calender({
 
   // Navigation handlers
   const handlePrev = () => {
-    if (selectedView === "month") {
+    if (view === "month") {
       setCurrentDate(currentDate.subtract(1, "month"));
-    } else if (selectedView === "week") {
+    } else if (view === "week") {
       setCurrentDate(currentDate.subtract(1, "week"));
-    } else if (selectedView === "day") {
+    } else if (view === "day") {
       setCurrentDate(currentDate.subtract(1, "day"));
     }
   };
 
   const handleNext = () => {
-    if (selectedView === "month") {
+    if (view === "month") {
       setCurrentDate(currentDate.add(1, "month"));
-    } else if (selectedView === "week") {
+    } else if (view === "week") {
       setCurrentDate(currentDate.add(1, "week"));
-    } else if (selectedView === "day") {
+    } else if (view === "day") {
       setCurrentDate(currentDate.add(1, "day"));
     }
   };
@@ -86,13 +86,14 @@ export default function Calender({
       />
       <div
         className={cn(
-          "lg:rounded-xl overflow-hidden border-gray-200 border-collapse w-full",
+          "rounded-xl overflow-hidden border-gray-200 border-collapse w-full",
           {
             "border-r": view === "day",
             "border border-t-0 border-l-0 border-b-0": view === "week",
             "border border-gray-200": view === "month",
           }
-        )}>
+        )}
+      >
         {/* Render the appropriate calendar content based on the selected view */}
         {view === "month" && (
           <MonthView
@@ -112,6 +113,7 @@ export default function Calender({
             events={events}
             weekView
             selectTimeFromProvider={selectTimeFromProvider}
+            solo={solo}
           />
         )}
 

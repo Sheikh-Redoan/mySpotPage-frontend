@@ -1,7 +1,15 @@
 import { Plus } from "lucide-react";
 import { Link } from "react-router";
+import FixedLocationModal from "../../../components/modal/FixedLocationModal";
+import { useState } from "react";
+import { Button } from "antd";
+import LocationList from "../../../components/SettingsPages/LocationList";
+import DeleteLocationModal from "../../../components/modal/DeleteLocationModal";
 
 const SetupTeamLocationServices1 = () => {
+  const [fixedLocationModalOpen, setFixedLocationModalOpen] = useState(false);
+  const [deleteLocationModalOpen, setDeleteLocationModalOpen] = useState(false);
+
   return (
     <div className="px-2 py-[20px] lg:px-[20px] lg:py-[30px] xl:p-[40px]">
       <p className="text-[#866BE7] mb-2 font-medium">Step 2 of 3</p>
@@ -24,12 +32,24 @@ const SetupTeamLocationServices1 = () => {
             </p>
           </div>
 
-          <div className="flex items-center gap-2 text-[#744CDB] text-sm sm:text-base font-semibold hover:underline mt-3 xl:mt-0 whitespace-nowrap w-fit">
-            <Plus /> Add Location
+          <div className="hidden md:block">
+            <Button
+              onClick={() => setFixedLocationModalOpen(true)}
+              className="!text-primary01 !border-primary01 "
+              disabled={locationData?.length >= 1}
+            >
+              <Plus size={20} /> Add Location
+            </Button>
           </div>
         </div>
-
         <hr className="my-6 text-[#F6F6F6]" />
+
+        {/* location List */}
+        <LocationList
+          locationData={locationData}
+          setFixedLocationModalOpen={setFixedLocationModalOpen}
+          setDeleteLocationModalOpen={setDeleteLocationModalOpen}
+        />
       </div>
 
       <div className="sm:w-auto flex items-center justify-end gap-4 my-6 mx-2 sm:mx-5">
@@ -39,14 +59,43 @@ const SetupTeamLocationServices1 = () => {
           </button>
         </Link>
 
-        <Link to={"/onboard/setup-teamservices2"} className="w-full sm:w-auto">
-          <button className="w-full sm:w-auto px-[18px] py-[8px] font-medium rounded-lg hover:scale-95 transform transition-all duration-300 ease-in-out  hover:shadow-md text-[#82868E] bg-[#E5E7E8] hover:bg-[#cccfd1]">
+        <Link to={"/onboard/service"} className="w-full sm:w-auto">
+          <Button color="default" variant="solid" size="large">
             Continue
-          </button>
+          </Button>
         </Link>
       </div>
+
+      {/* Fixed Location Setup Modal */}
+      {fixedLocationModalOpen && (
+        <FixedLocationModal
+          isOpen={fixedLocationModalOpen}
+          onClose={() => setFixedLocationModalOpen(false)}
+          onSave={() => setFixedLocationModalOpen(false)}
+        />
+      )}
+
+      {/* delete location modal */}
+      {deleteLocationModalOpen && (
+        <DeleteLocationModal
+          isOpen={deleteLocationModalOpen}
+          onClose={() => setDeleteLocationModalOpen(false)}
+          setDeleteLocationModalOpen={setDeleteLocationModalOpen}
+          onDeleteConfirm={() => setDeleteLocationModalOpen(false)}
+          title="This location"
+        />
+      )}
     </div>
   );
 };
 
 export default SetupTeamLocationServices1;
+
+const locationData = [
+  {
+    id: 1,
+    name: "TCL Beauty Studio 01",
+    address: "15 Rothschild Boulevard, Tel Aviv-Yafo, Israel",
+    isActive: true,
+  },
+];
